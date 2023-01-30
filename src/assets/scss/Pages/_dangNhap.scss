@@ -1,0 +1,136 @@
+.dang_nhap {
+    background: #1E1E2E;
+    color: #FFFFFF;
+
+    .top_header {
+        display: flex;
+        justify-content: flex-end;
+        padding-right: 80px;
+        padding-top: 34px;
+
+        .top {
+            border: 1px solid #E5E5E5;
+            text-align: center;
+            padding: 10px 8px;
+            width: 143px;
+            height: 40px;
+            border-radius: 4px;
+
+            .top_content {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                h4 {}
+
+                .top_logo {
+                    background: red;
+                    width: 22px;
+                    height: 22px;
+                    border-radius: 50%;
+
+
+                    i {
+                        font-size: 14px;
+                        color: #FFDA44;
+                    }
+                }
+
+                i {}
+            }
+        }
+
+    }
+
+    .dang_nhap_content {
+        margin: 62px auto 0px;
+        width: 475px;
+
+        .logo {
+            margin: auto;
+            width: 240px;
+            height: 240px;
+            background: #ffffff;
+            border-radius: 50%;
+
+            img {}
+        }
+
+        .content {
+            h1 {
+                text-align: center;
+                margin-top: 40px;
+                @include text(36px, 700, #fff);
+                line-height: 48px;
+            }
+        }
+
+        form {
+
+            .form_title {
+                margin-bottom: 20px;
+
+                label {
+                    @include text (16px, 600, #fff);
+                    line-height: 24px;
+                    opacity: .7;
+                    margin-bottom: 8px;
+                }
+
+                input {
+                    padding: 11px 24px 13px 16px;
+                    width: 471px;
+                    height: 48px;
+                    background: #2B2B3F;
+                    border-radius: 8px;
+                }
+
+                input:focus {
+                    background: #ff0000;
+                }
+            }
+
+            .form_checkbox {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+
+                margin-top: 20px;
+
+                input {
+                    height: 24px;
+                    width: 24px;
+                    color: #FF7506;
+                }
+
+                label {
+                    @include text(16px, 400, #fff);
+                }
+            }
+
+
+
+            .form_button {
+                display: flex;
+                justify-content: center;
+
+                button {
+                    margin: 48px 0 205px;
+                    @include button(24px, 400, #fff, #FF7506, 16px 24px, 1px solid #FF7506, 8px, #1E1E2E, #FF7506)
+                }
+            }
+        }
+
+        .form_footer {
+            display: flex;
+            justify-content: center;
+
+
+            a {
+                color: #FF7506;
+                margin-bottom: 51px;
+                text-decoration: underline;
+            }
+        }
+    }
+}
