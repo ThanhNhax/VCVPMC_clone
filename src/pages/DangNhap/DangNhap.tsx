@@ -1,20 +1,31 @@
-import React from "react";
+import { addDoc, collection } from "firebase/firestore";
+import React, { useState } from "react";
+import TopSibar from "../../Components/TopSibar";
+import { db } from "../../FireStore/fireStore";
 type Props = {};
 
+interface Login {
+  userName: string | undefined;
+  password: string | undefined;
+}
 export default function DangNhap({}: Props) {
+  const [userName, setUserName] = useState<string>();
+  const [password, setPassword] = useState<string>();
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    const userLogin: Login = {
+      userName: userName,
+      password: password,
+    };
+    if (userLogin.userName !== "" && userLogin.password !== "") {
+      await addDoc(collection(db, "user"), userLogin);
+      setUserName("");
+    }
+  };
   return (
     <div className="dang_nhap">
-      <div className="top_header">
-        <div className="top">
-          <div className="top_content">
-            <h4>Tiếng Việt</h4>
-            <div className="top_logo">
-              <i className="fas fa-star"></i>
-            </div>
-            <i className="fas fa-chevron-down"></i>
-          </div>
-        </div>
-      </div>
+      <TopSibar />
       <div className="dang_nhap_content">
         <div className="logo">
           <img src="../img/vcpmc_logo.png" alt="logo_vcpmc" />
@@ -22,16 +33,33 @@ export default function DangNhap({}: Props) {
         <div className="content">
           <h1>Đăng nhập</h1>
         </div>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="form_title">
             <label htmlFor="userName">Tên đăng nhập</label>
             <br />
-            <input type="text" id="userName" />
+            <input
+              type="text"
+              id="userName"
+              value={userName}
+              onChange={(e) => {
+                setUserName(e.target.value);
+              }}
+            />
           </div>
           <div className="form_title">
             <label htmlFor="password">Password</label>
             <br />
-            <input type="text" id="password" />
+            <div className="password">
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+              />
+              <i className="fas fa-eye"></i>
+            </div>
           </div>
           <div className="form_checkbox">
             <input type="checkbox" id="ghi_nho" />

@@ -1,46 +1,6 @@
 .dang_nhap {
-    background: #1E1E2E;
-    color: #FFFFFF;
-
-    .top_header {
-        display: flex;
-        justify-content: flex-end;
-        padding-right: 80px;
-        padding-top: 34px;
-
-        .top {
-            border: 1px solid #E5E5E5;
-            text-align: center;
-            padding: 10px 8px;
-            width: 143px;
-            height: 40px;
-            border-radius: 4px;
-
-            .top_content {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-
-                h4 {}
-
-                .top_logo {
-                    background: red;
-                    width: 22px;
-                    height: 22px;
-                    border-radius: 50%;
-
-
-                    i {
-                        font-size: 14px;
-                        color: #FFDA44;
-                    }
-                }
-
-                i {}
-            }
-        }
-
-    }
+    background: #1e1e2e;
+    color: #ffffff;
 
     .dang_nhap_content {
         margin: 62px auto 0px;
@@ -53,7 +13,6 @@
             background: #ffffff;
             border-radius: 50%;
 
-            img {}
         }
 
         .content {
@@ -66,14 +25,13 @@
         }
 
         form {
-
             .form_title {
                 margin-bottom: 20px;
 
                 label {
-                    @include text (16px, 600, #fff);
+                    @include text(16px, 600, #fff);
                     line-height: 24px;
-                    opacity: .7;
+                    opacity: 0.7;
                     margin-bottom: 8px;
                 }
 
@@ -81,12 +39,29 @@
                     padding: 11px 24px 13px 16px;
                     width: 471px;
                     height: 48px;
-                    background: #2B2B3F;
+                    background: #2b2b3f;
                     border-radius: 8px;
+                    @include text (16px,
+                        400,
+                        #F5F5FF);
+                    line-height: 24px;
+
+                    &:focus {
+                        outline: none;
+                        border: 2px solid #347aff;
+                    }
                 }
 
-                input:focus {
-                    background: #ff0000;
+                .password {
+                    position: relative;
+
+                    i {
+                        // display: none;
+                        color: #fff;
+                        position: absolute;
+                        top: 18px;
+                        right: 25px;
+                    }
                 }
             }
 
@@ -94,13 +69,12 @@
                 display: flex;
                 align-items: center;
                 gap: 10px;
-
                 margin-top: 20px;
 
-                input {
-                    height: 24px;
-                    width: 24px;
-                    color: #FF7506;
+                #ghi_nho {
+                    color: #347aff;
+                    display: block;
+                    border: 2px solid blue;
                 }
 
                 label {
@@ -108,15 +82,21 @@
                 }
             }
 
-
-
             .form_button {
                 display: flex;
                 justify-content: center;
 
                 button {
-                    margin: 48px 0 205px;
-                    @include button(24px, 400, #fff, #FF7506, 16px 24px, 1px solid #FF7506, 8px, #1E1E2E, #FF7506)
+                    margin: 48px 0 60px;
+                    @include button(24px,
+                        400,
+                        #fff,
+                        #ff7506,
+                        16px 24px,
+                        1px solid #ff7506,
+                        8px,
+                        #1e1e2e,
+                        #ff7506);
                 }
             }
         }
@@ -125,9 +105,8 @@
             display: flex;
             justify-content: center;
 
-
             a {
-                color: #FF7506;
+                color: #ff7506;
                 margin-bottom: 51px;
                 text-decoration: underline;
             }

@@ -7,9 +7,10 @@
 //Base
 @import './Base/reset';
 // Components
-
+@import './Components/topSibar';
 // Layouts
-
+@import './Layouts/templateAdmin';
+@import './Layouts/sibarAdmin';
 // Pages
 @import'./Pages/dangNhap';
 // Theme

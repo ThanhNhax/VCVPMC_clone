@@ -1,0 +1,14 @@
+.template_admin {
+    height: 100vh;
+    display: flex;
+    position: relative;
+
+    .admin_user {
+        position: fixed;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        background: #1e1e2e;
+        color: #fff;
+    }
+}

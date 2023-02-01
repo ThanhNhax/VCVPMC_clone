@@ -6,6 +6,7 @@ import { Route, Routes } from "react-router";
 // scss
 import "./assets/scss/Style.scss";
 import DangNhap from "./pages/DangNhap/DangNhap";
+import TemplateAmin from "./pages/Admin/TemplateAmin";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
@@ -15,6 +16,9 @@ root.render(
       <Routes>
         <Route path="" element={<DangNhap />}></Route>
         <Route path="*" element={""}></Route>
+      </Routes>
+      <Routes>
+        <Route path="/admin" element={<TemplateAmin />}></Route>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
