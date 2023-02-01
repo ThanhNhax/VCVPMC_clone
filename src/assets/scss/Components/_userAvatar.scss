@@ -1,13 +1,36 @@
 .user_avatar {
     color: white;
+    display: flex;
+    justify-content: center;
 
-    .avatar {
-        img {}
+    .user_img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        i {
+            color: black;
+            font-size: 24px;
+        }
     }
 
     .title {
-        h5 {}
+        text-align: center;
 
-        p {}
+        h5 {
+            @include text (16px, 600,
+                #F5F5FF);
+            line-height: 24px;
+        }
+
+        p {
+            @include text (14px, 500,
+                #B65100);
+            line-height: 17px;
+        }
     }
 }

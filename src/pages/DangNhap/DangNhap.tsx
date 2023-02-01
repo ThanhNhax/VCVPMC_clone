@@ -1,76 +1,80 @@
-import { addDoc, collection } from "firebase/firestore";
-import React, { useState } from "react";
+import React from "react";
 import TopSibar from "../../Components/TopSibar";
-import { db } from "../../FireStore/fireStore";
-type Props = {};
+import { Field, Form, Formik } from "formik";
+import * as Yup from "yup";
+import { Checkbox } from "antd";
+import type { CheckboxChangeEvent } from "antd/es/checkbox";
+import { Link } from "react-router-dom";
 
 interface Login {
   userName: string | undefined;
   password: string | undefined;
 }
-export default function DangNhap({}: Props) {
-  const [userName, setUserName] = useState<string>();
-  const [password, setPassword] = useState<string>();
-
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    const userLogin: Login = {
-      userName: userName,
-      password: password,
-    };
-    if (userLogin.userName !== "" && userLogin.password !== "") {
-      await addDoc(collection(db, "user"), userLogin);
-      setUserName("");
-    }
+export default function DangNhap() {
+  const onChange = (e: CheckboxChangeEvent) => {
+    console.log(`checked = ${e.target.checked}`);
   };
+
+  const initialValues: Login = {
+    userName: "",
+    password: "",
+  };
+  const loginSchema = Yup.object().shape({
+    password: Yup.string()
+      .required("Không được bỏ trống!")
+      .min(3, "Password nhiều hơn 3 ký tự!"),
+    userName: Yup.string().required("Không được bỏ trống!"),
+  });
   return (
     <div className="dang_nhap">
-      <TopSibar />
+      <div className="dang_nhap--header">
+        <TopSibar />
+      </div>
       <div className="dang_nhap_content">
         <div className="logo">
           <img src="../img/vcpmc_logo.png" alt="logo_vcpmc" />
         </div>
         <div className="content">
           <h1>Đăng nhập</h1>
-        </div>
-        <form onSubmit={handleSubmit}>
-          <div className="form_title">
-            <label htmlFor="userName">Tên đăng nhập</label>
-            <br />
-            <input
-              type="text"
-              id="userName"
-              value={userName}
-              onChange={(e) => {
-                setUserName(e.target.value);
-              }}
-            />
+          <Formik
+            initialValues={initialValues}
+            validationSchema={loginSchema}
+            onSubmit={(values: Login) => {
+              console.log({ values });
+            }}
+          >
+            {({ errors, touched }) => (
+              <Form>
+                <div className="form_title">
+                  <label htmlFor="userName">Tên đăng nhập</label>
+                  <Field type="text" name="userName" id="userName" />
+                  {errors.userName && touched.userName ? (
+                    <p className="text-danger">{errors.userName}</p>
+                  ) : null}
+                </div>
+                <div className="form_title">
+                  <label htmlFor="password">Mật khẩu</label>
+                  <div className="password">
+                    <Field type="password" name="password" id="password" />
+                    <i className="fa fa-eye"></i>
+                  </div>
+                  {errors.password && touched.password ? (
+                    <p className="text-danger">{errors.password}</p>
+                  ) : null}
+                </div>
+
+                <div className="form_checkbox">
+                  <Checkbox onChange={onChange}>Ghi nhớ tài khoản</Checkbox>
+                </div>
+                <div className="form_button">
+                  <button type="submit">Đăng nhập</button>
+                </div>
+              </Form>
+            )}
+          </Formik>
+          <div className="form_footer">
+            <Link to="#">Quên mật khẩu?</Link>
           </div>
-          <div className="form_title">
-            <label htmlFor="password">Password</label>
-            <br />
-            <div className="password">
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-              />
-              <i className="fas fa-eye"></i>
-            </div>
-          </div>
-          <div className="form_checkbox">
-            <input type="checkbox" id="ghi_nho" />
-            <label htmlFor="ghi_nho">Ghi nhớ đăng nhập</label>
-          </div>
-          <div className="form_button">
-            <button type="submit">Đăng nhập</button>
-          </div>
-        </form>
-        <div className="form_footer">
-          <a>Quên mật khẩu?</a>
         </div>
       </div>
     </div>

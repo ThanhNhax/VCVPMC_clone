@@ -1,14 +1,33 @@
 .template_admin {
     height: 100vh;
     display: flex;
-    position: relative;
 
-    .admin_user {
-        position: fixed;
-        width: 100%;
-        display: flex;
-        justify-content: flex-end;
-        background: #1e1e2e;
-        color: #fff;
+    .sibar_admin {
+        max-width: 170px;
+        z-index: 1;
     }
+
+    .right {
+
+        .admin_user {
+            position: fixed;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            background: #1e1e2e;
+            color: #fff;
+            min-height: 80px;
+
+            .admin_user-language {
+                height: 40px;
+                margin-right: 24px;
+            }
+
+            .admin_user-avatar {
+                margin-right: 75px;
+            }
+        }
+    }
+
 }
