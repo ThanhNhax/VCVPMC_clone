@@ -9,10 +9,12 @@
 // Components
 @import './Components/topSibar';
 @import './Components/userAvatar';
+@import "./Components/header";
 // Layouts
 @import './Layouts/templateAdmin';
 @import './Layouts/sibarAdmin';
 @import './Layouts/templateAntDemo';
 // Pages
 @import'./Pages/dangNhap';
+@import './Pages/thongTinCoBan'
 // Theme

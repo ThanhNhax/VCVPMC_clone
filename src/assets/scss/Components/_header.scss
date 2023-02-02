@@ -1,0 +1,14 @@
+.header {
+    display: flex;
+    justify-content: flex-end;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    .header_language {}
+
+    .header_user {
+        margin-right: 75px;
+    }
+}

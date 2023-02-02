@@ -1,0 +1,168 @@
+.container {
+
+    h1 {
+        @include text(36px, 700, #f5f5f5);
+        line-height: 48px;
+        margin: 40px;
+    }
+
+    .content {
+        display: flex;
+        justify-content: space-between;
+
+        .content_avatar {
+            width: 280px;
+            text-align: center;
+            margin-left: 60px;
+
+            .left-avatar {
+                position: relative;
+
+                img {
+                    width: 280px;
+                    height: 280px;
+                    border-radius: 50%;
+
+                }
+
+                .camera {
+                    position: absolute;
+                    width: 72px;
+                    height: 72px;
+                    left: 176px;
+                    top: 227px;
+                    border-radius: 50%;
+                    background: rgba(30, 30, 46, 0.7);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    i {
+                        font-size: 35px;
+                    }
+                }
+            }
+
+            p {
+                margin-top: 24px;
+                @include text (20px, 600, #F5F5FF);
+                line-height: 24px;
+            }
+        }
+
+        .content_form {
+            #form_profile {
+                form {
+                    .form_profile-top {
+                        display: flex;
+
+                        gap: 20px;
+
+                        .form_title {
+                            margin-bottom: 24px;
+
+                            label {
+                                @include text(16px, 600, #fff);
+                                line-height: 24px;
+
+                                margin-bottom: 8px;
+                            }
+
+                            input {
+                                padding: 11px 24px 13px 16px;
+                                width: 274px;
+                                height: 48px;
+                                background: #2b2b3f;
+                                border-radius: 8px;
+                                @include text (16px,
+                                    400,
+                                    #F5F5FF);
+                                line-height: 24px;
+
+                                &:focus {
+                                    outline: none;
+                                    border: 2px solid #347aff;
+                                }
+                            }
+
+
+                        }
+                    }
+
+                    .form_profile-bottom {
+                        .form_title {
+                            margin-bottom: 24px;
+
+                            label {
+                                @include text(16px, 600, #ffffff);
+                                line-height: 24px;
+                                margin-bottom: 8px;
+                            }
+
+                            input {
+                                padding: 11px 24px 13px 16px;
+                                width: 571px;
+                                height: 48px;
+                                background: #3E3E50;
+                                border-radius: 8px;
+                                @include text (16px,
+                                    400,
+                                    #F5F5FF);
+                                line-height: 24px;
+
+                                &:focus {
+                                    outline: none;
+                                    border: 2px solid #347aff;
+                                }
+                            }
+
+                            #phanQuyen {
+                                width: 274px;
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+
+        .menu {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0px;
+            width: 110px;
+            height: 372px;
+            background: #2F2F41;
+            border-radius: 16px 0px 0px 16px;
+
+            .menu_icon {
+                padding: 10px 16px;
+                text-align: center;
+
+                .icon-bg {
+                    width: 52px;
+                    height: 52px;
+                    background: rgba(114, 114, 136, 0.5);
+                    border-radius: 50%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    margin: auto;
+
+                    i {
+                        font-size: 24px;
+                        color: #FF7506;
+                    }
+                }
+
+                p {
+                    margin-top: 10px;
+                    @include text (12px, 500, #ffffff);
+                    line-height: 18px;
+                }
+            }
+        }
+    }
+}
