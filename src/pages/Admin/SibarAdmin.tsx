@@ -11,79 +11,51 @@ export default function SibarAdmin({}: Props) {
       </div>
       <nav className="navbar_amdin">
         <ul className="navbar-nav ">
-          <li className="nav-item active">
-            <NavLink
-              className={(isActive) => (isActive ? "nav-link" : "nav-active")}
-              to="/admin/khobanghi"
-            >
-              <i className="far fa-camera"></i>
-              <span>Kho bản ghi</span>
+          <li className="nav-item">
+            <NavLink className="nav-link" to="/admin/khobanghi">
+              <i className="far fa-folder-open"></i>
+              <p>Kho bản ghi</p>
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink
-              className={({ isActive }) =>
-                isActive ? "nav-active" : "nav-link"
-              }
-              to="/admin/playlist"
-            >
-              <i className="far fa-camera"></i>
-              <span>Playlist</span>
+            <NavLink className="nav-link" to="/admin/playlist">
+              <div id="playList">
+                <i id="bar" className="fas fa-bars"></i>
+                <div id="play">
+                  <i className="fas fa-play"></i>
+                </div>
+              </div>
+              <p>Playlist</p>
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink
-              className={({ isActive }) =>
-                isActive ? "nav-active" : "nav-link"
-              }
-              to="/admin/laplichphat"
-            >
-              <i className="far fa-camera"></i>
-              <span>Lập lịch phát</span>
+            <NavLink className="nav-link" to="/admin/laplichphat">
+              <i className="far fa-calendar-alt"></i>
+              <p>Lập lịch phát</p>
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink
-              className={({ isActive }) =>
-                isActive ? "nav-active" : "nav-link"
-              }
-              to="#"
-            >
-              <i className="far fa-camera"></i>
-              <span>Quản lý</span>
+            <NavLink className="nav-link" to="/admin/playlist">
+              <i className="fas fa-file"></i>
+              <p>Quản lý</p>
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink
-              className={({ isActive }) =>
-                isActive ? "nav-active" : "nav-link"
-              }
-              to="#"
-            >
-              <i className="far fa-camera"></i>
-              <span>Doanh thu</span>
+            <NavLink className="nav-link" to="/admin/playlist">
+              <i className="fas fa-file-invoice-dollar"></i>
+              <p>Doanh thu</p>
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink
-              className={({ isActive }) =>
-                isActive ? "nav-active" : "nav-link"
-              }
-              to="#"
-            >
-              <i className="far fa-camera"></i>
-              <span>Cài đặt</span>
+            <NavLink className="nav-link" to="/admin/playlist">
+              <i className="fas fa-cog"></i>
+              <p>Cài đặt</p>
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink
-              className={({ isActive }) =>
-                isActive ? "nav-active" : "nav-link"
-              }
-              to="#"
-            >
-              <i className="far fa-camera"></i>
-              <span>Hỗ trợ</span>
+            <NavLink className="nav-link" to="/admin/playlist">
+              <i className="fas fa-question-circle"></i>
+              <p>Hỗ trợ</p>
             </NavLink>
           </li>
         </ul>

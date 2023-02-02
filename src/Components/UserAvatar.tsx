@@ -1,8 +1,6 @@
 import React from "react";
 
-type Props = {};
-
-export default function UserAvatar({}: Props) {
+export default function UserAvatar() {
   return (
     <div className="user_avatar">
       <div className="user_img">

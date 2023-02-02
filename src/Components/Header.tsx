@@ -1,12 +1,9 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import SibarAdmin from "../pages/Admin/SibarAdmin";
 import TopSibar from "./TopSibar";
 import UserAvatar from "./UserAvatar";
 
-type Props = {};
-
-export default function Header({}: Props) {
+export default function Header() {
   return (
     <div className="header">
       <div className="header_language">

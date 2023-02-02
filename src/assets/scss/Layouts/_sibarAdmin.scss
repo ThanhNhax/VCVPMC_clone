@@ -34,23 +34,79 @@
             height: 100%;
 
             .nav-item {
-                color: #C8C8DB;
                 text-align: center;
                 list-style: none;
 
-                a {
+                .nav-link {
                     text-decoration: none;
                     list-style: none;
-                    background-color: #C8C8DB
+                    color: #C8C8DB;
+
+                    i {
+                        font-size: 32px
+                    }
+
+                    p {
+                        @include text(14px,
+                            500,
+                            #C8C8DB);
+                        line-height: 17px;
+                        margin-top: 5px;
+                    }
+
+                    #playList {
+                        width: 32px;
+                        height: 32px;
+                        position: relative;
+                        margin: 0 auto;
+
+                        #bar {
+                            font-size: 30px;
+                        }
+
+                        #play {
+
+                            width: 20px;
+                            height: 20px;
+                            background: #020220;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            position: absolute;
+                            bottom: -7px;
+                            right: -2px;
+
+                            i {
+                                font-size: 15px;
+                            }
+                        }
+                    }
                 }
 
-                p {
-                    @include text(14px,
-                        500,
-                        #C8C8DB);
-                    line-height: 17px;
-                    margin-top: 5px;
+                .active {
+                    color: #FF7506 !important;
+                    position: relative;
+
+                    p {
+                        @include text(14px,
+                            500, #FF7506);
+                        line-height: 17px;
+                        margin-top: 5px;
+                    }
+
+                    &::before {
+                        content: '';
+                        position: absolute;
+                        width: 8px;
+                        height: 72px;
+                        left: -66px;
+                        top: -22px;
+                        background: #FF7506;
+                        border-radius: 6px;
+                    }
                 }
+
+
             }
         }
     }
