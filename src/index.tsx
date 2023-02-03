@@ -5,10 +5,13 @@ import { BrowserRouter } from "react-router-dom";
 import { Route, Routes } from "react-router";
 // scss
 import "./assets/scss/Style.scss";
+// Cấu hình reudx
+import { Provider } from "react-redux";
+import { store } from "./redux/configStore";
+
 import DangNhap from "./pages/DangNhap/DangNhap";
 import TemplateAmin from "./pages/Admin/TemplateAmin";
 import ThongTinCoBan from "./pages/ThongTinCoBan/ThongTinCoBan";
-import TemplateDemoAnt from "./pages/Admin/TemplateDemoAnt";
 import KhoBanGhi from "./pages/KhoBanGhi/KhoBanGhi";
 import Playlist from "./pages/Playlist/Playlist";
 import LapLichPhat from "./pages/LapLichPhat/LapLichPhat";
@@ -17,29 +20,31 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="" element={<DangNhap />}></Route>
-        <Route path="*" element={""}></Route>
-      </Routes>
-      {/* <Routes>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="" element={<DangNhap />}></Route>
+          <Route path="*" element={""}></Route>
+        </Routes>
+        {/* <Routes>
         <Route path="/demo" element={<TemplateDemoAnt />}>
           <Route path="/demo/thongtincoban" element={<ThongTinCoBan />}></Route>
           <Route path="/demo/dangnhap" element={<DangNhap />}></Route>
         </Route>
       </Routes> */}
-      <Routes>
-        <Route path="/admin" element={<TemplateAmin />}>
-          <Route path="/admin/khobanghi" element={<KhoBanGhi />}></Route>
-          <Route path="/admin/playlist" element={<Playlist />}></Route>
-          <Route path="/admin/laplichphat" element={<LapLichPhat />}></Route>
-          <Route
-            path="/admin/thongtincoban"
-            element={<ThongTinCoBan />}
-          ></Route>
-        </Route>
-      </Routes>
-    </BrowserRouter>
+        <Routes>
+          <Route path="/admin" element={<TemplateAmin />}>
+            <Route path="/admin/khobanghi" element={<KhoBanGhi />}></Route>
+            <Route path="/admin/playlist" element={<Playlist />}></Route>
+            <Route path="/admin/laplichphat" element={<LapLichPhat />}></Route>
+            <Route
+              path="/admin/thongtincoban"
+              element={<ThongTinCoBan />}
+            ></Route>
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>
 );
 
