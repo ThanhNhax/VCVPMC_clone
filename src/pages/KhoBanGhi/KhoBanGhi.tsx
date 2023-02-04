@@ -43,7 +43,14 @@ export default function KhoBanGhi() {
             {khoBanGhi.thoiHanSuDung.thoiGian}
           </td>
           <td className="action">
-            <Link to="#">Cập nhật</Link>
+            <Link
+              to="/admin/khobanghi/capnhat"
+              onClick={() => {
+                console.log("Click Cap nhat");
+              }}
+            >
+              Cập nhật
+            </Link>
           </td>
           <td className="action">
             <Link to="#">Nghe</Link>

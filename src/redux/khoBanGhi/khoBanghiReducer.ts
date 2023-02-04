@@ -61,6 +61,7 @@ export const getArrKhoBanGhiFireStore = () => {
     try {
       const result = query(collection(db, "khoBanGhi"));
       const unSub = onSnapshot(result, (querySnapshot) => {
+        console.log({ result });
         let arrKhoBanGhi: any = [];
         querySnapshot.forEach((doc) => {
           arrKhoBanGhi.push({ ...doc.data(), id: doc.id });

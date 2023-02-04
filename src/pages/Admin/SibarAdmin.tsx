@@ -12,7 +12,7 @@ export default function SibarAdmin({}: Props) {
       <nav className="navbar_amdin">
         <ul className="navbar-nav ">
           <li className="nav-item">
-            <NavLink className="nav-link" to="/admin/khobanghi">
+            <NavLink className="nav-link" to="/admin/">
               <i className="far fa-folder-open"></i>
               <p>Kho bản ghi</p>
             </NavLink>

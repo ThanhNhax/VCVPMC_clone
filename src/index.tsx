@@ -15,6 +15,7 @@ import ThongTinCoBan from "./pages/ThongTinCoBan/ThongTinCoBan";
 import KhoBanGhi from "./pages/KhoBanGhi/KhoBanGhi";
 import Playlist from "./pages/Playlist/Playlist";
 import LapLichPhat from "./pages/LapLichPhat/LapLichPhat";
+import CapNhatkhoBanGhi from "./pages/KhoBanGhi/CapNhatkhoBanGhi";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
@@ -23,7 +24,7 @@ root.render(
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
-          <Route path="" element={<DangNhap />}></Route>
+          <Route index element={<DangNhap />}></Route>
           <Route path="*" element={""}></Route>
         </Routes>
         {/* <Routes>
@@ -34,7 +35,11 @@ root.render(
       </Routes> */}
         <Routes>
           <Route path="/admin" element={<TemplateAmin />}>
-            <Route path="/admin/khobanghi" element={<KhoBanGhi />}></Route>
+            <Route index element={<KhoBanGhi />}></Route>
+            <Route
+              path="/admin/khobanghi/capnhat"
+              element={<CapNhatkhoBanGhi />}
+            ></Route>
             <Route path="/admin/playlist" element={<Playlist />}></Route>
             <Route path="/admin/laplichphat" element={<LapLichPhat />}></Route>
             <Route

@@ -27,7 +27,7 @@ export default function ThongTinCoBan({}: Props) {
       <div className="content">
         <div className="content_avatar">
           <div className="left-avatar">
-            <img src="../img/Frame 433.png" alt="Frame 433.png" />
+            <img src="../img/Frame_433.png" alt="Frame 433.png" />
             <div className="camera">
               <i className="fas fa-camera"></i>
             </div>
