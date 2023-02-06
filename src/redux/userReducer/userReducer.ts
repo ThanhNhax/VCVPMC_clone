@@ -62,8 +62,8 @@ export default userReducer.reducer;
 export const getUser = (uid: string) => {
   return async (dispatch: AppDispatch) => {
     // let getUserFireStore: UserState | undefined = {};
-    const docRef = doc(db, "users", uid);
     try {
+      const docRef = doc(db, "users", uid);
       if (docRef) {
         const doc = await getDoc(docRef);
         const userFireStore: any = doc.data();
@@ -78,6 +78,7 @@ export const getUser = (uid: string) => {
       }
     } catch (err) {
       console.log(err);
+      history.push("/");
     }
   };
 };

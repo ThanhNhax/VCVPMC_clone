@@ -4,7 +4,7 @@ import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/configStore";
-import { getStoreJSON, UID_USER } from "../../util/setting";
+import { clearLocalStorage, getStoreJSON, UID_USER } from "../../util/setting";
 import { getUser } from "../../redux/userReducer/userReducer";
 
 export default function ThongTinCoBan() {
@@ -12,6 +12,7 @@ export default function ThongTinCoBan() {
   const user = useSelector((state: RootState) => state.user);
   //Lấy uid từ localStore lên để call user
   let uidUserStore: string = getStoreJSON(UID_USER);
+  console.log({ uidUserStore });
   useEffect(() => {
     dispatch(getUser(uidUserStore));
   }, []);
@@ -170,7 +171,12 @@ export default function ThongTinCoBan() {
             </div>
             <p>Đổi mật khẩu</p>
           </div>
-          <div className="menu_icon">
+          <div
+            className="menu_icon"
+            onClick={() => {
+              clearLocalStorage(UID_USER);
+            }}
+          >
             <div className="icon-bg">
               <i className="fas fa-sign-out-alt"></i>
             </div>
