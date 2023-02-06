@@ -1,9 +1,8 @@
 import React from "react";
 import { Field, Formik, Form } from "formik";
 import * as Yup from "yup";
-type Props = {};
 
-export default function CapNhatkhoBanGhi({}: Props) {
+export default function CapNhatkhoBanGhi() {
   const initialValues = {
     maISRC: "",
     tenBanGhi: "",

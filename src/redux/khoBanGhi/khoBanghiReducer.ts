@@ -7,7 +7,7 @@ export interface ThoiHanSuDung {
   thoiGian: string;
   thoiHan: boolean;
 }
-export interface KhoBanGhi {
+export interface KhoBanGhiRedux {
   tenBanGhi: string;
   maISRC: string;
   thoiLuong: string;
@@ -18,7 +18,7 @@ export interface KhoBanGhi {
   thoiHanSuDung: ThoiHanSuDung;
 }
 export interface KhoBanGhiState {
-  arrKhoBanGhi: KhoBanGhi[];
+  arrKhoBanGhi: KhoBanGhiRedux[];
 }
 const initialState: KhoBanGhiState = {
   arrKhoBanGhi: [
@@ -44,7 +44,7 @@ const khoBanghiReducer = createSlice({
   reducers: {
     setArrKhoBanGhi: (
       state: KhoBanGhiState,
-      action: PayloadAction<KhoBanGhi[]>
+      action: PayloadAction<KhoBanGhiRedux[]>
     ) => {
       state.arrKhoBanGhi = action.payload;
     },
@@ -60,8 +60,7 @@ export const getArrKhoBanGhiFireStore = () => {
   return async (dispatch: AppDispatch) => {
     try {
       const result = query(collection(db, "khoBanGhi"));
-      const unSub = onSnapshot(result, (querySnapshot) => {
-        console.log({ result });
+      onSnapshot(result, (querySnapshot) => {
         let arrKhoBanGhi: any = [];
         querySnapshot.forEach((doc) => {
           arrKhoBanGhi.push({ ...doc.data(), id: doc.id });

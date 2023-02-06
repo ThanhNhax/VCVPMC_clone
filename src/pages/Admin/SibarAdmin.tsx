@@ -1,9 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-type Props = {};
-
-export default function SibarAdmin({}: Props) {
+export default function SibarAdmin() {
   return (
     <div className="left">
       <div className="left_logo">

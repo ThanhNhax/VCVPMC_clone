@@ -1,7 +1,5 @@
 import React from "react";
 
-type Props = {};
-
-export default function LapLichPhat({}: Props) {
+export default function LapLichPhat() {
   return <div>LapLichPhat</div>;
 }

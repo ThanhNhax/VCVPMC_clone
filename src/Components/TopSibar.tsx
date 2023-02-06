@@ -1,8 +1,6 @@
 import React from "react";
 
-type Props = {};
-
-export default function TopSibar({}: Props) {
+export default function TopSibar() {
   return (
     <div className="top_header">
       <div className="top">

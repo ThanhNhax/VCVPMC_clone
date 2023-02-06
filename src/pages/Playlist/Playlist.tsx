@@ -1,7 +1,5 @@
 import React from "react";
 
-type Props = {};
-
-export default function Playlist({}: Props) {
+export default function Playlist() {
   return <div>Playlist</div>;
 }

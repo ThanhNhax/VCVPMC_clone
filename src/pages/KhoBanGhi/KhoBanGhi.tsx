@@ -1,13 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { AppDispatch, RootState } from "../../redux/configStore";
 import { getArrKhoBanGhiFireStore } from "../../redux/khoBanGhi/khoBanghiReducer";
 
 export default function KhoBanGhi() {
+  // const [prevPages, setPrevPages] = useState<Number>(0);
+  // const [nextPages, setNextPages] = useState<Number>(0);
+  // const [newPage, setNewPage] = useState<KhoBanGhiRedux[]>([]);
   const { arrKhoBanGhi } = useSelector((state: RootState) => state.khoBanGhi);
   const dispatch: AppDispatch = useDispatch();
-  console.log({ arrKhoBanGhi });
 
   // Lấy data(kho bản ghi từ fireStore cập nhật lên redux);
 
@@ -59,6 +61,7 @@ export default function KhoBanGhi() {
       );
     });
   };
+
   return (
     <div className="khoBanGhi">
       <div className="khoBanGhi_top">

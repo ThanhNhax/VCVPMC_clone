@@ -3,9 +3,7 @@ import React from "react";
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 
-type Props = {};
-
-export default function ThongTinCoBan({}: Props) {
+export default function ThongTinCoBan() {
   const initialValues = {
     ho: "",
     ten: "",
