@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import khoBanghiReducer from "./khoBanGhi/khoBanghiReducer";
+import userReducer from "./userReducer/userReducer";
 // ...
 
 export const store = configureStore({
   reducer: {
     khoBanGhi: khoBanghiReducer,
+    user: userReducer,
   },
 });
 

@@ -5,12 +5,18 @@ import * as Yup from "yup";
 import { Checkbox } from "antd";
 import type { CheckboxChangeEvent } from "antd/es/checkbox";
 import { Link } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../FireStore/fireStore";
+import { getUser } from "../../redux/userReducer/userReducer";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../redux/configStore";
 
 interface Login {
-  userName: string | undefined;
-  password: string | undefined;
+  userName: string;
+  password: string;
 }
 export default function DangNhap() {
+  const dispatch: AppDispatch = useDispatch();
   const onChange = (e: CheckboxChangeEvent) => {
     console.log(`checked = ${e.target.checked}`);
   };
@@ -39,8 +45,22 @@ export default function DangNhap() {
           <Formik
             initialValues={initialValues}
             validationSchema={loginSchema}
-            onSubmit={(values: Login) => {
+            onSubmit={async (values: Login) => {
               console.log({ values });
+              try {
+                await signInWithEmailAndPassword(
+                  auth,
+                  values.userName,
+                  values.password
+                ).then((result) => {
+                  console.log({ result });
+                  // tạo user admin trên fireStote
+                  const actions = getUser(result.user.uid);
+                  dispatch(actions);
+                });
+              } catch (err: any) {
+                console.log(err.message);
+              }
             }}
           >
             {({ errors, touched }) => (

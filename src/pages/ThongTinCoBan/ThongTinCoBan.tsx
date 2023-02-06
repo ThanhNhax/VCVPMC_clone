@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../redux/configStore";
+import { getStoreJSON, UID_USER } from "../../util/setting";
+import { getUser } from "../../redux/userReducer/userReducer";
 
 export default function ThongTinCoBan() {
+  const dispatch: AppDispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.user);
+  //Lấy uid từ localStore lên để call user
+  let uidUserStore: string = getStoreJSON(UID_USER);
+  useEffect(() => {
+    dispatch(getUser(uidUserStore));
+  }, []);
   const initialValues = {
     ho: "",
     ten: "",
@@ -25,12 +36,14 @@ export default function ThongTinCoBan() {
       <div className="content">
         <div className="content_avatar">
           <div className="left-avatar">
-            <img src="../img/Frame_433.png" alt="Frame 433.png" />
+            <img src={user.avatar} alt="avatar.png" />
             <div className="camera">
               <i className="fas fa-camera"></i>
             </div>
           </div>
-          <p>Name</p>
+          <p>
+            {user.ten} {user.ho}
+          </p>
         </div>
         <div className="content_form">
           <div id="form_profile">
@@ -48,7 +61,7 @@ export default function ThongTinCoBan() {
                       <div className="form_title">
                         <label htmlFor="ho">Họ:</label>
                         <br />
-                        <Field type="text" name="ho" id="ho" />
+                        <Field type="text" name="ho" id="ho" value={user.ho} />
                         {errors.ho && touched.ho ? (
                           <p className="text-danger">{errors.ho}</p>
                         ) : null}
@@ -56,7 +69,12 @@ export default function ThongTinCoBan() {
                       <div className="form_title">
                         <label htmlFor="ngaySinh">Ngày sinh:</label>
                         <br />
-                        <Field type="date" name="ngaySinh" id="ngaySinh" />
+                        <Field
+                          type="text"
+                          name="ngaySinh"
+                          id="ngaySinh"
+                          value={user.ngaySinh}
+                        />
                         {errors.ngaySinh && touched.ngaySinh ? (
                           <p className="text-danger">{errors.ngaySinh}</p>
                         ) : null}
@@ -68,7 +86,12 @@ export default function ThongTinCoBan() {
                         <label htmlFor="ten">Tên:</label>
 
                         <br />
-                        <Field type="text" name="ten" id="ten" />
+                        <Field
+                          type="text"
+                          name="ten"
+                          id="ten"
+                          value={user.ten}
+                        />
                         {errors.ten && touched.ten ? (
                           <p className="text-danger">{errors.ten}</p>
                         ) : null}
@@ -76,7 +99,12 @@ export default function ThongTinCoBan() {
                       <div className="form_title">
                         <label htmlFor="sdt">Số điện thoại:</label>
                         <br />
-                        <Field type="text" name="sdt" id="sdt" />
+                        <Field
+                          type="text"
+                          name="sdt"
+                          id="sdt"
+                          value={user.sdt}
+                        />
                         {errors.sdt && touched.sdt ? (
                           <p className="text-danger">{errors.sdt}</p>
                         ) : null}
@@ -87,7 +115,12 @@ export default function ThongTinCoBan() {
                     <div className="form_title">
                       <label htmlFor="email">Email:</label>
                       <br />
-                      <Field type="email" name="email" id="email" />
+                      <Field
+                        type="email"
+                        name="email"
+                        id="email"
+                        value={user.email}
+                      />
                       {errors.email && touched.email ? (
                         <p className="text-danger">{errors.email}</p>
                       ) : null}
@@ -95,7 +128,12 @@ export default function ThongTinCoBan() {
                     <div className="form_title">
                       <label htmlFor="tenDangNhap">Tên đăng nhập:</label>
                       <br />
-                      <Field type="text" name="tenDangNhap" id="tenDangNhap" />
+                      <Field
+                        type="text"
+                        name="tenDangNhap"
+                        id="tenDangNhap"
+                        value={user.tenDangNhap}
+                      />
                       {errors.tenDangNhap && touched.tenDangNhap ? (
                         <p className="text-danger">{errors.tenDangNhap}</p>
                       ) : null}
@@ -103,7 +141,12 @@ export default function ThongTinCoBan() {
                     <div className="form_title">
                       <label htmlFor="phanQuyen">Phân quyền:</label>
                       <br />
-                      <Field type="text" name="phanQuyen" id="phanQuyen" />
+                      <Field
+                        type="text"
+                        name="phanQuyen"
+                        id="phanQuyen"
+                        value={user.phanQuyen}
+                      />
                       {errors.phanQuyen && touched.phanQuyen ? (
                         <p className="text-danger">{errors.phanQuyen}</p>
                       ) : null}

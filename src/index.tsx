@@ -1,8 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 // Cấu hình router-dom
-import { BrowserRouter } from "react-router-dom";
-import { Route, Routes } from "react-router";
+//setup router dom
+import {
+  Navigate,
+  Route,
+  Routes,
+  unstable_HistoryRouter as HistoryRouter,
+} from "react-router-dom";
+import { createBrowserHistory } from "history";
 // scss
 import "./assets/scss/Style.scss";
 // Cấu hình reudx
@@ -16,19 +22,21 @@ import KhoBanGhi from "./pages/KhoBanGhi/KhoBanGhi";
 import Playlist from "./pages/Playlist/Playlist";
 import LapLichPhat from "./pages/LapLichPhat/LapLichPhat";
 import CapNhatkhoBanGhi from "./pages/KhoBanGhi/CapNhatkhoBanGhi";
+export const history: any = createBrowserHistory();
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
-        <Routes>
+  <Provider store={store}>
+    <HistoryRouter history={history}>
+      <Routes>
+        <Route>
           <Route index element={<DangNhap />}></Route>
           <Route path="*" element={""}></Route>
-        </Routes>
+        </Route>
 
-        <Routes>
+        <Route>
           <Route path="/admin" element={<TemplateAmin />}>
             <Route index element={<KhoBanGhi />}></Route>
             <Route
@@ -42,8 +50,8 @@ root.render(
               element={<ThongTinCoBan />}
             ></Route>
           </Route>
-        </Routes>
-      </BrowserRouter>
-    </Provider>
-  </React.StrictMode>
+        </Route>
+      </Routes>
+    </HistoryRouter>
+  </Provider>
 );
