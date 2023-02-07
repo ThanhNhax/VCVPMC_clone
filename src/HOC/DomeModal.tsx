@@ -4,17 +4,14 @@ import Modal from "./Modal";
 type Props = {};
 
 export default function DomeModal({}: Props) {
-  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [isModal, setIsModal] = useState(false);
+  const toggleModal = () => {
+    setIsModal((wasModal) => !wasModal);
+  };
   return (
     <div>
-      <button
-        onClick={() => {
-          setOpenModal(true);
-        }}
-      >
-        Modal
-      </button>
-      <Modal open={openModal} onClose={setOpenModal(false)} title="sdfw" />
+      <button>Show modal</button>
+      <Modal />
     </div>
   );
 }

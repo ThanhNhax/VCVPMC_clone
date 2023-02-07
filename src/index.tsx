@@ -24,6 +24,7 @@ import LapLichPhat from "./pages/LapLichPhat/LapLichPhat";
 import CapNhatkhoBanGhi from "./pages/KhoBanGhi/CapNhatkhoBanGhi";
 import SuaThongTin from "./pages/ThongTinCoBan/SuaThongTin";
 import DomeModal from "./HOC/DomeModal";
+import ItemKhoBanGhi from "./Components/ItemKhoBanGhi";
 export const history: any = createBrowserHistory();
 
 const root = ReactDOM.createRoot(

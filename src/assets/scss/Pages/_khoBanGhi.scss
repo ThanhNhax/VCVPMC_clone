@@ -33,6 +33,7 @@
     .khoBanGhi_content {
         display: flex;
         justify-content: space-between;
+        gap: 20px;
 
         .content-title {
             .title_list {
@@ -206,6 +207,14 @@
                     }
                 }
             }
+
+            .content-card {
+                .card-list {
+                    display: grid;
+                    grid-template-columns: auto auto auto auto;
+                    gap: 10px 20px;
+                }
+            }
         }
 
         .content-quanLyPheDuyet {
@@ -241,7 +250,7 @@
                 @include text (12px, 500, #ffffff);
                 line-height: 18px;
                 opacity: 0.7;
-                letter-spacing: 0.1em;
+
             }
         }
     }

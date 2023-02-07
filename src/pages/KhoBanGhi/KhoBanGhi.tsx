@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import ItemKhoBanGhi from "../../Components/ItemKhoBanGhi";
 import { AppDispatch, RootState } from "../../redux/configStore";
-import { getArrKhoBanGhiFireStore } from "../../redux/khoBanGhi/khoBanghiReducer";
+import {
+  getArrKhoBanGhiFireStore,
+  KhoBanGhiRedux,
+} from "../../redux/khoBanGhi/khoBanghiReducer";
 
 export default function KhoBanGhi() {
   const arrKhoBanGhi = useSelector(
@@ -15,7 +19,7 @@ export default function KhoBanGhi() {
   const indexOfFirstNews = indexOfLastNews - limit;
   const totalPages = Math.ceil(arrKhoBanGhi.length / limit);
   const newArrKho = arrKhoBanGhi.slice(indexOfFirstNews, indexOfLastNews);
-
+  const [isTable, setIsTable] = useState<boolean>(true);
   useEffect(() => {
     // Lấy danh sách kho bản ghi từ fireStore về
     const action = getArrKhoBanGhiFireStore();
@@ -67,7 +71,11 @@ export default function KhoBanGhi() {
       );
     });
   };
-
+  const renderKhoBanGhiCard = () => {
+    return arrKhoBanGhi.map((item: KhoBanGhiRedux, index: number) => {
+      return <ItemKhoBanGhi item={item} />;
+    });
+  };
   return (
     <div className="khoBanGhi">
       <div className="khoBanGhi_top">
@@ -116,14 +124,30 @@ export default function KhoBanGhi() {
               </select>
             </div>
             <div className="title-item">
-              <i className="fas fa-list-ul"></i>
               <i
-                style={{ marginLeft: "5px" }}
+                style={isTable ? { color: "#FF7506" } : {}}
+                onClick={() => {
+                  setIsTable(true);
+                }}
+                className="fas fa-list-ul"
+              ></i>
+              <i
+                onClick={() => {
+                  setIsTable(false);
+                }}
+                style={
+                  !isTable
+                    ? { color: "#FF7506", marginLeft: "5px" }
+                    : { marginLeft: "5px" }
+                }
                 className="fas fa-border-all"
               ></i>
             </div>
           </div>
-          <div className="content-table">
+          <div
+            className="content-table"
+            style={isTable ? { display: "block" } : { display: "none" }}
+          >
             <table>
               <thead>
                 <tr>
@@ -180,6 +204,12 @@ export default function KhoBanGhi() {
                 >{`>`}</button>
               </div>
             </div>
+          </div>
+          <div
+            className="content-card"
+            style={!isTable ? { display: "block" } : { display: "none" }}
+          >
+            <div className="card-list">{renderKhoBanGhiCard()}</div>
           </div>
         </div>
         <div className="content-quanLyPheDuyet">
