@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { doc, getDoc } from "firebase/firestore";
+import { Auth, signOut } from "firebase/auth";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { history } from "../..";
 import { db } from "../../FireStore/fireStore";
-import { setStoreJSON, UID_USER } from "../../util/setting";
+import { clearLocalStorage, setStoreJSON, UID_USER } from "../../util/setting";
 import { AppDispatch } from "../configStore";
 export interface User {
   avatar: string;
@@ -61,7 +62,6 @@ export default userReducer.reducer;
 
 export const getUser = (uid: string) => {
   return async (dispatch: AppDispatch) => {
-    // let getUserFireStore: UserState | undefined = {};
     try {
       const docRef = doc(db, "users", uid);
       if (docRef) {
@@ -70,10 +70,8 @@ export const getUser = (uid: string) => {
         // Lưu lại user_Login
         setStoreJSON(UID_USER, uid);
         //Đưa userLogin lên redux
-
-        console.log(userFireStore);
         dispatch(setUserRedux(userFireStore));
-        //
+        // chuyển hướng trang sang pages thông tin cơ bản
         history.push("/admin/thongtincoban");
       }
     } catch (err) {
@@ -81,4 +79,45 @@ export const getUser = (uid: string) => {
       history.push("/");
     }
   };
+};
+export const getUserEdit = (uid: string) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const docRef = doc(db, "users", uid);
+      if (docRef) {
+        const doc = await getDoc(docRef);
+        const userFireStore: any = doc.data();
+        dispatch(setUserRedux(userFireStore));
+      }
+    } catch (err) {
+      console.log(err);
+      // history.push("/");
+    }
+  };
+};
+// update User
+export const updateUser = (uid: string, data: User) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const docRef: any = doc(db, "users", uid);
+      if (docRef) {
+        let doc = await updateDoc(docRef, data);
+        dispatch(getUserEdit(uid));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+// Đăng xuất
+
+export const dangXuat = (auth: Auth) => {
+  signOut(auth)
+    .then(() => {
+      clearLocalStorage(UID_USER);
+      history.push("/");
+    })
+    .catch((e) => {
+      console.log(e);
+    });
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import TopSibar from "../../Components/TopSibar";
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
@@ -20,6 +20,8 @@ export default function DangNhap() {
   const onChange = (e: CheckboxChangeEvent) => {
     console.log(`checked = ${e.target.checked}`);
   };
+
+  const [isType, setIsType] = useState(true);
 
   const initialValues: Login = {
     userName: "",
@@ -67,19 +69,43 @@ export default function DangNhap() {
               <Form>
                 <div className="form_title">
                   <label htmlFor="userName">Tên đăng nhập</label>
-                  <Field type="text" name="userName" id="userName" />
+                  <Field
+                    type="text"
+                    name="userName"
+                    id="userName"
+                    style={
+                      errors.userName && touched.userName
+                        ? { border: " 2px solid red" }
+                        : {}
+                    }
+                  />
                   {errors.userName && touched.userName ? (
-                    <p className="text-danger">{errors.userName}</p>
+                    <p className="text-error">{errors.userName}</p>
                   ) : null}
                 </div>
                 <div className="form_title">
                   <label htmlFor="password">Mật khẩu</label>
                   <div className="password">
-                    <Field type="password" name="password" id="password" />
-                    <i className="fa fa-eye"></i>
+                    <Field
+                      type={isType ? "password" : "text"}
+                      name="password"
+                      id="password"
+                      style={
+                        errors.password && touched.password
+                          ? { border: " 2px solid red" }
+                          : {}
+                      }
+                    />
+                    <i
+                      onClick={() => {
+                        setIsType(isType ? false : true);
+                      }}
+                      id={isType ? "" : "doiMau"}
+                      className="fa fa-eye"
+                    ></i>
                   </div>
                   {errors.password && touched.password ? (
-                    <p className="text-danger">{errors.password}</p>
+                    <p className="text-error">{errors.password}</p>
                   ) : null}
                 </div>
 

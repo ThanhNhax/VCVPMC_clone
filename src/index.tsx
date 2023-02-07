@@ -22,6 +22,8 @@ import KhoBanGhi from "./pages/KhoBanGhi/KhoBanGhi";
 import Playlist from "./pages/Playlist/Playlist";
 import LapLichPhat from "./pages/LapLichPhat/LapLichPhat";
 import CapNhatkhoBanGhi from "./pages/KhoBanGhi/CapNhatkhoBanGhi";
+import SuaThongTin from "./pages/ThongTinCoBan/SuaThongTin";
+import DomeModal from "./HOC/DomeModal";
 export const history: any = createBrowserHistory();
 
 const root = ReactDOM.createRoot(
@@ -33,7 +35,8 @@ root.render(
       <Routes>
         <Route>
           <Route index element={<DangNhap />}></Route>
-          <Route path="*" element={""}></Route>
+          <Route path="*" element={<Navigate to={"/"} />}></Route>
+          <Route path="/demoModal" element={<DomeModal />}></Route>
         </Route>
 
         <Route>
@@ -49,6 +52,8 @@ root.render(
               path="/admin/thongtincoban"
               element={<ThongTinCoBan />}
             ></Route>
+            <Route path="/admin/suathongtin" element={<SuaThongTin />}></Route>
+            {/* <Route path="*" element={<Navigate to={"/admin"} />}></Route> */}
           </Route>
         </Route>
       </Routes>

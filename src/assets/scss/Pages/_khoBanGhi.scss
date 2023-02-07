@@ -78,7 +78,7 @@
                 table {
                     width: 100%;
                     background: rgba(47, 47, 65, 0.7);
-                    border-radius: 16px;
+                    border-radius: 16px 16px 0 0;
                     padding: 16px 24px;
 
                     thead {
@@ -156,6 +156,52 @@
                                     left: 0;
                                 }
                             }
+                        }
+                    }
+
+
+                }
+
+                .pagination {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    background: rgba(47, 47, 65, 0.7);
+                    border-radius: 0 0 16px 16px;
+                    padding: 16px 24px;
+
+                    .pagination_left {
+                        p {
+                            @include text (14px, 400, #F5F5FF);
+
+                            select {
+                                margin: 0 5px;
+                                @include text(16px, 400, #ff7506);
+                                line-height: 24px;
+                                background: rgba(47, 47, 65, 0.7);
+                                border: 1px solid #ff7506;
+                                border-radius: 8px;
+                                padding: 5px 10px;
+
+                                option {
+                                    margin: 8px 0;
+                                    background: #3e3e5b;
+                                    border: 2px solid #1e1e2e;
+                                    @include text(16px, 400, #ffffff);
+                                    line-height: 24px;
+                                }
+                            }
+                        }
+                    }
+
+                    .pagination_right {
+                        width: 100px;
+                        display: flex;
+                        justify-content: space-evenly;
+                        align-items: center;
+
+                        p {
+                            cursor: pointer;
                         }
                     }
                 }

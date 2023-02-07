@@ -64,12 +64,22 @@
                 .password {
                     position: relative;
 
-                    i {
+
+                    .fa-eye {
                         color: #fff;
                         position: absolute;
                         top: 18px;
                         right: 25px;
                     }
+
+                    #doiMau {
+                        color: #ff7506 !important;
+                    }
+                }
+
+                .text-error {
+                    margin-top: 10px;
+                    @include text (14px, 400, red)
                 }
             }
 

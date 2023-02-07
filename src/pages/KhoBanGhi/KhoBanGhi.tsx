@@ -5,44 +5,50 @@ import { AppDispatch, RootState } from "../../redux/configStore";
 import { getArrKhoBanGhiFireStore } from "../../redux/khoBanGhi/khoBanghiReducer";
 
 export default function KhoBanGhi() {
-  // const [prevPages, setPrevPages] = useState<Number>(0);
-  // const [nextPages, setNextPages] = useState<Number>(0);
-  // const [newPage, setNewPage] = useState<KhoBanGhiRedux[]>([]);
-  const { arrKhoBanGhi } = useSelector((state: RootState) => state.khoBanGhi);
+  const arrKhoBanGhi = useSelector(
+    (state: RootState) => state.khoBanGhi.arrKhoBanGhi
+  );
   const dispatch: AppDispatch = useDispatch();
-
-  // Lấy data(kho bản ghi từ fireStore cập nhật lên redux);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [limit, setLimit] = useState<number>(6);
+  const indexOfLastNews = currentPage * limit;
+  const indexOfFirstNews = indexOfLastNews - limit;
+  const totalPages = Math.ceil(arrKhoBanGhi.length / limit);
+  const newArrKho = arrKhoBanGhi.slice(indexOfFirstNews, indexOfLastNews);
 
   useEffect(() => {
+    // Lấy danh sách kho bản ghi từ fireStore về
     const action = getArrKhoBanGhiFireStore();
     dispatch(action);
   }, []);
 
   // tạo ra danh sách kho bản ghi
   const renderKhoBanGhi = () => {
-    return arrKhoBanGhi.map((khoBanGhi, index) => {
+    return newArrKho.map((khoBanGhi, index) => {
       return (
         <tr key={index}>
           <td className="text_right">{index + 1}</td>
-          <td>{khoBanGhi.tenBanGhi}</td>
-          <td>{khoBanGhi.maISRC}</td>
-          <td className="text_right">{khoBanGhi.thoiLuong}</td>
-          <td>{khoBanGhi.caSi}</td>
-          <td>{khoBanGhi.tacGia}</td>
-          <td>{khoBanGhi.theLoai}</td>
-          <td>{khoBanGhi.dingDang}</td>
+          <td>{khoBanGhi?.tenBanGhi}</td>
+          <td>{khoBanGhi?.maISRC}</td>
+          <td className="text_right">{khoBanGhi?.thoiLuong}</td>
+          <td>{khoBanGhi?.caSi}</td>
+          <td>{khoBanGhi?.tacGia}</td>
+          <td>{khoBanGhi?.theLoai}</td>
+          <td>{khoBanGhi?.dingDang}</td>
           <td>
             <p
               className={
-                khoBanGhi.thoiHanSuDung.thoiHan
+                khoBanGhi?.thoiHanSuDung?.thoiHan
                   ? "true_thoiHan"
                   : "false_thoiHan"
               }
             >
-              {khoBanGhi.thoiHanSuDung.thoiHan ? "Còn thời hạn" : "Đã hết hạn"}{" "}
+              {khoBanGhi?.thoiHanSuDung?.thoiHan
+                ? "Còn thời hạn"
+                : "Đã hết hạn"}{" "}
             </p>
 
-            {khoBanGhi.thoiHanSuDung.thoiGian}
+            {khoBanGhi?.thoiHanSuDung?.thoiGian}
           </td>
           <td className="action">
             <Link
@@ -136,6 +142,44 @@ export default function KhoBanGhi() {
               </thead>
               <tbody>{renderKhoBanGhi()}</tbody>
             </table>
+            <div className="pagination">
+              <div className="pagination_left">
+                <p>
+                  Hiển thị
+                  <select
+                    value={limit}
+                    onChange={(e) => {
+                      setLimit(parseInt(e.target.value));
+                    }}
+                  >
+                    <option value="6">6</option>
+                    <option value="4">4</option>
+                    <option value="8">8</option>
+                  </select>
+                  hàng trong mỗi trang
+                </p>
+              </div>
+              <div className="pagination_right">
+                <button
+                  disabled={currentPage === 1}
+                  onClick={() => {
+                    if (currentPage === 1) {
+                      setCurrentPage(1);
+                    }
+                    setCurrentPage(currentPage - 1);
+                  }}
+                >{`<`}</button>
+                {/* <p>1</p>
+                <p>2</p>
+                <p>3</p> */}
+                <button
+                  disabled={currentPage >= totalPages}
+                  onClick={() => {
+                    setCurrentPage(currentPage + 1);
+                  }}
+                >{`>`}</button>
+              </div>
+            </div>
           </div>
         </div>
         <div className="content-quanLyPheDuyet">

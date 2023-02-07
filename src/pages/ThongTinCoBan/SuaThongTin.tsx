@@ -1,43 +1,59 @@
-import React, { useEffect, useState } from "react";
-
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/configStore";
-import { clearLocalStorage, getStoreJSON, UID_USER } from "../../util/setting";
-import { dangXuat, getUser } from "../../redux/userReducer/userReducer";
-import { NavLink } from "react-router-dom";
-import { signOut } from "firebase/auth";
-import { auth } from "../../FireStore/fireStore";
+import * as Yup from "yup";
+import { Field, Form, Formik, useFormik } from "formik";
+import {
+  getUserEdit,
+  updateUser,
+  User,
+} from "../../redux/userReducer/userReducer";
+import { getStoreJSON, UID_USER } from "../../util/setting";
+import { Navigate, useNavigate } from "react-router-dom";
 
-//modal
-
-import { Button, Modal } from "antd";
-
-export default function ThongTinCoBan() {
+export default function SuaThongTin() {
   const user = useSelector((state: RootState) => state.user);
+  console.log({ user });
+  //chuyển hướng trang
+  const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
-  //Lấy uid từ localStore lên để call user
+  //   Lấy uid từ localStore lên để call user
   let uidUserStore: string = getStoreJSON(UID_USER);
+  console.log({ uidUserStore });
   useEffect(() => {
-    dispatch(getUser(uidUserStore));
-  }, []);
-
-  // modal
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const showModal = () => {
-    setIsModalOpen(true);
+    dispatch(getUserEdit(uidUserStore));
+  }, [uidUserStore]);
+  const initialValues: User = {
+    avatar: "",
+    ho: "",
+    ten: "",
+    ngaySinh: "",
+    sdt: "",
+    email: "",
+    tenDangNhap: "",
+    phanQuyen: "",
+    uid: "",
   };
 
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-  // modal
+  const formik = useFormik({
+    initialValues: initialValues,
+    onSubmit(value) {
+      //handleSubmit
+      value.avatar = user.avatar;
+      value.email = user.email;
+      value.phanQuyen = user.phanQuyen;
+      value.tenDangNhap = user.tenDangNhap;
+      value.uid = uidUserStore;
+      value.ho = value.ho ? value.ho : user.ho;
+      value.sdt = value.sdt ? value.sdt : user.sdt;
+      value.ngaySinh = value.ngaySinh ? value.ngaySinh : user.ngaySinh;
+      value.ten = value.ten ? value.ten : user.ten;
+      console.log({ value });
+      dispatch(updateUser(uidUserStore, value));
+    },
+  });
   return (
-    <div className="container">
+    <div className="suaThongTin" style={{ color: "white" }}>
       <h1>Thông Tin Cơ Bản</h1>
       <div className="content">
         <div className="content_avatar">
@@ -53,7 +69,7 @@ export default function ThongTinCoBan() {
         </div>
         <div className="content_form">
           <div id="form_profile">
-            <form>
+            <form onSubmit={formik.handleSubmit}>
               <div className="form_profile-top">
                 <div>
                   <div className="form_title">
@@ -63,19 +79,19 @@ export default function ThongTinCoBan() {
                       type="text"
                       name="ho"
                       id="ho"
-                      value={user.ho}
-                      readOnly
+                      defaultValue={user.ho}
+                      onChange={formik.handleChange}
                     />
                   </div>
                   <div className="form_title">
                     <label htmlFor="ngaySinh">Ngày sinh:</label>
                     <br />
                     <input
-                      type="text"
+                      type="date"
                       name="ngaySinh"
                       id="ngaySinh"
-                      value={user.ngaySinh}
-                      readOnly
+                      defaultValue={user.ngaySinh}
+                      onChange={formik.handleChange}
                     />
                   </div>
                 </div>
@@ -89,8 +105,8 @@ export default function ThongTinCoBan() {
                       type="text"
                       name="ten"
                       id="ten"
-                      value={user.ten}
-                      readOnly
+                      defaultValue={user.ten}
+                      onChange={formik.handleChange}
                     />
                   </div>
                   <div className="form_title">
@@ -100,8 +116,8 @@ export default function ThongTinCoBan() {
                       type="text"
                       name="sdt"
                       id="sdt"
-                      value={user.sdt}
-                      readOnly
+                      defaultValue={user.sdt}
+                      onChange={formik.handleChange}
                     />
                   </div>
                 </div>
@@ -141,57 +157,20 @@ export default function ThongTinCoBan() {
                   />
                 </div>
               </div>
+              <div className="form_bottom">
+                <button
+                  onClick={() => {
+                    navigate("/admin/thongtincoban");
+                  }}
+                  type="button"
+                >
+                  Hủy
+                </button>
+                <button type="submit">Lưu</button>
+              </div>
             </form>
           </div>
         </div>
-        <div className="menu">
-          <NavLink to={"/admin/suathongtin"} className="menu_icon">
-            <div className="icon-bg">
-              <i className="fas fa-edit"></i>
-            </div>
-            <p>Sửa thông tin</p>
-          </NavLink>
-          <div className="menu_icon">
-            <div className="icon-bg" onClick={showModal}>
-              <i className="fas fa-lock"></i>
-            </div>
-            <p>Đổi mật khẩu</p>
-          </div>
-          <div
-            className="menu_icon"
-            onClick={() => {
-              console.log("Đăng xuất");
-              dangXuat(auth);
-            }}
-          >
-            <div className="icon-bg">
-              <i className="fas fa-sign-out-alt"></i>
-            </div>
-            <p>Đăng xuất</p>
-          </div>
-        </div>
-      </div>
-      <div>
-        <Modal
-          open={isModalOpen}
-          onOk={handleOk}
-          onCancel={handleCancel}
-          footer={null}
-          // bodyStyle={{ background: "red" }}
-        >
-          <div>
-            <label htmlFor="passwordHienTai">Mật khẩu hiện tại:</label>
-            <input type="password" id="passwordHienTai" />
-          </div>
-          <div>
-            <label htmlFor="passwordMoi">Mật khẩu mới:</label>
-            <input type="password" id="passwordMoi" />
-          </div>
-          <div>
-            <label htmlFor="passwordNhapLai">Nhập lại mật khẩu hiện tại:</label>
-            <input type="password" id="passwordNhapLai" />
-          </div>
-        </Modal>
       </div>
     </div>
   );
