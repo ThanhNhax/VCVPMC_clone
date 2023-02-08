@@ -10,7 +10,7 @@ import { auth } from "../../FireStore/fireStore";
 
 //modal
 
-import { Button, Modal } from "antd";
+import { Modal } from "antd";
 
 export default function ThongTinCoBan() {
   const user = useSelector((state: RootState) => state.user);
@@ -144,31 +144,31 @@ export default function ThongTinCoBan() {
             </form>
           </div>
         </div>
-        <div className="menu">
-          <NavLink to={"/admin/suathongtin"} className="menu_icon">
-            <div className="icon-bg">
-              <i className="fas fa-edit"></i>
-            </div>
-            <p>Sửa thông tin</p>
-          </NavLink>
-          <div className="menu_icon">
-            <div className="icon-bg" onClick={showModal}>
-              <i className="fas fa-lock"></i>
-            </div>
-            <p>Đổi mật khẩu</p>
+      </div>
+      <div className="menu">
+        <NavLink to={"/admin/suathongtin"} className="menu_icon">
+          <div className="icon-bg">
+            <i className="fas fa-edit"></i>
           </div>
-          <div
-            className="menu_icon"
-            onClick={() => {
-              console.log("Đăng xuất");
-              dangXuat(auth);
-            }}
-          >
-            <div className="icon-bg">
-              <i className="fas fa-sign-out-alt"></i>
-            </div>
-            <p>Đăng xuất</p>
+          <p>Sửa thông tin</p>
+        </NavLink>
+        <div className="menu_icon">
+          <div className="icon-bg" onClick={showModal}>
+            <i className="fas fa-lock"></i>
           </div>
+          <p>Đổi mật khẩu</p>
+        </div>
+        <div
+          className="menu_icon"
+          onClick={() => {
+            console.log("Đăng xuất");
+            dangXuat(auth);
+          }}
+        >
+          <div className="icon-bg">
+            <i className="fas fa-sign-out-alt"></i>
+          </div>
+          <p>Đăng xuất</p>
         </div>
       </div>
       <div>

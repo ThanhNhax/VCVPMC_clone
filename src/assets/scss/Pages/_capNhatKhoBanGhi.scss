@@ -1,0 +1,138 @@
+.capNhatKhoBanGhi {
+    padding: 20px 40px;
+
+    .capNhatKhoBanGhi_title {
+        p {
+            @include text (16px, 600, #F5F5FF);
+
+            i {
+                margin: 0 13px;
+                color: #FFAC69;
+            }
+        }
+
+        h3 {
+            @include text(36px, 700, #ffffff);
+        }
+    }
+
+    .capNhatKhoBanGhi_content {
+        display: flex;
+        margin-top: 24px;
+
+        .content_left {
+
+
+            .content_left-top {
+                background: #2B2B3F;
+                border-radius: 8px;
+                width: 570px;
+                padding: 16px 24px;
+
+                .thongTin {
+                    h5 {
+                        text-align: center;
+                        @include text(24px, 700, #FF7506)
+                    }
+
+                    .avatar {
+                        position: relative;
+                        width: 130px;
+                        height: 130px;
+                        margin: 20px auto;
+
+                        img {
+                            width: 100%;
+                        }
+
+                        .camera {
+                            width: 40px;
+                            height: 40px;
+                            background: #347AFF;
+                            border-radius: 50%;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            position: absolute;
+                            bottom: 0;
+                            right: 0;
+
+                            i {
+                                color: #F5F5FF;
+                                font-size: 22px;
+                            }
+                        }
+                    }
+
+
+                    .music {
+                        text-align: center;
+
+                        i {
+                            color: #18E306;
+                            margin-right: 10px
+                        }
+
+                        span {
+                            opacity: 0.7;
+                            @include text(16px, 400, #ffffff);
+                        }
+                    }
+                }
+
+                .table_thongTin {
+                    .table_item {
+                        display: flex;
+                        justify-content: space-between;
+                        margin-top: 16px;
+
+                        p:nth-child(1) {
+                            @include text(16px, 700, #ffffff)
+                        }
+
+                        p:nth-child(2) {
+                            text-align: right;
+                            opacity: 0.7;
+                            @include text(16px, 400, #ffffff)
+                        }
+                    }
+                }
+            }
+        }
+
+        .content_right {
+            width: 743px;
+            height: 757px;
+
+            h5 {}
+
+            form {
+                .form_profile-top {
+                    div {
+                        .form_title {
+                            label {}
+
+                            input {}
+                        }
+                    }
+
+                    div {
+                        .form_title {
+                            label {}
+
+                            input {}
+                        }
+                    }
+                }
+            }
+
+            .xoaBanGhi {
+                .icon {
+                    i {}
+                }
+
+                p {}
+            }
+        }
+    }
+}

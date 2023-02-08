@@ -31,14 +31,14 @@ export default function CapNhatkhoBanGhi() {
           <div className="content_left-top">
             <div className="thongTin">
               <h5>Thông tin bản ghi</h5>
-              <div className="img">
+              <div className="avatar">
                 <img src="../../img/Frame_433.png" alt="Frame 433.png" />
                 <div className="camera">
                   <i className="fas fa-camera"></i>
                 </div>
               </div>
-              <div>
-                <i className="far fa-file-music"></i>
+              <div className="music">
+                <i className="fas fa-music"></i>
                 <span>Name.mp3</span>
               </div>
             </div>
@@ -53,8 +53,10 @@ export default function CapNhatkhoBanGhi() {
               </div>
               <div className="table_item">
                 <p>Người duyệt: </p>
-                <p>Hệ thống</p>
-                <p>(Tự động phê duyệt)</p>
+                <p>
+                  Hệ thống <br />
+                  (Tự động phê duyệt)
+                </p>
               </div>
               <div className="table_item">
                 <p>Ngày phê duyệt: </p>
@@ -63,7 +65,9 @@ export default function CapNhatkhoBanGhi() {
             </div>
           </div>
           <div className="content_left-bottom">
-            <h5>Thông tin ủy quyền</h5>
+            <div className="thongTin">
+              <h5>Thông tin ủy quyền</h5>
+            </div>
             <div className="table_thongTin">
               <div className="table_item">
                 <p>Số hợp đồng: </p>

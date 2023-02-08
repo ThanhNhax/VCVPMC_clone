@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { JsxElement } from "typescript";
 import ItemKhoBanGhi from "../../Components/ItemKhoBanGhi";
 import { AppDispatch, RootState } from "../../redux/configStore";
 import {
@@ -13,13 +14,15 @@ export default function KhoBanGhi() {
     (state: RootState) => state.khoBanGhi.arrKhoBanGhi
   );
   const dispatch: AppDispatch = useDispatch();
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [limit, setLimit] = useState<number>(6);
-  const indexOfLastNews = currentPage * limit;
-  const indexOfFirstNews = indexOfLastNews - limit;
-  const totalPages = Math.ceil(arrKhoBanGhi.length / limit);
+  const [currentPage, setCurrentPage] = useState<number>(1); // Vị trí page hiện tại
+  const [limit, setLimit] = useState<number>(12); // change số item hiển thị
+  const indexOfLastNews = currentPage * limit; // vị trí cuối
+  const indexOfFirstNews = indexOfLastNews - limit; // Vị trí đầu
+  const totalPages = Math.ceil(arrKhoBanGhi.length / limit); // Tính số tổng số pages
   const newArrKho = arrKhoBanGhi.slice(indexOfFirstNews, indexOfLastNews);
-  const [isTable, setIsTable] = useState<boolean>(true);
+  const [isTable, setIsTable] = useState<boolean>(true); // hiển thị dưới dạng table hoặc dạng card
+  const [isStyleBtn, setIsStyleBtn] = useState<boolean>(false);
+  console.log(isStyleBtn);
   useEffect(() => {
     // Lấy danh sách kho bản ghi từ fireStore về
     const action = getArrKhoBanGhiFireStore();
@@ -72,10 +75,25 @@ export default function KhoBanGhi() {
     });
   };
   const renderKhoBanGhiCard = () => {
-    return arrKhoBanGhi.map((item: KhoBanGhiRedux, index: number) => {
-      return <ItemKhoBanGhi item={item} />;
+    return newArrKho.map((item: KhoBanGhiRedux, index: number) => {
+      return <ItemKhoBanGhi item={item} key={index} />;
     });
   };
+  const handleClick = () => {
+    setIsStyleBtn(true);
+  };
+  const renderButtonPage = (n: number) => {
+    let btn: any = "";
+    for (let i = 0; i < n; i++) {
+      btn += `<button
+          className=${isStyleBtn ? "btn-item-active btn-item" : "btn-item"}
+          >
+          ${i + 1}
+        </button>`;
+    }
+    return { __html: btn };
+  };
+
   return (
     <div className="khoBanGhi">
       <div className="khoBanGhi_top">
@@ -128,12 +146,16 @@ export default function KhoBanGhi() {
                 style={isTable ? { color: "#FF7506" } : {}}
                 onClick={() => {
                   setIsTable(true);
+                  setLimit(8);
+                  setCurrentPage(1);
                 }}
                 className="fas fa-list-ul"
               ></i>
               <i
                 onClick={() => {
                   setIsTable(false);
+                  setLimit(8);
+                  setCurrentPage(1);
                 }}
                 style={
                   !isTable
@@ -144,28 +166,36 @@ export default function KhoBanGhi() {
               ></i>
             </div>
           </div>
-          <div
-            className="content-table"
-            style={isTable ? { display: "block" } : { display: "none" }}
-          >
-            <table>
-              <thead>
-                <tr>
-                  <th className="text_right">STT</th>
-                  <th>Tên bản ghi</th>
-                  <th>Mã ISRC</th>
-                  <th>Thời lượng</th>
-                  <th>Ca sĩ</th>
-                  <th>Tác giả</th>
-                  <th>Thể loại</th>
-                  <th>Định dạng</th>
-                  <th>Thời hạn sử dụng</th>
-                  <th></th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>{renderKhoBanGhi()}</tbody>
-            </table>
+          <div className="content-render">
+            <div
+              className="content-table"
+              style={isTable ? { display: "block" } : { display: "none" }}
+            >
+              <table>
+                <thead>
+                  <tr>
+                    <th className="text_right">STT</th>
+                    <th>Tên bản ghi</th>
+                    <th>Mã ISRC</th>
+                    <th>Thời lượng</th>
+                    <th>Ca sĩ</th>
+                    <th>Tác giả</th>
+                    <th>Thể loại</th>
+                    <th>Định dạng</th>
+                    <th>Thời hạn sử dụng</th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>{renderKhoBanGhi()}</tbody>
+              </table>
+            </div>
+            <div
+              className="content-card"
+              style={!isTable ? { display: "block" } : { display: "none" }}
+            >
+              <div className="card-list">{renderKhoBanGhiCard()}</div>
+            </div>
             <div className="pagination">
               <div className="pagination_left">
                 <p>
@@ -176,8 +206,8 @@ export default function KhoBanGhi() {
                       setLimit(parseInt(e.target.value));
                     }}
                   >
+                    <option value="12">12</option>
                     <option value="6">6</option>
-                    <option value="4">4</option>
                     <option value="8">8</option>
                   </select>
                   hàng trong mỗi trang
@@ -193,9 +223,10 @@ export default function KhoBanGhi() {
                     setCurrentPage(currentPage - 1);
                   }}
                 >{`<`}</button>
-                {/* <p>1</p>
-                <p>2</p>
-                <p>3</p> */}
+                <div
+                  id="btnPage"
+                  dangerouslySetInnerHTML={renderButtonPage(totalPages)}
+                ></div>
                 <button
                   disabled={currentPage >= totalPages}
                   onClick={() => {
@@ -204,12 +235,6 @@ export default function KhoBanGhi() {
                 >{`>`}</button>
               </div>
             </div>
-          </div>
-          <div
-            className="content-card"
-            style={!isTable ? { display: "block" } : { display: "none" }}
-          >
-            <div className="card-list">{renderKhoBanGhiCard()}</div>
           </div>
         </div>
         <div className="content-quanLyPheDuyet">

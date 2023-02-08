@@ -34,8 +34,11 @@
         display: flex;
         justify-content: space-between;
         gap: 20px;
+        height: 100vh;
 
         .content-title {
+            height: 100%;
+
             .title_list {
                 display: flex;
                 justify-content: space-between;
@@ -75,92 +78,110 @@
                 }
             }
 
-            .content-table {
-                table {
-                    width: 100%;
-                    background: rgba(47, 47, 65, 0.7);
-                    border-radius: 16px 16px 0 0;
-                    padding: 16px 24px;
+            .content-render {
+                .content-table {
+                    table {
+                        width: 100%;
+                        background: rgba(47, 47, 65, 0.7);
+                        border-radius: 16px 16px 0 0;
+                        padding: 16px 24px;
 
-                    thead {
-                        tr {
-                            .stt {
-                                text-align: right;
-                            }
+                        thead {
+                            tr {
 
-                            th {
-                                @include text(12px, 700, #ffac69);
-                                line-height: 20px;
-                                margin: 0 10px;
-                                text-align: left;
-                                padding: 0 10px;
+                                .stt {
+                                    text-align: right;
+                                }
 
-                            }
-                        }
-                    }
-
-                    tbody {
-                        tr {
-
-                            td {
-                                text-align: left;
-                                margin: 0 10px;
-                                padding: 0 10px;
-                                @include text(12px, 400, #FFFFFF);
-                                line-height: 20px;
-                            }
-
-                            .text_right {
-                                text-align: right;
-                            }
-
-                            .action {
-
-
-                                a {
-                                    @include text(12px, 600, #FF7506);
+                                th {
+                                    @include text(12px, 700, #ffac69);
                                     line-height: 20px;
+                                    margin: 0 10px;
+                                    text-align: left;
+                                    padding: 0 10px;
+
                                 }
                             }
+                        }
 
-                            .true_thoiHan {
+                        tbody {
+                            tr {
+                                border: 1px solid red;
 
-                                position: relative;
-                                padding-left: 10px;
+                                td {
+                                    border-bottom: 1px solid #727288;
+                                    text-align: left;
+                                    margin: 0 10px;
+                                    padding: 0 10px;
+                                    @include text(12px, 400, #FFFFFF);
+                                    line-height: 20px;
 
-                                &::before {
-                                    content: "";
-                                    position: absolute;
-                                    display: block;
-                                    width: 8px;
-                                    height: 8px;
-                                    border-radius: 50%;
-                                    background-color: blue;
-                                    top: 5px;
-                                    left: 0;
+
                                 }
-                            }
 
-                            .false_thoiHan {
-                                position: relative;
-                                padding-left: 10px;
 
-                                &::before {
-                                    content: "";
-                                    position: absolute;
-                                    display: block;
-                                    width: 8px;
-                                    height: 8px;
-                                    border-radius: 50%;
-                                    background-color: #878890;
-                                    top: 5px;
-                                    left: 0;
+
+
+                                .text_right {
+                                    text-align: right;
+                                }
+
+                                .action {
+
+
+                                    a {
+                                        @include text(12px, 600, #FF7506);
+                                        line-height: 20px;
+                                    }
+                                }
+
+                                .true_thoiHan {
+
+                                    position: relative;
+                                    padding-left: 10px;
+
+                                    &::before {
+                                        content: "";
+                                        position: absolute;
+                                        display: block;
+                                        width: 8px;
+                                        height: 8px;
+                                        border-radius: 50%;
+                                        background-color: blue;
+                                        top: 5px;
+                                        left: 0;
+                                    }
+                                }
+
+                                .false_thoiHan {
+                                    position: relative;
+                                    padding-left: 10px;
+
+                                    &::before {
+                                        content: "";
+                                        position: absolute;
+                                        display: block;
+                                        width: 8px;
+                                        height: 8px;
+                                        border-radius: 50%;
+                                        background-color: #878890;
+                                        top: 5px;
+                                        left: 0;
+                                    }
                                 }
                             }
                         }
                     }
+                }
 
+                .content-card {
+                    height: 100%;
 
+                    .card-list {
+                        display: grid;
+                        grid-template-columns: auto auto auto auto;
+                        gap: 10px 20px;
+                    }
                 }
 
                 .pagination {
@@ -199,22 +220,50 @@
                         width: 100px;
                         display: flex;
                         justify-content: space-evenly;
+                        gap: 5px;
                         align-items: center;
 
-                        p {
-                            cursor: pointer;
+                        #btnPage {
+                            display: flex;
+                            gap: 5px;
+
+                            button {
+                                width: 26px;
+                                height: 26px;
+                                @include button (14px, 500, #FFF9F4, rgba(47, 47, 65, 0.7), 1px solid rgba(47, 47, 65, 0.7), 0, 50%, rgba(255, 117, 6, 1), #FFF9F4);
+                                margin: auto;
+
+                                &:disabled {
+                                    background: rgba(#000000, 0);
+                                    color: #878890;
+
+                                }
+
+
+
+                            }
+                        }
+
+                        button {
+                            &:disabled {
+                                background: rgba(#000000, 0);
+                                color: #878890;
+
+                                &:hover {
+                                    background: rgba(#000000, 0);
+                                    color: #878890;
+                                }
+                            }
+
+
+                            @include button (14px, 500, #FFF9F4, rgba(47, 47, 65, 0.7), 1px solid rgba(47, 47, 65, 0.7), 0, 50%,
+                                rgba(47, 47, 65, 0.7), #ff7506);
+                            margin: auto
                         }
                     }
                 }
             }
 
-            .content-card {
-                .card-list {
-                    display: grid;
-                    grid-template-columns: auto auto auto auto;
-                    gap: 10px 20px;
-                }
-            }
         }
 
         .content-quanLyPheDuyet {
