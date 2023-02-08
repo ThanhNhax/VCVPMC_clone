@@ -1,0 +1,91 @@
+.quenMatKhau {
+    background: #1e1e2e;
+    color: #ffffff;
+    // width: 1920px;
+    // height: 1080px;
+
+    .quenMatKhau--header {
+        padding-right: 80px;
+        padding-top: 24px;
+        background: #1e1e2e;
+        color: #ffffff;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .quenMatKhau_content {
+        margin: 62px auto 0px;
+        width: 600px;
+
+        .logo {
+            margin: auto;
+            width: 240px;
+            height: 240px;
+            background: #ffffff;
+            border-radius: 50%;
+
+        }
+
+        .content_quenMatKhau {
+            h1 {
+                text-align: center;
+                @include text(24px, 700, #ffffff);
+                margin-top: 50px;
+                margin-bottom: 16px;
+            }
+
+            p {
+                text-align: center;
+                @include text(16px, 400, #ffffff);
+                margin-bottom: 32px;
+            }
+
+            .form_email {
+                label {
+                    text-align: left;
+                    @include text(16px, 600, #ffffff);
+                }
+
+                input {
+                    margin-top: 8px;
+                    margin-bottom: 54px;
+                    padding: 11px 24px 13px 16px;
+
+                    width: 598px;
+                    height: 48px;
+
+                    /* Background/BG_Lighter */
+
+                    background: #2B2B3F;
+                    /* Text & stroke/Text and stroke 2 */
+
+                    border: 1px solid #727288;
+                    border-radius: 8px;
+
+                    &:focus {
+                        outline: none;
+                        border: 2px solid #347aff;
+                    }
+                }
+            }
+
+            .form_button {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                button {
+                    margin-bottom: 54px;
+                    @include button (18px, 500, #ffffff, #FF7506, 16px 24px, 1px solid #FF7506, 8px, #1e1e2e, #ff7506)
+                }
+            }
+
+
+            a {
+                color: #FF7506;
+                margin-bottom: 54px;
+            }
+
+        }
+    }
+}

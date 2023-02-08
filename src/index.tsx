@@ -24,7 +24,7 @@ import LapLichPhat from "./pages/LapLichPhat/LapLichPhat";
 import CapNhatkhoBanGhi from "./pages/KhoBanGhi/CapNhatkhoBanGhi";
 import SuaThongTin from "./pages/ThongTinCoBan/SuaThongTin";
 import DomeModal from "./HOC/DomeModal";
-import ItemKhoBanGhi from "./Components/ItemKhoBanGhi";
+import QuenMatKhau from "./pages/DangNhap/QuenMatKhau";
 export const history: any = createBrowserHistory();
 
 const root = ReactDOM.createRoot(
@@ -38,6 +38,7 @@ root.render(
           <Route index element={<DangNhap />}></Route>
           <Route path="*" element={<Navigate to={"/"} />}></Route>
           <Route path="/demoModal" element={<DomeModal />}></Route>
+          <Route path="/quenMatKhau" element={<QuenMatKhau />}></Route>
         </Route>
 
         <Route>

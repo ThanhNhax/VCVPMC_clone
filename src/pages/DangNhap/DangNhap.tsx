@@ -131,7 +131,7 @@ export default function DangNhap() {
             )}
           </Formik>
           <div className="form_footer">
-            <Link to="#">Quên mật khẩu?</Link>
+            <Link to="/quenMatKhau">Quên mật khẩu?</Link>
           </div>
         </div>
       </div>
