@@ -1,0 +1,44 @@
+.content-linkError {
+
+
+    h5 {
+        text-align: center;
+        margin-top: 40px;
+        @include text(36px, 700, #FF4747);
+        line-height: 48px;
+    }
+
+    p {
+        @include text(16px, 400, #ffffff);
+        line-height: 24px;
+    }
+
+    .linkError-btn {
+        display: flex;
+        justify-content: center;
+
+        button {
+            margin: 48px 60px;
+            @include button(24px,
+                400,
+                #fff,
+                #ff7506,
+                16px 24px,
+                1px solid #ff7506,
+                8px,
+                #1e1e2e,
+                #ff7506);
+        }
+    }
+
+    .link_dangNhap {
+        text-align: center;
+
+        a {
+            color: #ff7506;
+            margin-bottom: 51px;
+            text-decoration: underline;
+        }
+    }
+
+}

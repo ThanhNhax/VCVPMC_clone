@@ -17,6 +17,9 @@ export default function ThongTinCoBan() {
   const dispatch: AppDispatch = useDispatch();
   //Lấy uid từ localStore lên để call user
   let uidUserStore: string = getStoreJSON(UID_USER);
+
+  const [isType, setIsType] = useState<boolean>(true);
+
   useEffect(() => {
     dispatch(getUser(uidUserStore));
   }, []);
@@ -171,28 +174,72 @@ export default function ThongTinCoBan() {
           <p>Đăng xuất</p>
         </div>
       </div>
-      <div>
-        <Modal
-          open={isModalOpen}
-          onOk={handleOk}
-          onCancel={handleCancel}
-          footer={null}
-          // bodyStyle={{ background: "red" }}
-        >
-          <div>
+
+      <Modal
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        footer={null}
+        wrapClassName="modal_doiMatKhau"
+      >
+        <form>
+          <h5>Thay đổi mật khẩu</h5>
+          <div className="form-title">
             <label htmlFor="passwordHienTai">Mật khẩu hiện tại:</label>
-            <input type="password" id="passwordHienTai" />
+            <div className="password">
+              <input type="password" id="passwordHienTai" />
+              <i
+                onClick={() => {
+                  setIsType(isType ? false : true);
+                }}
+                id={isType ? "" : "doiMau"}
+                className="fa fa-eye"
+              ></i>
+            </div>
           </div>
-          <div>
+          <div className="form-title">
             <label htmlFor="passwordMoi">Mật khẩu mới:</label>
-            <input type="password" id="passwordMoi" />
+            <div className="password">
+              <input type="password" id="passwordMoi" />
+              <i
+                onClick={() => {
+                  setIsType(isType ? false : true);
+                }}
+                id={isType ? "" : "doiMau"}
+                className="fa fa-eye"
+              ></i>
+            </div>
           </div>
-          <div>
+          <div className="form-title">
             <label htmlFor="passwordNhapLai">Nhập lại mật khẩu hiện tại:</label>
-            <input type="password" id="passwordNhapLai" />
+            <div className="password">
+              <input type="password" id="passwordNhapLai" />
+
+              <i
+                onClick={() => {
+                  setIsType(isType ? false : true);
+                }}
+                id={isType ? "" : "doiMau"}
+                className="fa fa-eye"
+              ></i>
+            </div>
           </div>
-        </Modal>
-      </div>
+          <div className="form-btn">
+            <button type="button" onClick={() => setIsModalOpen(false)}>
+              Hủy
+            </button>
+            <button
+              type="submit"
+              onClick={(e) => {
+                e.preventDefault();
+                setIsModalOpen(false);
+              }}
+            >
+              Lưu
+            </button>
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 }

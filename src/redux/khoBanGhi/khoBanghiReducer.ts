@@ -14,21 +14,38 @@ export interface KhoBanGhiRedux {
   caSi: string;
   tacGia: string;
   theLoai: string;
-  dingDang: string;
+  dinhDang: string;
+  nhaSanXuat: string;
   thoiHanSuDung: ThoiHanSuDung;
 }
 export interface KhoBanGhiState {
+  itemKhoBanGhi: KhoBanGhiRedux;
   arrKhoBanGhi: KhoBanGhiRedux[];
 }
 const initialState: KhoBanGhiState = {
+  itemKhoBanGhi: {
+    nhaSanXuat: "",
+    dinhDang: "",
+    tacGia: "",
+    tenBanGhi: "",
+    maISRC: "",
+    caSi: "",
+    theLoai: "",
+    thoiLuong: "",
+    thoiHanSuDung: {
+      thoiGian: "",
+      thoiHan: false,
+    },
+  },
   arrKhoBanGhi: [
     {
       tenBanGhi: "Mắt em",
+      nhaSanXuat: "",
       maISRC: "sdsfwefdsf",
       caSi: "Phan Mạnh Quỳnh",
       tacGia: "Phan Mạnh Quỳnh",
       theLoai: "EDM",
-      dingDang: "Audio",
+      dinhDang: "Audio",
       thoiLuong: "04:17",
       thoiHanSuDung: {
         thoiGian: "2023-09-24",
@@ -48,10 +65,17 @@ const khoBanghiReducer = createSlice({
     ) => {
       state.arrKhoBanGhi = action.payload;
     },
+    setItemKhoBanGhi: (
+      state: KhoBanGhiState,
+      action: PayloadAction<KhoBanGhiRedux>
+    ) => {
+      console.log(action.payload);
+      state.itemKhoBanGhi = action.payload;
+    },
   },
 });
 
-export const { setArrKhoBanGhi } = khoBanghiReducer.actions;
+export const { setArrKhoBanGhi, setItemKhoBanGhi } = khoBanghiReducer.actions;
 
 export default khoBanghiReducer.reducer;
 

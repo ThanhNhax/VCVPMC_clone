@@ -1,19 +1,22 @@
 .khoBanGhi {
     margin-left: 40px;
+    height: 90%;
 
     .khoBanGhi_top {
+        height: 10%;
+
         h1 {
-            @include text(36px, 700, #ffffff);
-            line-height: 48px;
+            @include text(24px, 700, #ffffff);
         }
 
         .khoBanGhi_search {
             #input_search {
                 position: relative;
+                width: 35%;
 
                 input {
-                    width: 517px;
-                    height: 48px;
+                    width: 100%;
+                    height: 36px;
                     background: #2b2b3f;
                     border-radius: 8px;
                     border: 2px solid #1e1e2e;
@@ -21,10 +24,10 @@
 
                 i {
                     color: #f5f5ff;
-                    font-size: 24px;
+                    font-size: 18px;
                     position: absolute;
-                    bottom: 11px;
-                    left: 475px;
+                    bottom: 8px;
+                    right: 15px;
                 }
             }
         }
@@ -34,28 +37,31 @@
         display: flex;
         justify-content: space-between;
         gap: 20px;
-        height: 100vh;
+        height: 90%;
+        width: 100%;
 
         .content-title {
-            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 90%;
 
             .title_list {
+                height: 10%;
                 display: flex;
                 justify-content: space-between;
-                margin: 20px 0;
+                align-items: center;
 
                 .title-item {
                     margin-right: 20px;
 
                     label {
                         @include text(16px, 600, #ffffff);
-                        line-height: 24px;
                         margin-right: 5px;
                     }
 
                     select {
                         @include text(16px, 400, #ff7506);
-                        line-height: 24px;
                         background: #1e1e2e;
                         border: 1px solid #ff7506;
                         border-radius: 8px;
@@ -66,7 +72,6 @@
                             background: #3e3e5b;
                             border: 2px solid #1e1e2e;
                             @include text(16px, 400, #ffffff);
-                            line-height: 24px;
                         }
                     }
 
@@ -79,95 +84,180 @@
             }
 
             .content-render {
+                height: 90%;
+
+
                 .content-table {
-                    table {
-                        width: 100%;
-                        background: rgba(47, 47, 65, 0.7);
-                        border-radius: 16px 16px 0 0;
-                        padding: 16px 24px;
+                    height: 100%;
 
-                        thead {
-                            tr {
 
-                                .stt {
-                                    text-align: right;
+                    .content-table-wrap {
+                        height: 100%;
+                        padding-bottom: 20px;
+
+                        table {
+                            width: 100%;
+                            height: 85%;
+                            background: rgba(47, 47, 65, 0.7);
+                            border-radius: 16px 16px 0 0;
+                            padding: 16px 24px;
+
+                            thead {
+                                tr {
+
+                                    .stt {
+                                        text-align: right;
+                                    }
+
+                                    th {
+                                        @include text(12px, 700, #ffac69);
+                                        margin: 0 10px;
+                                        text-align: left;
+                                        padding: 0 10px;
+
+                                    }
                                 }
+                            }
 
-                                th {
-                                    @include text(12px, 700, #ffac69);
-                                    line-height: 20px;
-                                    margin: 0 10px;
-                                    text-align: left;
-                                    padding: 0 10px;
+                            tbody {
+                                tr {
+                                    border: 1px solid red;
 
+                                    td {
+                                        border-bottom: 1px solid #727288;
+                                        text-align: left;
+                                        margin: 0 10px;
+                                        padding: 0 10px;
+                                        @include text(12px, 400, #FFFFFF);
+
+
+                                    }
+
+
+
+
+                                    .text_right {
+                                        text-align: right;
+                                    }
+
+                                    .action {
+
+
+                                        a {
+                                            @include text(12px, 600, #FF7506);
+                                        }
+                                    }
+
+                                    .true_thoiHan {
+
+                                        position: relative;
+                                        padding-left: 10px;
+
+                                        &::before {
+                                            content: "";
+                                            position: absolute;
+                                            display: block;
+                                            width: 8px;
+                                            height: 8px;
+                                            border-radius: 50%;
+                                            background-color: blue;
+                                            top: 5px;
+                                            left: 0;
+                                        }
+                                    }
+
+                                    .false_thoiHan {
+                                        position: relative;
+                                        padding-left: 10px;
+
+                                        &::before {
+                                            content: "";
+                                            position: absolute;
+                                            display: block;
+                                            width: 8px;
+                                            height: 8px;
+                                            border-radius: 50%;
+                                            background-color: #878890;
+                                            top: 5px;
+                                            left: 0;
+                                        }
+                                    }
                                 }
                             }
                         }
 
-                        tbody {
-                            tr {
-                                border: 1px solid red;
+                        .pagination-table {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            background: rgba(47, 47, 65, 0.7);
+                            border-radius: 0 0 16px 16px;
+                            padding: 0 24px;
+                            height: 15%;
 
-                                td {
-                                    border-bottom: 1px solid #727288;
-                                    text-align: left;
-                                    margin: 0 10px;
-                                    padding: 0 10px;
-                                    @include text(12px, 400, #FFFFFF);
-                                    line-height: 20px;
+                            .pagination_left {
+                                p {
+                                    @include text (14px, 400, #F5F5FF);
 
+                                    select {
+                                        margin: 0 5px;
+                                        @include text(16px, 400, #ff7506);
+                                        background: rgba(47, 47, 65, 0.7);
+                                        border: 1px solid #ff7506;
+                                        border-radius: 8px;
+                                        padding: 5px 10px;
 
+                                        option {
+                                            margin: 8px 0;
+                                            background: #3e3e5b;
+                                            border: 2px solid #1e1e2e;
+                                            @include text(16px, 400, #ffffff);
+
+                                        }
+                                    }
                                 }
+                            }
 
+                            .pagination_right {
+                                width: 100px;
+                                display: flex;
+                                justify-content: space-evenly;
+                                gap: 5px;
+                                align-items: center;
 
+                                #btnPage {
+                                    display: flex;
+                                    gap: 5px;
 
+                                    button {
+                                        width: 26px;
+                                        height: 26px;
+                                        @include button (14px, 500, #FFF9F4, rgba(47, 47, 65, 0.7), 1px solid rgba(47, 47, 65, 0.7), 0, 50%, rgba(255, 117, 6, 1), #FFF9F4);
+                                        margin: auto;
 
-                                .text_right {
-                                    text-align: right;
-                                }
+                                        &:disabled {
+                                            background: rgba(#000000, 0);
+                                            color: #878890;
 
-                                .action {
-
-
-                                    a {
-                                        @include text(12px, 600, #FF7506);
-                                        line-height: 20px;
+                                        }
                                     }
                                 }
 
-                                .true_thoiHan {
+                                button {
+                                    &:disabled {
+                                        background: rgba(#000000, 0);
+                                        color: #878890;
 
-                                    position: relative;
-                                    padding-left: 10px;
-
-                                    &::before {
-                                        content: "";
-                                        position: absolute;
-                                        display: block;
-                                        width: 8px;
-                                        height: 8px;
-                                        border-radius: 50%;
-                                        background-color: blue;
-                                        top: 5px;
-                                        left: 0;
+                                        &:hover {
+                                            background: rgba(#000000, 0);
+                                            color: #878890;
+                                        }
                                     }
-                                }
 
-                                .false_thoiHan {
-                                    position: relative;
-                                    padding-left: 10px;
 
-                                    &::before {
-                                        content: "";
-                                        position: absolute;
-                                        display: block;
-                                        width: 8px;
-                                        height: 8px;
-                                        border-radius: 50%;
-                                        background-color: #878890;
-                                        top: 5px;
-                                        left: 0;
-                                    }
+                                    @include button (14px, 500, #FFF9F4, rgba(47, 47, 65, 0.7), 1px solid rgba(47, 47, 65, 0.7), 0, 50%,
+                                        rgba(47, 47, 65, 0.7), #ff7506);
+                                    margin: auto
                                 }
                             }
                         }
@@ -175,93 +265,101 @@
                 }
 
                 .content-card {
-                    height: 100%;
+                    height: 85%;
 
-                    .card-list {
-                        display: grid;
-                        grid-template-columns: auto auto auto auto;
-                        gap: 10px 20px;
-                    }
-                }
+                    .card-container {
 
-                .pagination {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    background: rgba(47, 47, 65, 0.7);
-                    border-radius: 0 0 16px 16px;
-                    padding: 16px 24px;
+                        width: 100%;
+                        height: 100%;
 
-                    .pagination_left {
-                        p {
-                            @include text (14px, 400, #F5F5FF);
-
-                            select {
-                                margin: 0 5px;
-                                @include text(16px, 400, #ff7506);
-                                line-height: 24px;
-                                background: rgba(47, 47, 65, 0.7);
-                                border: 1px solid #ff7506;
-                                border-radius: 8px;
-                                padding: 5px 10px;
-
-                                option {
-                                    margin: 8px 0;
-                                    background: #3e3e5b;
-                                    border: 2px solid #1e1e2e;
-                                    @include text(16px, 400, #ffffff);
-                                    line-height: 24px;
-                                }
-                            }
-                        }
-                    }
-
-                    .pagination_right {
-                        width: 100px;
-                        display: flex;
-                        justify-content: space-evenly;
-                        gap: 5px;
-                        align-items: center;
-
-                        #btnPage {
+                        .card-list {
                             display: flex;
-                            gap: 5px;
-
-                            button {
-                                width: 26px;
-                                height: 26px;
-                                @include button (14px, 500, #FFF9F4, rgba(47, 47, 65, 0.7), 1px solid rgba(47, 47, 65, 0.7), 0, 50%, rgba(255, 117, 6, 1), #FFF9F4);
-                                margin: auto;
-
-                                &:disabled {
-                                    background: rgba(#000000, 0);
-                                    color: #878890;
-
-                                }
-
-
-
-                            }
+                            flex-wrap: wrap;
+                            justify-content: space-around;
+                            align-items: center;
+                            // grid-template-columns: auto auto auto auto;
+                            gap: 19px;
                         }
 
-                        button {
-                            &:disabled {
-                                background: rgba(#000000, 0);
-                                color: #878890;
+                        .pagination {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
 
-                                &:hover {
-                                    background: rgba(#000000, 0);
-                                    color: #878890;
+                            border-radius: 0 0 16px 16px;
+                            padding: 0 24px;
+                            height: 15%;
+
+                            .pagination_left {
+                                p {
+                                    @include text (14px, 400, #F5F5FF);
+
+                                    select {
+                                        margin: 0 5px;
+                                        @include text(16px, 400, #ff7506);
+                                        background: rgba(47, 47, 65, 0.7);
+                                        border: 1px solid #ff7506;
+                                        border-radius: 8px;
+                                        padding: 5px 10px;
+
+                                        option {
+                                            margin: 8px 0;
+                                            background: #3e3e5b;
+                                            border: 2px solid #1e1e2e;
+                                            @include text(16px, 400, #ffffff);
+
+                                        }
+                                    }
                                 }
                             }
 
+                            .pagination_right {
+                                width: 100px;
+                                display: flex;
+                                justify-content: space-evenly;
+                                gap: 5px;
+                                align-items: center;
 
-                            @include button (14px, 500, #FFF9F4, rgba(47, 47, 65, 0.7), 1px solid rgba(47, 47, 65, 0.7), 0, 50%,
-                                rgba(47, 47, 65, 0.7), #ff7506);
-                            margin: auto
+                                #btnPage {
+                                    display: flex;
+                                    gap: 5px;
+
+                                    button {
+                                        width: 26px;
+                                        height: 26px;
+                                        @include button (14px, 500, #FFF9F4, rgba(47, 47, 65, 0.7), 1px solid rgba(47, 47, 65, 0.7), 0, 50%, rgba(255, 117, 6, 1), #FFF9F4);
+                                        margin: auto;
+
+                                        &:disabled {
+                                            background: rgba(#000000, 0);
+                                            color: #878890;
+
+                                        }
+                                    }
+                                }
+
+                                button {
+                                    &:disabled {
+                                        background: rgba(#000000, 0);
+                                        color: #878890;
+
+                                        &:hover {
+                                            background: rgba(#000000, 0);
+                                            color: #878890;
+                                        }
+                                    }
+
+
+                                    @include button (14px, 500, #FFF9F4, rgba(47, 47, 65, 0.7), 1px solid rgba(47, 47, 65, 0.7), 0, 50%,
+                                        rgba(47, 47, 65, 0.7), #ff7506);
+                                    margin: auto
+                                }
+                            }
                         }
                     }
                 }
+
+
             }
 
         }
@@ -272,11 +370,10 @@
             justify-content: center;
             align-items: center;
             padding: 16px;
-            width: 110px;
+            width: 8%;
             height: 130px;
             background: #2f2f41;
             border-radius: 16px 0px 0px 16px;
-
             gap: 10px;
 
             .bg_icon {

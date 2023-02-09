@@ -1,7 +1,10 @@
 .capNhatKhoBanGhi {
     padding: 20px 40px;
+    height: 90%;
 
     .capNhatKhoBanGhi_title {
+        height: 10%;
+
         p {
             @include text (16px, 600, #F5F5FF);
 
@@ -18,36 +21,48 @@
 
     .capNhatKhoBanGhi_content {
         display: flex;
-        margin-top: 24px;
+        gap: 15px;
+        margin: 0 auto;
+        width: 80%;
+        height: 75%;
+        position: relative;
+        margin-top: 20px;
 
         .content_left {
-
+            width: 45%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            height: 100%;
 
             .content_left-top {
                 background: #2B2B3F;
                 border-radius: 8px;
-                width: 570px;
-                padding: 16px 24px;
+                padding: 8px 16px;
+                height: 66%;
 
                 .thongTin {
+                    height: 50%;
+                    margin-bottom: 30px;
+
                     h5 {
                         text-align: center;
-                        @include text(24px, 700, #FF7506)
+                        @include text(20px, 700, #FF7506)
                     }
 
                     .avatar {
                         position: relative;
-                        width: 130px;
-                        height: 130px;
-                        margin: 20px auto;
+                        width: 96px;
+                        height: 96px;
+                        margin: 10px auto;
 
                         img {
                             width: 100%;
                         }
 
                         .camera {
-                            width: 40px;
-                            height: 40px;
+                            width: 30px;
+                            height: 30px;
                             background: #347AFF;
                             border-radius: 50%;
                             display: flex;
@@ -59,7 +74,7 @@
 
                             i {
                                 color: #F5F5FF;
-                                font-size: 22px;
+                                font-size: 18px;
                             }
                         }
                     }
@@ -75,8 +90,42 @@
 
                         span {
                             opacity: 0.7;
-                            @include text(16px, 400, #ffffff);
+                            @include text(14px, 400, #ffffff);
                         }
+                    }
+                }
+
+                .table_thongTin {
+                    height: 50%;
+
+                    .table_item {
+                        display: flex;
+                        justify-content: space-between;
+                        margin-top: 8px;
+
+                        p:nth-child(1) {
+                            @include text(12px, 700, #ffffff)
+                        }
+
+                        p:nth-child(2) {
+                            text-align: right;
+                            opacity: 0.7;
+                            @include text(12px, 400, #ffffff)
+                        }
+                    }
+                }
+            }
+
+            .content_left-bottom {
+                background: #2B2B3F;
+                border-radius: 8px;
+                padding: 8px 16px;
+                height: 34%;
+
+                .thongTin {
+                    h5 {
+                        text-align: center;
+                        @include text (20px, 700, #FF7506)
                     }
                 }
 
@@ -84,16 +133,16 @@
                     .table_item {
                         display: flex;
                         justify-content: space-between;
-                        margin-top: 16px;
+                        margin-top: 8px;
 
                         p:nth-child(1) {
-                            @include text(16px, 700, #ffffff)
+                            @include text(12px, 700, #ffffff)
                         }
 
                         p:nth-child(2) {
                             text-align: right;
                             opacity: 0.7;
-                            @include text(16px, 400, #ffffff)
+                            @include text(12px, 400, #ffffff)
                         }
                     }
                 }
@@ -101,38 +150,125 @@
         }
 
         .content_right {
-            width: 743px;
-            height: 757px;
+            width: 55%;
+            height: 100%;
+            background: #2B2B3F;
+            padding: 0 24px;
+            display: flex;
+            flex-direction: column;
 
-            h5 {}
+            h5 {
+                margin-top: 16px;
+                text-align: center;
+                @include text(24px, 700, #FF7506)
+            }
 
             form {
-                .form_profile-top {
-                    div {
-                        .form_title {
-                            label {}
+                .form_profile {
 
-                            input {}
+                    .form_title {
+
+
+                        label {
+                            @include text(16px, 700, #f5f5f5);
                         }
-                    }
 
-                    div {
-                        .form_title {
-                            label {}
+                        input {
+                            margin: 5px 0;
+                            border: 1px solid #727288;
+                            padding: 11px 24px 13px 16px;
+                            width: 100%;
+                            height: 36px;
+                            background: #33334D;
+                            border-radius: 8px;
+                            @include text (16px,
+                                400,
+                                #F5F5FF);
+                            line-height: 24px;
 
-                            input {}
+                            &:focus {
+                                outline: none;
+                                border: 2px solid #347aff;
+                            }
+                        }
+
+                        select {
+                            margin: 5px 0;
+                            border: 1px solid #727288;
+                            padding: 11px 24px 13px 16px;
+                            width: 100%;
+                            // height: 36px;
+                            background: #33334D;
+                            border-radius: 8px;
+                            @include text (16px,
+                                400,
+                                #F5F5FF);
+                            line-height: 24px;
+
+                            &:focus {
+                                outline: none;
+                                border: 2px solid #347aff;
+                            }
+                        }
+
+
+                        .text-error {
+                            margin-top: 10px;
+                            @include text (14px, 400, red)
                         }
                     }
                 }
             }
+        }
 
-            .xoaBanGhi {
-                .icon {
-                    i {}
+        .xoaBanGhi {
+            position: absolute;
+            top: 0;
+            right: -170px;
+            width: 110px;
+            height: 112px;
+            background: #2F2F41;
+            border-radius: 16px 0px 0px 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+
+            .icon {
+                width: 52px;
+                height: 52px;
+
+                background: rgba(114, 114, 136, 0.5);
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                i {
+                    font-size: 34px;
+                    color: #FF4747;
                 }
-
-                p {}
             }
+
+            p {
+                @include text (12px, 500, #ffffff);
+                opacity: 0.7;
+            }
+        }
+    }
+
+    .capNhatKhoGhi_button {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 20px;
+
+        button:nth-child(1) {
+            @include button (18px, 500, #ffffff, rgba(0, 0, 0, 0), 12px 40px, 1px solid #FF7506, 8px, #FF7506, #ffffff)
+        }
+
+        button:nth-child(2) {
+            @include button (18px, 500, #ffffff, #FF7506, 12px 40px, 1px solid #FF7506, 8px, rgba(0, 0, 0, 0), #ffffff)
         }
     }
 }

@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Field, Formik, Form } from "formik";
 import * as Yup from "yup";
+import { history } from "../..";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/configStore";
+import { useNavigate } from "react-router-dom";
 
 export default function CapNhatkhoBanGhi() {
+  //Lấy Item kho bản ghi từ redux về
+  const item = useSelector((state: RootState) => state.khoBanGhi.itemKhoBanGhi);
+  console.log(item);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (item.tenBanGhi == "") {
+      navigate("/admin");
+    }
+  }, []);
+
+  // delete item kho bản ghi
+  const handleDelete = () => {};
   const initialValues = {
     maISRC: "",
     tenBanGhi: "",
@@ -24,7 +40,7 @@ export default function CapNhatkhoBanGhi() {
           Kho bản ghi <i className="fas fa-chevron-right"></i> Cập nhật thông
           tin
         </p>
-        <h3>Bản ghi - {"Name"}</h3>
+        <h3>Bản ghi - {item.tenBanGhi}</h3>
       </div>
       <div className="capNhatKhoBanGhi_content">
         <div className="content_left">
@@ -39,7 +55,7 @@ export default function CapNhatkhoBanGhi() {
               </div>
               <div className="music">
                 <i className="fas fa-music"></i>
-                <span>Name.mp3</span>
+                <span>{item.tenBanGhi}.mp3</span>
               </div>
             </div>
             <div className="table_thongTin">
@@ -99,47 +115,60 @@ export default function CapNhatkhoBanGhi() {
           >
             {({ errors, touched }) => (
               <Form>
-                <div className="form_profile-top">
-                  <div>
-                    <div className="form_title">
-                      <label htmlFor="tenBanGhi">Tên bản ghi:</label>
-                      <br />
-                      <Field type="text" name="tenBanGhi" id="tenBanGhi" />
-                      {errors.tenBanGhi && touched.tenBanGhi ? (
-                        <p className="text-danger">{errors.tenBanGhi}</p>
-                      ) : null}
-                    </div>
-                    <div className="form_title">
-                      <label htmlFor="maISRC">Mã ISRC:</label>
-                      <br />
-                      <Field type="text" name="maISRC" id="maISRC" />
-                      {errors.maISRC && touched.maISRC ? (
-                        <p className="text-danger">{errors.maISRC}</p>
-                      ) : null}
-                    </div>
+                <div className="form_profile">
+                  <div className="form_title">
+                    <label htmlFor="tenBanGhi">Tên bản ghi:</label>
+                    <br />
+                    <Field
+                      type="text"
+                      name="tenBanGhi"
+                      id="tenBanGhi"
+                      value={item.tenBanGhi}
+                    />
+                    {errors.tenBanGhi && touched.tenBanGhi ? (
+                      <p className="text-danger">{errors.tenBanGhi}</p>
+                    ) : null}
+                  </div>
+                  <div className="form_title">
+                    <label htmlFor="maISRC">Mã ISRC:</label>
+                    <br />
+                    <Field
+                      type="text"
+                      name="maISRC"
+                      id="maISRC"
+                      value={item.maISRC}
+                    />
+                    {errors.maISRC && touched.maISRC ? (
+                      <p className="text-danger">{errors.maISRC}</p>
+                    ) : null}
+                  </div>
+                  <div className="form_title">
+                    <label htmlFor="caSi">Ca sĩ:</label>
+                    <br />
+                    <Field
+                      type="text"
+                      name="caSi"
+                      id="caSi"
+                      value={item.caSi}
+                    />
+                    {errors.caSi && touched.caSi ? (
+                      <p className="text-danger">{errors.caSi}</p>
+                    ) : null}
+                  </div>
+                  <div className="form_title">
+                    <label htmlFor="tacGia">Tác giả:</label>
+                    <br />
+                    <Field
+                      type="text"
+                      name="tacGia"
+                      id="tacGia"
+                      value={item.tacGia}
+                    />
+                    {errors.tacGia && touched.tacGia ? (
+                      <p className="text-danger">{errors.tacGia}</p>
+                    ) : null}
                   </div>
 
-                  <div>
-                    <div className="form_title">
-                      <label htmlFor="caSi">Ca sĩ:</label>
-
-                      <br />
-                      <Field type="text" name="caSi" id="caSi" />
-                      {errors.caSi && touched.caSi ? (
-                        <p className="text-danger">{errors.caSi}</p>
-                      ) : null}
-                    </div>
-                    <div className="form_title">
-                      <label htmlFor="tacGia">Tác giả:</label>
-                      <br />
-                      <Field type="text" name="tacGia" id="tacGia" />
-                      {errors.tacGia && touched.tacGia ? (
-                        <p className="text-danger">{errors.tacGia}</p>
-                      ) : null}
-                    </div>
-                  </div>
-                </div>
-                <div className="form_profile-bottom">
                   <div className="form_title">
                     <label htmlFor="nhaSanXuat">Nhà sản xuất:</label>
                     <br />
@@ -147,6 +176,7 @@ export default function CapNhatkhoBanGhi() {
                       type="nhaSanXuat"
                       name="nhaSanXuat"
                       id="nhaSanXuat"
+                      value={item.nhaSanXuat}
                     />
                     {errors.nhaSanXuat && touched.nhaSanXuat ? (
                       <p className="text-danger">{errors.nhaSanXuat}</p>
@@ -155,7 +185,17 @@ export default function CapNhatkhoBanGhi() {
                   <div className="form_title">
                     <label htmlFor="theLoai">Thể loại:</label>
                     <br />
-                    <Field type="text" name="theLoai" id="theLoai" />
+                    <Field
+                      as="select"
+                      name="theLoai"
+                      id="theLoai"
+                      value={item.theLoai}
+                    >
+                      <option value="pop">Pop</option>
+                      <option value="ballad">Ballad</option>
+                      <option value="rock">Rock</option>
+                      <option value="edm">EDM</option>
+                    </Field>
                     {errors.theLoai && touched.theLoai ? (
                       <p className="text-danger">{errors.theLoai}</p>
                     ) : null}
@@ -164,13 +204,24 @@ export default function CapNhatkhoBanGhi() {
               </Form>
             )}
           </Formik>
-          <div className="xoaBanGhi">
-            <div className="icon">
-              <i className="fas fa-times"></i>
-            </div>
-            <p>Xóa bản ghi</p>
-          </div>
         </div>
+        <div className="xoaBanGhi" onClick={handleDelete}>
+          <div className="icon">
+            <i className="fas fa-times"></i>
+          </div>
+          <p>Xóa bản ghi</p>
+        </div>
+      </div>
+      <div className="capNhatKhoGhi_button">
+        <button
+          type="button"
+          onClick={() => {
+            history.push("/admin/");
+          }}
+        >
+          Huỷ
+        </button>
+        <button type="submit">Lưu</button>
       </div>
     </div>
   );

@@ -11,6 +11,8 @@
 @import './Components/userAvatar';
 @import "./Components/header";
 @import './Components/itemKhoBanGho';
+@import'./Components/modalDoiMatKhau';
+@import './Components/modalVideo';
 // Layouts
 @import './Layouts/templateAdmin';
 @import './Layouts/sibarAdmin';
@@ -22,4 +24,5 @@
 @import './Pages//suaThongTin';
 @import './Pages/capNhatKhoBanGhi';
 @import './Pages/quenMatKhau';
+@import './Pages/LinkError';
 // Theme

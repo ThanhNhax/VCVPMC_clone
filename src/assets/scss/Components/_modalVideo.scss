@@ -1,0 +1,32 @@
+.modal-video {
+    .ant-modal {
+        .ant-modal-content {
+            background: #3E3E5B;
+            border-radius: 16px;
+            padding: 0;
+            position: relative;
+
+            .ant-modal-close {
+                position: absolute;
+                top: 27px;
+                right: 27px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: #ffffff;
+                color: black;
+                border-radius: 50%;
+            }
+
+            .ant-modal-body {
+                margin: 0 auto;
+                width: 480px;
+                height: 280px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+
+    }
+}

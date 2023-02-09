@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { JsxElement } from "typescript";
+import { Modal } from "antd";
+
 import ItemKhoBanGhi from "../../Components/ItemKhoBanGhi";
 import { AppDispatch, RootState } from "../../redux/configStore";
 import {
   getArrKhoBanGhiFireStore,
   KhoBanGhiRedux,
+  setItemKhoBanGhi,
 } from "../../redux/khoBanGhi/khoBanghiReducer";
 
 export default function KhoBanGhi() {
@@ -22,7 +24,21 @@ export default function KhoBanGhi() {
   const newArrKho = arrKhoBanGhi.slice(indexOfFirstNews, indexOfLastNews);
   const [isTable, setIsTable] = useState<boolean>(true); // hiển thị dưới dạng table hoặc dạng card
   const [isStyleBtn, setIsStyleBtn] = useState<boolean>(false);
-  console.log(isStyleBtn);
+
+  // xử  lý modal popup
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   useEffect(() => {
     // Lấy danh sách kho bản ghi từ fireStore về
     const action = getArrKhoBanGhiFireStore();
@@ -41,7 +57,7 @@ export default function KhoBanGhi() {
           <td>{khoBanGhi?.caSi}</td>
           <td>{khoBanGhi?.tacGia}</td>
           <td>{khoBanGhi?.theLoai}</td>
-          <td>{khoBanGhi?.dingDang}</td>
+          <td>{khoBanGhi?.dinhDang}</td>
           <td>
             <p
               className={
@@ -62,13 +78,16 @@ export default function KhoBanGhi() {
               to="/admin/khobanghi/capnhat"
               onClick={() => {
                 console.log("Click Cap nhat");
+                dispatch(setItemKhoBanGhi(khoBanGhi));
               }}
             >
               Cập nhật
             </Link>
           </td>
           <td className="action">
-            <Link to="#">Nghe</Link>
+            <Link to="#" onClick={showModal}>
+              Nghe
+            </Link>
           </td>
         </tr>
       );
@@ -79,9 +98,7 @@ export default function KhoBanGhi() {
       return <ItemKhoBanGhi item={item} key={index} />;
     });
   };
-  const handleClick = () => {
-    setIsStyleBtn(true);
-  };
+
   const renderButtonPage = (n: number) => {
     let btn: any = "";
     for (let i = 0; i < n; i++) {
@@ -146,7 +163,7 @@ export default function KhoBanGhi() {
                 style={isTable ? { color: "#FF7506" } : {}}
                 onClick={() => {
                   setIsTable(true);
-                  setLimit(8);
+                  setLimit(12);
                   setCurrentPage(1);
                 }}
                 className="fas fa-list-ul"
@@ -159,8 +176,8 @@ export default function KhoBanGhi() {
                 }}
                 style={
                   !isTable
-                    ? { color: "#FF7506", marginLeft: "5px" }
-                    : { marginLeft: "5px" }
+                    ? { color: "#FF7506", marginLeft: "10px" }
+                    : { marginLeft: "10px" }
                 }
                 className="fas fa-border-all"
               ></i>
@@ -171,68 +188,111 @@ export default function KhoBanGhi() {
               className="content-table"
               style={isTable ? { display: "block" } : { display: "none" }}
             >
-              <table>
-                <thead>
-                  <tr>
-                    <th className="text_right">STT</th>
-                    <th>Tên bản ghi</th>
-                    <th>Mã ISRC</th>
-                    <th>Thời lượng</th>
-                    <th>Ca sĩ</th>
-                    <th>Tác giả</th>
-                    <th>Thể loại</th>
-                    <th>Định dạng</th>
-                    <th>Thời hạn sử dụng</th>
-                    <th></th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>{renderKhoBanGhi()}</tbody>
-              </table>
+              <div className="content-table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th className="text_right">STT</th>
+                      <th>Tên bản ghi</th>
+                      <th>Mã ISRC</th>
+                      <th>Thời lượng</th>
+                      <th>Ca sĩ</th>
+                      <th>Tác giả</th>
+                      <th>Thể loại</th>
+                      <th>Định dạng</th>
+                      <th>Thời hạn sử dụng</th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>{renderKhoBanGhi()}</tbody>
+                </table>
+                <div className="pagination-table">
+                  <div className="pagination_left">
+                    <p>
+                      Hiển thị
+                      <select
+                        value={limit}
+                        onChange={(e) => {
+                          setLimit(parseInt(e.target.value));
+                        }}
+                      >
+                        <option value="12">12</option>
+                        <option value="6">6</option>
+                        <option value="8">8</option>
+                      </select>
+                      hàng trong mỗi trang
+                    </p>
+                  </div>
+                  <div className="pagination_right">
+                    <button
+                      disabled={currentPage === 1}
+                      onClick={() => {
+                        if (currentPage === 1) {
+                          setCurrentPage(1);
+                        }
+                        setCurrentPage(currentPage - 1);
+                      }}
+                    >{`<`}</button>
+                    <div
+                      id="btnPage"
+                      dangerouslySetInnerHTML={renderButtonPage(totalPages)}
+                    ></div>
+                    <button
+                      disabled={currentPage >= totalPages}
+                      onClick={() => {
+                        setCurrentPage(currentPage + 1);
+                      }}
+                    >{`>`}</button>
+                  </div>
+                </div>
+              </div>
             </div>
             <div
               className="content-card"
               style={!isTable ? { display: "block" } : { display: "none" }}
             >
-              <div className="card-list">{renderKhoBanGhiCard()}</div>
-            </div>
-            <div className="pagination">
-              <div className="pagination_left">
-                <p>
-                  Hiển thị
-                  <select
-                    value={limit}
-                    onChange={(e) => {
-                      setLimit(parseInt(e.target.value));
-                    }}
-                  >
-                    <option value="12">12</option>
-                    <option value="6">6</option>
-                    <option value="8">8</option>
-                  </select>
-                  hàng trong mỗi trang
-                </p>
-              </div>
-              <div className="pagination_right">
-                <button
-                  disabled={currentPage === 1}
-                  onClick={() => {
-                    if (currentPage === 1) {
-                      setCurrentPage(1);
-                    }
-                    setCurrentPage(currentPage - 1);
-                  }}
-                >{`<`}</button>
-                <div
-                  id="btnPage"
-                  dangerouslySetInnerHTML={renderButtonPage(totalPages)}
-                ></div>
-                <button
-                  disabled={currentPage >= totalPages}
-                  onClick={() => {
-                    setCurrentPage(currentPage + 1);
-                  }}
-                >{`>`}</button>
+              <div className="card-container">
+                <div className="card-list">{renderKhoBanGhiCard()}</div>
+                <div className="pagination">
+                  <div className="pagination_left">
+                    <p>
+                      Hiển thị
+                      <select
+                        value={limit}
+                        onChange={(e) => {
+                          setLimit(parseInt(e.target.value));
+                        }}
+                      >
+                        <option value="7">7</option>
+                        <option value="6">6</option>
+                        <option value="8">8</option>
+                      </select>
+                      hàng trong mỗi trang
+                    </p>
+                  </div>
+                  <div className="pagination_right">
+                    <button
+                      disabled={currentPage === 1}
+                      onClick={() => {
+                        if (currentPage === 1) {
+                          setCurrentPage(1);
+                        }
+                        setCurrentPage(currentPage - 1);
+                      }}
+                    >{`<`}</button>
+                    <div
+                      id="btnPage"
+                      dangerouslySetInnerHTML={renderButtonPage(totalPages)}
+                    ></div>
+                    <button
+                      disabled={currentPage >= totalPages}
+                      onClick={() => {
+                        setCurrentPage(currentPage + 1);
+                      }}
+                    >{`>`}</button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -244,6 +304,22 @@ export default function KhoBanGhi() {
           <span>Quản lý phê duyệt</span>
         </div>
       </div>
+      <Modal
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        footer={null}
+        wrapClassName="modal-video"
+        width={480}
+      >
+        <video
+          width="452"
+          height="247"
+          src="https://www.youtube.com/embed/PoXDg2saXX8"
+          title="YouTube video player"
+          // frameborder="0"
+        ></video>
+      </Modal>
     </div>
   );
 }
