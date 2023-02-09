@@ -25,6 +25,9 @@ import CapNhatkhoBanGhi from "./pages/KhoBanGhi/CapNhatkhoBanGhi";
 import SuaThongTin from "./pages/ThongTinCoBan/SuaThongTin";
 import DomeModal from "./HOC/DomeModal";
 import QuenMatKhau from "./pages/DangNhap/QuenMatKhau";
+import TemplateUser from "./pages/DangNhap/TemplateUser";
+import CapnhatMatKhau from "./pages/DangNhap/CapnhatMatKhau";
+import LinkError from "./pages/DangNhap/LinkError";
 export const history: any = createBrowserHistory();
 
 const root = ReactDOM.createRoot(
@@ -35,10 +38,14 @@ root.render(
     <HistoryRouter history={history}>
       <Routes>
         <Route>
-          <Route index element={<DangNhap />}></Route>
-          <Route path="*" element={<Navigate to={"/"} />}></Route>
-          <Route path="/demoModal" element={<DomeModal />}></Route>
-          <Route path="/quenMatKhau" element={<QuenMatKhau />}></Route>
+          <Route path="" element={<TemplateUser />}>
+            <Route index element={<DangNhap />}></Route>
+            <Route path="*" element={<Navigate to={"/"} />}></Route>
+            <Route path="/demoModal" element={<DomeModal />}></Route>
+            <Route path="/quenMatKhau" element={<QuenMatKhau />}></Route>
+            <Route path="/capNhatMatKhau" element={<CapnhatMatKhau />}></Route>
+            <Route path="/linkError" element={<LinkError />}></Route>
+          </Route>
         </Route>
 
         <Route>
