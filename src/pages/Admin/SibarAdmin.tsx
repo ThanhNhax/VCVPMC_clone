@@ -1,10 +1,13 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-export default function SibarAdmin() {
+type Props = {
+  setToggle(): void;
+};
+export default function SibarAdmin({ setToggle }: Props) {
   return (
     <div className="left">
-      <div className="left_logo">
+      <div className="left_logo" onClick={setToggle}>
         <img src="../img/vcpmc_logo.png" alt="logo_vcpmc" />
       </div>
       <nav className="navbar_amdin">

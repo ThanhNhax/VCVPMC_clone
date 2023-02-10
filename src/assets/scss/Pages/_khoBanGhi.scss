@@ -34,9 +34,7 @@
     }
 
     .khoBanGhi_content {
-        display: flex;
-        justify-content: space-between;
-        gap: 20px;
+        position: relative;
         height: 90%;
         width: 100%;
 
@@ -51,21 +49,21 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+                margin-top: 5px;
 
                 .title-item {
-                    margin-right: 20px;
-
                     label {
-                        @include text(16px, 600, #ffffff);
+                        @include text(14px, 600, #ffffff);
                         margin-right: 5px;
                     }
 
                     select {
-                        @include text(16px, 400, #ff7506);
+                        @include text(14px, 400, #ff7506);
                         background: #1e1e2e;
                         border: 1px solid #ff7506;
                         border-radius: 8px;
                         padding: 10px;
+                        margin: 5px 0;
 
                         option {
                             margin: 8px 0;
@@ -89,7 +87,6 @@
 
                 .content-table {
                     height: 100%;
-
 
                     .content-table-wrap {
                         height: 100%;
@@ -120,29 +117,47 @@
                             }
 
                             tbody {
+                                tr:last-child {
+                                    &::after {
+                                        position: absolute;
+                                        bottom: 0;
+                                        left: 0;
+                                        content: '';
+                                        height: 0;
+                                        width: 0;
+                                        background: rgb(97, 96, 96);
+                                    }
+                                }
+
                                 tr {
-                                    border: 1px solid red;
+                                    position: relative;
+                                    vertical-align: middle;
 
-                                    td {
-                                        border-bottom: 1px solid #727288;
-                                        text-align: left;
-                                        margin: 0 10px;
-                                        padding: 0 10px;
-                                        @include text(12px, 400, #FFFFFF);
-
-
+                                    &::after {
+                                        position: absolute;
+                                        left: 0;
+                                        bottom: 0;
+                                        content: '';
+                                        height: 1px;
+                                        width: 100%;
+                                        background: rgb(97, 96, 96);
                                     }
 
 
+                                    td {
+                                        text-align: left;
+                                        padding: 0px 10px;
+                                        @include text(12px, 400, #FFFFFF);
+                                        border: none;
 
+
+                                    }
 
                                     .text_right {
                                         text-align: right;
                                     }
 
                                     .action {
-
-
                                         a {
                                             @include text(12px, 600, #FF7506);
                                         }
@@ -265,27 +280,28 @@
                 }
 
                 .content-card {
-                    height: 85%;
+                    height: 100%;
 
                     .card-container {
 
                         width: 100%;
-                        height: 100%;
+                        height: 85%;
 
                         .card-list {
+                            height: 100%;
                             display: flex;
                             flex-wrap: wrap;
                             justify-content: space-around;
                             align-items: center;
                             // grid-template-columns: auto auto auto auto;
-                            gap: 19px;
+                            gap: 10px;
                         }
 
-                        .pagination {
+                        .pagination-card {
                             display: flex;
                             justify-content: space-between;
                             align-items: center;
-
+                            margin-top: 15px;
                             border-radius: 0 0 16px 16px;
                             padding: 0 24px;
                             height: 15%;
@@ -365,6 +381,9 @@
         }
 
         .content-quanLyPheDuyet {
+            position: absolute;
+            top: 0;
+            right: 0;
             display: flex;
             flex-direction: column;
             justify-content: center;

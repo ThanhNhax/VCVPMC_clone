@@ -2,14 +2,18 @@ import React, { useEffect } from "react";
 import { Field, Formik, Form } from "formik";
 import * as Yup from "yup";
 import { history } from "../..";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/configStore";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../redux/configStore";
 import { useNavigate } from "react-router-dom";
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from "../../FireStore/fireStore";
+import { message } from "antd";
 
 export default function CapNhatkhoBanGhi() {
   //Lấy Item kho bản ghi từ redux về
   const item = useSelector((state: RootState) => state.khoBanGhi.itemKhoBanGhi);
   console.log(item);
+  const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
     if (item.tenBanGhi == "") {
@@ -18,7 +22,19 @@ export default function CapNhatkhoBanGhi() {
   }, []);
 
   // delete item kho bản ghi
-  const handleDelete = () => {};
+  const handleDelete = (id: string) => {
+    //dispatch dc cái id của item
+    console.log({ id });
+    const khoBanGhiRef = doc(db, "khoBanGhi", id);
+    try {
+      deleteDoc(khoBanGhiRef);
+      //chuyển về page kho ban ghi
+      navigate("/admin");
+      message.success("xóa thành công!");
+    } catch (error) {
+      console.log({ error });
+    }
+  };
   const initialValues = {
     maISRC: "",
     tenBanGhi: "",
@@ -205,8 +221,8 @@ export default function CapNhatkhoBanGhi() {
             )}
           </Formik>
         </div>
-        <div className="xoaBanGhi" onClick={handleDelete}>
-          <div className="icon">
+        <div className="xoaBanGhi">
+          <div className="icon" onClick={() => handleDelete(item.id)}>
             <i className="fas fa-times"></i>
           </div>
           <p>Xóa bản ghi</p>

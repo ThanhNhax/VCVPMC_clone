@@ -33,13 +33,19 @@
             height: 100%;
 
             .nav-item {
-                text-align: center;
+                // text-align: center;
                 list-style: none;
 
                 .nav-link {
                     text-decoration: none;
                     list-style: none;
                     color: #C8C8DB;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    width: 92px;
+                    position: relative;
 
                     i {
                         font-size: 32px
@@ -84,7 +90,7 @@
 
                 .active {
                     color: #FF7506 !important;
-                    position: relative;
+
 
                     p {
                         @include text(14px,
@@ -98,8 +104,8 @@
                         position: absolute;
                         width: 8px;
                         height: 72px;
-                        left: -59px;
-                        top: -22px;
+                        left: -23px;
+                        top: 0px;
                         background: #FF7506;
                         border-radius: 6px;
                     }

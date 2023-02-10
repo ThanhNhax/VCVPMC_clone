@@ -28,6 +28,7 @@ import QuenMatKhau from "./pages/DangNhap/QuenMatKhau";
 import TemplateUser from "./pages/DangNhap/TemplateUser";
 import CapnhatMatKhau from "./pages/DangNhap/CapnhatMatKhau";
 import LinkError from "./pages/DangNhap/LinkError";
+import QuanLyPheDuyet from "./pages/KhoBanGhi/QuanLyPheDuyet";
 export const history: any = createBrowserHistory();
 
 const root = ReactDOM.createRoot(
@@ -54,6 +55,10 @@ root.render(
             <Route
               path="/admin/khobanghi/capnhat"
               element={<CapNhatkhoBanGhi />}
+            ></Route>{" "}
+            <Route
+              path="/admin/khobanghi/quanLyPheDuyet"
+              element={<QuanLyPheDuyet />}
             ></Route>
             <Route path="/admin/playlist" element={<Playlist />}></Route>
             <Route path="/admin/laplichphat" element={<LapLichPhat />}></Route>

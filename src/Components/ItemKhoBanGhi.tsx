@@ -1,4 +1,4 @@
-import { Modal } from "antd";
+import { Checkbox, Modal } from "antd";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
@@ -9,9 +9,11 @@ import {
 
 type Props = {
   item: KhoBanGhiRedux;
+  isPheDuyet: boolean;
+  isCheck: boolean;
 };
 
-export default function ItemKhoBanGhi({ item }: Props) {
+export default function ItemKhoBanGhi({ item, isPheDuyet, isCheck }: Props) {
   const dispatch = useDispatch();
   // xử  lý modal popup
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -57,17 +59,21 @@ export default function ItemKhoBanGhi({ item }: Props) {
             </div>
           </div>
           <div className="item-edit">
-            <Link to={"/admin/khobanghi/capnhat"}>
-              <i
-                onClick={() => {
-                  console.log("edit");
+            {isPheDuyet ? (
+              <Checkbox checked={isCheck ? true : false} />
+            ) : (
+              <Link to={"/admin/khobanghi/capnhat"}>
+                <i
+                  onClick={() => {
+                    console.log("edit");
 
-                  console.log("Click Cap nhat");
-                  dispatch(setItemKhoBanGhi(item));
-                }}
-                className="fa fa-edit"
-              ></i>
-            </Link>
+                    console.log("Click Cap nhat");
+                    dispatch(setItemKhoBanGhi(item));
+                  }}
+                  className="fa fa-edit"
+                ></i>
+              </Link>
+            )}
           </div>
         </div>
       </div>

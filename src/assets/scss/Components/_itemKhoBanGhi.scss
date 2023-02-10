@@ -1,6 +1,6 @@
 .item_khoBanGhi {
-    width: 20%;
-    height: 220px;
+    width: 24%;
+    height: 200px;
     // background: #FF7506;
 
     video {
@@ -13,20 +13,18 @@
     .item_khoBanGhi-title {
         background: #393955;
         border-radius: 0px 0px 8px 8px;
-        margin-top: -5px;
-        padding: 8px;
+        padding: 4px;
+        height: 50%;
 
         .title-top {
             margin-bottom: 10px;
 
             h4 {
-                @include text (14px, 600, #ffffff);
-
-                margin-bottom: 4px;
+                @include text (12px, 600, #ffffff);
             }
 
             p {
-                @include text (10px, 400, #F5F5FF);
+                @include text (8px, 400, #F5F5FF);
 
             }
         }

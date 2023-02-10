@@ -30,3 +30,80 @@
 
     }
 }
+
+.modal-tuChoi {
+    .ant-modal {
+        .ant-modal-content {
+            background: #3E3E5B;
+            border-radius: 16px;
+            padding: 0;
+            position: relative;
+
+            .ant-modal-close {
+                position: absolute;
+                top: 27px;
+                right: 27px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: #ffffff;
+                color: black;
+                border-radius: 50%;
+            }
+
+            .ant-modal-body {
+
+                width: 480px;
+                height: 280px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                div {
+
+                    h4 {
+                        text-align: center;
+                        margin-bottom: 5px;
+                        @include text (24px, 700, #f5f5f5)
+                    }
+
+
+                    textarea {
+                        padding: 12px 24px;
+                        /* Background/BG_Lighter */
+                        height: 145px;
+                        width: 430px;
+                        background: #2B2B3F;
+                        /* Text & stroke/Text and stroke 2 */
+
+                        border: 1px solid #727288;
+                        border-radius: 8px;
+                        color: #F5F5FF;
+
+                        &:focus {
+                            outline: none;
+                            border: 2px solid #347aff;
+                        }
+                    }
+
+                    .modal-btn {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        gap: 32px;
+                        margin-top: 10px;
+
+                        button:nth-child(1) {
+                            @include button (16px, 600, #FF7506, rgba(0, 0, 0, 0), 12px 32px, 1px solid #FF7506, 8px, #FF7506, #ffffff)
+                        }
+
+                        button:nth-child(2) {
+                            @include button (16px, 600, #ffffff, #FF7506, 12px 32px, 1px solid #FF7506, 8px, rgba(0, 0, 0, 0), #FF7506)
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+}

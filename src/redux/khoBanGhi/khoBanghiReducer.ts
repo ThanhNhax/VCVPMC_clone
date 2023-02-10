@@ -1,5 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { collection, onSnapshot, query } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  onSnapshot,
+  query,
+} from "firebase/firestore";
 import { db } from "../../FireStore/fireStore";
 import { AppDispatch } from "../configStore";
 
@@ -7,7 +13,16 @@ export interface ThoiHanSuDung {
   thoiGian: string;
   thoiHan: boolean;
 }
+// export interface NgayTai {
+//   nt: {
+//     nanoseconds: number;
+//     seconds: number;
+//   };
+// }
 export interface KhoBanGhiRedux {
+  id: string;
+  ngayTai: string;
+  soHopDong: string;
   tenBanGhi: string;
   maISRC: string;
   thoiLuong: string;
@@ -24,6 +39,9 @@ export interface KhoBanGhiState {
 }
 const initialState: KhoBanGhiState = {
   itemKhoBanGhi: {
+    ngayTai: "{ nt: { nanoseconds: 12, seconds: 123 } }",
+    soHopDong: "",
+    id: "",
     nhaSanXuat: "",
     dinhDang: "",
     tacGia: "",
@@ -39,6 +57,9 @@ const initialState: KhoBanGhiState = {
   },
   arrKhoBanGhi: [
     {
+      ngayTai: "{ nt: { nanoseconds: 12, seconds: 123 } }",
+      soHopDong: "",
+      id: "",
       tenBanGhi: "Mắt em",
       nhaSanXuat: "",
       maISRC: "sdsfwefdsf",
@@ -63,13 +84,14 @@ const khoBanghiReducer = createSlice({
       state: KhoBanGhiState,
       action: PayloadAction<KhoBanGhiRedux[]>
     ) => {
+      console.log("Payload:", action.payload);
       state.arrKhoBanGhi = action.payload;
     },
     setItemKhoBanGhi: (
       state: KhoBanGhiState,
       action: PayloadAction<KhoBanGhiRedux>
     ) => {
-      console.log(action.payload);
+      // console.log(action.payload);
       state.itemKhoBanGhi = action.payload;
     },
   },
@@ -89,11 +111,24 @@ export const getArrKhoBanGhiFireStore = () => {
         querySnapshot.forEach((doc) => {
           arrKhoBanGhi.push({ ...doc.data(), id: doc.id });
         });
-        console.log({ arrKhoBanGhi });
+        console.log("lấy từ firesStore về :", { arrKhoBanGhi });
         dispatch(setArrKhoBanGhi(arrKhoBanGhi));
       });
     } catch (e) {
       console.log({ e });
+    }
+  };
+};
+
+// delete item kho bản ghi
+
+export const deleteFireStore = (id: string) => {
+  return async (dispatch: AppDispatch) => {
+    const khoBanGhiRef = doc(db, "khoBanGhi", id);
+    try {
+      await deleteDoc(khoBanGhiRef);
+    } catch (error) {
+      console.log({ error });
     }
   };
 };

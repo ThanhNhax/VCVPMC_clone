@@ -2,6 +2,7 @@
 import { initializeApp } from "firebase/app";
 import {
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getFirestore,
@@ -30,5 +31,6 @@ export const auth = getAuth(app);
 
 ///
 
-const cityRef = doc(db, "cities", "BJ");
-setDoc(cityRef, { capital: true }, { merge: true });
+// const cityRef = doc(db, "cities", "CA");
+// setDoc(cityRef, { capital: true }, { merge: false });
+// deleteDoc(cityRef);
