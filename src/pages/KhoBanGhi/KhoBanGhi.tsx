@@ -16,14 +16,16 @@ export default function KhoBanGhi() {
     (state: RootState) => state.khoBanGhi.arrKhoBanGhi
   );
   const dispatch: AppDispatch = useDispatch();
+  // cấu hình phân pages
   const [currentPage, setCurrentPage] = useState<number>(1); // Vị trí page hiện tại
   const [limit, setLimit] = useState<number>(12); // change số item hiển thị
   const indexOfLastNews = currentPage * limit; // vị trí cuối
   const indexOfFirstNews = indexOfLastNews - limit; // Vị trí đầu
   const totalPages = Math.ceil(arrKhoBanGhi.length / limit); // Tính số tổng số pages
   const newArrKho = arrKhoBanGhi.slice(indexOfFirstNews, indexOfLastNews);
-  const [isTable, setIsTable] = useState<boolean>(true); // hiển thị dưới dạng table hoặc dạng card
   const [isStyleBtn, setIsStyleBtn] = useState<boolean>(false);
+  // cấu hình phân pages
+  const [isTable, setIsTable] = useState<boolean>(true); // hiển thị dưới dạng table hoặc dạng card
   // const [isCheck, setIsCheck] = useState<boolean>(false);
   // xử  lý modal popup
   const [isModalOpen, setIsModalOpen] = useState(false);

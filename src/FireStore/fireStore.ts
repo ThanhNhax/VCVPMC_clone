@@ -1,15 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import {
-  collection,
-  deleteDoc,
-  doc,
-  getDoc,
-  getFirestore,
-  query,
-  setDoc,
-  where,
-} from "firebase/firestore";
+import { doc, getFirestore, setDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -34,3 +25,31 @@ export const auth = getAuth(app);
 // const cityRef = doc(db, "cities", "CA");
 // setDoc(cityRef, { capital: true }, { merge: false });
 // deleteDoc(cityRef);
+// setDoc(doc(db, "khoBanGhi", "ZaWSiITsY6H8uHSvNBWA"), {
+//   ngayTai: "2023-2-12 ",
+//   soHopDong: "",
+//   id: "",
+//   tenBanGhi: "Mắt em",
+//   nhaSanXuat: "",
+//   maISRC: "sdsfwefdsf",
+//   caSi: "Phan Mạnh Quỳnh",
+//   tacGia: "Phan Mạnh Quỳnh",
+//   theLoai: "EDM",
+//   dinhDang: "Audio",
+//   thoiLuong: "04:17",
+//   thoiHanSuDung: {
+//     thoiGian: "2023-09-24",
+//     thoiHan: false,
+//   },
+// });
+
+// // tạo playlist tren fireStore
+
+// setDoc(doc(db, "playList", "g2IdXWr0yZNm4wSGK27"), {
+//   tieuDe: "Top ca khúc 2021",
+//   soBanGhi: 20,
+//   thoiLuong: "01:04:3",
+//   chuDe: ["Pop", "EDM", "Songs", "Chill", "Lofi"],
+//   ngayTao: 2 - 3 - 2022,
+//   nguoiTao: "Thanh Nhã",
+// });
