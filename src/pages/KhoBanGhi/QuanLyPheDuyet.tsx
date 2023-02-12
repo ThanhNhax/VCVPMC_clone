@@ -187,6 +187,8 @@ export default function QuanLyPheDuyet() {
                   setIsTable(true);
                   setLimit(12);
                   setCurrentPage(1);
+                  setIsCheckBox(false);
+                  setIsCheck(false);
                 }}
                 className="fas fa-list-ul"
               ></i>
@@ -196,6 +198,7 @@ export default function QuanLyPheDuyet() {
                   setLimit(8);
                   setCurrentPage(1);
                   setIsCheckBox(true);
+                  setIsCheck(false);
                 }}
                 style={
                   !isTable
@@ -216,7 +219,10 @@ export default function QuanLyPheDuyet() {
                   <thead>
                     <tr>
                       <th>
-                        <Checkbox onClick={() => setIsCheck((pre) => !pre)} />
+                        <Checkbox
+                          onClick={() => setIsCheck((pre) => !pre)}
+                          checked={isCheck}
+                        />
                       </th>
                       <th className="text_right">STT</th>
                       <th>Tên bản ghi</th>
@@ -324,7 +330,7 @@ export default function QuanLyPheDuyet() {
         <div className="content_menu">
           <div className="content_menu-item">
             <div className="bg_icon">
-              <Link to={"/admin/"}>
+              <Link to={"/admin/khobanghi"}>
                 <i className="fas fa-check" style={{ color: "#0FBF00" }}></i>
               </Link>
             </div>

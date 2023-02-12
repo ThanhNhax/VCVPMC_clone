@@ -13,6 +13,7 @@
 @import './Components/itemKhoBanGhi';
 @import'./Components/modalDoiMatKhau';
 @import './Components/modalVideo';
+@import './Components/itemPlayList';
 // Layouts
 @import './Layouts/templateAdmin';
 @import './Layouts/sibarAdmin';
@@ -27,4 +28,8 @@
 @import './Pages/LinkError';
 @import './Pages/quanLyPheDuyet';
 @import './Pages/playlist';
+@import './Pages//xemChiTietPlayList';
+@import './Pages/editPlaylist';
+@import './Pages/addBanGhi';
+@import './Pages/addPlaylist';
 // Theme

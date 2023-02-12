@@ -27,9 +27,9 @@ export default function KhoBanGhi() {
   // cấu hình phân pages
   const [isTable, setIsTable] = useState<boolean>(true); // hiển thị dưới dạng table hoặc dạng card
   // const [isCheck, setIsCheck] = useState<boolean>(false);
+  const [toggle, setToggle] = useState<boolean>(true);
   // xử  lý modal popup
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [toggle, setToggle] = useState<boolean>(true);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -333,7 +333,7 @@ export default function KhoBanGhi() {
         <video
           width="452"
           height="247"
-          src="https://www.youtube.com/embed/PoXDg2saXX8"
+          // src="https://www.youtube.com/embed/PoXDg2saXX8"
           title="YouTube video player"
           // frameborder="0"
         ></video>

@@ -13,7 +13,7 @@ export default function SibarAdmin({ setToggle }: Props) {
       <nav className="navbar_amdin">
         <ul className="navbar-nav ">
           <li className="nav-item">
-            <NavLink className="nav-link" to="/admin/">
+            <NavLink className="nav-link" to="/admin/khobanghi">
               <i className="far fa-folder-open"></i>
               <p>Kho bản ghi</p>
             </NavLink>

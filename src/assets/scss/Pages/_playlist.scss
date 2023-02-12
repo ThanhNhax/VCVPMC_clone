@@ -17,8 +17,9 @@
             .playlist_content-left {
                 width: 90%;
 
-                .content_title {
+                .content-title {
                     display: flex;
+                    margin: 10px 0;
 
                     .content-search {
                         width: 100%;
@@ -118,6 +119,10 @@
                                         padding: 0px 10px;
                                         @include text(12px, 400, #FFFFFF);
                                         border: none;
+
+                                        a {
+                                            @include text(12px, 600, #FF7506);
+                                        }
                                     }
 
                                     .td-chuDe {
@@ -154,24 +159,21 @@
                             height: 15%;
 
                             .pagination_left {
+                                margin-bottom: 10px;
+
                                 p {
                                     @include text (14px, 400, #F5F5FF);
 
-                                    select {
+                                    input {
                                         margin: 0 5px;
                                         @include text(16px, 400, #ff7506);
                                         background: rgba(47, 47, 65, 0.7);
                                         border: 1px solid #ff7506;
                                         border-radius: 8px;
                                         padding: 5px 10px;
-
-                                        option {
-                                            margin: 8px 0;
-                                            background: #3e3e5b;
-                                            border: 2px solid #1e1e2e;
-                                            @include text(16px, 400, #ffffff);
-
-                                        }
+                                        width: 40px;
+                                        color: #f5f5ff;
+                                        cursor: pointer;
                                     }
                                 }
                             }
@@ -216,6 +218,98 @@
                                     @include button (14px, 500, #FFF9F4, rgba(47, 47, 65, 0.7), 1px solid rgba(47, 47, 65, 0.7), 0, 50%,
                                         rgba(47, 47, 65, 0.7), #ff7506);
                                     margin: auto
+                                }
+                            }
+                        }
+                    }
+
+                    .render-card {
+                        height: 100%;
+
+                        .card-container {
+                            width: 100%;
+                            height: 85%;
+
+                            .card-list {
+
+                                height: 100%;
+                                display: flex;
+                                flex-wrap: wrap;
+                                justify-content: space-around;
+                                align-items: center;
+                                // grid-template-columns: auto auto auto auto;
+                                gap: 10px;
+                            }
+
+                            .pagination-card {
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                margin-top: 15px;
+                                border-radius: 0 0 16px 16px;
+                                padding: 0 24px;
+                                height: 15%;
+
+                                .pagination_left {
+                                    p {
+                                        @include text (14px, 400, #F5F5FF);
+
+                                        input {
+                                            margin: 0 5px;
+                                            @include text(16px, 400, #ff7506);
+                                            background: rgba(47, 47, 65, 0.7);
+                                            border: 1px solid #ff7506;
+                                            border-radius: 8px;
+                                            padding: 5px 10px;
+                                            @include text(16px, 400, #ffffff);
+                                            width: 40px;
+                                            cursor: pointer;
+
+                                        }
+                                    }
+                                }
+
+                                .pagination_right {
+                                    width: 100px;
+                                    display: flex;
+                                    justify-content: space-evenly;
+                                    gap: 5px;
+                                    align-items: center;
+
+                                    #btnPage {
+                                        display: flex;
+                                        gap: 5px;
+
+                                        button {
+                                            width: 26px;
+                                            height: 26px;
+                                            @include button (14px, 500, #FFF9F4, rgba(47, 47, 65, 0.7), 1px solid rgba(47, 47, 65, 0.7), 0, 50%, rgba(255, 117, 6, 1), #FFF9F4);
+                                            margin: auto;
+
+                                            &:disabled {
+                                                background: rgba(#000000, 0);
+                                                color: #878890;
+
+                                            }
+                                        }
+                                    }
+
+                                    button {
+                                        &:disabled {
+                                            background: rgba(#000000, 0);
+                                            color: #878890;
+
+                                            &:hover {
+                                                background: rgba(#000000, 0);
+                                                color: #878890;
+                                            }
+                                        }
+
+
+                                        @include button (14px, 500, #FFF9F4, rgba(47, 47, 65, 0.7), 1px solid rgba(47, 47, 65, 0.7), 0, 50%,
+                                            rgba(47, 47, 65, 0.7), #ff7506);
+                                        margin: auto
+                                    }
                                 }
                             }
                         }
@@ -241,6 +335,7 @@
                     justify-content: center;
                     background: rgba(114, 114, 136, 0.5);
                     border-radius: 50%;
+                    cursor: pointer;
 
                     i {
                         font-size: 26px;
@@ -257,390 +352,5 @@
         }
     }
 
-    .playlist_content {
-        position: relative;
-        height: 90%;
-        width: 100%;
 
-        .content-title {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 90%;
-
-            .title_list {
-                height: 10%;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin: 5px;
-
-                .title-item {
-                    label {
-                        @include text(14px, 600, #ffffff);
-                        margin-right: 5px;
-                    }
-
-                    select {
-                        @include text(14px, 400, #ff7506);
-                        background: #1e1e2e;
-                        border: 1px solid #ff7506;
-                        border-radius: 8px;
-                        padding: 10px;
-                        margin: 5px 0;
-
-                        option {
-                            margin: 8px 0;
-                            background: #3e3e5b;
-                            border: 2px solid #1e1e2e;
-                            @include text(16px, 400, #ffffff);
-                        }
-                    }
-
-                    i {
-                        gap: 20px;
-                        font-size: 32px;
-
-                    }
-                }
-            }
-
-            .content-render {
-                height: 90%;
-
-
-                .content-table {
-                    height: 100%;
-
-                    .content-table-wrap {
-                        height: 100%;
-                        padding-bottom: 20px;
-
-                        table {
-                            width: 100%;
-                            height: 85%;
-                            background: rgba(47, 47, 65, 0.7);
-                            border-radius: 16px 16px 0 0;
-                            padding: 16px 24px;
-
-                            thead {
-                                tr {
-
-                                    .stt {
-                                        text-align: right;
-                                    }
-
-                                    th {
-                                        @include text(12px, 700, #ffac69);
-                                        margin: 0 10px;
-                                        text-align: left;
-                                        padding: 0 10px;
-
-                                    }
-                                }
-                            }
-
-                            tbody {
-                                tr:last-child {
-                                    &::after {
-                                        position: absolute;
-                                        bottom: 0;
-                                        left: 0;
-                                        content: '';
-                                        height: 0;
-                                        width: 0;
-                                        background: rgb(97, 96, 96);
-                                    }
-                                }
-
-                                tr {
-                                    position: relative;
-                                    vertical-align: middle;
-
-                                    &::after {
-                                        position: absolute;
-                                        left: 0;
-                                        bottom: 0;
-                                        content: '';
-                                        height: 1px;
-                                        width: 100%;
-                                        background: rgb(97, 96, 96);
-                                    }
-
-
-                                    td {
-                                        text-align: left;
-                                        padding: 0px 10px;
-                                        @include text(12px, 400, #FFFFFF);
-                                        border: none;
-
-
-                                    }
-
-                                    .text_right {
-                                        text-align: right;
-                                    }
-
-                                    .action {
-                                        a {
-                                            @include text(12px, 600, #FF7506);
-                                        }
-                                    }
-
-                                    .true_thoiHan {
-
-                                        position: relative;
-                                        padding-left: 10px;
-
-                                        &::before {
-                                            content: "";
-                                            position: absolute;
-                                            display: block;
-                                            width: 8px;
-                                            height: 8px;
-                                            border-radius: 50%;
-                                            background-color: blue;
-                                            top: 5px;
-                                            left: 0;
-                                        }
-                                    }
-
-                                    .false_thoiHan {
-                                        position: relative;
-                                        padding-left: 10px;
-
-                                        &::before {
-                                            content: "";
-                                            position: absolute;
-                                            display: block;
-                                            width: 8px;
-                                            height: 8px;
-                                            border-radius: 50%;
-                                            background-color: #878890;
-                                            top: 5px;
-                                            left: 0;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        .pagination-table {
-                            display: flex;
-                            justify-content: space-between;
-                            align-items: center;
-                            background: rgba(47, 47, 65, 0.7);
-                            border-radius: 0 0 16px 16px;
-                            padding: 0 24px;
-                            height: 15%;
-
-                            .pagination_left {
-                                p {
-                                    @include text (14px, 400, #F5F5FF);
-
-                                    select {
-                                        margin: 0 5px;
-                                        @include text(16px, 400, #ff7506);
-                                        background: rgba(47, 47, 65, 0.7);
-                                        border: 1px solid #ff7506;
-                                        border-radius: 8px;
-                                        padding: 5px 10px;
-
-                                        option {
-                                            margin: 8px 0;
-                                            background: #3e3e5b;
-                                            border: 2px solid #1e1e2e;
-                                            @include text(16px, 400, #ffffff);
-
-                                        }
-                                    }
-                                }
-                            }
-
-                            .pagination_right {
-                                width: 100px;
-                                display: flex;
-                                justify-content: space-evenly;
-                                gap: 5px;
-                                align-items: center;
-
-                                #btnPage {
-                                    display: flex;
-                                    gap: 5px;
-
-                                    button {
-                                        width: 26px;
-                                        height: 26px;
-                                        @include button (14px, 500, #FFF9F4, rgba(47, 47, 65, 0.7), 1px solid rgba(47, 47, 65, 0.7), 0, 50%, rgba(255, 117, 6, 1), #FFF9F4);
-                                        margin: auto;
-
-                                        &:disabled {
-                                            background: rgba(#000000, 0);
-                                            color: #878890;
-
-                                        }
-                                    }
-                                }
-
-                                button {
-                                    &:disabled {
-                                        background: rgba(#000000, 0);
-                                        color: #878890;
-
-                                        &:hover {
-                                            background: rgba(#000000, 0);
-                                            color: #878890;
-                                        }
-                                    }
-
-
-                                    @include button (14px, 500, #FFF9F4, rgba(47, 47, 65, 0.7), 1px solid rgba(47, 47, 65, 0.7), 0, 50%,
-                                        rgba(47, 47, 65, 0.7), #ff7506);
-                                    margin: auto
-                                }
-                            }
-                        }
-                    }
-                }
-
-                .content-card {
-                    height: 100%;
-
-                    .card-container {
-
-                        width: 100%;
-                        height: 85%;
-
-                        .card-list {
-                            height: 100%;
-                            display: flex;
-                            flex-wrap: wrap;
-                            justify-content: space-around;
-                            align-items: center;
-                            // grid-template-columns: auto auto auto auto;
-                            gap: 10px;
-                        }
-
-                        .pagination-card {
-                            display: flex;
-                            justify-content: space-between;
-                            align-items: center;
-                            margin-top: 15px;
-                            border-radius: 0 0 16px 16px;
-                            padding: 0 24px;
-                            height: 15%;
-
-                            .pagination_left {
-                                p {
-                                    @include text (14px, 400, #F5F5FF);
-
-                                    select {
-                                        margin: 0 5px;
-                                        @include text(16px, 400, #ff7506);
-                                        background: rgba(47, 47, 65, 0.7);
-                                        border: 1px solid #ff7506;
-                                        border-radius: 8px;
-                                        padding: 5px 10px;
-
-                                        option {
-                                            margin: 8px 0;
-                                            background: #3e3e5b;
-                                            border: 2px solid #1e1e2e;
-                                            @include text(16px, 400, #ffffff);
-
-                                        }
-                                    }
-                                }
-                            }
-
-                            .pagination_right {
-                                width: 100px;
-                                display: flex;
-                                justify-content: space-evenly;
-                                gap: 5px;
-                                align-items: center;
-
-                                #btnPage {
-                                    display: flex;
-                                    gap: 5px;
-
-                                    button {
-                                        width: 26px;
-                                        height: 26px;
-                                        @include button (14px, 500, #FFF9F4, rgba(47, 47, 65, 0.7), 1px solid rgba(47, 47, 65, 0.7), 0, 50%, rgba(255, 117, 6, 1), #FFF9F4);
-                                        margin: auto;
-
-                                        &:disabled {
-                                            background: rgba(#000000, 0);
-                                            color: #878890;
-
-                                        }
-                                    }
-                                }
-
-                                button {
-                                    &:disabled {
-                                        background: rgba(#000000, 0);
-                                        color: #878890;
-
-                                        &:hover {
-                                            background: rgba(#000000, 0);
-                                            color: #878890;
-                                        }
-                                    }
-
-
-                                    @include button (14px, 500, #FFF9F4, rgba(47, 47, 65, 0.7), 1px solid rgba(47, 47, 65, 0.7), 0, 50%,
-                                        rgba(47, 47, 65, 0.7), #ff7506);
-                                    margin: auto
-                                }
-                            }
-                        }
-                    }
-                }
-
-
-            }
-
-        }
-
-        .content-quanLyPheDuyet {
-            position: absolute;
-            top: 0;
-            right: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 16px;
-            width: 8%;
-            height: 130px;
-            background: #2f2f41;
-            border-radius: 16px 0px 0px 16px;
-            gap: 10px;
-
-            .bg_icon {
-                width: 52px;
-                height: 52px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background: rgba(114, 114, 136, 0.5);
-                border-radius: 50%;
-
-                i {
-                    font-size: 26px;
-                    color: #ff7506;
-                }
-            }
-
-            span {
-                text-align: center;
-                @include text (12px, 500, #ffffff);
-                line-height: 18px;
-                opacity: 0.7;
-
-            }
-        }
-    }
 }

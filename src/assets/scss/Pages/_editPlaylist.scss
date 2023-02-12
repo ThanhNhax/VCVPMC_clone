@@ -1,0 +1,410 @@
+.editplaylist {
+    height: 90%;
+    padding-left: 40px;
+
+    .container {
+        width: 100%;
+        height: 100%;
+
+        .content_top {
+            p {
+                @include text (16px, 600, #F5F5FF);
+
+                i {
+                    margin: 0 13px;
+                    color: #FFAC69;
+                }
+            }
+
+            h1 {
+                @include text(36px, 700, #ffffff);
+
+            }
+        }
+
+        .content_center {
+            height: 85%;
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 20px;
+
+            .center-left {
+                display: flex;
+                gap: 15px;
+                width: 100%;
+
+                .left-title {
+                    width: 20%;
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+
+                    .title-item {
+                        border-bottom: 1px solid #727288;
+                        padding: 8px 0;
+                    }
+
+                    .title-item:last-child {
+                        border: none;
+                    }
+
+                    .title-top {
+                        height: 45%;
+
+                        .img {
+                            margin: 0 auto;
+                            width: 150px;
+                            height: 150px;
+                            background-image: url('../../img/Frame-485.png');
+                            background-size: cover;
+                            background-repeat: no-repeat;
+                            background-position: center;
+                        }
+
+                        h3 {
+                            margin-top: 10px;
+                            @include text(20px, 700, #FFF9F4);
+                        }
+
+                        input {
+                            width: 100%;
+                            border: 1px solid #727288;
+                            border-radius: 8px;
+                            background: #2B2B3F;
+                            color: #F5F5F5;
+                            padding: 8px 24px 13px 16px;
+                        }
+                    }
+
+                    .title-table {
+                        margin: 0 0 8px 0;
+
+                        table {
+                            width: 100%;
+
+                            tr {
+                                td:first-child {
+                                    @include text(12px, 700, #ffffff);
+                                }
+
+                                td:last-child {
+                                    @include text(12px, 400, #ffffff);
+                                    opacity: 0.7;
+                                }
+                            }
+                        }
+                    }
+
+                    .title-decs {
+                        h5 {
+                            @include text(12px, 400, #ffffff);
+                        }
+
+                        textarea {
+                            width: 100%;
+                            height: 55px;
+                            border: 1px solid #727288;
+                            border-radius: 8px;
+                            background: #2B2B3F;
+                            color: #F5F5F5;
+                            padding: 8px 24px 13px 16px;
+
+                            &:focus {
+                                outline: 1px solid #727288;
+                            }
+                        }
+                    }
+
+                    .title-chuDe {
+                        // display: grid;
+                        // grid-template-columns: auto auto auto;
+                        // justify-content: space-evenly;
+                        // gap: 5px 40px;
+
+                        // p {
+                        //     @include text(10px, 400, #ffffff);
+                        //     opacity: 0.7;
+                        //     position: relative;
+
+                        //     &::after {
+                        //         position: absolute;
+                        //         left: -10px;
+                        //         bottom: 5px;
+                        //         content: "";
+                        //         height: 5px;
+                        //         width: 5px;
+                        //         border-radius: 50%;
+                        //         background: #347AFF;
+                        //     }
+                        // }
+                        textarea {
+                            width: 100%;
+                            height: 55px;
+                            border: 1px solid #727288;
+                            border-radius: 8px;
+                            background: #2B2B3F;
+                            color: #F5F5F5;
+                            padding: 8px 24px 13px 16px;
+
+                            &:focus {
+                                outline: 1px solid #727288;
+                            }
+                        }
+                    }
+
+                    .title-bottom {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-evenly;
+                        gap: 8px;
+
+                        .bottom-item {
+                            display: flex;
+                            gap: 10px;
+                            @include text(12px, 400, #ffffff);
+                            // opacity: 0.7;
+                        }
+                    }
+                }
+
+                .left-table {
+                    width: 80%;
+
+                    table {
+                        width: 100%;
+                        height: 75%;
+                        background: rgba(47, 47, 65, 0.7);
+                        border-radius: 16px 16px 0 0;
+                        padding: 16px 24px;
+
+                        thead {
+                            tr {
+                                th {
+                                    @include text(12px, 700, #ffac69);
+                                    margin: 0 10px;
+                                    text-align: left;
+                                    padding: 0 10px;
+
+                                }
+                            }
+                        }
+
+                        tbody {
+                            tr:last-child {
+                                &::after {
+                                    position: absolute;
+                                    bottom: 0;
+                                    left: 0;
+                                    content: '';
+                                    height: 0;
+                                    width: 0;
+                                    background: rgb(97, 96, 96);
+                                }
+                            }
+
+                            tr {
+                                position: relative;
+                                vertical-align: middle;
+                                height: 30px;
+
+                                &::after {
+                                    position: absolute;
+                                    left: 0;
+                                    bottom: 0;
+                                    content: '';
+                                    height: 1px;
+                                    width: 100%;
+                                    background: rgb(97, 96, 96);
+                                }
+
+
+                                td {
+                                    margin-top: 2px;
+                                    text-align: left;
+                                    padding: 0px 10px;
+                                    @include text(12px, 400, #FFFFFF);
+                                    border: none;
+
+                                    a {
+                                        @include text(12px, 600, #FF7506);
+                                    }
+                                }
+
+                                .td-chuDe {
+                                    display: flex;
+                                    gap: 5px;
+                                    align-items: center;
+
+                                    p {
+                                        padding: 3px 10px;
+                                        border: 1px solid #727288;
+                                        border-radius: 4px;
+                                    }
+
+                                }
+
+                                .text_right {
+                                    text-align: right;
+                                }
+
+                                .action {
+                                    @include text(12px, 600, #FF7506);
+                                    cursor: pointer;
+                                }
+                            }
+                        }
+                    }
+
+                    .pagination-table {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        background: rgba(47, 47, 65, 0.7);
+                        border-radius: 0 0 16px 16px;
+                        padding: 0 24px;
+                        height: 15%;
+
+                        .pagination_left {
+                            margin-bottom: 10px;
+
+                            p {
+                                @include text (14px, 400, #F5F5FF);
+
+                                input {
+                                    margin: 0 5px;
+                                    @include text(16px, 400, #ff7506);
+                                    background: rgba(47, 47, 65, 0.7);
+                                    border: 1px solid #ff7506;
+                                    border-radius: 8px;
+                                    padding: 5px 10px;
+                                    width: 40px;
+                                    color: #f5f5ff;
+                                    cursor: pointer;
+                                }
+                            }
+                        }
+
+                        .pagination_right {
+                            width: 100px;
+                            display: flex;
+                            justify-content: space-evenly;
+                            gap: 5px;
+                            align-items: center;
+
+                            #btnPage {
+                                display: flex;
+                                gap: 5px;
+
+                                button {
+                                    width: 26px;
+                                    height: 26px;
+                                    @include button (14px, 500, #FFF9F4, rgba(47, 47, 65, 0.7), 1px solid rgba(47, 47, 65, 0.7), 0, 50%, rgba(255, 117, 6, 1), #FFF9F4);
+                                    margin: auto;
+
+                                    &:disabled {
+                                        background: rgba(#000000, 0);
+                                        color: #878890;
+
+                                    }
+                                }
+                            }
+
+                            button {
+                                &:disabled {
+                                    background: rgba(#000000, 0);
+                                    color: #878890;
+
+                                    &:hover {
+                                        background: rgba(#000000, 0);
+                                        color: #878890;
+                                    }
+                                }
+
+
+                                @include button (14px, 500, #FFF9F4, rgba(47, 47, 65, 0.7), 1px solid rgba(47, 47, 65, 0.7), 0, 50%,
+                                    rgba(47, 47, 65, 0.7), #ff7506);
+                                margin: auto
+                            }
+                        }
+                    }
+
+                    .left-table-btn {
+                        p {
+                            padding-top: 5px;
+                            @include text(12px, 600, #f5f5f5);
+
+                            i {
+                                color: red;
+                                margin-right: 5px;
+                            }
+                        }
+
+                        .btn-list {
+                            display: flex;
+                            justify-content: center;
+                            gap: 20px;
+
+                            button:nth-child(1) {
+                                @include button (16px, 600, #FF7506, #1E1E2E, 12px 32px, 1px solid #FF7506, 8px, #FF7506, #ffffff)
+                            }
+
+                            button:nth-child(2) {
+                                @include button (16px, 600, #ffffff, #FF7506, 12px 32px, 1px solid #FF7506, 8px, #1E1E2E, #FF7506)
+                            }
+                        }
+                    }
+                }
+            }
+
+            .center-right {
+                width: 110px;
+
+
+
+                .menu-list {
+                    width: 100%;
+                    height: 120px;
+                    background: #2F2F41;
+                    border-radius: 16px 0px 0px 16px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: space-evenly;
+                    padding: 10px 0;
+                    gap: 10px;
+
+                    .menu-item {
+                        text-align: center;
+                        cursor: pointer;
+
+                        .bg-icon {
+                            width: 52px;
+                            height: 52px;
+                            background: rgba(114, 114, 136, 0.5);
+                            border-radius: 50%;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            margin: auto;
+
+                            i {
+                                font-size: 24px;
+                                color: #FF7506;
+                            }
+                        }
+
+                        p {
+                            margin-top: 10px;
+                            @include text (12px, 500, #ffffff);
+                            line-height: 18px;
+                            opacity: 0.7;
+
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+}

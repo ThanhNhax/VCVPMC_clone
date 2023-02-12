@@ -1,15 +1,83 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import ItemPlayList from "../../Components/ItemPlayList";
+import { AppDispatch, RootState } from "../../redux/configStore";
+import {
+  getArrPlayListFireStore,
+  PlayListRedux,
+  setItemPlayList,
+} from "../../redux/playListReducer/playListReducer";
 
 export default function Playlist() {
+  //Lấy Arr playList từ reudux về
+  const { arrPlayList } = useSelector((state: RootState) => state.playList);
+  const dispatch: AppDispatch = useDispatch();
   // cấu hình phân pages
   const [currentPage, setCurrentPage] = useState<number>(1); // Vị trí page hiện tại
-  const [limit, setLimit] = useState<number>(12); // change số item hiển thị
+  const [limit, setLimit] = useState<number>(13); // change số item hiển thị
   const indexOfLastNews = currentPage * limit; // vị trí cuối
   const indexOfFirstNews = indexOfLastNews - limit; // Vị trí đầu
-  // const totalPages = Math.ceil(arrKhoBanGhi.length / limit); // Tính số tổng số pages
-  // const newArrKho = arrKhoBanGhi.slice(indexOfFirstNews, indexOfLastNews);
+  const totalPages = Math.ceil(arrPlayList.length / limit); // Tính số tổng số pages
+  const newArrPlayList = arrPlayList.slice(indexOfFirstNews, indexOfLastNews);
   const [isStyleBtn, setIsStyleBtn] = useState<boolean>(false);
   // cấu hình phân pages
+
+  const [isTable, setIsTable] = useState<boolean>(true); // hiển thị dưới dạng table hoặc dạng card
+  const navigate = useNavigate();
+  useEffect(() => {
+    dispatch(getArrPlayListFireStore());
+  }, []);
+
+  const handleChiTiet = (item: PlayListRedux) => {
+    console.log(item.id);
+    // cập nhật itemPlayList lên redux
+    dispatch(setItemPlayList(item));
+  };
+  const renderPlayListTable = () => {
+    return newArrPlayList.map((item: PlayListRedux, index: number) => {
+      return (
+        <tr key={index}>
+          <td>{index + 1}</td>
+          <td>{item.tieuDe}</td>
+          <td>{item.soBanGhi}</td>
+          <td>{item.thoiLuong}</td>
+          <td className="td-chuDe">
+            {item?.chuDe?.map((chuDe: string, index: number) => {
+              return <p key={index}>{chuDe}</p>;
+            })}
+          </td>
+          <td>{item.ngayTao}</td>
+          <td>{item.nguoiTao}</td>
+          <td className="action">
+            <Link
+              to={"/admin/playlist/xemchitiet"}
+              onClick={() => handleChiTiet(item)}
+            >
+              Chi tiết
+            </Link>
+          </td>
+        </tr>
+      );
+    });
+  };
+
+  const renderButtonPage = (n: number) => {
+    let btn: any = "";
+    for (let i = 0; i < n; i++) {
+      btn += `<button
+          className=${isStyleBtn ? "btn-item-active btn-item" : "btn-item"}
+          >
+          ${i + 1}
+        </button>`;
+    }
+    return { __html: btn };
+  };
+  const renderPlayListCard = () => {
+    return newArrPlayList.map((item: PlayListRedux, index: number) => {
+      return <ItemPlayList item={item} isCheck={false} key={index} />;
+    });
+  };
   return (
     <div className="playlist">
       <h1>Playlist</h1>
@@ -30,31 +98,33 @@ export default function Playlist() {
               </form>
               <div className="title-item">
                 <i
-                  // style={isTable ? { color: "#FF7506" } : {}}
-                  // onClick={() => {
-                  //   setIsTable(true);
-                  //   setLimit(12);
-                  //   setCurrentPage(1);
-                  // }}
+                  style={isTable ? { color: "#FF7506" } : {}}
+                  onClick={() => {
+                    setIsTable(true);
+                    setCurrentPage(1);
+                  }}
                   className="fas fa-list-ul"
                 ></i>
                 <i
-                  // onClick={() => {
-                  //   setIsTable(false);
-                  //   setLimit(8);
-                  //   setCurrentPage(1);
-                  // }}
-                  // style={
-                  //   !isTable
-                  //     ? { color: "#FF7506", marginLeft: "10px" }
-                  //     : { marginLeft: "10px" }
-                  // }
+                  onClick={() => {
+                    setIsTable(false);
+                    setLimit(8);
+                    setCurrentPage(1);
+                  }}
+                  style={
+                    !isTable
+                      ? { color: "#FF7506", marginLeft: "10px" }
+                      : { marginLeft: "10px" }
+                  }
                   className="fas fa-border-all"
                 ></i>
               </div>
             </div>
             <div className="content-render">
-              <div className="render-table">
+              <div
+                className="render-table"
+                style={isTable ? { display: "block" } : { display: "none" }}
+              >
                 <table>
                   <thead>
                     <tr>
@@ -68,51 +138,13 @@ export default function Playlist() {
                       <th></th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Top ca khúc 2021</td>
-                      <td>20</td>
-                      <td>01:04:3</td>
-                      <td className="td-chuDe">
-                        <p>Pop</p>
-                        <p>Chill</p>
-                        <p>Songs</p>
-                      </td>
-                      <td>22/10/2020</td>
-                      <td>Cindy Cường</td>
-                      <td className="action">Chi tiết</td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>Top ca khúc 2021</td>
-                      <td>20</td>
-                      <td>01:04:3</td>
-                      <td className="td-chuDe">
-                        <p>Pop</p>
-                        <p>Chill</p>
-                        <p>Songs</p>
-                      </td>
-                      <td>22/10/2020</td>
-                      <td>Cindy Cường</td>
-                      <td className="action">Chi tiết</td>
-                    </tr>
-                  </tbody>
+                  <tbody>{renderPlayListTable()}</tbody>
                 </table>
                 <div className="pagination-table">
                   <div className="pagination_left">
                     <p>
                       Hiển thị
-                      <select
-                        value={limit}
-                        onChange={(e) => {
-                          setLimit(parseInt(e.target.value));
-                        }}
-                      >
-                        <option value="12">12</option>
-                        <option value="6">6</option>
-                        <option value="8">8</option>
-                      </select>
+                      <input defaultValue="13"></input>
                       hàng trong mỗi trang
                     </p>
                   </div>
@@ -125,25 +157,76 @@ export default function Playlist() {
                         }
                         setCurrentPage(currentPage - 1);
                       }}
-                    >{`<`}</button>
+                    >
+                      <i className="fas fa-chevron-left"></i>
+                    </button>
                     <div
                       id="btnPage"
-                      // dangerouslySetInnerHTML={renderButtonPage(totalPages)}
+                      dangerouslySetInnerHTML={renderButtonPage(totalPages)}
                     ></div>
                     <button
-                      // disabled={currentPage >= totalPages}
+                      disabled={currentPage >= totalPages}
                       onClick={() => {
                         setCurrentPage(currentPage + 1);
                       }}
-                    >{`>`}</button>
+                    >
+                      <i className="fas fa-chevron-right"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="render-card"
+                style={!isTable ? { display: "block" } : { display: "none" }}
+              >
+                <div className="card-container">
+                  <div className="card-list">{renderPlayListCard()}</div>
+                  <div className="pagination-card">
+                    <div className="pagination_left">
+                      <p>
+                        Hiển thị
+                        <input defaultValue={8} />
+                        hàng trong mỗi trang
+                      </p>
+                    </div>
+                    <div className="pagination_right">
+                      <button
+                        disabled={currentPage === 1}
+                        onClick={() => {
+                          if (currentPage === 1) {
+                            setCurrentPage(1);
+                          }
+                          setCurrentPage(currentPage - 1);
+                        }}
+                      >
+                        <i className="fas fa-chevron-left"></i>
+                      </button>
+                      <div
+                        id="btnPage"
+                        dangerouslySetInnerHTML={renderButtonPage(totalPages)}
+                      ></div>
+                      <button
+                        disabled={currentPage >= totalPages}
+                        onClick={() => {
+                          setCurrentPage(currentPage + 1);
+                        }}
+                      >
+                        <i className="fas fa-chevron-right"></i>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div className="playlist_content-addPlaylsit">
-            <div className="bg_icon">
-              {/* <i className="fas fa-bars"></i> */}
+            <div
+              className="bg_icon"
+              onClick={() => {
+                navigate("/admin/addplaylist");
+                console.log("/admin/addplaylist");
+              }}
+            >
               <i className="fas fa-plus"></i>
             </div>
             <p>Thêm Playlist</p>

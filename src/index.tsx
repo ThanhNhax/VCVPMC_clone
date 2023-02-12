@@ -29,6 +29,11 @@ import TemplateUser from "./pages/DangNhap/TemplateUser";
 import CapnhatMatKhau from "./pages/DangNhap/CapnhatMatKhau";
 import LinkError from "./pages/DangNhap/LinkError";
 import QuanLyPheDuyet from "./pages/KhoBanGhi/QuanLyPheDuyet";
+import XemChiTietPlayList from "./pages/Playlist/XemChiTietPlayList";
+import EditPlayList from "./pages/Playlist/EditPlayList";
+import AddBanGhi from "./pages/Playlist/AddBanGhi";
+import AddPlayList from "./pages/Playlist/AddPlayList";
+import AddBanGhiPlaylist from "./pages/Playlist/AddBanGhiPlaylist";
 export const history: any = createBrowserHistory();
 
 const root = ReactDOM.createRoot(
@@ -51,7 +56,11 @@ root.render(
 
         <Route>
           <Route path="/admin" element={<TemplateAmin />}>
-            <Route index element={<KhoBanGhi />}></Route>
+            <Route
+              index
+              path="/admin/khobanghi"
+              element={<KhoBanGhi />}
+            ></Route>
             <Route
               path="/admin/khobanghi/capnhat"
               element={<CapNhatkhoBanGhi />}
@@ -61,6 +70,20 @@ root.render(
               element={<QuanLyPheDuyet />}
             ></Route>
             <Route path="/admin/playlist" element={<Playlist />}></Route>
+            <Route
+              path="/admin/playlist/xemchitiet"
+              element={<XemChiTietPlayList />}
+            ></Route>
+            <Route
+              path="/admin/editplaylist"
+              element={<EditPlayList />}
+            ></Route>
+            <Route path="/admin/addbanghi" element={<AddBanGhi />}></Route>
+            <Route path="/admin/addplaylist" element={<AddPlayList />}></Route>
+            <Route
+              path="/admin/addbanghiplaylist"
+              element={<AddBanGhiPlaylist />}
+            ></Route>
             <Route path="/admin/laplichphat" element={<LapLichPhat />}></Route>
             <Route
               path="/admin/thongtincoban"

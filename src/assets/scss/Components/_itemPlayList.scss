@@ -1,0 +1,83 @@
+.itemPlayList {
+    width: 24%;
+    height: 200px;
+    background: #393955;
+
+    img {
+        width: 100%;
+        height: 50%;
+        border-radius: 8px 8px 0 0;
+    }
+
+    .itemPlayList_title {
+        background: #393955;
+        border-radius: 0px 0px 8px 8px;
+        padding: 0 10px 10px;
+        height: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+
+        h4 {
+            @include text (12px, 600, #ffffff);
+        }
+
+        .chuDe-tilte {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+
+            p {
+                padding: 3px 10px;
+                border: 1px solid #727288;
+                border-radius: 4px;
+            }
+        }
+
+        p {
+            @include text (8px, 400, #F5F5FF);
+
+        }
+
+        .title-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .item-list {
+                display: flex;
+                gap: 8px;
+
+                .item {
+                    text-align: center;
+                    border: 1px solid #727288;
+                    border-radius: 6px;
+                    padding: 4px 12px;
+
+                    p {
+                        @include text (8px, 700, #727288);
+                    }
+                }
+            }
+
+            .item-edit {
+                .bg-icon {
+                    background: rgba(0, 0, 0, 0);
+                    border: 2px solid #FF7506;
+                    border-radius: 50%;
+                    width: 20px;
+                    height: 20px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    i {
+                        color: #FF7506;
+                        font-size: 10px;
+                    }
+                }
+            }
+        }
+
+    }
+}

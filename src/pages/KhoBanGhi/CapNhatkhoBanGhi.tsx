@@ -17,7 +17,7 @@ export default function CapNhatkhoBanGhi() {
   const navigate = useNavigate();
   useEffect(() => {
     if (item.tenBanGhi == "") {
-      navigate("/admin");
+      navigate("/admin/khobanghi");
     }
   }, []);
 
@@ -29,7 +29,7 @@ export default function CapNhatkhoBanGhi() {
     try {
       deleteDoc(khoBanGhiRef);
       //chuyển về page kho ban ghi
-      navigate("/admin");
+      navigate("/admin/khobanghi");
       message.success("xóa thành công!");
     } catch (error) {
       console.log({ error });
@@ -232,7 +232,7 @@ export default function CapNhatkhoBanGhi() {
         <button
           type="button"
           onClick={() => {
-            history.push("/admin/");
+            history.push("/admin/khobanghi");
           }}
         >
           Huỷ

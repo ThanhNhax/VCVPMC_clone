@@ -1,6 +1,13 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { doc, getFirestore, setDoc } from "firebase/firestore";
+import {
+  arrayUnion,
+  doc,
+  FieldValue,
+  getFirestore,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -22,8 +29,29 @@ export const auth = getAuth(app);
 
 ///
 
-// const cityRef = doc(db, "cities", "CA");
-// setDoc(cityRef, { capital: true }, { merge: false });
+// const cityRef = doc(db, "playList", "7fR314PFFiof20b94tFR");
+// setDoc(
+//   cityRef,
+//   {
+//     arrBanGhi: [
+//       {
+//         caSi: "Phan Mạnh Quỳnh",
+//         dinhDang: "Audio",
+//         id: "4x6DPzZXo936ql28ecap",
+//         maISRC: "sdsfwefdsf",
+//         ngayTai: "2023-2-12 ",
+//         nhaSanXuat: "",
+//         soHopDong: "",
+//         tacGia: "Phan Mạnh Quỳnh",
+//         tenBanGhi: "Mắt em",
+//         theLoai: "EDM",
+//         thoiHanSuDung: { thoiHan: false, thoiGian: "2023-09-24" },
+//         thoiLuong: "04:17",
+//       },
+//     ],
+//   },
+//   { merge: true }
+// );
 // deleteDoc(cityRef);
 // setDoc(doc(db, "khoBanGhi", "ZaWSiITsY6H8uHSvNBWA"), {
 //   ngayTai: "2023-2-12 ",
@@ -53,3 +81,19 @@ export const auth = getAuth(app);
 //   ngayTao: 2 - 3 - 2022,
 //   nguoiTao: "Thanh Nhã",
 // });
+
+// demo updata
+// const user = {
+//   ten: "thanh nha",
+//   tuoi: 23,
+// };
+// const goRef = doc(db, "cities", "BJ", 'arrBanGhi');
+
+// // Atomically add a new region to the "regions" array field.
+// try{
+//   updateDoc(goRef,{
+//     0.
+//   })
+// }catch(e){
+//   console.log(e)
+// }
