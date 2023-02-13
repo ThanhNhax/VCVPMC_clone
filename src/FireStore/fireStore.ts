@@ -1,7 +1,9 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import {
+  addDoc,
   arrayUnion,
+  collection,
   doc,
   FieldValue,
   getFirestore,
@@ -97,3 +99,5 @@ export const auth = getAuth(app);
 // }catch(e){
 //   console.log(e)
 // }
+
+// add data khi không có id : => auto ID

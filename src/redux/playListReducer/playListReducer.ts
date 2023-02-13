@@ -1,12 +1,23 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { collection, onSnapshot, query } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  onSnapshot,
+  query,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
+import ItemPlayList from "../../Components/ItemPlayList";
 import { db } from "../../FireStore/fireStore";
 import { AppDispatch } from "../configStore";
 import { KhoBanGhiRedux } from "../khoBanGhi/khoBanghiReducer";
 
 export interface PlayListRedux {
+  anhBia: string | null;
   desc: string | null;
-  id: string | null;
+  id: string | undefined;
   ngayTao: string | null;
   nguoiTao: string | null;
   soBanGhi: number | null;
@@ -23,14 +34,15 @@ export interface PlayListState {
 const initialState: PlayListState = {
   newPlayList: {
     arrBanGhi: undefined,
-    chuDe: [null],
-    id: null,
+    chuDe: [""],
+    id: "",
     ngayTao: null,
     nguoiTao: null,
     soBanGhi: null,
     thoiLuong: null,
     tieuDe: null,
     desc: null,
+    anhBia: null,
   },
   itemPlayList: {
     arrBanGhi: undefined,
@@ -42,6 +54,7 @@ const initialState: PlayListState = {
     thoiLuong: "",
     tieuDe: "",
     desc: "",
+    anhBia: null,
   },
   arrPlayList: [],
 };
@@ -79,21 +92,46 @@ const playListReducer = createSlice({
       state: PlayListState,
       action: PayloadAction<number>
     ) => {
+      console.log(state.itemPlayList.arrBanGhi);
       if (state.itemPlayList.arrBanGhi !== undefined) {
         state.itemPlayList.arrBanGhi.splice(action.payload, 1);
+        // Cập nhật lên FireStore
+        // if (state.itemPlayList.id !== undefined) {
+        //   const itemPlayListRef = doc(db, "playList", state.itemPlayList.id);
+        //   try {
+        //     setDoc(itemPlayListRef, state.itemPlayList, { merge: true });
+        //   } catch (e) {
+        //     console.log(e);
+        //   }
+        // }
       }
     },
     setNewPlayListArrBanGhiRedux: (
       state: PlayListState,
       action: PayloadAction<KhoBanGhiRedux>
     ) => {
-      if (state.newPlayList.arrBanGhi !== undefined) {
-        state.newPlayList.arrBanGhi.push(action.payload);
+      if (state.newPlayList.arrBanGhi === undefined) {
+        let newArr: KhoBanGhiRedux[] = [];
+        newArr.push(action.payload);
+        state.newPlayList.arrBanGhi = newArr;
       } else {
-        let newarr: KhoBanGhiRedux[] = [];
-        newarr.push(action.payload);
-        state.newPlayList.arrBanGhi = newarr;
+        state.newPlayList.arrBanGhi.push(action.payload);
       }
+    },
+    deleteArrBanghiPlaylist: (
+      state: PlayListState,
+      action: PayloadAction<number>
+    ) => {
+      if (state.newPlayList !== undefined) {
+        state.newPlayList.arrBanGhi?.splice(action.payload, 1);
+      }
+    },
+    setNewPlayList: (
+      state: PlayListState,
+      action: PayloadAction<PlayListRedux>
+    ) => {
+      console.log("setNewPlaylist", action.payload);
+      state.newPlayList = action.payload;
     },
   },
 });
@@ -104,6 +142,8 @@ export const {
   addBanGhiItemPlaylist,
   deleteArrBanGhiRedux,
   setNewPlayListArrBanGhiRedux,
+  deleteArrBanghiPlaylist,
+  setNewPlayList,
 } = playListReducer.actions;
 
 export default playListReducer.reducer;
@@ -123,6 +163,53 @@ export const getArrPlayListFireStore = () => {
       });
     } catch (error) {
       console.log({ error });
+    }
+  };
+};
+
+//
+export const addNewPlaylist = (playlist: PlayListRedux) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      console.log("addNewOlaylist: ", playlist);
+      const docRef = await addDoc(collection(db, "playList"), {
+        arrBanGhi: playlist.arrBanGhi,
+        chuDe: playlist.chuDe,
+        desc: "",
+        ngayTao: "",
+        nguoiTao: "",
+        soBanGhi: 0,
+        thoiLuong: "",
+        tieuDe: "",
+        id: "",
+      });
+
+      console.log("Document written with ID: ", docRef.id);
+      dispatch(getItemPlayList(docRef.id));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};
+
+export const getItemPlayList = (id: string) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      let newItem: any;
+      const docRef = doc(db, "playList", id);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        console.log("Document data:", docSnap.data());
+        newItem = docSnap.data();
+        newItem.id = docRef.id;
+        dispatch(setNewPlayList(newItem));
+      } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
 };

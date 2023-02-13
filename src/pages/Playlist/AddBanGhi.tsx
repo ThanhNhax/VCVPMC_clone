@@ -174,7 +174,7 @@ export default function AddBanGhi({}: Props) {
   // xử ly updata khi handle submit
   const handleSubmit = async () => {
     console.log("id: ", itemPlayList.id, itemPlayList);
-    if (itemPlayList.id !== null) {
+    if (itemPlayList.id !== undefined) {
       const itemPlaylistRef = doc(db, "playList", itemPlayList.id);
       try {
         setDoc(

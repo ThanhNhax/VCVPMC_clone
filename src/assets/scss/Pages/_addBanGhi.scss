@@ -11,16 +11,21 @@
             height: 10%;
 
             p {
-                @include text(12px, 400, #f5f5f5);
+                @include text (16px, 600, #F5F5FF);
+                opacity: 0.5;
 
                 i {
-                    margin: 0 5px;
-                    color: #FFAC69
+                    margin: 0 13px;
+                    color: #FFAC69;
+                }
+
+                span {
+                    cursor: pointer;
                 }
             }
 
             h1 {
-                @include text(36px, 700, #ffffff);
+                @include text(24px, 700, #ffffff);
             }
         }
 
@@ -157,8 +162,6 @@
                                     padding: 0px 10px;
                                     @include text(12px, 400, #FFFFFF);
                                     border: none;
-
-
                                 }
 
                                 .text_right {

@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { message, Modal } from "antd";
-import { doc, setDoc } from "firebase/firestore";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { db } from "../../FireStore/fireStore";
 import { AppDispatch, RootState } from "../../redux/configStore";
 import {
   getArrKhoBanGhiFireStore,
   KhoBanGhiRedux,
 } from "../../redux/khoBanGhi/khoBanghiReducer";
 import {
-  deleteArrBanGhiRedux,
-  setItemPlayList,
+  addNewPlaylist,
+  deleteArrBanghiPlaylist,
+  PlayListRedux,
   setNewPlayListArrBanGhiRedux,
 } from "../../redux/playListReducer/playListReducer";
+import { collection, doc, setDoc } from "firebase/firestore";
+import { db } from "../../FireStore/fireStore";
 
 export default function AddBanGhiPlaylist() {
   const { newPlayList } = useSelector((state: RootState) => state.playList);
@@ -35,7 +36,7 @@ export default function AddBanGhiPlaylist() {
 
   // Tính số tổng số pages kho bản ghi
   const newArrKho = arrKhoBanGhi?.slice(indexOfFirstNews, indexOfLastNews);
-  const newArrPlayList = newPlayList.arrBanGhi?.slice(
+  const newArrPlayList = newPlayList?.arrBanGhi?.slice(
     indexOfFirstNews,
     indexOfLastNews
   );
@@ -70,6 +71,25 @@ export default function AddBanGhiPlaylist() {
     // Call arrKhoBanGhi từ FireStore về
     dispatch(getArrKhoBanGhiFireStore());
   }, []);
+  // handleSubmit
+  const handleSubmit = () => {
+    console.log("Submit", { newPlayList });
+    if (newPlayList.arrBanGhi?.length === 0) {
+      message.open({
+        type: "error",
+        content: "Kho Bản ghi chưa có dữ liệu",
+        duration: 0.8,
+      });
+    } else {
+      dispatch(addNewPlaylist(newPlayList));
+      message.open({
+        type: "success",
+        content: "Thêm thành công!",
+        duration: 0.8,
+      });
+      navigate("/admin/addplaylist");
+    }
+  };
 
   //tạo ra table kho bản ghi
   const renderKhoBanGhiTable = () => {
@@ -145,17 +165,19 @@ export default function AddBanGhiPlaylist() {
               </td>
               <td>{khoBanGhi?.caSi}</td>
               <td>{khoBanGhi?.tacGia}</td>
-              <td className="action" onClick={showModal}>
-                Nghe
-              </td>
+              <td className="action">Nghe</td>
               <td
                 className="action"
                 onClick={() => {
                   if (newPlayList.arrBanGhi !== undefined) {
+                    console.log("newPlaylist.arBanGhi !== undef");
                     const indexDelete = newPlayList.arrBanGhi.findIndex(
                       (item) => item?.id === khoBanGhi?.id
                     );
-                    dispatch(deleteArrBanGhiRedux(indexDelete));
+                    dispatch(deleteArrBanghiPlaylist(indexDelete));
+                    if (newPlayList.arrBanGhi.length === 1) {
+                      setIsNullData(true);
+                    }
                   }
                 }}
               >
@@ -180,28 +202,6 @@ export default function AddBanGhiPlaylist() {
     return { __html: btn };
   };
 
-  // xử ly updata khi handle submit
-  // const handleSubmit = async () => {
-  //   console.log("id: ", itemPlayList.id, itemPlayList);
-  //   const itemPlaylistRef = doc(db, "playList", itemPlayList.id);
-  //   try {
-  //     setDoc(
-  //       itemPlaylistRef,
-  //       { arrBanGhi: itemPlayList.arrBanGhi },
-  //       { merge: true }
-  //     );
-  //     message.open({
-  //       type: "success",
-  //       content: "Cập nhật thành công!",
-  //       duration: 0.8,
-  //     });
-  //     //cập nhật lại itemPlayList
-  //     dispatch(setItemPlayList(itemPlayList));
-  //     navigate("/admin/editplaylist");
-  //   } catch (e) {
-  //     console.log({ e });
-  //   }
-  // };
   return (
     <div className="addbanghi">
       <div className="addbanghgi_container">
@@ -410,10 +410,7 @@ export default function AddBanGhiPlaylist() {
           >
             Hủy
           </button>
-          <button
-            type="submit"
-            // onClick={handleSubmit}
-          >
+          <button type="submit" onClick={handleSubmit}>
             Lưu
           </button>
         </div>

@@ -61,7 +61,7 @@ export default function EditPlayList({}: Props) {
 
   const handleSubmit = async () => {
     console.log("id: ", itemPlayList.id, itemPlayList);
-    if (itemPlayList.id !== null) {
+    if (itemPlayList.id !== undefined) {
       const itemPlaylistRef = doc(db, "playList", itemPlayList.id);
       try {
         setDoc(
@@ -76,7 +76,7 @@ export default function EditPlayList({}: Props) {
         });
         //cập nhật lại itemPlayList
         dispatch(setItemPlayList(itemPlayList));
-        // navigate("/admin/editplaylist");
+        navigate("/admin/playlist/xemchitiet");
       } catch (e) {
         console.log({ e });
       }
@@ -257,7 +257,9 @@ export default function EditPlayList({}: Props) {
                   >
                     Hủy
                   </button>
-                  <button type="submit">Lưu</button>
+                  <button type="submit" onClick={handleSubmit}>
+                    Lưu
+                  </button>
                 </div>
               </div>
             </div>

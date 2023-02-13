@@ -1,8 +1,13 @@
+import { AnyAction } from "@reduxjs/toolkit";
+import { message, Modal } from "antd";
+import { deleteDoc, doc } from "firebase/firestore";
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { db } from "../../FireStore/fireStore";
 import { RootState } from "../../redux/configStore";
 import { KhoBanGhiRedux } from "../../redux/khoBanGhi/khoBanghiReducer";
+import { deleteArrBanGhiRedux } from "../../redux/playListReducer/playListReducer";
 
 type Props = {};
 
@@ -16,6 +21,7 @@ export default function XemChiTietPlayList({}: Props) {
   // Lấy itemPlayList tuef redux về
   const { itemPlayList } = useSelector((state: RootState) => state.playList);
   console.log({ itemPlayList });
+  const dispatch = useDispatch();
   // cấu hình phân pages
   const [currentPage, setCurrentPage] = useState<number>(1); // Vị trí page hiện tại
   const [limit, setLimit] = useState<number>(13); // change số item hiển thị
@@ -32,6 +38,37 @@ export default function XemChiTietPlayList({}: Props) {
   const [isStyleBtn, setIsStyleBtn] = useState<boolean>(false);
   // cấu hình phân pages
   const navigate = useNavigate();
+
+  // xử  lý modal popup
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleDelete = () => {
+    try {
+      if (itemPlayList.id !== undefined) {
+        deleteDoc(doc(db, "playList", itemPlayList.id));
+        message.open({
+          type: "success",
+          content: "Xoá thành công!",
+          duration: 0.8,
+        });
+        navigate("/admin/playlist");
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   useEffect(() => {
     if (itemPlayList?.id == "") {
@@ -77,8 +114,27 @@ export default function XemChiTietPlayList({}: Props) {
             </td>
             <td>{banGhi?.caSi}</td>
             <td>{banGhi?.tacGia}</td>
-            <td className="action">Nghe</td>
-            <td className="action">Gỡ</td>
+            <td className="action" onClick={showModal}>
+              Nghe
+            </td>
+            <td
+              className="action"
+              onClick={() => {
+                if (itemPlayList.arrBanGhi !== undefined) {
+                  const indexDelete: number = itemPlayList.arrBanGhi.findIndex(
+                    (item) => item?.id === banGhi?.id
+                  );
+                  dispatch(deleteArrBanGhiRedux(indexDelete));
+                  message.open({
+                    type: "success",
+                    content: "Gỡ thành công!",
+                    duration: 0.8,
+                  });
+                }
+              }}
+            >
+              Gỡ
+            </td>
           </tr>
         );
       }
@@ -212,7 +268,7 @@ export default function XemChiTietPlayList({}: Props) {
                 <p>Chỉnh sửa</p>
               </div>
               <div className="menu-item">
-                <div className="bg-icon">
+                <div className="bg-icon" onClick={handleDelete}>
                   <i className="far fa-trash-alt"></i>
                 </div>
                 <p>Xóa playlist</p>
@@ -221,6 +277,22 @@ export default function XemChiTietPlayList({}: Props) {
           </div>
         </div>
       </div>
+      <Modal
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        footer={null}
+        wrapClassName="modal-video"
+        width={480}
+      >
+        <video
+          width="452"
+          height="247"
+          // src="https://www.youtube.com/embed/PoXDg2saXX8"
+          title="YouTube video player"
+          // frameborder="0"
+        ></video>
+      </Modal>
     </div>
   );
 }

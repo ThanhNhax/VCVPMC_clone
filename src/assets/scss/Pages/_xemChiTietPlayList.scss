@@ -220,6 +220,7 @@
 
                                 .action {
                                     @include text(12px, 600, #FF7506);
+                                    cursor: pointer;
                                 }
                             }
                         }
