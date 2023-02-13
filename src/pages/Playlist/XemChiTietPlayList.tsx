@@ -21,7 +21,10 @@ export default function XemChiTietPlayList({}: Props) {
   const [limit, setLimit] = useState<number>(13); // change số item hiển thị
   const indexOfLastNews = currentPage * limit; // vị trí cuối
   const indexOfFirstNews = indexOfLastNews - limit; // Vị trí đầu
-  const totalPages = Math.ceil(itemPlayList?.arrBanGhi?.length / limit); // Tính số tổng số pages
+  let totalPages: number = 1;
+  if (itemPlayList?.arrBanGhi !== undefined) {
+    totalPages = Math.ceil(itemPlayList?.arrBanGhi?.length / limit); // Tính số tổng số pages
+  }
   const newArrPlayList = itemPlayList?.arrBanGhi?.slice(
     indexOfFirstNews,
     indexOfLastNews
@@ -48,36 +51,38 @@ export default function XemChiTietPlayList({}: Props) {
   };
 
   const renderBanGhiTable = () => {
-    return newArrPlayList.map((banGhi: KhoBanGhiRedux, index: number) => {
-      return (
-        <tr key={index}>
-          <td>{index + 1}</td>
-          <td>
-            <div className="td-tenBanGhi">
-              <p>{banGhi.tenBanGhi}</p>
-              <div
-                className="td-bottom"
-                style={{
-                  display: "flex",
-                  gap: "5px",
-                  alignItems: "center",
-                }}
-              >
-                <p>{banGhi.theLoai}</p>
-                <i className="fas fa-circle" style={styleI}></i>
-                <p>{banGhi.dinhDang}</p>
-                <i className="fas fa-circle" style={styleI}></i>
-                <p>{banGhi.thoiLuong}</p>
+    return newArrPlayList?.map(
+      (banGhi: KhoBanGhiRedux | undefined, index: number) => {
+        return (
+          <tr key={index}>
+            <td>{index + 1}</td>
+            <td>
+              <div className="td-tenBanGhi">
+                <p>{banGhi?.tenBanGhi}</p>
+                <div
+                  className="td-bottom"
+                  style={{
+                    display: "flex",
+                    gap: "5px",
+                    alignItems: "center",
+                  }}
+                >
+                  <p>{banGhi?.theLoai}</p>
+                  <i className="fas fa-circle" style={styleI}></i>
+                  <p>{banGhi?.dinhDang}</p>
+                  <i className="fas fa-circle" style={styleI}></i>
+                  <p>{banGhi?.thoiLuong}</p>
+                </div>
               </div>
-            </div>
-          </td>
-          <td>{banGhi.caSi}</td>
-          <td>{banGhi.tacGia}</td>
-          <td className="action">Nghe</td>
-          <td className="action">Gỡ</td>
-        </tr>
-      );
-    });
+            </td>
+            <td>{banGhi?.caSi}</td>
+            <td>{banGhi?.tacGia}</td>
+            <td className="action">Nghe</td>
+            <td className="action">Gỡ</td>
+          </tr>
+        );
+      }
+    );
   };
   return (
     <div className="xemChiTietPlayList">
@@ -123,9 +128,11 @@ export default function XemChiTietPlayList({}: Props) {
                 <p>{itemPlayList?.desc}</p>
               </div>
               <div className="title-chuDe title-item">
-                {itemPlayList?.chuDe?.map((chuDe: string, index: number) => {
-                  return <p key={index}>{chuDe}</p>;
-                })}
+                {itemPlayList?.chuDe?.map(
+                  (chuDe: string | null, index: number) => {
+                    return <p key={index}>{chuDe}</p>;
+                  }
+                )}
               </div>
               <div className="title-bottom title-item">
                 <div className="bottom-item">

@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../FireStore/fireStore";
 import { message } from "antd";
+import { KhoBanGhiRedux } from "../../redux/khoBanGhi/khoBanghiReducer";
 
 export default function CapNhatkhoBanGhi() {
   //Lấy Item kho bản ghi từ redux về
@@ -16,23 +17,24 @@ export default function CapNhatkhoBanGhi() {
   const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
-    if (item.tenBanGhi == "") {
+    if (item == null) {
       navigate("/admin/khobanghi");
     }
   }, []);
 
   // delete item kho bản ghi
-  const handleDelete = (id: string) => {
+  const handleDelete = (id: string | null) => {
     //dispatch dc cái id của item
-    console.log({ id });
-    const khoBanGhiRef = doc(db, "khoBanGhi", id);
-    try {
-      deleteDoc(khoBanGhiRef);
-      //chuyển về page kho ban ghi
-      navigate("/admin/khobanghi");
-      message.success("xóa thành công!");
-    } catch (error) {
-      console.log({ error });
+    if (id !== null) {
+      const khoBanGhiRef = doc(db, "khoBanGhi", id);
+      try {
+        deleteDoc(khoBanGhiRef);
+        //chuyển về page kho ban ghi
+        navigate("/admin/khobanghi");
+        message.success("xóa thành công!");
+      } catch (error) {
+        console.log({ error });
+      }
     }
   };
   const initialValues = {
@@ -56,7 +58,7 @@ export default function CapNhatkhoBanGhi() {
           Kho bản ghi <i className="fas fa-chevron-right"></i> Cập nhật thông
           tin
         </p>
-        <h3>Bản ghi - {item.tenBanGhi}</h3>
+        <h3>Bản ghi - {item?.tenBanGhi}</h3>
       </div>
       <div className="capNhatKhoBanGhi_content">
         <div className="content_left">
@@ -71,7 +73,7 @@ export default function CapNhatkhoBanGhi() {
               </div>
               <div className="music">
                 <i className="fas fa-music"></i>
-                <span>{item.tenBanGhi}.mp3</span>
+                <span>{item?.tenBanGhi}.mp3</span>
               </div>
             </div>
             <div className="table_thongTin">
@@ -139,7 +141,7 @@ export default function CapNhatkhoBanGhi() {
                       type="text"
                       name="tenBanGhi"
                       id="tenBanGhi"
-                      value={item.tenBanGhi}
+                      value={item?.tenBanGhi}
                     />
                     {errors.tenBanGhi && touched.tenBanGhi ? (
                       <p className="text-danger">{errors.tenBanGhi}</p>
@@ -152,7 +154,7 @@ export default function CapNhatkhoBanGhi() {
                       type="text"
                       name="maISRC"
                       id="maISRC"
-                      value={item.maISRC}
+                      value={item?.maISRC}
                     />
                     {errors.maISRC && touched.maISRC ? (
                       <p className="text-danger">{errors.maISRC}</p>
@@ -165,7 +167,7 @@ export default function CapNhatkhoBanGhi() {
                       type="text"
                       name="caSi"
                       id="caSi"
-                      value={item.caSi}
+                      value={item?.caSi}
                     />
                     {errors.caSi && touched.caSi ? (
                       <p className="text-danger">{errors.caSi}</p>
@@ -178,7 +180,7 @@ export default function CapNhatkhoBanGhi() {
                       type="text"
                       name="tacGia"
                       id="tacGia"
-                      value={item.tacGia}
+                      value={item?.tacGia}
                     />
                     {errors.tacGia && touched.tacGia ? (
                       <p className="text-danger">{errors.tacGia}</p>
@@ -192,7 +194,7 @@ export default function CapNhatkhoBanGhi() {
                       type="nhaSanXuat"
                       name="nhaSanXuat"
                       id="nhaSanXuat"
-                      value={item.nhaSanXuat}
+                      value={item?.nhaSanXuat}
                     />
                     {errors.nhaSanXuat && touched.nhaSanXuat ? (
                       <p className="text-danger">{errors.nhaSanXuat}</p>
@@ -205,7 +207,7 @@ export default function CapNhatkhoBanGhi() {
                       as="select"
                       name="theLoai"
                       id="theLoai"
-                      value={item.theLoai}
+                      value={item?.theLoai}
                     >
                       <option value="pop">Pop</option>
                       <option value="ballad">Ballad</option>

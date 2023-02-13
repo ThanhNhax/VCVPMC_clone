@@ -43,7 +43,7 @@ export default function Playlist() {
           <td>{item.soBanGhi}</td>
           <td>{item.thoiLuong}</td>
           <td className="td-chuDe">
-            {item?.chuDe?.map((chuDe: string, index: number) => {
+            {item?.chuDe?.map((chuDe: string | null, index: number) => {
               return <p key={index}>{chuDe}</p>;
             })}
           </td>

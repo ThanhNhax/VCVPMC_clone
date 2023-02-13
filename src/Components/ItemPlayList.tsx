@@ -33,7 +33,7 @@ export default function ItemPlayList({ item, isCheck, isPheDuyet }: Props) {
       <div className="itemPlayList_title">
         <h4>{item.tieuDe}</h4>
         <div className="chuDe-tilte">
-          {item?.chuDe?.map((chuDe: string, index: number) => {
+          {item?.chuDe?.map((chuDe: string | null, index: number) => {
             return <p key={index}>{chuDe}</p>;
           })}
         </div>

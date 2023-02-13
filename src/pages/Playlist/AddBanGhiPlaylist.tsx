@@ -11,13 +11,14 @@ import {
   KhoBanGhiRedux,
 } from "../../redux/khoBanGhi/khoBanghiReducer";
 import {
-  addBanGhiItemPlaylist,
   deleteArrBanGhiRedux,
   setItemPlayList,
+  setNewPlayListArrBanGhiRedux,
 } from "../../redux/playListReducer/playListReducer";
 
 export default function AddBanGhiPlaylist() {
-  const { itemPlayList } = useSelector((state: RootState) => state.playList);
+  const { newPlayList } = useSelector((state: RootState) => state.playList);
+  console.log({ newPlayList });
   const dispatch: AppDispatch = useDispatch();
   const { arrKhoBanGhi } = useSelector((state: RootState) => state.khoBanGhi);
   const navigate = useNavigate();
@@ -27,12 +28,14 @@ export default function AddBanGhiPlaylist() {
   const indexOfLastNews = currentPage * limit; // vị trí cuối
   const indexOfFirstNews = indexOfLastNews - limit; // Vị trí đầu
   const totalPages = Math.ceil(arrKhoBanGhi.length / limit); // Tính số tổng số pages kho bản ghi
+  let totalPagesArrPlaylist: number = 1;
+  if (newPlayList?.arrBanGhi !== undefined) {
+    totalPagesArrPlaylist = Math.ceil(newPlayList?.arrBanGhi?.length / limit);
+  }
 
-  const totalPagesArrPlaylist = Math.ceil(
-    itemPlayList?.arrBanGhi?.length / limit
-  ); // Tính số tổng số pages kho bản ghi
+  // Tính số tổng số pages kho bản ghi
   const newArrKho = arrKhoBanGhi?.slice(indexOfFirstNews, indexOfLastNews);
-  const newArrPlayList = itemPlayList.arrBanGhi?.slice(
+  const newArrPlayList = newPlayList.arrBanGhi?.slice(
     indexOfFirstNews,
     indexOfLastNews
   );
@@ -44,6 +47,9 @@ export default function AddBanGhiPlaylist() {
     opacity: "0.7",
     fontSize: "5px",
   };
+
+  // xử ky arrBanGhi == null
+  const [isNullData, setIsNullData] = useState<boolean>(true);
 
   // xử  lý modal popup
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -97,7 +103,12 @@ export default function AddBanGhiPlaylist() {
           </td>
           <td
             className="action"
-            onClick={() => dispatch(addBanGhiItemPlaylist(khoBanGhi))}
+            onClick={() => {
+              console.log({ khoBanGhi });
+              setIsNullData(false);
+              //cập nhật lên redux
+              dispatch(setNewPlayListArrBanGhiRedux(khoBanGhi));
+            }}
           >
             Thêm
           </td>
@@ -107,48 +118,54 @@ export default function AddBanGhiPlaylist() {
   };
   // tạo ra table kho bản đã chọn trong item Playlist
   const renderItemPlaylistArrBanGhi = () => {
-    return newArrPlayList.map((khoBanGhi: KhoBanGhiRedux, index: number) => {
-      return (
-        <tr key={index}>
-          <td className="text_right">{index + 1}</td>
-          <td>
-            <div className="td-tenBanGhi">
-              <p>{khoBanGhi.tenBanGhi}</p>
-              <div
-                className="td-bottom"
-                style={{
-                  display: "flex",
-                  gap: "5px",
-                  alignItems: "center",
+    if (newArrPlayList !== undefined) {
+      return newArrPlayList.map(
+        (khoBanGhi: KhoBanGhiRedux | undefined, index: number) => {
+          return (
+            <tr key={index}>
+              <td className="text_right">{index + 1}</td>
+              <td>
+                <div className="td-tenBanGhi">
+                  <p>{khoBanGhi?.tenBanGhi}</p>
+                  <div
+                    className="td-bottom"
+                    style={{
+                      display: "flex",
+                      gap: "5px",
+                      alignItems: "center",
+                    }}
+                  >
+                    <p>{khoBanGhi?.theLoai}</p>
+                    <i className="fas fa-circle" style={styleI}></i>
+                    <p>{khoBanGhi?.dinhDang}</p>
+                    <i className="fas fa-circle" style={styleI}></i>
+                    <p>{khoBanGhi?.thoiLuong}</p>
+                  </div>
+                </div>
+              </td>
+              <td>{khoBanGhi?.caSi}</td>
+              <td>{khoBanGhi?.tacGia}</td>
+              <td className="action" onClick={showModal}>
+                Nghe
+              </td>
+              <td
+                className="action"
+                onClick={() => {
+                  if (newPlayList.arrBanGhi !== undefined) {
+                    const indexDelete = newPlayList.arrBanGhi.findIndex(
+                      (item) => item?.id === khoBanGhi?.id
+                    );
+                    dispatch(deleteArrBanGhiRedux(indexDelete));
+                  }
                 }}
               >
-                <p>{khoBanGhi.theLoai}</p>
-                <i className="fas fa-circle" style={styleI}></i>
-                <p>{khoBanGhi.dinhDang}</p>
-                <i className="fas fa-circle" style={styleI}></i>
-                <p>{khoBanGhi.thoiLuong}</p>
-              </div>
-            </div>
-          </td>
-          <td>{khoBanGhi.caSi}</td>
-          <td>{khoBanGhi.tacGia}</td>
-          <td className="action" onClick={showModal}>
-            Nghe
-          </td>
-          <td
-            className="action"
-            onClick={() => {
-              const indexDelete = itemPlayList.arrBanGhi.findIndex(
-                (item) => item.id === khoBanGhi.id
-              );
-              dispatch(deleteArrBanGhiRedux(indexDelete));
-            }}
-          >
-            Gỡ
-          </td>
-        </tr>
+                Gỡ
+              </td>
+            </tr>
+          );
+        }
       );
-    });
+    }
   };
   // tạo ra các button phân pages
   const renderButtonPage = (n: number) => {
@@ -164,36 +181,37 @@ export default function AddBanGhiPlaylist() {
   };
 
   // xử ly updata khi handle submit
-  const handleSubmit = async () => {
-    console.log("id: ", itemPlayList.id, itemPlayList);
-    const itemPlaylistRef = doc(db, "playList", itemPlayList.id);
-    try {
-      setDoc(
-        itemPlaylistRef,
-        { arrBanGhi: itemPlayList.arrBanGhi },
-        { merge: true }
-      );
-      message.open({
-        type: "success",
-        content: "Cập nhật thành công!",
-        duration: 0.8,
-      });
-      //cập nhật lại itemPlayList
-      dispatch(setItemPlayList(itemPlayList));
-      navigate("/admin/editplaylist");
-    } catch (e) {
-      console.log({ e });
-    }
-  };
+  // const handleSubmit = async () => {
+  //   console.log("id: ", itemPlayList.id, itemPlayList);
+  //   const itemPlaylistRef = doc(db, "playList", itemPlayList.id);
+  //   try {
+  //     setDoc(
+  //       itemPlaylistRef,
+  //       { arrBanGhi: itemPlayList.arrBanGhi },
+  //       { merge: true }
+  //     );
+  //     message.open({
+  //       type: "success",
+  //       content: "Cập nhật thành công!",
+  //       duration: 0.8,
+  //     });
+  //     //cập nhật lại itemPlayList
+  //     dispatch(setItemPlayList(itemPlayList));
+  //     navigate("/admin/editplaylist");
+  //   } catch (e) {
+  //     console.log({ e });
+  //   }
+  // };
   return (
     <div className="addbanghi">
       <div className="addbanghgi_container">
         <div className="content-top">
           <p>
-            Playlist<i className="fas fa-chevron-right"></i> Chi tiết playlist
-            <i className="fas fa-chevron-right"></i>Chỉnh sửa
+            Playlist<i className="fas fa-chevron-right"></i> Thêm playlist mới
+            <i className="fas fa-chevron-right"></i>Thêm bản ghi vào playlist
+            mới
           </p>
-          <h1>Playlist tiêu đề</h1>
+          <h1>Thêm bản ghi</h1>
         </div>
         <div className="content-center">
           <div className="center-left">
@@ -301,14 +319,6 @@ export default function AddBanGhiPlaylist() {
                 </div>
               </div>
               <div className="title-search">
-                <div className="title-item">
-                  <label htmlFor="dinhDang">Định dạng:</label>
-                  <select id="dinhDang">
-                    <option value="">Tất cả</option>
-                    <option value="">Video</option>
-                    <option value="">Audio</option>
-                  </select>
-                </div>
                 <div className="input-search">
                   <div id="input_search">
                     <input
@@ -334,6 +344,7 @@ export default function AddBanGhiPlaylist() {
                 </thead>
                 <tbody>{renderItemPlaylistArrBanGhi()}</tbody>
               </table>
+
               <div className="pagination-table">
                 <div className="pagination_left">
                   <p>
@@ -379,6 +390,13 @@ export default function AddBanGhiPlaylist() {
                   </button>
                 </div>
               </div>
+              {isNullData ? (
+                <p id="null_data">
+                  Vui lòng chọn bản ghi để thêm vào Playlist <i>*</i>
+                </p>
+              ) : (
+                <></>
+              )}
             </div>
           </div>
         </div>
@@ -386,13 +404,16 @@ export default function AddBanGhiPlaylist() {
           <button
             type="button"
             onClick={() => {
-              dispatch(setItemPlayList(itemPlayList));
+              // dispatch(setItemPlayList(itemPlayList));
               navigate("/admin/editplaylist");
             }}
           >
             Hủy
           </button>
-          <button type="submit" onClick={handleSubmit}>
+          <button
+            type="submit"
+            // onClick={handleSubmit}
+          >
             Lưu
           </button>
         </div>

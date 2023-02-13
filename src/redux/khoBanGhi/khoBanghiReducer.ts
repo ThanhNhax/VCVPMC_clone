@@ -10,7 +10,7 @@ import { db } from "../../FireStore/fireStore";
 import { AppDispatch } from "../configStore";
 
 export interface ThoiHanSuDung {
-  thoiGian: string;
+  thoiGian: string | null;
   thoiHan: boolean;
 }
 // export interface NgayTai {
@@ -20,17 +20,17 @@ export interface ThoiHanSuDung {
 //   };
 // }
 export interface KhoBanGhiRedux {
-  id: string;
-  ngayTai: string;
-  soHopDong: string;
-  tenBanGhi: string;
-  maISRC: string;
-  thoiLuong: string;
-  caSi: string;
-  tacGia: string;
-  theLoai: string;
-  dinhDang: string;
-  nhaSanXuat: string;
+  id: string | null;
+  ngayTai: string | null;
+  soHopDong: string | null;
+  tenBanGhi: string | null;
+  maISRC: string | null;
+  thoiLuong: string | null;
+  caSi: string | null;
+  tacGia: string | null;
+  theLoai: string | null;
+  dinhDang: string | null;
+  nhaSanXuat: string | null;
   thoiHanSuDung: ThoiHanSuDung;
 }
 export interface KhoBanGhiState {
@@ -39,41 +39,23 @@ export interface KhoBanGhiState {
 }
 const initialState: KhoBanGhiState = {
   itemKhoBanGhi: {
-    ngayTai: "{ nt: { nanoseconds: 12, seconds: 123 } }",
-    soHopDong: "",
-    id: "",
-    nhaSanXuat: "",
-    dinhDang: "",
-    tacGia: "",
-    tenBanGhi: "",
-    maISRC: "",
-    caSi: "",
-    theLoai: "",
-    thoiLuong: "",
+    ngayTai: null,
+    soHopDong: null,
+    id: null,
+    nhaSanXuat: null,
+    dinhDang: null,
+    tacGia: null,
+    tenBanGhi: null,
+    maISRC: null,
+    caSi: null,
+    theLoai: null,
+    thoiLuong: null,
     thoiHanSuDung: {
-      thoiGian: "",
+      thoiGian: null,
       thoiHan: false,
     },
   },
-  arrKhoBanGhi: [
-    {
-      ngayTai: "{ nt: { nanoseconds: 12, seconds: 123 } }",
-      soHopDong: "",
-      id: "",
-      tenBanGhi: "Mắt em",
-      nhaSanXuat: "",
-      maISRC: "sdsfwefdsf",
-      caSi: "Phan Mạnh Quỳnh",
-      tacGia: "Phan Mạnh Quỳnh",
-      theLoai: "EDM",
-      dinhDang: "Audio",
-      thoiLuong: "04:17",
-      thoiHanSuDung: {
-        thoiGian: "2023-09-24",
-        thoiHan: false,
-      },
-    },
-  ],
+  arrKhoBanGhi: [],
 };
 
 const khoBanghiReducer = createSlice({

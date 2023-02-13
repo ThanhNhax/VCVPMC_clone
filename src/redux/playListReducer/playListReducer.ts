@@ -5,38 +5,35 @@ import { AppDispatch } from "../configStore";
 import { KhoBanGhiRedux } from "../khoBanGhi/khoBanghiReducer";
 
 export interface PlayListRedux {
-  desc: string;
-  id: string;
-  ngayTao: string;
-  nguoiTao: string;
-  soBanGhi: number;
-  thoiLuong: string;
-  tieuDe: string;
-  chuDe: [string];
-  arrBanGhi: [KhoBanGhiRedux];
+  desc: string | null;
+  id: string | null;
+  ngayTao: string | null;
+  nguoiTao: string | null;
+  soBanGhi: number | null;
+  thoiLuong: string | null;
+  tieuDe: string | null;
+  chuDe: [string | null];
+  arrBanGhi: KhoBanGhiRedux[] | undefined;
 }
 export interface PlayListState {
+  newPlayList: PlayListRedux;
   itemPlayList: PlayListRedux;
   arrPlayList: PlayListRedux[];
 }
 const initialState: PlayListState = {
+  newPlayList: {
+    arrBanGhi: undefined,
+    chuDe: [null],
+    id: null,
+    ngayTao: null,
+    nguoiTao: null,
+    soBanGhi: null,
+    thoiLuong: null,
+    tieuDe: null,
+    desc: null,
+  },
   itemPlayList: {
-    arrBanGhi: [
-      {
-        caSi: "",
-        dinhDang: "",
-        id: "",
-        maISRC: "",
-        ngayTai: "",
-        nhaSanXuat: "",
-        soHopDong: "",
-        tacGia: "",
-        tenBanGhi: "",
-        theLoai: "",
-        thoiHanSuDung: { thoiGian: "", thoiHan: false },
-        thoiLuong: "",
-      },
-    ],
+    arrBanGhi: undefined,
     chuDe: [""],
     id: "",
     ngayTao: "",
@@ -70,13 +67,33 @@ const playListReducer = createSlice({
       action: PayloadAction<KhoBanGhiRedux>
     ) => {
       // console.log("redux", action.payload);
-      state.itemPlayList?.arrBanGhi.push(action.payload);
+      if (state.itemPlayList.arrBanGhi === undefined) {
+        let newarr: KhoBanGhiRedux[] = [];
+        newarr.push(action.payload);
+        state.itemPlayList.arrBanGhi = newarr;
+      } else {
+        state.itemPlayList.arrBanGhi.push(action.payload);
+      }
     },
     deleteArrBanGhiRedux: (
       state: PlayListState,
       action: PayloadAction<number>
     ) => {
-      state.itemPlayList.arrBanGhi.splice(action.payload, 1);
+      if (state.itemPlayList.arrBanGhi !== undefined) {
+        state.itemPlayList.arrBanGhi.splice(action.payload, 1);
+      }
+    },
+    setNewPlayListArrBanGhiRedux: (
+      state: PlayListState,
+      action: PayloadAction<KhoBanGhiRedux>
+    ) => {
+      if (state.newPlayList.arrBanGhi !== undefined) {
+        state.newPlayList.arrBanGhi.push(action.payload);
+      } else {
+        let newarr: KhoBanGhiRedux[] = [];
+        newarr.push(action.payload);
+        state.newPlayList.arrBanGhi = newarr;
+      }
     },
   },
 });
@@ -86,6 +103,7 @@ export const {
   setItemPlayList,
   addBanGhiItemPlaylist,
   deleteArrBanGhiRedux,
+  setNewPlayListArrBanGhiRedux,
 } = playListReducer.actions;
 
 export default playListReducer.reducer;

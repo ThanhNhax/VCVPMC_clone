@@ -61,23 +61,25 @@ export default function EditPlayList({}: Props) {
 
   const handleSubmit = async () => {
     console.log("id: ", itemPlayList.id, itemPlayList);
-    const itemPlaylistRef = doc(db, "playList", itemPlayList.id);
-    try {
-      setDoc(
-        itemPlaylistRef,
-        { arrBanGhi: itemPlayList.arrBanGhi },
-        { merge: true }
-      );
-      message.open({
-        type: "success",
-        content: "Cập nhật thành công!",
-        duration: 0.8,
-      });
-      //cập nhật lại itemPlayList
-      dispatch(setItemPlayList(itemPlayList));
-      // navigate("/admin/editplaylist");
-    } catch (e) {
-      console.log({ e });
+    if (itemPlayList.id !== null) {
+      const itemPlaylistRef = doc(db, "playList", itemPlayList.id);
+      try {
+        setDoc(
+          itemPlaylistRef,
+          { arrBanGhi: itemPlayList.arrBanGhi },
+          { merge: true }
+        );
+        message.open({
+          type: "success",
+          content: "Cập nhật thành công!",
+          duration: 0.8,
+        });
+        //cập nhật lại itemPlayList
+        dispatch(setItemPlayList(itemPlayList));
+        // navigate("/admin/editplaylist");
+      } catch (e) {
+        console.log({ e });
+      }
     }
   };
   const renderButtonPage = (n: number) => {
@@ -94,13 +96,13 @@ export default function EditPlayList({}: Props) {
 
   const renderBanGhiTable = () => {
     return itemPlayList?.arrBanGhi?.map(
-      (banGhi: KhoBanGhiRedux, index: number) => {
+      (banGhi: KhoBanGhiRedux | undefined, index: number) => {
         return (
           <tr key={index}>
             <td>{index + 1}</td>
             <td>
               <div className="td-tenBanGhi">
-                <p>{banGhi.tenBanGhi}</p>
+                <p>{banGhi?.tenBanGhi}</p>
                 <div
                   className="td-bottom"
                   style={{
@@ -109,26 +111,28 @@ export default function EditPlayList({}: Props) {
                     alignItems: "center",
                   }}
                 >
-                  <p>{banGhi.theLoai}</p>
+                  <p>{banGhi?.theLoai}</p>
                   <i className="fas fa-circle" style={styleI}></i>
-                  <p>{banGhi.dinhDang}</p>
+                  <p>{banGhi?.dinhDang}</p>
                   <i className="fas fa-circle" style={styleI}></i>
-                  <p>{banGhi.thoiLuong}</p>
+                  <p>{banGhi?.thoiLuong}</p>
                 </div>
               </div>
             </td>
-            <td>{banGhi.caSi}</td>
-            <td>{banGhi.tacGia}</td>
+            <td>{banGhi?.caSi}</td>
+            <td>{banGhi?.tacGia}</td>
             <td className="action" onClick={showModal}>
               Nghe
             </td>
             <td
               className="action"
               onClick={() => {
-                const indexDelete = itemPlayList.arrBanGhi.findIndex(
-                  (item) => item.id === banGhi.id
-                );
-                dispatch(deleteArrBanGhiRedux(indexDelete));
+                if (itemPlayList.arrBanGhi !== undefined) {
+                  const indexDelete = itemPlayList.arrBanGhi.findIndex(
+                    (item) => item?.id === banGhi?.id
+                  );
+                  dispatch(deleteArrBanGhiRedux(indexDelete));
+                }
               }}
             >
               Gỡ

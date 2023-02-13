@@ -29,10 +29,12 @@ export default function AddBanGhi({}: Props) {
   const indexOfLastNews = currentPage * limit; // vị trí cuối
   const indexOfFirstNews = indexOfLastNews - limit; // Vị trí đầu
   const totalPages = Math.ceil(arrKhoBanGhi.length / limit); // Tính số tổng số pages kho bản ghi
+  let totalPagesArrPlaylist: number = 1;
+  if (itemPlayList?.arrBanGhi !== undefined) {
+    totalPagesArrPlaylist = Math.ceil(itemPlayList?.arrBanGhi?.length / limit);
+  }
 
-  const totalPagesArrPlaylist = Math.ceil(
-    itemPlayList?.arrBanGhi?.length / limit
-  ); // Tính số tổng số pages kho bản ghi
+  // Tính số tổng số pages kho bản ghi
   const newArrKho = arrKhoBanGhi?.slice(indexOfFirstNews, indexOfLastNews);
   const newArrPlayList = itemPlayList.arrBanGhi?.slice(
     indexOfFirstNews,
@@ -109,48 +111,52 @@ export default function AddBanGhi({}: Props) {
   };
   // tạo ra table kho bản đã chọn trong item Playlist
   const renderItemPlaylistArrBanGhi = () => {
-    return newArrPlayList.map((khoBanGhi: KhoBanGhiRedux, index: number) => {
-      return (
-        <tr key={index}>
-          <td className="text_right">{index + 1}</td>
-          <td>
-            <div className="td-tenBanGhi">
-              <p>{khoBanGhi.tenBanGhi}</p>
-              <div
-                className="td-bottom"
-                style={{
-                  display: "flex",
-                  gap: "5px",
-                  alignItems: "center",
-                }}
-              >
-                <p>{khoBanGhi.theLoai}</p>
-                <i className="fas fa-circle" style={styleI}></i>
-                <p>{khoBanGhi.dinhDang}</p>
-                <i className="fas fa-circle" style={styleI}></i>
-                <p>{khoBanGhi.thoiLuong}</p>
+    return newArrPlayList?.map(
+      (khoBanGhi: KhoBanGhiRedux | undefined, index: number) => {
+        return (
+          <tr key={index}>
+            <td className="text_right">{index + 1}</td>
+            <td>
+              <div className="td-tenBanGhi">
+                <p>{khoBanGhi?.tenBanGhi}</p>
+                <div
+                  className="td-bottom"
+                  style={{
+                    display: "flex",
+                    gap: "5px",
+                    alignItems: "center",
+                  }}
+                >
+                  <p>{khoBanGhi?.theLoai}</p>
+                  <i className="fas fa-circle" style={styleI}></i>
+                  <p>{khoBanGhi?.dinhDang}</p>
+                  <i className="fas fa-circle" style={styleI}></i>
+                  <p>{khoBanGhi?.thoiLuong}</p>
+                </div>
               </div>
-            </div>
-          </td>
-          <td>{khoBanGhi.caSi}</td>
-          <td>{khoBanGhi.tacGia}</td>
-          <td className="action" onClick={showModal}>
-            Nghe
-          </td>
-          <td
-            className="action"
-            onClick={() => {
-              const indexDelete = itemPlayList.arrBanGhi.findIndex(
-                (item) => item.id === khoBanGhi.id
-              );
-              dispatch(deleteArrBanGhiRedux(indexDelete));
-            }}
-          >
-            Gỡ
-          </td>
-        </tr>
-      );
-    });
+            </td>
+            <td>{khoBanGhi?.caSi}</td>
+            <td>{khoBanGhi?.tacGia}</td>
+            <td className="action" onClick={showModal}>
+              Nghe
+            </td>
+            <td
+              className="action"
+              onClick={() => {
+                if (itemPlayList?.arrBanGhi !== undefined) {
+                  const indexDelete = itemPlayList?.arrBanGhi.findIndex(
+                    (item) => item?.id === khoBanGhi?.id
+                  );
+                  dispatch(deleteArrBanGhiRedux(indexDelete));
+                }
+              }}
+            >
+              Gỡ
+            </td>
+          </tr>
+        );
+      }
+    );
   };
   // tạo ra các button phân pages
   const renderButtonPage = (n: number) => {
@@ -168,23 +174,25 @@ export default function AddBanGhi({}: Props) {
   // xử ly updata khi handle submit
   const handleSubmit = async () => {
     console.log("id: ", itemPlayList.id, itemPlayList);
-    const itemPlaylistRef = doc(db, "playList", itemPlayList.id);
-    try {
-      setDoc(
-        itemPlaylistRef,
-        { arrBanGhi: itemPlayList.arrBanGhi },
-        { merge: true }
-      );
-      message.open({
-        type: "success",
-        content: "Cập nhật thành công!",
-        duration: 0.8,
-      });
-      //cập nhật lại itemPlayList
-      dispatch(setItemPlayList(itemPlayList));
-      navigate("/admin/editplaylist");
-    } catch (e) {
-      console.log({ e });
+    if (itemPlayList.id !== null) {
+      const itemPlaylistRef = doc(db, "playList", itemPlayList.id);
+      try {
+        setDoc(
+          itemPlaylistRef,
+          { arrBanGhi: itemPlayList.arrBanGhi },
+          { merge: true }
+        );
+        message.open({
+          type: "success",
+          content: "Cập nhật thành công!",
+          duration: 0.8,
+        });
+        //cập nhật lại itemPlayList
+        dispatch(setItemPlayList(itemPlayList));
+        navigate("/admin/editplaylist");
+      } catch (e) {
+        console.log({ e });
+      }
     }
   };
   return (
@@ -232,7 +240,7 @@ export default function AddBanGhi({}: Props) {
                 <i className="fas fa-search"></i>
               </div>
             </div>
-            <div className="left-table">
+            <div className="left-table ">
               <table>
                 <thead>
                   <tr>
