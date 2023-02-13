@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Switch } from "antd";
+import { Space, Switch, Tag } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import type { UploadProps } from "antd";
 import { Button, message, Upload } from "antd";
@@ -16,6 +16,7 @@ import { doc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../FireStore/fireStore";
 
 type Props = {};
+const tagsData = ["Pop", "EDM", "Lofi", "Ballad", "Chill", "Mashup"];
 
 export default function AddPlayList({}: Props) {
   const dispatch: AppDispatch = useDispatch();
@@ -172,7 +173,13 @@ export default function AddPlayList({}: Props) {
         console.log(e);
       }
     }
-    //check errr
+  };
+  const [selectedTags, setSelectedTags] = useState<string[]>(["Chill", "Lofi"]);
+  console.log(selectedTags);
+  const [arrChuDeSearch, setArrChuDeSearch] = useState<string[]>([]);
+  const [valueSearch, setValueSearch] = useState<string>("");
+  const handleSearch = (arr: string[], string: string) => {
+    return arr.filter((el) => el.toLowerCase().includes(string.toLowerCase()));
   };
   return (
     <div className="addPlaylist">
@@ -222,7 +229,52 @@ export default function AddPlayList({}: Props) {
               </div>
               <div className="left-item title-item">
                 <p>Chủ đề:</p>
-                <textarea></textarea>
+                <div className="select_tag">
+                  <div className="list-tag">
+                    {selectedTags.map((tag, index) => (
+                      <div className="tag-item">
+                        <span key={tag}>{tag}</span>
+                        <i
+                          onClick={() => {
+                            let selectedTagsDelete = selectedTags.splice(
+                              index,
+                              1
+                            );
+                            setSelectedTags([...selectedTags]);
+                          }}
+                        >
+                          &times;
+                        </i>
+                      </div>
+                    ))}
+                  </div>
+                  <input
+                    type="search"
+                    id="search-tag"
+                    value={valueSearch}
+                    onChange={(e) => {
+                      const arrChuDe = handleSearch(tagsData, e.target.value);
+                      setArrChuDeSearch(arrChuDe);
+                    }}
+                    placeholder="Nhập chủ đề"
+                  />
+                  <div className="render-table-tag">
+                    {arrChuDeSearch.map((el) => (
+                      <div className="table-list" key={el}>
+                        <span
+                          onClick={() => {
+                            console.log(el);
+                            setSelectedTags([...selectedTags, el]);
+                            setArrChuDeSearch([]);
+                            setValueSearch("");
+                          }}
+                        >
+                          {el}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
               <div className="title-bottom title-item">
                 <div className="bottom-item">

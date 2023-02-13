@@ -56,8 +56,8 @@
 
                     .left-item {
                         p {
-                            @include text (16px, 600, #F5F5FF);
-                            margin-bottom: 8px;
+                            @include text (14px, 600, #F5F5FF);
+                            margin-bottom: 4px;
 
                             i {
                                 color: red;
@@ -99,6 +99,65 @@
 
                             &:focus {
                                 outline: 1px solid #727288;
+                            }
+                        }
+
+                        .select_tag {
+                            background: #2B2B3F;
+                            padding: 8px 12px 8px 16px;
+                            border: 1px solid #727288;
+                            border-radius: 8px;
+                            position: relative;
+
+                            .list-tag {
+                                display: flex;
+                                flex-wrap: wrap;
+                                gap: 3px;
+                                margin-bottom: 5px;
+
+                                .tag-item {
+                                    display: flex;
+                                    align-items: center;
+                                    padding: 4px 8px 4px 12px;
+                                    border: 1px solid #C8C8DB;
+                                    border-radius: 4px;
+
+                                    span {
+                                        @include text(12px, 400, #F5F5FF);
+                                    }
+
+                                    i {
+                                        color: red;
+                                        cursor: pointer;
+
+                                    }
+                                }
+
+                            }
+
+                            #search-tag {
+                                width: 100%;
+                                border: none;
+                                border-top: 1px solid #727288;
+                                border-radius: 0px;
+                            }
+
+                            .table-list {
+                                background: #2B2B3F;
+                                padding: 8px 12px 8px 16px;
+                                border: 1px solid #727288;
+                                border-radius: 8px;
+                                position: absolute;
+                                top: 0;
+                                right: 0;
+
+                                span {
+                                    @include text(12px, 400, #F5F5FF);
+                                    padding: 4px 8px 4px 12px;
+                                    border: 1px solid #C8C8DB;
+                                    border-radius: 4px;
+                                    cursor: pointer;
+                                }
                             }
                         }
                     }
