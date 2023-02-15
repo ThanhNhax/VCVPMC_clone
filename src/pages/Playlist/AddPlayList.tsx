@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Space, Switch, Tag } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import type { UploadProps } from "antd";
@@ -19,6 +19,8 @@ type Props = {};
 const tagsData = ["Pop", "EDM", "Lofi", "Ballad", "Chill", "Mashup"];
 
 export default function AddPlayList({}: Props) {
+  const user = useSelector((state: RootState) => state.user);
+  console.log({ user });
   const dispatch: AppDispatch = useDispatch();
   //lấy newPlaylist  từ redux
   const { newPlayList } = useSelector((state: RootState) => state.playList);
@@ -33,8 +35,6 @@ export default function AddPlayList({}: Props) {
   if (newPlayList?.arrBanGhi !== undefined) {
     totalPages = Math.ceil(newPlayList?.arrBanGhi.length / limit); // Tính số tổng số pages kho bản ghi
   }
-  const [tieuDe, setTieuDe] = useState<string>("");
-  console.log(tieuDe);
 
   const pagesBanGhi = newPlayList?.arrBanGhi?.slice(
     indexOfFirstNews,
@@ -43,14 +43,17 @@ export default function AddPlayList({}: Props) {
 
   const [isStyleBtn, setIsStyleBtn] = useState<boolean>(false);
   // cấu hình phân pages
+  // xử ky arrBanGhi == null
+  const [isNullData, setIsNullData] = useState<boolean>(true);
+  console.log({ isNullData });
+  // lấy tiêu đề
+  const [tieuDe, setTieuDe] = useState<string>("");
+  console.log(tieuDe);
   const styleI = {
     color: "#347AFF",
     opacity: "0.7",
     fontSize: "5px",
   };
-
-  // xử ky arrBanGhi == null
-  const [isNullData, setIsNullData] = useState<boolean>(true);
 
   const props: UploadProps = {
     action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
@@ -136,27 +139,29 @@ export default function AddPlayList({}: Props) {
   };
 
   const handleSubmit = () => {
-    if (tieuDe === "" && newPlayList.arrBanGhi?.length === undefined) {
+    console.log({ tieuDe }, newPlayList.arrBanGhi);
+    if (tieuDe === "" || newPlayList.arrBanGhi?.length === 0) {
       message.open({
         type: "error",
         content: "Vui lòng nhập tiêu đề hoặc thêm bản ghi!",
         duration: 0.8,
       });
     } else {
-      // newPlayList.tieuDe = tieuDe;
+      console.log("sai if");
+
       let newItem: PlayListRedux = {
         anhBia: "",
         arrBanGhi: newPlayList.arrBanGhi,
-        chuDe: newPlayList.chuDe,
+        chuDe: [...selectedTags],
         desc: newPlayList.desc,
         id: newPlayList.id,
         ngayTao: newPlayList.ngayTao,
-        nguoiTao: newPlayList.nguoiTao,
+        nguoiTao: user.ho + " " + user.ten,
         tieuDe: tieuDe,
         soBanGhi: newPlayList.soBanGhi,
         thoiLuong: newPlayList.thoiLuong,
       };
-      console.log({ newItem });
+      // console.log({ newItem });
       try {
         if (newItem.id !== undefined) {
           const washingtonRef = doc(db, "playList", newItem.id);
@@ -181,6 +186,7 @@ export default function AddPlayList({}: Props) {
   const handleSearch = (arr: string[], string: string) => {
     return arr.filter((el) => el.toLowerCase().includes(string.toLowerCase()));
   };
+
   return (
     <div className="addPlaylist">
       <div className="container">
@@ -232,8 +238,8 @@ export default function AddPlayList({}: Props) {
                 <div className="select_tag">
                   <div className="list-tag">
                     {selectedTags.map((tag, index) => (
-                      <div className="tag-item">
-                        <span key={tag}>{tag}</span>
+                      <div className="tag-item" key={tag}>
+                        <span>{tag}</span>
                         <i
                           onClick={() => {
                             let selectedTagsDelete = selectedTags.splice(
@@ -287,7 +293,7 @@ export default function AddPlayList({}: Props) {
               <table>
                 <thead>
                   <tr>
-                    <th>STT</th>
+                    <th className="text_right">STT</th>
                     <th>Tên bản ghi</th>
                     <th>Ca sĩ</th>
                     <th>Tác giả</th>
@@ -296,7 +302,7 @@ export default function AddPlayList({}: Props) {
 
                 <tbody>{renderBanGhiTable()}</tbody>
               </table>
-              {isNullData && newPlayList.arrBanGhi === undefined ? (
+              {newPlayList.arrBanGhi.length === 0 ? (
                 <p id="null_data">
                   Vui lòng chọn bản ghi để thêm vào Playlist <i>*</i>
                 </p>

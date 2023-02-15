@@ -249,7 +249,9 @@ export default function KhoBanGhi() {
                         }
                         setCurrentPage(currentPage - 1);
                       }}
-                    >{`<`}</button>
+                    >
+                      <i className="fas fa-chevron-left"></i>
+                    </button>
                     <div
                       id="btnPage"
                       dangerouslySetInnerHTML={renderButtonPage(totalPages)}
@@ -259,7 +261,9 @@ export default function KhoBanGhi() {
                       onClick={() => {
                         setCurrentPage(currentPage + 1);
                       }}
-                    >{`>`}</button>
+                    >
+                      <i className="fas fa-chevron-right"></i>
+                    </button>
                   </div>
                 </div>
               </div>

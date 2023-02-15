@@ -1,7 +1,10 @@
+import { Checkbox } from "antd";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function LapLichPhat() {
+type Props = {};
+
+export default function ApLichChoThietbi({}: Props) {
   // cấu hình phân pages
   const [currentPage, setCurrentPage] = useState<number>(1); // Vị trí page hiện tại
   const [limit, setLimit] = useState<number>(13); // change số item hiển thị
@@ -14,17 +17,29 @@ export default function LapLichPhat() {
 
   const navigate = useNavigate();
   return (
-    <div className="lapLichPhat">
-      <h1>Danh sách lịch phát</h1>
+    <div className="apLichChoThietBi">
+      <p>
+        Lập lịch phát <i className="fas fa-chevron-right"></i>Chi tiết
+        <i className="fas fa-chevron-right"></i>Chỉnh sửa lịch phát
+        <i className="fas fa-chevron-right"></i>Áp lịch cho thiết bị
+      </p>
+      <h1>Chọn thiết bị</h1>
       <div className="container">
         <div className="container-table">
           <div className="wrap-table">
             <table>
               <thead>
                 <tr>
+                  <th>
+                    <Checkbox />
+                  </th>
                   <th>STT</th>
-                  <th>Tê lịch</th>
-                  <th>Thời gian phát</th>
+                  <th>Tên thiết bị</th>
+                  <th>MAC Address</th>
+                  <th>SKU/ID</th>
+                  <th>Đơn vị sử dụng</th>
+                  <th>Tên đăng nhập</th>
+                  <th>Đia điểm hoạt động</th>
                 </tr>
               </thead>
               <tbody>
@@ -90,16 +105,30 @@ export default function LapLichPhat() {
           </div>
         </div>
         <div className="container-menu">
-          <div
-            className="bg_icon"
-            onClick={() => {
-              // navigate("/admin/addplaylist");
-              // console.log("/admin/addplaylist");
-            }}
-          >
-            <i className="fas fa-plus"></i>
+          <div className="menu-item">
+            <div
+              className="bg_icon"
+              onClick={() => {
+                // navigate("/admin/addplaylist");
+                // console.log("/admin/addplaylist");
+              }}
+            >
+              <i className="fas fa-check"></i>
+            </div>
+            <p>Chọn</p>
           </div>
-          <p>Thêm Playlist</p>
+          <div className="menu-item">
+            <div
+              className="bg_icon"
+              onClick={() => {
+                // navigate("/admin/addplaylist");
+                // console.log("/admin/addplaylist");
+              }}
+            >
+              <i className="fas fa-times"></i>
+            </div>
+            <p>Xóa</p>
+          </div>
         </div>
       </div>
     </div>

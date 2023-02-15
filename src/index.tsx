@@ -34,6 +34,11 @@ import EditPlayList from "./pages/Playlist/EditPlayList";
 import AddBanGhi from "./pages/Playlist/AddBanGhi";
 import AddPlayList from "./pages/Playlist/AddPlayList";
 import AddBanGhiPlaylist from "./pages/Playlist/AddBanGhiPlaylist";
+import ChiTietLichPhat from "./pages/LapLichPhat/ChiTietLichPhat";
+import EditLichPhat from "./pages/LapLichPhat/EditLichPhat";
+import ApLichChoThietBi from "./pages/LapLichPhat/ApLichChoThietBi";
+import QuanLyHopDong from "./pages/QuanLy/QuanLyHopDong";
+import QuanLyThietBi from "./pages/QuanLy/QuanLyThietBi";
 export const history: any = createBrowserHistory();
 
 const root = ReactDOM.createRoot(
@@ -46,7 +51,7 @@ root.render(
         <Route>
           <Route path="" element={<TemplateUser />}>
             <Route index element={<DangNhap />}></Route>
-            <Route path="*" element={<Navigate to={"/"} />}></Route>
+            {/* <Route path="*" element={<Navigate to={"/"} />}></Route> */}
             <Route path="/demoModal" element={<DomeModal />}></Route>
             <Route path="/quenMatKhau" element={<QuenMatKhau />}></Route>
             <Route path="/capNhatMatKhau" element={<CapnhatMatKhau />}></Route>
@@ -86,10 +91,30 @@ root.render(
             ></Route>
             <Route path="/admin/laplichphat" element={<LapLichPhat />}></Route>
             <Route
+              path="/admin/lapLichPhat/chiTiet"
+              element={<ChiTietLichPhat />}
+            ></Route>
+            <Route
+              path="/admin/lapLichPhat/editLichPhat"
+              element={<EditLichPhat />}
+            ></Route>
+            <Route
+              path="/admin/lapLichPhat/editLichPhat/apLichChoThietBi"
+              element={<ApLichChoThietBi />}
+            ></Route>
+            <Route
               path="/admin/thongtincoban"
               element={<ThongTinCoBan />}
             ></Route>
             <Route path="/admin/suathongtin" element={<SuaThongTin />}></Route>
+            <Route
+              path="/admin/quanLyHopDong"
+              element={<QuanLyHopDong />}
+            ></Route>
+            <Route
+              path="/admin/quanLyThietBi"
+              element={<QuanLyThietBi />}
+            ></Route>
             {/* <Route path="*" element={<Navigate to={"/admin"} />}></Route> */}
           </Route>
         </Route>

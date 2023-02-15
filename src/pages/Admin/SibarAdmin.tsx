@@ -1,18 +1,29 @@
+import { Dropdown, MenuProps, Space } from "antd";
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { DownOutlined } from "@ant-design/icons";
 
 type Props = {
   setToggle(): void;
 };
+
+const url = [
+  "/quanLuHopDong",
+  "/quanLyThietBi",
+  "/quanLyUyQuyen",
+  "/donViSuDung",
+];
 export default function SibarAdmin({ setToggle }: Props) {
   return (
     <div className="left">
-      <div className="left_logo" onClick={setToggle}>
-        <img src="../img/vcpmc_logo.png" alt="logo_vcpmc" />
+      <div className="left_top" onClick={setToggle}>
+        <div className="top-logo">
+          <img src="../img/vcpmc_logo.png" alt="logo_vcpmc" />
+        </div>
       </div>
       <nav className="navbar_amdin">
         <ul className="navbar-nav ">
-          <li className="nav-item">
+          <li className="nav-item active">
             <NavLink className="nav-link" to="/admin/khobanghi">
               <i className="far fa-folder-open"></i>
               <p>Kho bản ghi</p>
@@ -36,28 +47,64 @@ export default function SibarAdmin({ setToggle }: Props) {
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink className="nav-link" to="/admin/playlist">
+            <div className="nav-link">
               <i className="fas fa-file"></i>
               <p>Quản lý</p>
-            </NavLink>
+              <i className="fas fa-ellipsis-v"></i>
+              <div className="dropdown-quanly">
+                <Link to="/admin/quanLyHopDong">Quản lý hợp đồng</Link>
+
+                <Link to="/admin/quanLyThietBi">Quản lý thiết bị</Link>
+
+                <Link to="/admin/quanLyUyQuyen">Quản lý ủy quyền</Link>
+
+                <Link to="/admin/donViSuDung">Đơn vị sử dụng</Link>
+              </div>
+            </div>
           </li>
           <li className="nav-item">
-            <NavLink className="nav-link" to="/admin/playlist">
+            <div className="nav-link">
               <i className="fas fa-file-invoice-dollar"></i>
               <p>Doanh thu</p>
-            </NavLink>
+              <i className="fas fa-ellipsis-v"></i>
+              <div className="dropdown-quanly">
+                <Link to="/admin/quanLyUyQuyen">Báo cáo doanh thu</Link>
+                <Link to="/admin/quanLyHopDong">Lịch sử đối soát</Link>
+
+                <Link to="/admin/quanLyThietBi">Phân phối doanh thu</Link>
+              </div>
+            </div>
           </li>
           <li className="nav-item">
-            <NavLink className="nav-link" to="/admin/playlist">
+            <div className="nav-link">
               <i className="fas fa-cog"></i>
               <p>Cài đặt</p>
-            </NavLink>
+              <i className="fas fa-ellipsis-v"></i>
+              <div className="dropdown-quanly">
+                <Link to="/admin/quanLyHopDong">Phân quyền người</Link>
+
+                <Link to="/admin/quanLyThietBi">Cấu hình</Link>
+
+                <Link to="/admin/quanLyUyQuyen">Quản lý hợp đồng</Link>
+
+                <Link to="/admin/donViSuDung">Thông tin tác phẩm</Link>
+                <Link to="/admin/donViSuDung">Chu kỳ đối soát</Link>
+              </div>
+            </div>
           </li>
           <li className="nav-item">
-            <NavLink className="nav-link" to="/admin/playlist">
+            <div className="nav-link">
               <i className="fas fa-question-circle"></i>
               <p>Hỗ trợ</p>
-            </NavLink>
+              <i className="fas fa-ellipsis-v"></i>
+              <div className="dropdown-quanly">
+                <Link to="/admin/quanLyHopDong">Hướng dẵn sử dụng</Link>
+
+                <Link to="/admin/quanLyThietBi">Tải app</Link>
+
+                <Link to="/admin/quanLyUyQuyen">Feedback</Link>
+              </div>
+            </div>
           </li>
         </ul>
       </nav>

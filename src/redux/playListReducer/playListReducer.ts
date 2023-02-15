@@ -6,8 +6,6 @@ import {
   getDoc,
   onSnapshot,
   query,
-  setDoc,
-  updateDoc,
 } from "firebase/firestore";
 import ItemPlayList from "../../Components/ItemPlayList";
 import { db } from "../../FireStore/fireStore";
@@ -21,10 +19,10 @@ export interface PlayListRedux {
   ngayTao: string | null;
   nguoiTao: string | null;
   soBanGhi: number | null;
-  thoiLuong: string | null;
+  thoiLuong: string;
   tieuDe: string | null;
-  chuDe: [string | null];
-  arrBanGhi: KhoBanGhiRedux[] | undefined;
+  chuDe: string[];
+  arrBanGhi: KhoBanGhiRedux[] | [];
 }
 export interface PlayListState {
   newPlayList: PlayListRedux;
@@ -33,20 +31,20 @@ export interface PlayListState {
 }
 const initialState: PlayListState = {
   newPlayList: {
-    arrBanGhi: undefined,
-    chuDe: [""],
+    arrBanGhi: [],
+    chuDe: [],
     id: "",
     ngayTao: null,
     nguoiTao: null,
     soBanGhi: null,
-    thoiLuong: null,
+    thoiLuong: "",
     tieuDe: null,
     desc: null,
     anhBia: null,
   },
   itemPlayList: {
-    arrBanGhi: undefined,
-    chuDe: [""],
+    arrBanGhi: [],
+    chuDe: [],
     id: "",
     ngayTao: "",
     nguoiTao: "",
@@ -79,14 +77,10 @@ const playListReducer = createSlice({
       state: PlayListState,
       action: PayloadAction<KhoBanGhiRedux>
     ) => {
-      // console.log("redux", action.payload);
-      if (state.itemPlayList.arrBanGhi === undefined) {
-        let newarr: KhoBanGhiRedux[] = [];
-        newarr.push(action.payload);
-        state.itemPlayList.arrBanGhi = newarr;
-      } else {
-        state.itemPlayList.arrBanGhi.push(action.payload);
-      }
+      state.itemPlayList.arrBanGhi = [
+        ...state.itemPlayList.arrBanGhi,
+        action.payload,
+      ];
     },
     deleteArrBanGhiRedux: (
       state: PlayListState,
@@ -110,13 +104,10 @@ const playListReducer = createSlice({
       state: PlayListState,
       action: PayloadAction<KhoBanGhiRedux>
     ) => {
-      if (state.newPlayList.arrBanGhi === undefined) {
-        let newArr: KhoBanGhiRedux[] = [];
-        newArr.push(action.payload);
-        state.newPlayList.arrBanGhi = newArr;
-      } else {
-        state.newPlayList.arrBanGhi.push(action.payload);
-      }
+      state.newPlayList.arrBanGhi = [
+        ...state.newPlayList.arrBanGhi,
+        action.payload,
+      ];
     },
     deleteArrBanghiPlaylist: (
       state: PlayListState,

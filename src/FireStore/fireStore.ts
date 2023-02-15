@@ -31,73 +31,10 @@ export const auth = getAuth(app);
 
 ///
 
-// const cityRef = doc(db, "playList", "7fR314PFFiof20b94tFR");
-// setDoc(
-//   cityRef,
-//   {
-//     arrBanGhi: [
-//       {
-//         caSi: "Phan Mạnh Quỳnh",
-//         dinhDang: "Audio",
-//         id: "4x6DPzZXo936ql28ecap",
-//         maISRC: "sdsfwefdsf",
-//         ngayTai: "2023-2-12 ",
-//         nhaSanXuat: "",
-//         soHopDong: "",
-//         tacGia: "Phan Mạnh Quỳnh",
-//         tenBanGhi: "Mắt em",
-//         theLoai: "EDM",
-//         thoiHanSuDung: { thoiHan: false, thoiGian: "2023-09-24" },
-//         thoiLuong: "04:17",
-//       },
-//     ],
-//   },
-//   { merge: true }
-// );
-// deleteDoc(cityRef);
-// setDoc(doc(db, "khoBanGhi", "ZaWSiITsY6H8uHSvNBWA"), {
-//   ngayTai: "2023-2-12 ",
-//   soHopDong: "",
-//   id: "",
-//   tenBanGhi: "Mắt em",
-//   nhaSanXuat: "",
-//   maISRC: "sdsfwefdsf",
-//   caSi: "Phan Mạnh Quỳnh",
-//   tacGia: "Phan Mạnh Quỳnh",
-//   theLoai: "EDM",
-//   dinhDang: "Audio",
-//   thoiLuong: "04:17",
-//   thoiHanSuDung: {
-//     thoiGian: "2023-09-24",
-//     thoiHan: false,
-//   },
-// });
-
-// // tạo playlist tren fireStore
-
-// setDoc(doc(db, "playList", "g2IdXWr0yZNm4wSGK27"), {
-//   tieuDe: "Top ca khúc 2021",
-//   soBanGhi: 20,
-//   thoiLuong: "01:04:3",
-//   chuDe: ["Pop", "EDM", "Songs", "Chill", "Lofi"],
-//   ngayTao: 2 - 3 - 2022,
-//   nguoiTao: "Thanh Nhã",
-// });
-
-// demo updata
-// const user = {
-//   ten: "thanh nha",
-//   tuoi: 23,
+// const data = {
+//   tenLich: "Lịch phát số 1",
+//   thoiGianPhat: "22/05/2022- 30/05/2022",
 // };
-// const goRef = doc(db, "cities", "BJ", 'arrBanGhi');
-
-// // Atomically add a new region to the "regions" array field.
-// try{
-//   updateDoc(goRef,{
-//     0.
-//   })
-// }catch(e){
-//   console.log(e)
-// }
-
-// add data khi không có id : => auto ID
+// //demo add colectionlịch lap phat
+// // Add a new document with a generated id.
+// addDoc(collection(db, "lapLichPhat"), data);
