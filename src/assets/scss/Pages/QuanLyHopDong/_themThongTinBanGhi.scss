@@ -1,0 +1,125 @@
+.themThongTinBanGhi {
+    height: 90%;
+
+    .container-top {
+        padding-left: 40px;
+        height: 10%;
+
+        p {
+            @include text (14px, 600, #F5F5FF);
+            opacity: 0.5;
+
+            i {
+                margin: 0 13px;
+                color: #FFAC69;
+            }
+
+        }
+
+        h1 {
+            @include text(24px, 700, #ffffff);
+            margin-bottom: 12px;
+        }
+    }
+
+    .container-content {
+
+        width: 100%;
+        height: 90%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .wrap-content {
+
+            width: 550px;
+            background: #2B2B3F;
+            border-radius: 16px;
+            padding: 40px;
+
+            .content-top {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;
+                border-bottom: 1px solid#c8c8db4d;
+                padding-bottom: 24px;
+
+                .bg-icon {
+                    background: #FFFFFF;
+                    width: 25px;
+                    height: 25px;
+                    border-radius: 50%;
+                    background: #0FBF00;
+                    position: relative;
+
+                    i {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        color: #ffffff;
+                    }
+                }
+
+                h5 {
+                    @include text (24px, 700, #FFFFFF)
+                }
+            }
+
+            .content-center {
+                p {
+                    margin-top: 30px;
+                    @include text (16px, 700, #FFFFFF);
+                }
+
+                .wrap-item {
+                    .item {
+                        padding-left: 25px;
+
+                        p {
+                            span {
+
+                                @include text(14px, 700, #FF7506)
+                            }
+
+                            @include text(14px, 500, #FFffff)
+                        }
+
+                        .tab-item {
+                            padding-left: 60px;
+
+                            p {
+                                margin-top: 14px;
+                                @include text(14px, 400, #FFFFFF);
+
+                                opacity: 0.8;
+                            }
+
+                            input {
+                                margin-top: 15px;
+                                @include button (16px, 600, #FFFFFF, #FF7506, 12px 24px, 1px solid #FF7506, 8px, #2B2B3F, #FF7506)
+                            }
+
+                        }
+
+
+                        &:nth-child(2) {
+
+                            input {
+                                @include button (16px, 600, #FF7506, #2B2B3F, 12px 24px, 1px solid #FF7506, 8px, #FF7506, #FFFFFF)
+                            }
+                        }
+                    }
+
+
+                    .error {
+
+                        @include text(14px, 500, #FF4747)
+                    }
+                }
+
+            }
+        }
+    }
+}

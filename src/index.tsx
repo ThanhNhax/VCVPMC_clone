@@ -37,8 +37,10 @@ import AddBanGhiPlaylist from "./pages/Playlist/AddBanGhiPlaylist";
 import ChiTietLichPhat from "./pages/LapLichPhat/ChiTietLichPhat";
 import EditLichPhat from "./pages/LapLichPhat/EditLichPhat";
 import ApLichChoThietBi from "./pages/LapLichPhat/ApLichChoThietBi";
-import QuanLyHopDong from "./pages/QuanLy/QuanLyHopDong";
+import QuanLyHopDong from "./pages/QuanLy/QuanLyHopDong/QuanLyHopDong";
 import QuanLyThietBi from "./pages/QuanLy/QuanLyThietBi";
+import ThemHopDongUyQuyenMoi from "./pages/QuanLy/QuanLyHopDong/ThemHopDongUyQuyenMoi";
+import ThemThongTinBanGhi from "./pages/QuanLy/QuanLyHopDong/ThemThongTinBanGhi";
 export const history: any = createBrowserHistory();
 
 const root = ReactDOM.createRoot(
@@ -110,6 +112,14 @@ root.render(
             <Route
               path="/admin/quanLyHopDong"
               element={<QuanLyHopDong />}
+            ></Route>
+            <Route
+              path="/admin/quanLyHopDong/themHopDongUyQuyenMoi"
+              element={<ThemHopDongUyQuyenMoi />}
+            ></Route>
+            <Route
+              path="/admin/quanLyHopDong/themThongTinBanGhi"
+              element={<ThemThongTinBanGhi />}
             ></Route>
             <Route
               path="/admin/quanLyThietBi"

@@ -427,7 +427,7 @@ export default function QuanLyHopDong({}: Props) {
           </div>
           <div className="center-right">
             <div className="bg_icon">
-              <Link to={"/admin/khobanghi/quanLyPheDuyet"}>
+              <Link to={"/admin/quanLyHopDong/themHopDongUyQuyenMoi"}>
                 <i className="far fa-edit"></i>
               </Link>
             </div>
