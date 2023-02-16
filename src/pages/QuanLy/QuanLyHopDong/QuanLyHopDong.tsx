@@ -103,7 +103,11 @@ export default function QuanLyHopDong({}: Props) {
                         <td>Người biểu diễn</td>
                         <td className="true_thoiHan">Còn thời hạn</td>
                         <td>01/04/2021 15:53:13</td>
-                        <td className="action">Xem chi tiết</td>
+                        <td className="action">
+                          <Link to={"/admin/quanLyHopDong/chiTiet"}>
+                            Xem chi tiết
+                          </Link>
+                        </td>
                         <td className="action">Lý do hủy</td>
                       </tr>
                       <tr>
@@ -276,7 +280,11 @@ export default function QuanLyHopDong({}: Props) {
                         <td>02/12/2021</td>
                         <td>02/12/2022</td>
                         <td className="moi_thoiHan">Mới</td>
-                        <td className="action">Xem chi tiết</td>
+                        <td className="action">
+                          <Link to={"/admin/quanLyHopDong/chiTiet"}>
+                            Xem chi tiết
+                          </Link>
+                        </td>
                         <td className="action">Sao chép hợp đồng</td>
                       </tr>
                       <tr>

@@ -141,86 +141,90 @@
                 .left-table {
                     width: 80%;
 
-                    table {
-                        width: 100%;
+
+                    .wrap-table {
                         height: 85%;
                         background: rgba(47, 47, 65, 0.7);
                         border-radius: 16px 16px 0 0;
-                        padding: 16px 24px;
 
-                        thead {
-                            tr {
-                                th {
-                                    @include text(12px, 700, #ffac69);
-                                    margin: 0 10px;
-                                    text-align: left;
-                                    padding: 0 10px;
+                        table {
+                            width: 100%;
+                            padding: 16px 24px;
 
-                                }
-                            }
-                        }
+                            thead {
+                                tr {
+                                    th {
+                                        @include text(12px, 700, #ffac69);
+                                        margin: 0 10px;
+                                        text-align: left;
+                                        padding: 0 10px;
 
-                        tbody {
-                            tr:last-child {
-                                &::after {
-                                    position: absolute;
-                                    bottom: 0;
-                                    left: 0;
-                                    content: '';
-                                    height: 0;
-                                    width: 0;
-                                    background: rgb(97, 96, 96);
+                                    }
                                 }
                             }
 
-                            tr {
-                                position: relative;
-                                vertical-align: middle;
-                                height: 30px;
-
-                                &::after {
-                                    position: absolute;
-                                    left: 0;
-                                    bottom: 0;
-                                    content: '';
-                                    height: 1px;
-                                    width: 100%;
-                                    background: rgb(97, 96, 96);
+                            tbody {
+                                tr:last-child {
+                                    &::after {
+                                        position: absolute;
+                                        bottom: 0;
+                                        left: 0;
+                                        content: '';
+                                        height: 0;
+                                        width: 0;
+                                        background: rgb(97, 96, 96);
+                                    }
                                 }
 
+                                tr {
+                                    position: relative;
+                                    vertical-align: middle;
+                                    height: 30px;
 
-                                td {
-                                    margin-top: 2px;
-                                    text-align: left;
-                                    padding: 0px 10px;
-                                    @include text(12px, 400, #FFFFFF);
-                                    border: none;
+                                    &::after {
+                                        position: absolute;
+                                        left: 0;
+                                        bottom: 0;
+                                        content: '';
+                                        height: 1px;
+                                        width: 100%;
+                                        background: rgb(97, 96, 96);
+                                    }
 
-                                    a {
+
+                                    td {
+                                        margin-top: 2px;
+                                        text-align: left;
+                                        padding: 0px 10px;
+                                        @include text(12px, 400, #FFFFFF);
+                                        border: none;
+
+                                        a {
+                                            @include text(12px, 600, #FF7506);
+                                        }
+                                    }
+
+                                    .td-chuDe {
+                                        display: flex;
+                                        gap: 5px;
+                                        align-items: center;
+
+                                        p {
+                                            padding: 3px 10px;
+                                            border: 1px solid #727288;
+                                            border-radius: 4px;
+                                        }
+
+                                    }
+
+                                    .text_right {
+                                        text-align: right;
+                                    }
+
+                                    .action {
                                         @include text(12px, 600, #FF7506);
+                                        cursor: pointer;
                                     }
-                                }
-
-                                .td-chuDe {
-                                    display: flex;
-                                    gap: 5px;
-                                    align-items: center;
-
-                                    p {
-                                        padding: 3px 10px;
-                                        border: 1px solid #727288;
-                                        border-radius: 4px;
-                                    }
-
-                                }
-
-                                .text_right {
-                                    text-align: right;
-                                }
-
-                                .action {
-                                    @include text(12px, 600, #FF7506);
-                                    cursor: pointer;
                                 }
                             }
                         }
@@ -303,8 +307,6 @@
 
             .center-right {
                 width: 110px;
-
-
 
                 .menu-list {
                     width: 100%;

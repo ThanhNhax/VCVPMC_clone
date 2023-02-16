@@ -241,17 +241,19 @@ export default function AddBanGhi({}: Props) {
               </div>
             </div>
             <div className="left-table ">
-              <table>
-                <thead>
-                  <tr>
-                    <th>STT</th>
-                    <th>Tên bản ghi</th>
-                    <th>Ca sĩ</th>
-                    <th>Tác giả</th>
-                  </tr>
-                </thead>
-                <tbody>{renderKhoBanGhiTable()}</tbody>
-              </table>
+              <div className="wrap-table">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>STT</th>
+                      <th>Tên bản ghi</th>
+                      <th>Ca sĩ</th>
+                      <th>Tác giả</th>
+                    </tr>
+                  </thead>
+                  <tbody>{renderKhoBanGhiTable()}</tbody>
+                </table>
+              </div>
               <div className="pagination-table">
                 <div className="pagination_left">
                   <p>
@@ -333,17 +335,19 @@ export default function AddBanGhi({}: Props) {
               </div>
             </div>
             <div className="right-table left-table">
-              <table>
-                <thead>
-                  <tr>
-                    <th>STT</th>
-                    <th>Tên bản ghi</th>
-                    <th>Ca sĩ</th>
-                    <th>Tác giả</th>
-                  </tr>
-                </thead>
-                <tbody>{renderItemPlaylistArrBanGhi()}</tbody>
-              </table>
+              <div className="wrap-table">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>STT</th>
+                      <th>Tên bản ghi</th>
+                      <th>Ca sĩ</th>
+                      <th>Tác giả</th>
+                    </tr>
+                  </thead>
+                  <tbody>{renderItemPlaylistArrBanGhi()}</tbody>
+                </table>
+              </div>
               <div className="pagination-table">
                 <div className="pagination_left">
                   <p>

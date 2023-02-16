@@ -1,8 +1,23 @@
-import React from "react";
+import { Button, Modal, Upload } from "antd";
+import React, { useState } from "react";
 
 type Props = {};
 
 export default function ThemThongTinBanGhi({}: Props) {
+  // xử  lý modal popup
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   return (
     <div className="themThongTinBanGhi">
       <div className="container-top">
@@ -29,7 +44,11 @@ export default function ThemThongTinBanGhi({}: Props) {
                 </p>
                 <div className="tab-item">
                   <p>Bạn có thể thực hiện thêm bản ghi ngay trên website</p>
-                  <input type="button" value="Thêm bản ghi trực tiếp " />
+                  <input
+                    type="button"
+                    value="Thêm bản ghi trực tiếp "
+                    onClick={showModal}
+                  />
                 </div>
               </div>
               <div className="item">
@@ -48,6 +67,89 @@ export default function ThemThongTinBanGhi({}: Props) {
           </div>
         </div>
       </div>
+      <Modal
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        footer={null}
+        wrapClassName="modal-themBanGhi"
+        width={650}
+      >
+        <form>
+          <h5>Thêm bản ghi mới</h5>
+          <div className="form-group">
+            <div className="form-item">
+              <label htmlFor="">
+                Tên bản ghi: <i>*</i>
+              </label>
+              <input type="text" />
+            </div>
+            <div className="form-item">
+              <label htmlFor="">
+                Mã ISRC: <i>*</i>
+              </label>
+              <input type="text" />
+            </div>
+            <div className="form-item">
+              <label htmlFor="">
+                Tác giả: <i>*</i>
+              </label>
+              <input type="text" />
+            </div>
+            <div className="form-item">
+              <label htmlFor="">
+                Ca sĩ/Nhóm nhạc: <i>*</i>
+              </label>
+              <input type="text" />
+            </div>
+            <div className="form-list">
+              <div className="form-item">
+                <label htmlFor="">
+                  Thể loại: <i>*</i>
+                </label>
+                <select>
+                  <option value="">Rap</option>
+                  <option value="">Ballad</option>
+                  <option value="">Rock n Roll</option>
+                  <option value="">R&B</option>
+                </select>
+              </div>
+              <div className="form-item">
+                <label htmlFor="">
+                  Nhà sản xuất: <i>*</i>
+                </label>
+                <input type="text" />
+              </div>
+            </div>
+            <div className="form-list">
+              <div className="form-item">
+                <label htmlFor="">
+                  Đính kèm bản ghi: <i>*</i>
+                </label>
+                <Upload>
+                  <Button id="input_file">
+                    <i className="fas fa-cloud-upload-alt"></i> Tải lên
+                  </Button>
+                </Upload>
+              </div>
+              <div className="form-item">
+                <label htmlFor="">
+                  Đính kèm lời bài hát: <i>*</i>
+                </label>
+                <Upload>
+                  <Button id="input_file">
+                    <i className="fas fa-cloud-upload-alt"></i> Tải lên
+                  </Button>
+                </Upload>
+              </div>
+            </div>
+            <div className="form-btn">
+              <button>Hủy</button>
+              <button>Lưu</button>
+            </div>
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 }

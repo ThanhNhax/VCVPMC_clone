@@ -206,17 +206,19 @@ export default function XemChiTietPlayList({}: Props) {
               </div>
             </div>
             <div className="left-table">
-              <table>
-                <thead>
-                  <tr>
-                    <th>STT</th>
-                    <th>Tên bản ghi</th>
-                    <th>Ca sĩ</th>
-                    <th>Tác giả</th>
-                  </tr>
-                </thead>
-                <tbody>{renderBanGhiTable()}</tbody>
-              </table>
+              <div className="wrap-table">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>STT</th>
+                      <th>Tên bản ghi</th>
+                      <th>Ca sĩ</th>
+                      <th>Tác giả</th>
+                    </tr>
+                  </thead>
+                  <tbody>{renderBanGhiTable()}</tbody>
+                </table>
+              </div>
               <div className="pagination-table">
                 <div className="pagination_left">
                   <p>

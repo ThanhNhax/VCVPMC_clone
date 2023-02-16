@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import ItemPlayList from "../../Components/ItemPlayList";
 import { AppDispatch, RootState } from "../../redux/configStore";
+import { KhoBanGhiRedux } from "../../redux/khoBanGhi/khoBanghiReducer";
 import {
   getArrPlayListFireStore,
   PlayListRedux,
@@ -40,8 +41,8 @@ export default function Playlist() {
         <tr key={index}>
           <td>{index + 1}</td>
           <td>{item.tieuDe}</td>
-          <td>{item.soBanGhi}</td>
-          <td>{item.thoiLuong}</td>
+          <td>{item.arrBanGhi.length}</td>
+          <td>{}</td>
           <td className="td-chuDe">
             {item?.chuDe?.map((chuDe: string | null, index: number) => {
               return <p key={index}>{chuDe}</p>;
@@ -125,21 +126,23 @@ export default function Playlist() {
                 className="render-table"
                 style={isTable ? { display: "block" } : { display: "none" }}
               >
-                <table>
-                  <thead>
-                    <tr>
-                      <th>STT</th>
-                      <th>Tiêu đề</th>
-                      <th>Số bản ghi</th>
-                      <th>Thời lượng</th>
-                      <th>Chủ đề</th>
-                      <th>Ngày tạo</th>
-                      <th>Người tạo</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>{renderPlayListTable()}</tbody>
-                </table>
+                <div className="wrap-table">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>STT</th>
+                        <th>Tiêu đề</th>
+                        <th>Số bản ghi</th>
+                        <th>Thời lượng</th>
+                        <th>Chủ đề</th>
+                        <th>Ngày tạo</th>
+                        <th>Người tạo</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>{renderPlayListTable()}</tbody>
+                  </table>
+                </div>
                 <div className="pagination-table">
                   <div className="pagination_left">
                     <p>

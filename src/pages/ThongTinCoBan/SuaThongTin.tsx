@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/configStore";
 import * as Yup from "yup";
-import { Field, Form, Formik, useFormik } from "formik";
+import { useFormik } from "formik";
 import {
   getUserEdit,
   updateUser,
@@ -50,6 +50,7 @@ export default function SuaThongTin() {
       value.ten = value.ten ? value.ten : user.ten;
       console.log({ value });
       dispatch(updateUser(uidUserStore, value));
+      navigate("/admin/thongtincoban");
     },
   });
   return (
