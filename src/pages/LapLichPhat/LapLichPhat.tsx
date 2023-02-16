@@ -23,7 +23,7 @@ export default function LapLichPhat() {
               <thead>
                 <tr>
                   <th>STT</th>
-                  <th>Tê lịch</th>
+                  <th>Tên lịch</th>
                   <th>Thời gian phát</th>
                 </tr>
               </thead>
@@ -32,24 +32,27 @@ export default function LapLichPhat() {
                   <td>1</td>
                   <td>Lịch phát số 1</td>
                   <td>22/05/2022 - 30/05/2022</td>
-                  <td onClick={() => navigate("/admin/lapLichPhat/chiTiet")}>
+                  <td
+                    onClick={() => navigate("/admin/lapLichPhat/chiTiet")}
+                    className="action"
+                  >
                     Xem chi tiết
                   </td>
-                  <td>Xóa</td>
+                  <td className="action">Xóa</td>
                 </tr>
                 <tr>
                   <td>1</td>
                   <td>Lịch phát số 1</td>
                   <td>22/05/2022 - 30/05/2022</td>
-                  <td>Xem chi tiết</td>
-                  <td>Xóa</td>
+                  <td className="action">Xem chi tiết</td>
+                  <td className="action">Xóa</td>
                 </tr>
                 <tr>
                   <td>1</td>
                   <td>Lịch phát số 1</td>
                   <td>22/05/2022 - 30/05/2022</td>
-                  <td>Xem chi tiết</td>
-                  <td>Xóa</td>
+                  <td className="action">Xem chi tiết</td>
+                  <td className="action">Xóa</td>
                 </tr>
               </tbody>
             </table>

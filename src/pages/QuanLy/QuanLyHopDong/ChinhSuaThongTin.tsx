@@ -1,57 +1,67 @@
 import { Button, Upload } from "antd";
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
-type Props = {};
-
-export default function ThemHopDongUyQuyenMoi({}: Props) {
-  const navigate = useNavigate();
+export default function ChinhSuaThongTin() {
   return (
-    <div className="themHopDingUyQuyenMoi">
+    <div className="chinhSuaThongTin">
       <div className="container">
-        <div className="content-top">
+        <div className="container-top">
           <p>
             Quản lý<i className="fas fa-chevron-right"></i>Quản lý hợp đồng
-            <i className="fas fa-chevron-right"></i>Thêm hợp đồng
+            <i className="fas fa-chevron-right"></i>Chi tiết
+            <i className="fas fa-chevron-right"></i>Chỉnh sửa thông tin
           </p>
-          <h1>Thêm hợp đồng ủy quyền mới</h1>
+          <h1>Hợp đồng uỷ quyền bài hát - BH123</h1>
         </div>
-        <div className="content-center">
+        <div className="container-center">
           <div className="center-top">
             <div className="from-group">
               <div className="from-item">
-                <label htmlFor="">
-                  Số hợp đồng:<i>*</i>
-                </label>
-                <input type="text" />
+                <label htmlFor="">Số hợp đồng:</label>
+                <input type="text" defaultValue={"1421566747"} />
               </div>
               <div className="from-item">
-                <label htmlFor="">
-                  Tên hợp đồng:<i>*</i>
-                </label>
-                <input type="text" />
+                <label htmlFor="">Tên hợp đồng:</label>
+                <input
+                  type="text"
+                  defaultValue={"Hợp đồng uỷ quyền tác phẩm âm nhạc"}
+                />
               </div>
               <div className="from-item">
-                <label htmlFor="">
-                  Ngày hiệu lực:<i>*</i>
-                </label>
-                <input type="date" />
+                <label htmlFor="">Ngày hiệu lực:</label>
+                <input type="date" defaultValue={"01/05/2021"} />
               </div>
               <div className="from-item">
-                <label htmlFor="">
-                  Ngày hết hạn:<i>*</i>
-                </label>
-                <input type="date" />
+                <label htmlFor="">Ngày hết hạn:</label>
+                <input type="date" defaultValue={"12/01/2021"} />
+              </div>
+              <div className="from-item">
+                <label htmlFor="">Tình trạng:</label>
+                <select>
+                  <option value="">Đang hiệu lực</option>
+                </select>
               </div>
             </div>
             <div className="from-group">
               <div className="from-item">
                 <label htmlFor="">Đính kèm tệp:</label>
-                <Upload>
-                  <Button id="input_file">
-                    <i className="fas fa-cloud-upload-alt"></i> Tải lên
-                  </Button>
-                </Upload>
+                <div className="upload-file">
+                  <Upload>
+                    <Button id="input_file">
+                      <i className="fas fa-cloud-upload-alt"></i> Tải lên
+                    </Button>
+                  </Upload>
+                  <p>
+                    <i className="fas fa-file-word"></i>
+                    hetthuongcannho.doc
+                    <i className="fas fa-times"></i>
+                  </p>
+                  <p>
+                    <i className="fas fa-file-word"></i>
+                    hetthuongcannho.doc
+                    <i className="fas fa-times"></i>
+                  </p>
+                </div>
               </div>
             </div>
             <div className="from-group">
@@ -79,11 +89,7 @@ export default function ThemHopDongUyQuyenMoi({}: Props) {
                       Quyền của nhà sản xuất:
                       <br /> (Bản ghi/video)
                     </td>
-                    <td
-                      style={{ display: "flex", justifyContent: "flex-start" }}
-                    >
-                      50%
-                    </td>
+                    <td>50%</td>
                   </tr>
                 </tbody>
               </table>
@@ -103,8 +109,10 @@ export default function ThemHopDongUyQuyenMoi({}: Props) {
                   </div>
                 </div>
                 <div className="from-item">
-                  <label htmlFor="">Tên người uỷ quyền:</label>
-                  <input type="text" />
+                  <label htmlFor="">
+                    Tên người uỷ quyền: <i>*</i>
+                  </label>
+                  <input type="text" defaultValue={"Nguyễn Văn A"} />
                 </div>
                 <div className="from-item">
                   <label htmlFor="">
@@ -135,7 +143,7 @@ export default function ThemHopDongUyQuyenMoi({}: Props) {
                   <label htmlFor="">
                     Số điện thoại: <i>*</i>
                   </label>
-                  <input type="text" />
+                  <input type="text" defaultValue={"(+84) 345 678 901"} />
                 </div>
               </div>
               <div className="from-group">
@@ -143,78 +151,77 @@ export default function ThemHopDongUyQuyenMoi({}: Props) {
                   <label htmlFor="">
                     CMND/ CCCD: <i>*</i>
                   </label>
-                  <input type="text" />
+                  <input type="text" defaultValue={"123456789012"} />
                 </div>
                 <div className="from-item">
                   <label htmlFor="">
                     Ngày cấp: <i>*</i>
                   </label>
-                  <input type="text" />
+                  <input type="text" defaultValue={"10/01/2011"} />
                 </div>
                 <div className="from-item">
                   <label htmlFor="">
                     Nơi cấp: <i>*</i>
                   </label>
-                  <input type="text" />
+                  <input type="text" defaultValue={"Tp.HCM, Việt Nam"} />
                 </div>
                 <div className="from-item">
                   <label htmlFor="">
                     Mã số thuế: <i>*</i>
                   </label>
-                  <input type="text" />
+                  <input type="text" defaultValue={"92387489"} />
                 </div>
                 <div className="from-item">
                   <label htmlFor="">
                     Nơi cư trú: <i>*</i>
                   </label>
-                  <input type="text" />
+                  <input
+                    type="text"
+                    defaultValue={
+                      "69/53, Nguyễn Gia Trí, phường 25, quận Bình Thạnh, thành phố Hồ Chí Minh"
+                    }
+                  />
                 </div>
               </div>
               <div className="from-group">
                 <div className="from-item">
-                  <label htmlFor="">
-                    Email: <i>*</i>
-                  </label>
-                  <input type="text" />
+                  <label htmlFor="">Email:</label>
+                  <input type="text" defaultValue={"nguyenvana@gmail.com"} />
                 </div>
                 <div className="from-item">
                   <label htmlFor="">
                     Tên đăng nhập: <i>*</i>
                   </label>
-                  <input type="text" />
+                  <input type="text" defaultValue={"nguyenvana@gmail.com"} />
                 </div>
                 <div className="from-item">
                   <label htmlFor="">
                     Mật khẩu: <i>*</i>
                   </label>
-                  <input type="text" />
+                  <input type="password" defaultValue={"12345678"} />
                 </div>
                 <div className="from-item">
-                  <label htmlFor="">
-                    Số tài khoản: <i>*</i>
-                  </label>
-                  <input type="text" />
+                  <label htmlFor="">Số tài khoản:</label>
+                  <input type="text" defaultValue={"1231123312211223"} />
                 </div>
                 <div className="from-item">
-                  <label htmlFor="">
-                    Ngân hàng: <i>*</i>
-                  </label>
-                  <input type="text" />
+                  <label htmlFor="">Ngân hàng:</label>
+                  <input type="text" defaultValue={"ACB - Ngân hàng Á Châu"} />
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="content-bottom">
+        <div className="container-bottom">
           <p>
             <i>*</i>là những trường thông tin bắt buộc
           </p>
           <div className="button">
             <button>Hủy</button>
             <button
-              onClick={() =>
-                navigate("/admin/quanLyHopDong/themThongTinBanGhi")
-              }
+            //   onClick={() =>
+            //     // navigate("/admin/quanLyHopDong/themThongTinBanGhi")
+            //   }
             >
               Tạo
             </button>
