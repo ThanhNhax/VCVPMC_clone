@@ -117,10 +117,6 @@
                                     }
                                 }
                             }
-
-
-
-
                         }
 
                         &:first-child {
@@ -254,6 +250,14 @@
                             text-align: center;
                             @include text (12px, 500, #FFFFFF);
                             opacity: 0.7;
+                        }
+
+                        &:last-child {
+                            .bg-icon {
+                                i {
+                                    color: #FF4747;
+                                }
+                            }
                         }
                     }
 

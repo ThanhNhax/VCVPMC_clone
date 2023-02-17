@@ -1,0 +1,61 @@
+.modal-huyHopDongUyQuyen {
+    .ant-modal {
+        padding: 0;
+
+        .ant-modal-content {
+            background: #3E3E5B;
+            border-radius: 16px;
+            padding: 40px;
+
+            .ant-modal-close {
+                display: none;
+            }
+
+            .ant-modal-body {
+
+                .container {
+                    text-align: center;
+
+
+                    h1 {
+                        @include text(24px, 700, #f5f5f5);
+                        text-align: center;
+                    }
+
+                    textarea {
+                        margin: 40px 0;
+                        width: 640px;
+                        height: 208px;
+                        padding: 12px 24px 12px 16px;
+                        background: #2B2B3F;
+                        border: 1px solid #727288;
+                        border-radius: 8px;
+                        @include text(16px, 400, #FFFFFF);
+                    }
+
+                    .content-btn {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        gap: 30px;
+
+                        button {
+                            width: 168px;
+                            height: 48px;
+
+                            &:first-child {
+
+                                @include button(16px, 600, #FF7506, rgba(0, 0, 0, 0), 12px 24px, 1px solid #FF7506, 8px, #FF7506, #FFFFFF);
+                            }
+
+                            &:last-child {
+
+                                @include button(16px, 600, #FFFFFF, #FF7506, 12px 24px, 1px solid #FF7506, 8px, rgba(0, 0, 0, 0), #FF7506);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

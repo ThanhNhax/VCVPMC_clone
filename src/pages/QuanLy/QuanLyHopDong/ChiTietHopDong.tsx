@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Button, Modal, Upload } from "antd";
 import { useNavigate } from "react-router-dom";
 
 export default function ChiTietHopDong() {
@@ -14,6 +15,34 @@ export default function ChiTietHopDong() {
   const [isStyleBtn, setIsStyleBtn] = useState<boolean>(false);
   // cấu hình phân pages
   const navigate = useNavigate();
+
+  // xử  lý modal popup
+  const [isChecked, setIsChecked] = useState<boolean>(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpenHuy, setIsModalOpenHuy] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+  const showModalHuy = () => {
+    setIsModalOpenHuy(true);
+  };
+
+  const handleOkHuy = () => {
+    setIsModalOpenHuy(false);
+  };
+
+  const handleCancelHuy = () => {
+    setIsModalOpenHuy(false);
+  };
   return (
     <div className="chiTietHopDong">
       <div className="container">
@@ -232,19 +261,24 @@ export default function ChiTietHopDong() {
             </div>
             <div className="menu">
               <div className="menu-item">
-                <div className="bg-icon">
+                <div
+                  className="bg-icon"
+                  onClick={() =>
+                    navigate("/admin/quanLyHopDong/chiTiet/chinhSuaThongTin")
+                  }
+                >
                   <i className="fas fa-edit"></i>
                 </div>
                 <p>Chỉnh sửa hợp đồng</p>
               </div>
               <div className="menu-item">
-                <div className="bg-icon">
+                <div className="bg-icon" onClick={() => setIsModalOpen(true)}>
                   <i className="fas fa-file-alt"></i>
                 </div>
                 <p>Gia hạn hợp đồng</p>
               </div>
               <div className="menu-item">
-                <div className="bg-icon">
+                <div className="bg-icon" onClick={showModalHuy}>
                   <i className="fas fa-times"></i>
                 </div>
                 <p>Huỷ hợp đồng</p>
@@ -428,13 +462,13 @@ export default function ChiTietHopDong() {
                   <p>Chỉnh sửa tác phẩm</p>
                 </div>
                 <div className="menu-item">
-                  <div className="bg-icon">
+                  <div className="bg-icon" onClick={showModal}>
                     <i className="fas fa-file-alt"></i>
                   </div>
                   <p>Gia hạn hợp đồng</p>
                 </div>
                 <div className="menu-item">
-                  <div className="bg-icon">
+                  <div className="bg-icon" onClick={showModalHuy}>
                     <i className="fas fa-undo-alt"></i>
                   </div>
                   <p>Hủy hợp đồng</p>
@@ -450,6 +484,132 @@ export default function ChiTietHopDong() {
           </div>
         </div>
       </div>
+      <Modal
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        footer={null}
+        wrapClassName="modal-giaHanHopDong"
+        width={960}
+      >
+        <div className="modal-container">
+          <h5>Gia hạn uỷ quyền tác phẩm</h5>
+          <div className="content-top">
+            <div className="thoGianGianHan">
+              <p>
+                Thời gian gia hạn <i>*</i>
+              </p>
+              <p>Từ ngày: 02/08/2021</p>
+              <div className="form-group">
+                <label htmlFor="">Đến ngày:</label>
+                <input type="date" name="" id="" />
+              </div>
+              <p>
+                Lưu ý: Thời gian bắt đầu gia hạn hợp đồng mới được tính sau ngày
+                hết hạn hợp đồng cũ một ngày.
+              </p>
+            </div>
+            <div className="mucNhuanBut">
+              <p>
+                Mức nhuận bút <i>*</i>
+              </p>
+              <div className="form-group">
+                <input
+                  type="checkbox"
+                  name="quyen"
+                  checked={!isChecked ? true : false}
+                  onChange={() => setIsChecked(false)}
+                />
+                <label htmlFor="">Quyền tác giả</label>
+                <input
+                  type="text"
+                  id="%"
+                  defaultValue={"0"}
+                  disabled={isChecked ? true : false}
+                />
+                <label htmlFor="%">%</label>
+              </div>
+              <div className="form-group">
+                <input
+                  type="checkbox"
+                  checked={isChecked ? true : false}
+                  onChange={() => setIsChecked(true)}
+                />
+                <label htmlFor="">Quyền liên quan:</label>
+              </div>
+              <div className="form-list">
+                <div className="form-group">
+                  <input type="checkbox" checked={isChecked ? true : false} />
+                  <label htmlFor="">Quyền của người biểu diễn</label>{" "}
+                  <input
+                    type="text"
+                    defaultValue={"50"}
+                    disabled={!isChecked ? true : false}
+                  />
+                  <label htmlFor="">%</label>
+                </div>
+                <div className="form-group">
+                  <input type="checkbox" checked={isChecked ? true : false} />
+                  <label htmlFor="">
+                    Quyền của nhà sản xuất
+                    <br />
+                    (bản ghi/video)
+                  </label>
+                  <input
+                    type="text"
+                    defaultValue={"50"}
+                    disabled={!isChecked ? true : false}
+                  />
+                  <label htmlFor="">%</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="content-bottom">
+            <div className="form-group">
+              <label htmlFor="">Đính kèm tệp:</label>
+              <div className="upload-file">
+                <Upload>
+                  <Button id="input_file">
+                    <i className="fas fa-cloud-upload-alt"></i> Tải lên
+                  </Button>
+                </Upload>
+                <p>
+                  <i className="fas fa-file-word"></i>
+                  hetthuongcannho.doc
+                  <i className="fas fa-times"></i>
+                </p>
+                <p>
+                  <i className="fas fa-file-word"></i>
+                  hetthuongcannho.doc
+                  <i className="fas fa-times"></i>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="content-btn">
+            <button onClick={handleCancel}>Hủy</button>
+            <button onClick={handleOk}>Lưu</button>
+          </div>
+        </div>
+      </Modal>
+      <Modal
+        open={isModalOpenHuy}
+        onOk={handleOkHuy}
+        onCancel={handleCancelHuy}
+        footer={null}
+        wrapClassName="modal-huyHopDongUyQuyen"
+        width={720}
+      >
+        <div className="container">
+          <h1>Hủy hợp đồng uỷ quyền</h1>
+          <textarea placeholder="Cho chúng tôi biết lý do bạn muốn huỷ hợp đồng uỷ quyền này..." />
+          <div className="content-btn">
+            <button onClick={handleCancelHuy}>Quay lại</button>
+            <button onClick={handleOkHuy}>Huỷ hợp đồng</button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }
