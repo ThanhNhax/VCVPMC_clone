@@ -101,6 +101,7 @@
                             border: 1px solid #727288;
                             border-radius: 8px;
                             height: 36px;
+                            @include text(14px, 400, #ffffff);
                         }
                     }
 
@@ -180,6 +181,8 @@
                                 border: 1px solid #727288;
                                 border-radius: 8px;
                                 height: 36px;
+                                @include text(14px, 400, #ffffff);
+
                             }
 
                             select {
@@ -188,6 +191,8 @@
                                 border: 1px solid #727288;
                                 border-radius: 8px;
                                 height: 36px;
+                                @include text(14px, 400, #ffffff);
+
                             }
                         }
 

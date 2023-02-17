@@ -281,7 +281,9 @@ export default function QuanLyHopDong({}: Props) {
                         <td>02/12/2022</td>
                         <td className="moi_thoiHan">Mới</td>
                         <td className="action">
-                          <Link to={"/admin/quanLyHopDong/chiTiet"}>
+                          <Link
+                            to={"/admin/quanLyHopDong/chiTietHopDongKhaiThac"}
+                          >
                             Xem chi tiết
                           </Link>
                         </td>

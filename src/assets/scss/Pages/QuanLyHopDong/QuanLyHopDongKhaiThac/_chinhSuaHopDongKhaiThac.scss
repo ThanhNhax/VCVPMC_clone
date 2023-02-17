@@ -1,0 +1,303 @@
+.chinhSuaHopDongKhaiThac {
+    height: 90%;
+    padding: 0 80px 0 40px;
+
+    .container {
+        width: 100%;
+        height: 100%;
+
+        .container-top {
+            height: 10%;
+
+            p {
+                @include text (14px, 600, #F5F5FF);
+                opacity: 0.5;
+
+                i {
+                    margin: 0 13px;
+                    color: #FFAC69;
+                }
+            }
+
+            h1 {
+                @include text(24px, 700, #ffffff);
+                margin-bottom: 12px;
+            }
+        }
+
+        .container-center {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+
+            .center-list {
+                display: flex;
+                justify-content: space-between;
+
+                .center-item {
+                    table {
+                        width: 100%;
+
+                        tr {
+                            height: 40px;
+
+                            td {
+                                &:first-child {
+                                    label {
+                                        @include text(14px, 700, #FFFFFF);
+
+                                        i {
+                                            color: #FF4747;
+                                        }
+                                    }
+                                }
+
+                                &:last-child {
+                                    padding-left: 12px;
+
+                                    input {
+                                        width: 100%;
+                                        padding: 11px 12px 13px;
+                                        height: 36px;
+                                        background: #2B2B3F;
+                                        border: 1px solid #727288;
+                                        border-radius: 8px;
+                                        @include text (14px, 400, #F5F5FF);
+                                    }
+
+                                    select {
+                                        padding: 0 16px;
+                                        width: 100%;
+                                        height: 36px;
+                                        background: #2B2B3F;
+                                        border: 1px solid #727288;
+                                        border-radius: 8px;
+                                        @include text (14px, 400, #F5F5FF);
+                                    }
+
+                                    textarea {
+                                        padding: 5px 16px;
+                                        width: 100%;
+                                        height: 100%;
+                                        background: #2B2B3F;
+                                        border: 1px solid #727288;
+                                        border-radius: 8px;
+                                        @include text (14px, 400, #F5F5FF);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                &:first-child {
+                    .center-item:first-child {
+                        width: 35%;
+                    }
+
+                    .center-item:nth-child(2) {
+                        display: flex;
+                        gap: 10px;
+
+                        label {
+                            margin-right: 5px;
+                            @include text (14px, 700, #ffffff);
+                        }
+
+                        .upload-file {
+                            display: flex;
+                            flex-direction: column;
+                            gap: 10px;
+
+                            #input_file {
+                                border: 1px solid #FFAC69;
+                                border-radius: 6px;
+                                width: 108px;
+                                height: 40px;
+                                background: rgba(0, 0, 0, 0);
+                                color: #FFAC69;
+                                font-size: 16px;
+
+                                i {
+                                    margin-right: 5px;
+                                }
+                            }
+
+                            p {
+                                i:first-child {
+                                    margin-right: 10px;
+                                }
+
+                                @include text (14px, 400, #FFFFFF);
+
+                                i:last-child {
+                                    color: #FF4747;
+                                    margin-left: 20px;
+                                    cursor: pointer;
+                                }
+                            }
+                        }
+
+                    }
+
+                    .center-item:last-child {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 16px;
+                        width: 33%;
+
+                        h5 {
+                            @include text (14px, 700, #ffffff);
+
+                        }
+
+                        .checked-item {
+                            display: flex;
+                            justify-content: flex-end;
+                            gap: 20px;
+
+                            .form-group {
+
+
+                                input {
+                                    width: 20px;
+                                    height: 20px;
+                                }
+
+                                label {
+                                    margin-left: 12px;
+                                    @include text(14px, 400, #F5F5FF);
+                                }
+                            }
+
+                            .wrap-checked-right {
+                                border-left: 1px solid #727288;
+                                padding-left: 12px;
+                                display: flex;
+                                flex-direction: column;
+                                gap: 16px;
+                                width: 70%;
+
+                                .form-group {
+                                    display: flex;
+                                    justify-content: flex-end;
+                                    gap: 12px;
+
+                                    label {
+                                        @include text(14px, 400, #F5F5FF);
+                                    }
+
+                                    input {
+                                        padding: 11px 24px 13px 16px;
+                                        background: #2B2B3F;
+                                        border: 1px solid #727288;
+                                        border-radius: 8px;
+                                        @include text(14px, 400, #F5F5FF);
+                                        width: 50%;
+                                        height: 36px;
+                                    }
+                                }
+                            }
+
+                            &:last-child {
+                                .wrap-checked-right {
+                                    border: none;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                &:last-child {
+                    .center-item:first-child {
+                        width: 35%;
+                    }
+
+                    .center-item:nth-child(2) {
+                        table {
+                            tr {
+                                &:first-child {
+
+                                    td {
+                                        &:last-child {
+
+                                            // width: 20px;
+                                            display: flex;
+                                            align-items: center;
+                                            gap: 20px;
+                                            height: 40px;
+
+                                            .form-group {
+                                                display: flex;
+                                                align-items: center;
+                                                gap: 10px;
+
+                                                input {
+                                                    width: 20px;
+                                                    height: 20px;
+                                                }
+
+                                                label {
+                                                    @include text (14px, 400, #FFFFFF);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                // &:last-child {
+
+                                //     td:last-child {
+                                //         background: red;
+                                //         height: 80px;
+
+                                //         textarea {
+                                //             width: 100%;
+                                //             height: 100%;
+                                //         }
+                                //     }
+                                // }
+                            }
+                        }
+                    }
+
+                    .center-item:last-child {
+                        width: 33%;
+                    }
+                }
+            }
+        }
+
+        .container-btn {
+            height: 10%;
+
+            p {
+                i {
+                    color: red;
+                }
+
+                @include text(12px, 500, #F5F5FF);
+                opacity: .5;
+            }
+
+            .content-btn {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 32px;
+
+                button {
+                    width: 168px;
+
+                    &:nth-child(1) {
+                        @include button (16px, 600, #FF7506, #1E1E2E, 12px 32px, 1px solid #FF7506, 8px, #FF7506, #ffffff)
+                    }
+
+                    &:nth-child(2) {
+                        @include button (16px, 600, #ffffff, #FF7506, 12px 32px, 1px solid #FF7506, 8px, #1E1E2E, #FF7506)
+                    }
+                }
+            }
+        }
+    }
+}
