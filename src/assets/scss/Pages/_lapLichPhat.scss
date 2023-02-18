@@ -97,6 +97,14 @@
 
                             .action {
                                 @include text(12px, 600, #FF7506);
+                                text-decoration: underline;
+                                cursor: pointer;
+                            }
+
+                            .action-xoa {
+                                @include text(12px, 600, #FF4747);
+                                text-decoration: underline;
+                                cursor: pointer;
                             }
                         }
                     }

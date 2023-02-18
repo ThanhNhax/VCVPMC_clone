@@ -1,9 +1,16 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../../redux/configStore";
 
 type Props = {};
 
 export default function ChiTietLichPhat({}: Props) {
+  // Lấy data item lập lịch phát từ redux về
+  const { itemLapLichPhat } = useSelector(
+    (state: RootState) => state.lapLichPhat
+  );
+
   const navigate = useNavigate();
   // cấu hình phân pages
   const [currentPage, setCurrentPage] = useState<number>(1); // Vị trí page hiện tại
@@ -20,7 +27,7 @@ export default function ChiTietLichPhat({}: Props) {
         <p>
           Lập lịch phát <i className="fas fa-chevron-right"></i> Chi tiết
         </p>
-        <h1>Danh sách lịch phát</h1>
+        <h1>{itemLapLichPhat?.tenLich}</h1>
         <p>Danh sách Playlist</p>
       </div>
       <div className="container">

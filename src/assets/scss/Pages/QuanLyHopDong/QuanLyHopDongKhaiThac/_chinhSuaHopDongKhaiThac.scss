@@ -93,6 +93,32 @@
                 &:first-child {
                     .center-item:first-child {
                         width: 35%;
+
+                        table {
+                            tbody {
+                                tr:nth-child(3) {
+                                    td:last-child {
+                                        input {
+                                            width: 60%;
+
+                                            &::-webkit-calendar-picker-indicator {
+                                                color: #FF7506;
+                                                cursor: pointer;
+                                            }
+
+                                        }
+                                    }
+                                }
+
+                                tr:nth-child(4) {
+                                    td:last-child {
+                                        input {
+                                            width: 60%;
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
 
                     .center-item:nth-child(2) {
@@ -153,20 +179,26 @@
 
                         .checked-item {
                             display: flex;
-                            justify-content: flex-end;
+                            justify-content: space-between;
                             gap: 20px;
 
                             .form-group {
+                                .wrap-form {
+                                    display: flex;
+                                    align-items: center;
 
 
-                                input {
-                                    width: 20px;
-                                    height: 20px;
-                                }
+                                    input {
+                                        width: 20px;
+                                        height: 20px;
+                                        cursor: pointer;
+                                    }
 
-                                label {
-                                    margin-left: 12px;
-                                    @include text(14px, 400, #F5F5FF);
+                                    label {
+                                        margin-left: 12px;
+                                        @include text(14px, 400, #F5F5FF);
+                                        cursor: pointer;
+                                    }
                                 }
                             }
 
@@ -211,6 +243,40 @@
                 &:last-child {
                     .center-item:first-child {
                         width: 35%;
+
+                        table {
+                            tbody {
+                                tr {
+                                    td:first-child {
+                                        width: 35%;
+                                    }
+
+                                    &:nth-child(3) {
+                                        td:last-child {
+                                            input {
+                                                width: 60%;
+                                            }
+                                        }
+                                    }
+
+                                    &:nth-child(4) {
+                                        td:last-child {
+                                            input {
+                                                width: 60%;
+                                            }
+                                        }
+                                    }
+
+                                    &:nth-child(5) {
+                                        td:last-child {
+                                            select {
+                                                width: 60%;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
 
                     .center-item:nth-child(2) {
@@ -245,24 +311,58 @@
                                     }
                                 }
 
-                                // &:last-child {
+                                &:last-child {
 
-                                //     td:last-child {
-                                //         background: red;
-                                //         height: 80px;
 
-                                //         textarea {
-                                //             width: 100%;
-                                //             height: 100%;
-                                //         }
-                                //     }
-                                // }
+                                    td:last-child {
+                                        height: 80px;
+
+                                        textarea {
+                                            margin-top: 5px;
+                                        }
+                                    }
+                                }
+
+                                &:nth-child(3) {
+                                    td:last-child {
+                                        input {
+                                            width: 60%;
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
 
                     .center-item:last-child {
                         width: 33%;
+
+                        table {
+                            tbody {
+                                tr {
+                                    td {
+                                        .password {
+                                            position: relative;
+
+                                            .fa-eye {
+                                                color: #fff;
+                                                position: absolute;
+                                                top: 50%;
+                                                transform: translateY(-50%);
+                                                right: 25px;
+                                                transition: all .3s;
+
+                                            }
+
+                                            #doiMau {
+                                                color: #ff7506 !important;
+                                                // transition: all .3s;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

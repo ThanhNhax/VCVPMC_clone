@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Upload } from "antd";
 
-export default function ChinhSuaHopDongKhaiThac() {
+export default function ThemHopDongKhaiThacMoi() {
   const [isType, setIsType] = useState<boolean>(true); // để handle type password => type text
 
   return (
@@ -10,10 +10,9 @@ export default function ChinhSuaHopDongKhaiThac() {
         <div className="container-top">
           <p>
             Quản lý<i className="fas fa-chevron-right"></i>Quản lý hợp đồng
-            <i className="fas fa-chevron-right"></i>Chi tiết
-            <i className="fas fa-chevron-right"></i>Chỉnh sửa hợp đồng
+            <i className="fas fa-chevron-right"></i>Thêm hợp đồng mới
           </p>
-          <h1>Hợp đồng khai thác - HD123 </h1>
+          <h1>Thêm hợp đồng khai thác mới</h1>
         </div>
         <div className="container-center">
           <div className="center-list">
@@ -27,12 +26,7 @@ export default function ChinhSuaHopDongKhaiThac() {
                       </label>
                     </td>
                     <td>
-                      <input
-                        type="text"
-                        name="tenHopDong"
-                        id="tenHopDong"
-                        defaultValue={"Hợp đồng kinh doanh"}
-                      />
+                      <input type="text" name="tenHopDong" id="tenHopDong" />
                     </td>
                   </tr>
                   <tr>
@@ -42,12 +36,7 @@ export default function ChinhSuaHopDongKhaiThac() {
                       </label>
                     </td>
                     <td>
-                      <input
-                        type="text"
-                        name="soHopDong"
-                        id="soHopDong"
-                        defaultValue={"123"}
-                      />
+                      <input type="text" name="soHopDong" id="soHopDong" />
                     </td>
                   </tr>
                   <tr>
@@ -57,12 +46,7 @@ export default function ChinhSuaHopDongKhaiThac() {
                       </label>
                     </td>
                     <td>
-                      <input
-                        type="date"
-                        name="ngayHieuLuc"
-                        id="ngayHieuLuc"
-                        defaultValue={"05/22/2021"}
-                      />
+                      <input type="date" name="ngayHieuLuc" id="ngayHieuLuc" />
                     </td>
                   </tr>
                   <tr>
@@ -72,12 +56,7 @@ export default function ChinhSuaHopDongKhaiThac() {
                       </label>
                     </td>
                     <td>
-                      <input
-                        type="date"
-                        name="ngayHetHan"
-                        id="ngayHetHan"
-                        defaultValue={"30/06/2021"}
-                      />
+                      <input type="date" name="ngayHetHan" id="ngayHetHan" />
                     </td>
                   </tr>
                 </tbody>
@@ -184,7 +163,6 @@ export default function ChinhSuaHopDongKhaiThac() {
                         type="text"
                         name="tenDonViSuDung"
                         id="tenDonViSuDung"
-                        defaultValue={"Công ty TNHH MTV  Âu Lạc"}
                       />
                     </td>
                   </tr>
@@ -199,7 +177,6 @@ export default function ChinhSuaHopDongKhaiThac() {
                         type="text"
                         name="nguoiDaiDien"
                         id="nguoiDaiDien"
-                        defaultValue={"Nguyễn văn A"}
                       />
                     </td>
                   </tr>
@@ -210,12 +187,7 @@ export default function ChinhSuaHopDongKhaiThac() {
                       </label>
                     </td>
                     <td>
-                      <input
-                        type="text"
-                        name="chucVu"
-                        id="chucVu"
-                        defaultValue={"Giám đốc"}
-                      />
+                      <input type="text" name="chucVu" id="chucVu" />
                     </td>
                   </tr>
                   <tr>
@@ -225,12 +197,7 @@ export default function ChinhSuaHopDongKhaiThac() {
                       </label>
                     </td>
                     <td>
-                      <input
-                        type="text"
-                        name="ngaySinh"
-                        id="ngaySinh"
-                        defaultValue={"10/01/1984"}
-                      />
+                      <input type="text" name="ngaySinh" id="ngaySinh" />
                     </td>
                   </tr>
                   <tr>
@@ -250,12 +217,7 @@ export default function ChinhSuaHopDongKhaiThac() {
                       <label htmlFor="soDienThoai">Số điện thoại:</label>
                     </td>
                     <td>
-                      <input
-                        type="text"
-                        name="soDienThoai"
-                        id="soDienThoai"
-                        defaultValue={"123456789012"}
-                      />
+                      <input type="text" name="soDienThoai" id="soDienThoai" />
                     </td>
                   </tr>
                   <tr>
@@ -265,12 +227,7 @@ export default function ChinhSuaHopDongKhaiThac() {
                       </label>
                     </td>
                     <td>
-                      <input
-                        type="text"
-                        name="email"
-                        id="email"
-                        defaultValue={"nguyenvana@gmail.com"}
-                      />
+                      <input type="text" name="email" id="email" />
                     </td>
                   </tr>
                 </tbody>
@@ -303,12 +260,7 @@ export default function ChinhSuaHopDongKhaiThac() {
                       </label>
                     </td>
                     <td>
-                      <input
-                        type="text"
-                        name="CMND"
-                        id="CMND"
-                        defaultValue={"123456789012"}
-                      />
+                      <input type="text" name="CMND" id="CMND" />
                     </td>
                   </tr>
                   <tr>
@@ -318,12 +270,7 @@ export default function ChinhSuaHopDongKhaiThac() {
                       </label>
                     </td>
                     <td>
-                      <input
-                        type="text"
-                        name="ngayCap"
-                        id="ngayCap"
-                        defaultValue={"10/02/2014"}
-                      />
+                      <input type="text" name="ngayCap" id="ngayCap" />
                     </td>
                   </tr>
                   <tr>
@@ -333,12 +280,7 @@ export default function ChinhSuaHopDongKhaiThac() {
                       </label>
                     </td>
                     <td>
-                      <input
-                        type="text"
-                        name="noiCap"
-                        id="noiCap"
-                        defaultValue={"Tp.Hồ Chí Minh"}
-                      />
+                      <input type="text" name="noiCap" id="noiCap" />
                     </td>
                   </tr>
                   <tr>
@@ -346,12 +288,7 @@ export default function ChinhSuaHopDongKhaiThac() {
                       <label htmlFor="maSoThue">Mã số thuế:</label>
                     </td>
                     <td>
-                      <input
-                        type="text"
-                        name="maSoThue"
-                        id="maSoThue"
-                        defaultValue={"123456789012"}
-                      />
+                      <input type="text" name="maSoThue" id="maSoThue" />
                     </td>
                   </tr>
                   <tr>
@@ -359,13 +296,7 @@ export default function ChinhSuaHopDongKhaiThac() {
                       <label htmlFor="noiCuTru">Nơi cư trú:</label>
                     </td>
                     <td>
-                      <textarea
-                        name="noiCuTru"
-                        id="noiCuTru"
-                        defaultValue={
-                          "69/53, Nguyễn Gia Trí, Phường 25, Quận Bình Thạnh, Thành phố Hồ Chí Minh"
-                        }
-                      />
+                      <textarea name="noiCuTru" id="noiCuTru" />
                     </td>
                   </tr>
                 </tbody>
@@ -381,12 +312,7 @@ export default function ChinhSuaHopDongKhaiThac() {
                       </label>
                     </td>
                     <td>
-                      <input
-                        type="text"
-                        id="tenDangNhap"
-                        name="tenDangNhap"
-                        defaultValue={"nguyenvana@gmail.com"}
-                      />
+                      <input type="text" id="tenDangNhap" name="tenDangNhap" />
                     </td>
                   </tr>
                   <tr>
@@ -401,7 +327,6 @@ export default function ChinhSuaHopDongKhaiThac() {
                           type={isType ? "password" : "test"}
                           name="matKhau"
                           id="matKhau"
-                          defaultValue={"11111111"}
                         />
                         <i
                           onClick={() => {
@@ -418,12 +343,7 @@ export default function ChinhSuaHopDongKhaiThac() {
                       <label htmlFor="soTaiKhoan">Số tài khoản:</label>
                     </td>
                     <td>
-                      <input
-                        type="text"
-                        name="soTaiKhoan"
-                        id="soTaiKhoan"
-                        defaultValue={"1231123312211223"}
-                      />
+                      <input type="text" name="soTaiKhoan" id="soTaiKhoan" />
                     </td>
                   </tr>
                   <tr>
@@ -431,12 +351,7 @@ export default function ChinhSuaHopDongKhaiThac() {
                       <label htmlFor="nganHang">Ngân hàng:</label>
                     </td>
                     <td>
-                      <input
-                        type="text"
-                        name="nganHang"
-                        id="nganHang"
-                        defaultValue={"ACB - Ngân hàng TMCP Á Châu"}
-                      />
+                      <input type="text" name="nganHang" id="nganHang" />
                     </td>
                   </tr>
                   <tr>
@@ -444,12 +359,7 @@ export default function ChinhSuaHopDongKhaiThac() {
                       <label htmlFor="maSoThue">Mã số thuế:</label>
                     </td>
                     <td>
-                      <input
-                        type="text"
-                        name="maSoThue"
-                        id="maSoThue"
-                        defaultValue={"123456789012"}
-                      />
+                      <input type="text" name="maSoThue" id="maSoThue" />
                     </td>
                   </tr>
                 </tbody>
