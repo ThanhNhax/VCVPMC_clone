@@ -3,7 +3,7 @@ import { Auth, signOut } from "firebase/auth";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { history } from "../..";
 import { db } from "../../FireStore/fireStore";
-import { clearLocalStorage, setStoreJSON, UID_USER } from "../../util/setting";
+import { clearLocalStorage, setStoreJSON, USER } from "../../util/setting";
 import { AppDispatch } from "../configStore";
 export interface User {
   avatar: string;
@@ -16,45 +16,36 @@ export interface User {
   phanQuyen: string;
   tenDangNhap: string;
 }
-interface UserState {
+export interface UserState {
   userLogin: {
-    accessToken: string;
+    accessToken: string | null;
 
-    user: User;
+    user: User | null;
   };
 }
 
-const initialState: User = {
-  avatar: "",
-  ngaySinh: "",
-  ho: "",
-  ten: "",
-  sdt: "",
-  uid: "",
-  email: "",
-  phanQuyen: "",
-  tenDangNhap: "",
+const initialState: UserState = {
+  userLogin: {
+    accessToken: null,
+    user: null,
+  },
 };
 const userReducer = createSlice({
   name: "userReducer",
   initialState,
   reducers: {
-    setUserRedux: (state: User, actions: PayloadAction<User>) => {
+    setUserRedux: (state: UserState, actions: PayloadAction<User>) => {
       let { payload } = actions;
       console.log({ payload });
-      state.avatar = payload.avatar;
-      state.email = payload.email;
-      state.ho = payload.ho;
-      state.ten = payload.ten;
-      state.ngaySinh = payload.ngaySinh;
-      state.phanQuyen = payload.phanQuyen;
-      state.sdt = payload.sdt;
-      state.tenDangNhap = payload.tenDangNhap;
+      state.userLogin.user = payload;
+    },
+    setUserAccessToken: (state: UserState, action: PayloadAction<string>) => {
+      state.userLogin.accessToken = action.payload;
     },
   },
 });
 
-export const { setUserRedux } = userReducer.actions;
+export const { setUserRedux, setUserAccessToken } = userReducer.actions;
 
 export default userReducer.reducer;
 
@@ -68,11 +59,12 @@ export const getUser = (uid: string) => {
         const doc = await getDoc(docRef);
         const userFireStore: any = doc.data();
         // Lưu lại user_Login
-        setStoreJSON(UID_USER, uid);
+        setStoreJSON(USER, userFireStore);
         //Đưa userLogin lên redux
+        console.log({ userFireStore });
         dispatch(setUserRedux(userFireStore));
         // chuyển hướng trang sang pages thông tin cơ bản
-        history.push("/admin/thongtincoban");
+        // history.push("/admin/thongtincoban");
       }
     } catch (err) {
       console.log(err);
@@ -96,7 +88,7 @@ export const getUserEdit = (uid: string) => {
   };
 };
 // update User
-export const updateUser = (uid: string, data: User) => {
+export const updateUser = (uid: string, data: UserState) => {
   return async (dispatch: AppDispatch) => {
     try {
       const docRef: any = doc(db, "users", uid);
@@ -114,7 +106,7 @@ export const updateUser = (uid: string, data: User) => {
 export const dangXuat = (auth: Auth) => {
   signOut(auth)
     .then(() => {
-      clearLocalStorage(UID_USER);
+      clearLocalStorage(USER);
       history.push("/");
     })
     .catch((e) => {

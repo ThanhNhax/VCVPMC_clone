@@ -7,49 +7,43 @@ import {
   getUserEdit,
   updateUser,
   User,
+  UserState,
 } from "../../redux/userReducer/userReducer";
-import { getStoreJSON, UID_USER } from "../../util/setting";
+import { getStoreJSON, USER } from "../../util/setting";
 import { Navigate, useNavigate } from "react-router-dom";
+import { message } from "antd";
 
 export default function SuaThongTin() {
-  const user = useSelector((state: RootState) => state.user);
+  const { user, accessToken } = useSelector(
+    (state: RootState) => state.user.userLogin
+  );
   console.log({ user });
   //chuyển hướng trang
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
   //   Lấy uid từ localStore lên để call user
-  let uidUserStore: string = getStoreJSON(UID_USER);
-  console.log({ uidUserStore });
+  let { uid } = getStoreJSON(USER);
   useEffect(() => {
-    dispatch(getUserEdit(uidUserStore));
-  }, [uidUserStore]);
-  const initialValues: User = {
-    avatar: "",
-    ho: "",
-    ten: "",
-    ngaySinh: "",
-    sdt: "",
-    email: "",
-    tenDangNhap: "",
-    phanQuyen: "",
-    uid: "",
+    dispatch(getUserEdit(uid));
+  }, []);
+  const initialValues: UserState = {
+    userLogin: {
+      accessToken: accessToken,
+      user: null,
+    },
   };
 
   const formik = useFormik({
     initialValues: initialValues,
     onSubmit(value) {
       //handleSubmit
-      value.avatar = user.avatar;
-      value.email = user.email;
-      value.phanQuyen = user.phanQuyen;
-      value.tenDangNhap = user.tenDangNhap;
-      value.uid = uidUserStore;
-      value.ho = value.ho ? value.ho : user.ho;
-      value.sdt = value.sdt ? value.sdt : user.sdt;
-      value.ngaySinh = value.ngaySinh ? value.ngaySinh : user.ngaySinh;
-      value.ten = value.ten ? value.ten : user.ten;
       console.log({ value });
-      dispatch(updateUser(uidUserStore, value));
+      dispatch(updateUser(uid, value));
+      message.open({
+        type: "success",
+        content: "Cập nhật thành công!",
+        duration: 0.8,
+      });
       navigate("/admin/thongtincoban");
     },
   });
@@ -59,13 +53,13 @@ export default function SuaThongTin() {
       <div className="content">
         <div className="content_avatar">
           <div className="left-avatar">
-            <img src={user.avatar} alt="avatar.png" />
+            <img src={user?.avatar} alt="avatar.png" />
             <div className="camera">
               <i className="fas fa-camera"></i>
             </div>
           </div>
           <p>
-            {user.ten} {user.ho}
+            {user?.ten} {user?.ho}
           </p>
         </div>
         <div className="content_form">
@@ -80,7 +74,7 @@ export default function SuaThongTin() {
                       type="text"
                       name="ho"
                       id="ho"
-                      defaultValue={user.ho}
+                      defaultValue={user?.ho}
                       onChange={formik.handleChange}
                     />
                   </div>
@@ -91,7 +85,7 @@ export default function SuaThongTin() {
                       type="date"
                       name="ngaySinh"
                       id="ngaySinh"
-                      defaultValue={user.ngaySinh}
+                      defaultValue={user?.ngaySinh}
                       onChange={formik.handleChange}
                     />
                   </div>
@@ -106,7 +100,7 @@ export default function SuaThongTin() {
                       type="text"
                       name="ten"
                       id="ten"
-                      defaultValue={user.ten}
+                      defaultValue={user?.ten}
                       onChange={formik.handleChange}
                     />
                   </div>
@@ -117,7 +111,7 @@ export default function SuaThongTin() {
                       type="text"
                       name="sdt"
                       id="sdt"
-                      defaultValue={user.sdt}
+                      defaultValue={user?.sdt}
                       onChange={formik.handleChange}
                     />
                   </div>
@@ -131,7 +125,7 @@ export default function SuaThongTin() {
                     type="email"
                     name="email"
                     id="email"
-                    value={user.email}
+                    value={user?.email}
                     readOnly
                   />
                 </div>
@@ -142,7 +136,7 @@ export default function SuaThongTin() {
                     type="text"
                     name="tenDangNhap"
                     id="tenDangNhap"
-                    value={user.tenDangNhap}
+                    value={user?.tenDangNhap}
                     readOnly
                   />
                 </div>
@@ -153,7 +147,7 @@ export default function SuaThongTin() {
                     type="text"
                     name="phanQuyen"
                     id="phanQuyen"
-                    value={user.phanQuyen}
+                    value={user?.phanQuyen}
                     readOnly
                   />
                 </div>

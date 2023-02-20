@@ -66,10 +66,40 @@ export default function EditPlayList() {
     console.log("id: ", itemPlayList.id, itemPlayList);
     if (itemPlayList.id !== undefined) {
       const itemPlaylistRef = doc(db, "playList", itemPlayList.id);
+      let tongThoiLuong: string = "";
+      let gio: number = 0;
+      let phut: number = 0;
+      let giay: number = 0;
+
+      itemPlayList.arrBanGhi.map((banGhi: KhoBanGhiRedux) => {
+        if (banGhi.thoiLuong) {
+          let index = banGhi.thoiLuong.search(":");
+          console.log({ index });
+          giay += parseInt(
+            banGhi.thoiLuong.slice(index + 1, banGhi.thoiLuong.length)
+          );
+          phut += parseInt(banGhi.thoiLuong.slice(0, index));
+          console.log({ giay, phut }, banGhi.thoiLuong);
+          if (giay > 59) {
+            giay = 0;
+            phut += 1;
+          } else if (phut > 59) {
+            phut = 0;
+            gio += 1;
+          }
+          tongThoiLuong = gio + ":" + phut + ":" + giay;
+          console.log({ tongThoiLuong });
+        }
+      }); // handle  o day
+      console.log({ tongThoiLuong });
       try {
         setDoc(
           itemPlaylistRef,
-          { arrBanGhi: itemPlayList.arrBanGhi, chuDe: selectedTags },
+          {
+            arrBanGhi: itemPlayList.arrBanGhi,
+            chuDe: selectedTags,
+            thoiLuong: tongThoiLuong,
+          },
           { merge: true }
         );
         message.open({

@@ -89,15 +89,6 @@ const playListReducer = createSlice({
       console.log(state.itemPlayList.arrBanGhi);
       if (state.itemPlayList.arrBanGhi !== undefined) {
         state.itemPlayList.arrBanGhi.splice(action.payload, 1);
-        // Cập nhật lên FireStore
-        // if (state.itemPlayList.id !== undefined) {
-        //   const itemPlayListRef = doc(db, "playList", state.itemPlayList.id);
-        //   try {
-        //     setDoc(itemPlayListRef, state.itemPlayList, { merge: true });
-        //   } catch (e) {
-        //     console.log(e);
-        //   }
-        // }
       }
     },
     setNewPlayListArrBanGhiRedux: (
@@ -123,6 +114,12 @@ const playListReducer = createSlice({
     ) => {
       console.log("setNewPlaylist", action.payload);
       state.newPlayList = action.payload;
+    },
+    clearNewPlaylistRedux: (
+      state: PlayListState,
+      action: PayloadAction<undefined>
+    ) => {
+      state.newPlayList.arrBanGhi = [];
     },
   },
 });
@@ -162,6 +159,32 @@ export const getArrPlayListFireStore = () => {
 export const addNewPlaylist = (playlist: PlayListRedux) => {
   return async (dispatch: AppDispatch) => {
     try {
+      let tongThoiLuong: string = "";
+      let gio: number = 0;
+      let phut: number = 0;
+      let giay: number = 0;
+
+      playlist.arrBanGhi.map((banGhi: KhoBanGhiRedux) => {
+        if (banGhi.thoiLuong) {
+          let index = banGhi.thoiLuong.search(":");
+          console.log({ index });
+          giay += parseInt(
+            banGhi.thoiLuong.slice(index + 1, banGhi.thoiLuong.length)
+          );
+          phut += parseInt(banGhi.thoiLuong.slice(0, index));
+          console.log({ giay, phut }, banGhi.thoiLuong);
+          if (giay > 59) {
+            giay = 0;
+            phut += 1;
+          } else if (phut > 59) {
+            phut = 0;
+            gio += 1;
+          }
+          tongThoiLuong = gio + ":" + phut + ":" + giay;
+          console.log({ tongThoiLuong });
+        }
+      });
+
       console.log("addNewOlaylist: ", playlist);
       const docRef = await addDoc(collection(db, "playList"), {
         arrBanGhi: playlist.arrBanGhi,
@@ -170,7 +193,7 @@ export const addNewPlaylist = (playlist: PlayListRedux) => {
         ngayTao: "",
         nguoiTao: "",
         soBanGhi: 0,
-        thoiLuong: "",
+        thoiLuong: tongThoiLuong,
         tieuDe: "",
         id: "",
       });

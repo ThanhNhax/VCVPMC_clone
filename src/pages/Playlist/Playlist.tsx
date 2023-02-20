@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import ItemPlayList from "../../Components/ItemPlayList";
 import { AppDispatch, RootState } from "../../redux/configStore";
-import { KhoBanGhiRedux } from "../../redux/khoBanGhi/khoBanghiReducer";
+import moment from "moment";
 import {
   getArrPlayListFireStore,
   PlayListRedux,
   setItemPlayList,
 } from "../../redux/playListReducer/playListReducer";
+import { KhoBanGhiRedux } from "../../redux/khoBanGhi/khoBanghiReducer";
 
 export default function Playlist() {
   //Lấy Arr playList từ reudux về
@@ -35,6 +36,9 @@ export default function Playlist() {
     // cập nhật itemPlayList lên redux
     dispatch(setItemPlayList(item));
   };
+  ////
+  // handle thoi luong
+
   const renderPlayListTable = () => {
     return newArrPlayList.map((item: PlayListRedux, index: number) => {
       return (
@@ -42,13 +46,13 @@ export default function Playlist() {
           <td>{index + 1}</td>
           <td>{item.tieuDe}</td>
           <td>{item.arrBanGhi.length}</td>
-          <td>{}</td>
+          <td>{item.thoiLuong}</td>
           <td className="td-chuDe">
             {item?.chuDe?.map((chuDe: string | null, index: number) => {
               return <p key={index}>{chuDe}</p>;
             })}
           </td>
-          <td>{item.ngayTao}</td>
+          <td>{moment(item.ngayTao).format("DD/mm/yyy")}</td>
           <td>{item.nguoiTao}</td>
           <td className="action">
             <Link

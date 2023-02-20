@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/configStore";
-import { clearLocalStorage, getStoreJSON, UID_USER } from "../../util/setting";
-import { dangXuat, getUser } from "../../redux/userReducer/userReducer";
+import { clearLocalStorage, getStoreJSON, USER } from "../../util/setting";
+import { dangXuat, getUser, User } from "../../redux/userReducer/userReducer";
 import { NavLink } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../../FireStore/fireStore";
@@ -13,15 +13,16 @@ import { auth } from "../../FireStore/fireStore";
 import { Modal } from "antd";
 
 export default function ThongTinCoBan() {
-  const user = useSelector((state: RootState) => state.user);
+  const { user } = useSelector((state: RootState) => state.user.userLogin);
+  console.log({ user });
   const dispatch: AppDispatch = useDispatch();
   //Lấy uid từ localStore lên để call user
-  let uidUserStore: string = getStoreJSON(UID_USER);
+  let userStore: User = getStoreJSON(USER);
 
   const [isType, setIsType] = useState<boolean>(true);
 
   useEffect(() => {
-    dispatch(getUser(uidUserStore));
+    dispatch(getUser(userStore.uid));
   }, []);
 
   // modal
@@ -46,13 +47,13 @@ export default function ThongTinCoBan() {
         <div className="content">
           <div className="content_avatar">
             <div className="left-avatar">
-              <img src={user.avatar} alt="avatar.png" />
+              <img src={user?.avatar} alt="avatar.png" />
               <div className="camera">
                 <i className="fas fa-camera"></i>
               </div>
             </div>
             <p>
-              {user.ten} {user.ho}
+              {user?.ten} {user?.ho}
             </p>
           </div>
           <div className="content_form">
@@ -67,7 +68,7 @@ export default function ThongTinCoBan() {
                         type="text"
                         name="ho"
                         id="ho"
-                        value={user.ho}
+                        value={user?.ho}
                         readOnly
                       />
                     </div>
@@ -78,7 +79,7 @@ export default function ThongTinCoBan() {
                         type="text"
                         name="ngaySinh"
                         id="ngaySinh"
-                        value={user.ngaySinh}
+                        value={user?.ngaySinh}
                         readOnly
                       />
                     </div>
@@ -93,7 +94,7 @@ export default function ThongTinCoBan() {
                         type="text"
                         name="ten"
                         id="ten"
-                        value={user.ten}
+                        value={user?.ten}
                         readOnly
                       />
                     </div>
@@ -104,7 +105,7 @@ export default function ThongTinCoBan() {
                         type="text"
                         name="sdt"
                         id="sdt"
-                        value={user.sdt}
+                        value={user?.sdt}
                         readOnly
                       />
                     </div>
@@ -118,7 +119,7 @@ export default function ThongTinCoBan() {
                       type="email"
                       name="email"
                       id="email"
-                      value={user.email}
+                      value={user?.email}
                       readOnly
                     />
                   </div>
@@ -129,7 +130,7 @@ export default function ThongTinCoBan() {
                       type="text"
                       name="tenDangNhap"
                       id="tenDangNhap"
-                      value={user.tenDangNhap}
+                      value={user?.tenDangNhap}
                       readOnly
                     />
                   </div>
@@ -140,7 +141,7 @@ export default function ThongTinCoBan() {
                       type="text"
                       name="phanQuyen"
                       id="phanQuyen"
-                      value={user.phanQuyen}
+                      value={user?.phanQuyen}
                       readOnly
                     />
                   </div>

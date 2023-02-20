@@ -173,7 +173,7 @@ export default function XemChiTietPlayList() {
                     </tr>
                     <tr>
                       <td>Tổng thời lượng:</td>
-                      <td>01:02:3</td>
+                      <td>{itemPlayList.thoiLuong}</td>
                     </tr>
                   </tbody>
                 </table>

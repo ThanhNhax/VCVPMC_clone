@@ -10,15 +10,16 @@ import {
   deleteArrBanghiPlaylist,
   PlayListRedux,
 } from "../../redux/playListReducer/playListReducer";
-import { KhoBanGhiRedux } from "../../redux/khoBanGhi/khoBanghiReducer";
-import { useFormik } from "formik";
-import { doc, setDoc, updateDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../FireStore/fireStore";
+import { KhoBanGhiRedux } from "../../redux/khoBanGhi/khoBanghiReducer";
+import moment from "moment";
 
 const tagsData = ["Pop", "EDM", "Lofi", "Ballad", "Chill", "Mashup"];
 
 export default function AddPlayList() {
-  const user = useSelector((state: RootState) => state.user);
+  const { user } = useSelector((state: RootState) => state.user.userLogin);
+
   console.log({ user });
   const dispatch: AppDispatch = useDispatch();
   //lấy newPlaylist  từ redux
@@ -146,7 +147,36 @@ export default function AddPlayList() {
         duration: 0.8,
       });
     } else {
-      console.log("sai if");
+      let tongThoiLuong: string = "";
+      let gio: number = 0;
+      let phut: number = 0;
+      let giay: number = 0;
+
+      newPlayList.arrBanGhi.map((banGhi: KhoBanGhiRedux) => {
+        if (banGhi.thoiLuong) {
+          let index = banGhi.thoiLuong.search(":");
+          console.log({ index });
+          giay += parseInt(
+            banGhi.thoiLuong.slice(index + 1, banGhi.thoiLuong.length)
+          );
+          phut += parseInt(banGhi.thoiLuong.slice(0, index));
+          console.log({ giay, phut }, banGhi.thoiLuong);
+          if (giay > 59) {
+            giay = 0;
+            phut += 1;
+          } else if (phut > 59) {
+            phut = 0;
+            gio += 1;
+          }
+          tongThoiLuong = gio + ":" + phut + ":" + giay;
+          console.log({ tongThoiLuong });
+        }
+      });
+      const d = new Date();
+
+      let ngayTao =
+        d.getDate() + ":" + (d.getMonth() + 1) + ":" + d.getFullYear();
+      console.log(ngayTao);
 
       let newItem: PlayListRedux = {
         anhBia: "",
@@ -154,13 +184,13 @@ export default function AddPlayList() {
         chuDe: [...selectedTags],
         desc: newPlayList.desc,
         id: newPlayList.id,
-        ngayTao: newPlayList.ngayTao,
-        nguoiTao: user.ho + " " + user.ten,
+        ngayTao: `${ngayTao}`,
+        nguoiTao: user?.ho + " " + user?.ten,
         tieuDe: tieuDe,
         soBanGhi: newPlayList.soBanGhi,
-        thoiLuong: newPlayList.thoiLuong,
+        thoiLuong: tongThoiLuong,
       };
-      // console.log({ newItem });
+      console.log({ newItem });
       try {
         if (newItem.id !== undefined) {
           const washingtonRef = doc(db, "playList", newItem.id);
@@ -225,7 +255,7 @@ export default function AddPlayList() {
                 </div>
                 <div className="item">
                   <p>Tổng thời lượng</p>
-                  <p className="text-right">--:--:--</p>
+                  <p className="text-right">{newPlayList.thoiLuong}</p>
                 </div>
               </div>
               <div className="left-item title-item">

@@ -46,12 +46,12 @@ export const configs = {
     localStorage.removeItem(name);
   },
   ACCESS_TOKEN: "accessToken",
-  UID_USER: "uid_user",
+  USER: "user",
 };
 
 export const {
   ACCESS_TOKEN,
-  UID_USER,
+  USER,
   getCookie,
   setCookie,
   getStore,
