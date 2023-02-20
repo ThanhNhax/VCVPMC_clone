@@ -21,6 +21,10 @@ export default function ChiTietLichPhat({}: Props) {
   // const newArrPlayList = arrPlayList.slice(indexOfFirstNews, indexOfLastNews);
   const [isStyleBtn, setIsStyleBtn] = useState<boolean>(false);
   // cấu hình phân pages
+
+  // const renderDanhSachPlaylist = () => {
+  //   return itemLapLichPhat.
+  // };
   return (
     <div className="chiTietLichPhat">
       <div className="chiTietLichPhat-title">

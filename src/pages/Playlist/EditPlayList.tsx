@@ -1,6 +1,6 @@
+import React, { useEffect, useState } from "react";
 import { message, Modal, Switch } from "antd";
 import { doc, setDoc } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../FireStore/fireStore";
@@ -11,20 +11,23 @@ import {
   setItemPlayList,
 } from "../../redux/playListReducer/playListReducer";
 
-type Props = {};
+const tagsData = ["Pop", "EDM", "Lofi", "Ballad", "Chill", "Mashup"];
 
-export default function EditPlayList({}: Props) {
+export default function EditPlayList() {
   // Lấy itemPlayList tuef redux về
   const { itemPlayList } = useSelector((state: RootState) => state.playList);
   console.log({ itemPlayList });
   const dispatch: AppDispatch = useDispatch();
   // cấu hình phân pages
   const [currentPage, setCurrentPage] = useState<number>(1); // Vị trí page hiện tại
-  const [limit, setLimit] = useState<number>(13); // change số item hiển thị
+  const [limit, setLimit] = useState<number>(12); // change số item hiển thị
   const indexOfLastNews = currentPage * limit; // vị trí cuối
   const indexOfFirstNews = indexOfLastNews - limit; // Vị trí đầu
-  // const totalPages = Math.ceil(itemPlayList?.arrBanGhi?.length / limit); // Tính số tổng số pages
-  // const newArrPlayList = arrPlayList.slice(indexOfFirstNews, indexOfLastNews);
+  const totalPages = Math.ceil(itemPlayList?.arrBanGhi?.length / limit); // Tính số tổng số pages
+  const newArrPlayList = itemPlayList.arrBanGhi.slice(
+    indexOfFirstNews,
+    indexOfLastNews
+  );
   const [isStyleBtn, setIsStyleBtn] = useState<boolean>(false);
   // cấu hình phân pages
   const navigate = useNavigate();
@@ -66,7 +69,7 @@ export default function EditPlayList({}: Props) {
       try {
         setDoc(
           itemPlaylistRef,
-          { arrBanGhi: itemPlayList.arrBanGhi },
+          { arrBanGhi: itemPlayList.arrBanGhi, chuDe: selectedTags },
           { merge: true }
         );
         message.open({
@@ -95,7 +98,7 @@ export default function EditPlayList({}: Props) {
   };
 
   const renderBanGhiTable = () => {
-    return itemPlayList?.arrBanGhi?.map(
+    return newArrPlayList.map(
       (banGhi: KhoBanGhiRedux | undefined, index: number) => {
         return (
           <tr key={index}>
@@ -142,6 +145,14 @@ export default function EditPlayList({}: Props) {
       }
     );
   };
+
+  const [arrChuDeSearch, setArrChuDeSearch] = useState<string[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>(["Chill", "Lofi"]);
+  const [valueSearch, setValueSearch] = useState<string>("");
+  const handleSearch = (arr: string[], string: string) => {
+    return arr.filter((el) => el.toLowerCase().includes(string.toLowerCase()));
+  };
+
   return (
     <div className="editplaylist">
       <div className="container">
@@ -161,7 +172,11 @@ export default function EditPlayList({}: Props) {
                   // onClick={showModal}
                 ></div>
                 <h3>Tiêu đề</h3>
-                <input type="text" placeholder="Tên tiêu đề" />
+                <input
+                  type="text"
+                  placeholder="Tên tiêu đề"
+                  defaultValue={itemPlayList.tieuDe ? itemPlayList.tieuDe : ""}
+                />
               </div>
               <div className="title-table title-item">
                 <table>
@@ -191,7 +206,54 @@ export default function EditPlayList({}: Props) {
                 <textarea placeholder="Thêm mô tả" />
               </div>
               <div className="title-chuDe title-item">
-                <textarea placeholder="Thêm chủ đề" />
+                <h5>Chủ đề:</h5>
+                <div className="select_tag">
+                  <div className="list-tag">
+                    {selectedTags.map((tag, index) => (
+                      <div className="tag-item" key={tag}>
+                        <span>{tag}</span>
+                        <i
+                          onClick={() => {
+                            let selectedTagsDelete = selectedTags.splice(
+                              index,
+                              1
+                            );
+                            setSelectedTags([...selectedTags]);
+                          }}
+                        >
+                          &times;
+                        </i>
+                      </div>
+                    ))}
+                  </div>
+                  <input
+                    type="search"
+                    id="search-tag"
+                    value={valueSearch}
+                    onChange={(e) => {
+                      const arrChuDe = handleSearch(tagsData, e.target.value);
+                      setArrChuDeSearch(arrChuDe);
+                      setValueSearch(e.target.value);
+                    }}
+                    placeholder="Nhập chủ đề"
+                  />
+                  <div className="render-table-tag">
+                    {arrChuDeSearch.map((el) => (
+                      <div className="table-list" key={el}>
+                        <span
+                          onClick={() => {
+                            console.log(el);
+                            setSelectedTags([...selectedTags, el]);
+                            setArrChuDeSearch([]);
+                            setValueSearch("");
+                          }}
+                        >
+                          {el}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
               <div className="title-bottom title-item">
                 <div className="bottom-item">
@@ -218,7 +280,7 @@ export default function EditPlayList({}: Props) {
                 <div className="pagination_left">
                   <p>
                     Hiển thị
-                    <input defaultValue="13"></input>
+                    <input defaultValue="12"></input>
                     hàng trong mỗi trang
                   </p>
                 </div>
@@ -236,10 +298,10 @@ export default function EditPlayList({}: Props) {
                   </button>
                   <div
                     id="btnPage"
-                    // dangerouslySetInnerHTML={renderButtonPage(totalPages)}
+                    dangerouslySetInnerHTML={renderButtonPage(totalPages)}
                   ></div>
                   <button
-                    // disabled={currentPage >= totalPages}
+                    disabled={currentPage >= totalPages}
                     onClick={() => {
                       setCurrentPage(currentPage + 1);
                     }}

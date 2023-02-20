@@ -1,7 +1,6 @@
-import { AnyAction } from "@reduxjs/toolkit";
+import React, { useState, useEffect } from "react";
 import { message, Modal } from "antd";
 import { deleteDoc, doc } from "firebase/firestore";
-import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../FireStore/fireStore";
@@ -9,9 +8,7 @@ import { RootState } from "../../redux/configStore";
 import { KhoBanGhiRedux } from "../../redux/khoBanGhi/khoBanghiReducer";
 import { deleteArrBanGhiRedux } from "../../redux/playListReducer/playListReducer";
 
-type Props = {};
-
-export default function XemChiTietPlayList({}: Props) {
+export default function XemChiTietPlayList() {
   const styleI = {
     color: "#347AFF",
     opacity: "0.7",
@@ -35,6 +32,7 @@ export default function XemChiTietPlayList({}: Props) {
     indexOfFirstNews,
     indexOfLastNews
   );
+  console.log({ newArrPlayList });
   const [isStyleBtn, setIsStyleBtn] = useState<boolean>(false);
   // cấu hình phân pages
   const navigate = useNavigate();

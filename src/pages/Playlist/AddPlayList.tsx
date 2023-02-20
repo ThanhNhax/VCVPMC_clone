@@ -15,10 +15,9 @@ import { useFormik } from "formik";
 import { doc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../FireStore/fireStore";
 
-type Props = {};
 const tagsData = ["Pop", "EDM", "Lofi", "Ballad", "Chill", "Mashup"];
 
-export default function AddPlayList({}: Props) {
+export default function AddPlayList() {
   const user = useSelector((state: RootState) => state.user);
   console.log({ user });
   const dispatch: AppDispatch = useDispatch();
@@ -316,7 +315,7 @@ export default function AddPlayList({}: Props) {
                 <div className="btn-list">
                   <button
                     type="button"
-                    // onClick={() => navigate("/admin/playlist/xemchitiet")}
+                    onClick={() => navigate("/admin/playlist/xemchitiet")}
                   >
                     Hủy
                   </button>
