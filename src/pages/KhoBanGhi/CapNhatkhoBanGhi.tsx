@@ -1,20 +1,19 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import { Field, Formik, Form } from "formik";
 import * as Yup from "yup";
 import { history } from "../..";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../redux/configStore";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../FireStore/fireStore";
 import { message } from "antd";
-import { KhoBanGhiRedux } from "../../redux/khoBanGhi/khoBanghiReducer";
+import { RootState } from "../../redux/configStore";
 
 export default function CapNhatkhoBanGhi() {
   //Lấy Item kho bản ghi từ redux về
   const item = useSelector((state: RootState) => state.khoBanGhi.itemKhoBanGhi);
   console.log(item);
-  const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
     if (item == null) {

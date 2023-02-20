@@ -1,11 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/configStore";
-import { clearLocalStorage, getStoreJSON, USER } from "../../util/setting";
+import { getStoreJSON, USER } from "../../util/setting";
 import { dangXuat, getUser, User } from "../../redux/userReducer/userReducer";
 import { NavLink } from "react-router-dom";
-import { signOut } from "firebase/auth";
 import { auth } from "../../FireStore/fireStore";
 
 //modal
@@ -22,7 +22,9 @@ export default function ThongTinCoBan() {
   const [isType, setIsType] = useState<boolean>(true);
 
   useEffect(() => {
-    dispatch(getUser(userStore.uid));
+    if (user!) {
+      dispatch(getUser(userStore.uid));
+    }
   }, []);
 
   // modal
@@ -68,7 +70,7 @@ export default function ThongTinCoBan() {
                         type="text"
                         name="ho"
                         id="ho"
-                        value={user?.ho}
+                        defaultValue={user?.ho}
                         readOnly
                       />
                     </div>
@@ -79,7 +81,7 @@ export default function ThongTinCoBan() {
                         type="text"
                         name="ngaySinh"
                         id="ngaySinh"
-                        value={user?.ngaySinh}
+                        defaultValue={user?.ngaySinh}
                         readOnly
                       />
                     </div>
@@ -94,7 +96,7 @@ export default function ThongTinCoBan() {
                         type="text"
                         name="ten"
                         id="ten"
-                        value={user?.ten}
+                        defaultValue={user?.ten}
                         readOnly
                       />
                     </div>
@@ -105,7 +107,7 @@ export default function ThongTinCoBan() {
                         type="text"
                         name="sdt"
                         id="sdt"
-                        value={user?.sdt}
+                        defaultValue={user?.sdt}
                         readOnly
                       />
                     </div>
@@ -119,7 +121,7 @@ export default function ThongTinCoBan() {
                       type="email"
                       name="email"
                       id="email"
-                      value={user?.email}
+                      defaultValue={user?.email}
                       readOnly
                     />
                   </div>
@@ -130,7 +132,7 @@ export default function ThongTinCoBan() {
                       type="text"
                       name="tenDangNhap"
                       id="tenDangNhap"
-                      value={user?.tenDangNhap}
+                      defaultValue={user?.tenDangNhap}
                       readOnly
                     />
                   </div>
@@ -141,7 +143,7 @@ export default function ThongTinCoBan() {
                       type="text"
                       name="phanQuyen"
                       id="phanQuyen"
-                      value={user?.phanQuyen}
+                      defaultValue={user?.phanQuyen}
                       readOnly
                     />
                   </div>

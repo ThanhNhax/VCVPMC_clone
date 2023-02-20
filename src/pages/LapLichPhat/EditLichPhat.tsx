@@ -1,8 +1,6 @@
 import React from "react";
-import { Avatar, List } from "antd";
 import { useNavigate } from "react-router-dom";
 
-type Props = {};
 const data = [
   {
     ten: "Playlist 1",
@@ -38,7 +36,7 @@ const data = [
   },
 ];
 
-export default function EditLichPhat({}: Props) {
+export default function EditLichPhat() {
   const navigate = useNavigate();
   return (
     <div className="editLichPhat">
@@ -100,82 +98,6 @@ export default function EditLichPhat({}: Props) {
               </div>
             </div>
             <div className="center-right">
-              {/* <table>
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th>Thứ hai</th>
-                    <th>Thứ ba</th>
-                    <th>Thứ tư</th>
-                    <th>Thứ năm</th>
-                    <th>Thứ sáu</th>
-                    <th>Thứ bảy</th>
-                    <th>Chủ nhật</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>01:00</td>
-                  </tr>
-                  <tr>
-                    <td>02:00</td>
-                  </tr>
-                  <tr>
-                    <td>03:00</td>
-                  </tr>
-                  <tr>
-                    <td>04:00</td>
-                  </tr>
-                  <tr>
-                    <td>05:00</td>
-                  </tr>
-                  <tr>
-                    <td>06:00</td>
-                  </tr>
-                  <tr>
-                    <td>07:00</td>
-                  </tr>
-                  <tr>
-                    <td>08:00</td>
-                  </tr>
-                  <tr>
-                    <td>09:00</td>
-                  </tr>
-                  <tr>
-                    <td>10:00</td>
-                  </tr>
-                  <tr>
-                    <td>11:00</td>
-                  </tr>
-                  <tr>
-                    <td>12:00</td>
-                  </tr>
-                  <tr>
-                    <td>13:00</td>
-                  </tr>
-                  <tr>
-                    <td>14:00</td>
-                  </tr>
-                  <tr>
-                    <td>15:00</td>
-                  </tr>
-                  <tr>
-                    <td>16:00</td>
-                  </tr>
-                </tbody>
-              </table> */}
-              {/* <div className="presentation">
-                <div className="presentation-null"></div>
-                <div className="presentation-title">
-                  <span>Thứ hai</span>
-                  <span>Thứ ba</span>
-                  <span>Thứ tư</span>
-                  <span>Thứ năm</span>
-                  <span>Thứ sáu</span>
-                  <span>Thứ bảy</span>
-                  <span>Chủ nhật</span>
-                </div>
-              </div> */}
               <div className="presentation-content">
                 <div className="content-time">
                   <span></span>

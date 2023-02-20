@@ -11,6 +11,7 @@ export default function UserAvatar() {
   let { uid } = getStoreJSON(USER);
   useEffect(() => {
     dispatch(getUser(uid));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div className="user_avatar">

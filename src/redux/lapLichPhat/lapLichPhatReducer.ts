@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { collection, onSnapshot, query } from "firebase/firestore";
-import { type } from "os";
 import { db } from "../../FireStore/fireStore";
 import { AppDispatch } from "../configStore";
 

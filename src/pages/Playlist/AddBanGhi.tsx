@@ -16,9 +16,7 @@ import {
   setItemPlayList,
 } from "../../redux/playListReducer/playListReducer";
 
-type Props = {};
-
-export default function AddBanGhi({}: Props) {
+export default function AddBanGhi() {
   const { itemPlayList } = useSelector((state: RootState) => state.playList);
   const dispatch: AppDispatch = useDispatch();
   const { arrKhoBanGhi } = useSelector((state: RootState) => state.khoBanGhi);
@@ -41,6 +39,7 @@ export default function AddBanGhi({}: Props) {
     indexOfLastNews
   );
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isStyleBtn, setIsStyleBtn] = useState<boolean>(false);
   // cấu hình phân pages
   const styleI = {
@@ -67,6 +66,7 @@ export default function AddBanGhi({}: Props) {
   useEffect(() => {
     // Call arrKhoBanGhi từ FireStore về
     dispatch(getArrKhoBanGhiFireStore());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //tạo ra table kho bản ghi

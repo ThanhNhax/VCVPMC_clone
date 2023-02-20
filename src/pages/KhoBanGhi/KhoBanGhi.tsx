@@ -1,7 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Checkbox, Modal } from "antd";
+import { Modal } from "antd";
 
 import ItemKhoBanGhi from "../../Components/ItemKhoBanGhi";
 import { AppDispatch, RootState } from "../../redux/configStore";
@@ -23,6 +25,7 @@ export default function KhoBanGhi() {
   const indexOfFirstNews = indexOfLastNews - limit; // Vị trí đầu
   const totalPages = Math.ceil(arrKhoBanGhi.length / limit); // Tính số tổng số pages
   const newArrKho = arrKhoBanGhi.slice(indexOfFirstNews, indexOfLastNews);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isStyleBtn, setIsStyleBtn] = useState<boolean>(false);
   // cấu hình phân pages
   const [isTable, setIsTable] = useState<boolean>(true); // hiển thị dưới dạng table hoặc dạng card

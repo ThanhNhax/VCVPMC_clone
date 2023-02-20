@@ -1,18 +1,10 @@
-import { Dropdown, MenuProps, Space } from "antd";
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
-import { DownOutlined } from "@ant-design/icons";
 
 type Props = {
   setToggle(): void;
 };
 
-const url = [
-  "/quanLuHopDong",
-  "/quanLyThietBi",
-  "/quanLyUyQuyen",
-  "/donViSuDung",
-];
 export default function SibarAdmin({ setToggle }: Props) {
   return (
     <div className="left">

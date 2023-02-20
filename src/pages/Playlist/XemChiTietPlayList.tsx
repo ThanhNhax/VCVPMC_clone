@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { message, Modal } from "antd";
 import { deleteDoc, doc } from "firebase/firestore";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,7 +21,7 @@ export default function XemChiTietPlayList() {
   const dispatch = useDispatch();
   // cấu hình phân pages
   const [currentPage, setCurrentPage] = useState<number>(1); // Vị trí page hiện tại
-  const [limit, setLimit] = useState<number>(13); // change số item hiển thị
+  const [limit] = useState<number>(13); // change số item hiển thị
   const indexOfLastNews = currentPage * limit; // vị trí cuối
   const indexOfFirstNews = indexOfLastNews - limit; // Vị trí đầu
   let totalPages: number = 1;
@@ -33,7 +33,7 @@ export default function XemChiTietPlayList() {
     indexOfLastNews
   );
   console.log({ newArrPlayList });
-  const [isStyleBtn, setIsStyleBtn] = useState<boolean>(false);
+  const [isStyleBtn] = useState<boolean>(false);
   // cấu hình phân pages
   const navigate = useNavigate();
 
@@ -68,11 +68,9 @@ export default function XemChiTietPlayList() {
     }
   };
 
-  useEffect(() => {
-    if (itemPlayList?.id == "") {
-      navigate("/admin/playlist");
-    }
-  }, []);
+  if (itemPlayList?.id === "") {
+    navigate("/admin/playlist");
+  }
   const renderButtonPage = (n: number) => {
     let btn: any = "";
     for (let i = 0; i < n; i++) {

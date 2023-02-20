@@ -7,7 +7,6 @@ import {
   onSnapshot,
   query,
 } from "firebase/firestore";
-import ItemPlayList from "../../Components/ItemPlayList";
 import { db } from "../../FireStore/fireStore";
 import { AppDispatch } from "../configStore";
 import { KhoBanGhiRedux } from "../khoBanGhi/khoBanghiReducer";
@@ -181,8 +180,8 @@ export const addNewPlaylist = (playlist: PlayListRedux) => {
             gio += 1;
           }
           tongThoiLuong = gio + ":" + phut + ":" + giay;
-          console.log({ tongThoiLuong });
         }
+        return tongThoiLuong;
       });
 
       console.log("addNewOlaylist: ", playlist);

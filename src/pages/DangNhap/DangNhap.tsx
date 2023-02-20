@@ -6,10 +6,7 @@ import type { CheckboxChangeEvent } from "antd/es/checkbox";
 import { Link } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../FireStore/fireStore";
-import {
-  getUser,
-  setUserAccessToken,
-} from "../../redux/userReducer/userReducer";
+import { getUser } from "../../redux/userReducer/userReducer";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../redux/configStore";
 

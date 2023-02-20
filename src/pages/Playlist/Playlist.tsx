@@ -9,7 +9,6 @@ import {
   PlayListRedux,
   setItemPlayList,
 } from "../../redux/playListReducer/playListReducer";
-import { KhoBanGhiRedux } from "../../redux/khoBanGhi/khoBanghiReducer";
 
 export default function Playlist() {
   //Lấy Arr playList từ reudux về
@@ -22,13 +21,14 @@ export default function Playlist() {
   const indexOfFirstNews = indexOfLastNews - limit; // Vị trí đầu
   const totalPages = Math.ceil(arrPlayList.length / limit); // Tính số tổng số pages
   const newArrPlayList = arrPlayList.slice(indexOfFirstNews, indexOfLastNews);
-  const [isStyleBtn, setIsStyleBtn] = useState<boolean>(false);
+  const [isStyleBtn] = useState<boolean>(false);
   // cấu hình phân pages
 
   const [isTable, setIsTable] = useState<boolean>(true); // hiển thị dưới dạng table hoặc dạng card
   const navigate = useNavigate();
   useEffect(() => {
     dispatch(getArrPlayListFireStore());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChiTiet = (item: PlayListRedux) => {

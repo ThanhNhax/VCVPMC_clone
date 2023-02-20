@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
 import { Space, Switch, Tag } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
@@ -27,6 +28,7 @@ export default function AddPlayList() {
   console.log(newPlayList);
   const navigate = useNavigate();
   // cấu hình phân pages cho table bản ghi
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [currentPage, setCurrentPage] = useState<number>(1); // Vị trí page hiện tại
   const [limit, setLimit] = useState<number>(8); // change số item hiển thị
   const indexOfLastNews = currentPage * limit; // vị trí cuối
@@ -171,6 +173,7 @@ export default function AddPlayList() {
           tongThoiLuong = gio + ":" + phut + ":" + giay;
           console.log({ tongThoiLuong });
         }
+        return tongThoiLuong;
       });
       const d = new Date();
 

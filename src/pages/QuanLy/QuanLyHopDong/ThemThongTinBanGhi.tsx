@@ -1,9 +1,7 @@
 import { Button, Modal, Upload } from "antd";
 import React, { useState } from "react";
 
-type Props = {};
-
-export default function ThemThongTinBanGhi({}: Props) {
+export default function ThemThongTinBanGhi() {
   // xử  lý modal popup
   const [isModalOpen, setIsModalOpen] = useState(false);
 

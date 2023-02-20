@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch, RootState } from "../../redux/configStore";
@@ -14,18 +14,19 @@ export default function LapLichPhat() {
   );
   console.log({ arrLapLichPhat });
   // cấu hình phân pages
-  const [currentPage, setCurrentPage] = useState<number>(1); // Vị trí page hiện tại
-  const [limit, setLimit] = useState<number>(13); // change số item hiển thị
-  const indexOfLastNews = currentPage * limit; // vị trí cuối
-  const indexOfFirstNews = indexOfLastNews - limit; // Vị trí đầu
-  // const totalPages = Math.ceil(arrPlayList.length / limit); // Tính số tổng số pages
-  // const newArrPlayList = arrPlayList.slice(indexOfFirstNews, indexOfLastNews);
-  const [isStyleBtn, setIsStyleBtn] = useState<boolean>(false);
+  // const [currentPage, setCurrentPage] = useState<number>(1); // Vị trí page hiện tại
+  // const [limit, setLimit] = useState<number>(13); // change số item hiển thị
+  // const indexOfLastNews = currentPage * limit; // vị trí cuối
+  // const indexOfFirstNews = indexOfLastNews - limit; // Vị trí đầu
+  // // const totalPages = Math.ceil(arrPlayList.length / limit); // Tính số tổng số pages
+  // // const newArrPlayList = arrPlayList.slice(indexOfFirstNews, indexOfLastNews);
+  // const [isStyleBtn, setIsStyleBtn] = useState<boolean>(false);
   // cấu hình phân pages
   const dispatch: AppDispatch = useDispatch();
   useEffect(() => {
     // lấy data lập lịch phát từ fireStore về cập nhật lên redux
     dispatch(getLapLichPhatFireStore());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const handleXemChiTiet = (item: LapLichPhatRedux) => {
     // Cập nhật lên redux item lập lịch phát để dàn data trang chi tiết lập lịch phát
@@ -76,13 +77,13 @@ export default function LapLichPhat() {
               </div>
               <div className="pagination_right">
                 <button
-                  disabled={currentPage === 1}
-                  onClick={() => {
-                    if (currentPage === 1) {
-                      setCurrentPage(1);
-                    }
-                    setCurrentPage(currentPage - 1);
-                  }}
+                // disabled={currentPage === 1}
+                // onClick={() => {
+                //   if (currentPage === 1) {
+                //     setCurrentPage(1);
+                //   }
+                //   setCurrentPage(currentPage - 1);
+                // }}
                 >
                   <i className="fas fa-chevron-left"></i>
                 </button>
@@ -91,10 +92,10 @@ export default function LapLichPhat() {
                   // dangerouslySetInnerHTML={renderButtonPage(totalPages)}
                 ></div>
                 <button
-                  // disabled={currentPage >= totalPages}
-                  onClick={() => {
-                    setCurrentPage(currentPage + 1);
-                  }}
+                // disabled={currentPage >= totalPages}
+                // onClick={() => {
+                //   setCurrentPage(currentPage + 1);
+                // }}
                 >
                   <i className="fas fa-chevron-right"></i>
                 </button>

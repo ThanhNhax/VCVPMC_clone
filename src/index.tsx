@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 // Cấu hình router-dom
 //setup router dom
 import {
-  Navigate,
   Route,
   Routes,
   unstable_HistoryRouter as HistoryRouter,
@@ -23,7 +22,6 @@ import Playlist from "./pages/Playlist/Playlist";
 import LapLichPhat from "./pages/LapLichPhat/LapLichPhat";
 import CapNhatkhoBanGhi from "./pages/KhoBanGhi/CapNhatkhoBanGhi";
 import SuaThongTin from "./pages/ThongTinCoBan/SuaThongTin";
-import DomeModal from "./HOC/DomeModal";
 import QuenMatKhau from "./pages/DangNhap/QuenMatKhau";
 import TemplateUser from "./pages/DangNhap/TemplateUser";
 import CapnhatMatKhau from "./pages/DangNhap/CapnhatMatKhau";
@@ -59,7 +57,6 @@ root.render(
           <Route path="" element={<TemplateUser />}>
             <Route index element={<DangNhap />}></Route>
             {/* <Route path="*" element={<Navigate to={"/"} />}></Route> */}
-            <Route path="/demoModal" element={<DomeModal />}></Route>
             <Route path="/quenMatKhau" element={<QuenMatKhau />}></Route>
             <Route path="/capNhatMatKhau" element={<CapnhatMatKhau />}></Route>
             <Route path="/linkError" element={<LinkError />}></Route>

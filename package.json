@@ -13,6 +13,7 @@
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "antd": "^5.1.7",
+    "eslint-plugin-react-hooks": "^5.0.0-next-4fcc9184a-20230217",
     "firebase": "^9.16.0",
     "formik": "^2.2.9",
     "history": "^5.3.0",

@@ -1,16 +1,15 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/configStore";
-import * as Yup from "yup";
 import { useFormik } from "formik";
 import {
   getUserEdit,
   updateUser,
-  User,
   UserState,
 } from "../../redux/userReducer/userReducer";
 import { getStoreJSON, USER } from "../../util/setting";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { message } from "antd";
 
 export default function SuaThongTin() {

@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-type Props = {};
-
-export default function QuanLyHopDong({}: Props) {
+export default function QuanLyHopDong() {
   // cấu hình phân pages
-  const [currentPage, setCurrentPage] = useState<number>(1); // Vị trí page hiện tại
-  const [limit, setLimit] = useState<number>(10); // change số item hiển thị
-  const indexOfLastNews = currentPage * limit; // vị trí cuối
-  const indexOfFirstNews = indexOfLastNews - limit; // Vị trí đầu
-  // const totalPages = Math.ceil(arrKhoBanGhi.length / limit); // Tính số tổng số pages
-  // const newArrKho = arrKhoBanGhi.slice(indexOfFirstNews, indexOfLastNews);
-  const [isStyleBtn, setIsStyleBtn] = useState<boolean>(false);
+  // const [currentPage, setCurrentPage] = useState<number>(1); // Vị trí page hiện tại
+  // const [limit, setLimit] = useState<number>(10); // change số item hiển thị
+  // const indexOfLastNews = currentPage * limit; // vị trí cuối
+  // const indexOfFirstNews = indexOfLastNews - limit; // Vị trí đầu
+  // // const totalPages = Math.ceil(arrKhoBanGhi.length / limit); // Tính số tổng số pages
+  // // const newArrKho = arrKhoBanGhi.slice(indexOfFirstNews, indexOfLastNews);
+  // const [isStyleBtn, setIsStyleBtn] = useState<boolean>(false);
   // cấu hình phân pages
   const [isActive, setIsActive] = useState<boolean>(true);
   return (
@@ -217,10 +215,10 @@ export default function QuanLyHopDong({}: Props) {
                     <p>
                       Hiển thị
                       <select
-                        value={limit}
-                        onChange={(e) => {
-                          setLimit(parseInt(e.target.value));
-                        }}
+                      // value={limit}
+                      // onChange={(e) => {
+                      //   setLimit(parseInt(e.target.value));
+                      // }}
                       >
                         <option value="10">10</option>
                       </select>
@@ -229,13 +227,13 @@ export default function QuanLyHopDong({}: Props) {
                   </div>
                   <div className="pagination_right">
                     <button
-                      disabled={currentPage === 1}
-                      onClick={() => {
-                        if (currentPage === 1) {
-                          setCurrentPage(1);
-                        }
-                        setCurrentPage(currentPage - 1);
-                      }}
+                    // disabled={currentPage === 1}
+                    // onClick={() => {
+                    //   if (currentPage === 1) {
+                    //     setCurrentPage(1);
+                    //   }
+                    //   setCurrentPage(currentPage - 1);
+                    // }}
                     >
                       <i className="fas fa-chevron-left"></i>
                     </button>
@@ -246,7 +244,7 @@ export default function QuanLyHopDong({}: Props) {
                     <button
                       // disabled={currentPage >= totalPages}
                       onClick={() => {
-                        setCurrentPage(currentPage + 1);
+                        // setCurrentPage(currentPage + 1);
                       }}
                     >
                       <i className="fas fa-chevron-right"></i>
@@ -396,9 +394,9 @@ export default function QuanLyHopDong({}: Props) {
                     <p>
                       Hiển thị
                       <select
-                        value={limit}
+                        // value={limit}
                         onChange={(e) => {
-                          setLimit(parseInt(e.target.value));
+                          // setLimit(parseInt(e.target.value));
                         }}
                       >
                         <option value="10">10</option>
@@ -408,13 +406,13 @@ export default function QuanLyHopDong({}: Props) {
                   </div>
                   <div className="pagination_right">
                     <button
-                      disabled={currentPage === 1}
-                      onClick={() => {
-                        if (currentPage === 1) {
-                          setCurrentPage(1);
-                        }
-                        setCurrentPage(currentPage - 1);
-                      }}
+                    // disabled={currentPage === 1}
+                    // onClick={() => {
+                    //   if (currentPage === 1) {
+                    //     setCurrentPage(1);
+                    //   }
+                    //   setCurrentPage(currentPage - 1);
+                    // }}
                     >
                       <i className="fas fa-chevron-left"></i>
                     </button>
@@ -423,10 +421,10 @@ export default function QuanLyHopDong({}: Props) {
                       // dangerouslySetInnerHTML={renderButtonPage(totalPages)}
                     ></div>
                     <button
-                      // disabled={currentPage >= totalPages}
-                      onClick={() => {
-                        setCurrentPage(currentPage + 1);
-                      }}
+                    // disabled={currentPage >= totalPages}
+                    // onClick={() => {
+                    // setCurrentPage(currentPage + 1);
+                    // }}
                     >
                       <i className="fas fa-chevron-right"></i>
                     </button>

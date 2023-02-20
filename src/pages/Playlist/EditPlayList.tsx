@@ -20,7 +20,7 @@ export default function EditPlayList() {
   const dispatch: AppDispatch = useDispatch();
   // cấu hình phân pages
   const [currentPage, setCurrentPage] = useState<number>(1); // Vị trí page hiện tại
-  const [limit, setLimit] = useState<number>(12); // change số item hiển thị
+  const [limit] = useState<number>(12); // change số item hiển thị
   const indexOfLastNews = currentPage * limit; // vị trí cuối
   const indexOfFirstNews = indexOfLastNews - limit; // Vị trí đầu
   const totalPages = Math.ceil(itemPlayList?.arrBanGhi?.length / limit); // Tính số tổng số pages
@@ -28,7 +28,7 @@ export default function EditPlayList() {
     indexOfFirstNews,
     indexOfLastNews
   );
-  const [isStyleBtn, setIsStyleBtn] = useState<boolean>(false);
+  const [isStyleBtn] = useState<boolean>(false);
   // cấu hình phân pages
   const navigate = useNavigate();
   const styleI = {
@@ -57,9 +57,10 @@ export default function EditPlayList() {
   };
 
   useEffect(() => {
-    if (itemPlayList?.id == "") {
+    if (itemPlayList?.id === "") {
       navigate("/admin/playlist");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSubmit = async () => {
@@ -90,6 +91,7 @@ export default function EditPlayList() {
           tongThoiLuong = gio + ":" + phut + ":" + giay;
           console.log({ tongThoiLuong });
         }
+        return tongThoiLuong;
       }); // handle  o day
       console.log({ tongThoiLuong });
       try {
@@ -244,6 +246,7 @@ export default function EditPlayList() {
                         <span>{tag}</span>
                         <i
                           onClick={() => {
+                            // eslint-disable-next-line @typescript-eslint/no-unused-vars
                             let selectedTagsDelete = selectedTags.splice(
                               index,
                               1

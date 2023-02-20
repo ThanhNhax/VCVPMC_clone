@@ -38,6 +38,7 @@ export default function AddBanGhiPlaylist() {
     indexOfLastNews
   );
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isStyleBtn, setIsStyleBtn] = useState<boolean>(false);
   // cấu hình phân pages
   const styleI = {
@@ -67,6 +68,7 @@ export default function AddBanGhiPlaylist() {
   useEffect(() => {
     // Call arrKhoBanGhi từ FireStore về
     dispatch(getArrKhoBanGhiFireStore());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   // handleSubmit
   const handleSubmit = () => {

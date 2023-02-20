@@ -64,7 +64,7 @@ export const getUser = (uid: string) => {
         console.log({ userFireStore });
         dispatch(setUserRedux(userFireStore));
         // chuyển hướng trang sang pages thông tin cơ bản
-        // history.push("/admin/thongtincoban");
+        history.push("/admin/thongtincoban");
       }
     } catch (err) {
       console.log(err);
@@ -93,7 +93,7 @@ export const updateUser = (uid: string, data: UserState) => {
     try {
       const docRef: any = doc(db, "users", uid);
       if (docRef) {
-        let doc = await updateDoc(docRef, data);
+        await updateDoc(docRef, data);
         dispatch(getUserEdit(uid));
       }
     } catch (error) {

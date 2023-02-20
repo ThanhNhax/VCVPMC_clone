@@ -1,5 +1,4 @@
 import { Checkbox, Modal } from "antd";
-import TextArea from "antd/es/input/TextArea";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -8,7 +7,6 @@ import { AppDispatch, RootState } from "../../redux/configStore";
 import {
   getArrKhoBanGhiFireStore,
   KhoBanGhiRedux,
-  setItemKhoBanGhi,
 } from "../../redux/khoBanGhi/khoBanghiReducer";
 
 export default function QuanLyPheDuyet() {
@@ -24,6 +22,7 @@ export default function QuanLyPheDuyet() {
   const totalPages = Math.ceil(arrKhoBanGhi.length / limit); // Tính số tổng số pages
   const newArrKho = arrKhoBanGhi.slice(indexOfFirstNews, indexOfLastNews);
   const [isTable, setIsTable] = useState<boolean>(true); // hiển thị dưới dạng table hoặc dạng card
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isStyleBtn, setIsStyleBtn] = useState<boolean>(false);
   const [isCheck, setIsCheck] = useState<boolean>(false);
   // xử  lý modal popup
@@ -62,6 +61,7 @@ export default function QuanLyPheDuyet() {
     // Lấy danh sách kho bản ghi từ fireStore về
     const action = getArrKhoBanGhiFireStore();
     dispatch(action);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // tạo ra danh sách kho bản ghi

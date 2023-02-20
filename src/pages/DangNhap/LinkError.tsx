@@ -1,9 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-type Props = {};
-
-export default function LinkError({}: Props) {
+export default function LinkError() {
   return (
     <div className="content-linkError">
       <h5>Không thể kết nối </h5>

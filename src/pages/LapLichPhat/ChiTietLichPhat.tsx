@@ -1,11 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../redux/configStore";
 
-type Props = {};
-
-export default function ChiTietLichPhat({}: Props) {
+export default function ChiTietLichPhat() {
   // Lấy data item lập lịch phát từ redux về
   const { itemLapLichPhat } = useSelector(
     (state: RootState) => state.lapLichPhat
@@ -13,18 +11,15 @@ export default function ChiTietLichPhat({}: Props) {
 
   const navigate = useNavigate();
   // cấu hình phân pages
-  const [currentPage, setCurrentPage] = useState<number>(1); // Vị trí page hiện tại
-  const [limit, setLimit] = useState<number>(13); // change số item hiển thị
-  const indexOfLastNews = currentPage * limit; // vị trí cuối
-  const indexOfFirstNews = indexOfLastNews - limit; // Vị trí đầu
-  // const totalPages = Math.ceil(arrPlayList.length / limit); // Tính số tổng số pages
-  // const newArrPlayList = arrPlayList.slice(indexOfFirstNews, indexOfLastNews);
-  const [isStyleBtn, setIsStyleBtn] = useState<boolean>(false);
+  // const [currentPage, setCurrentPage] = useState<number>(1); // Vị trí page hiện tại
+  // const [limit, setLimit] = useState<number>(13); // change số item hiển thị
+  // const indexOfLastNews = currentPage * limit; // vị trí cuối
+  // const indexOfFirstNews = indexOfLastNews - limit; // Vị trí đầu
+  // // const totalPages = Math.ceil(arrPlayList.length / limit); // Tính số tổng số pages
+  // // const newArrPlayList = arrPlayList.slice(indexOfFirstNews, indexOfLastNews);
+  // const [isStyleBtn, setIsStyleBtn] = useState<boolean>(false);
   // cấu hình phân pages
 
-  // const renderDanhSachPlaylist = () => {
-  //   return itemLapLichPhat.
-  // };
   return (
     <div className="chiTietLichPhat">
       <div className="chiTietLichPhat-title">
@@ -94,13 +89,13 @@ export default function ChiTietLichPhat({}: Props) {
               </div>
               <div className="pagination_right">
                 <button
-                  disabled={currentPage === 1}
-                  onClick={() => {
-                    if (currentPage === 1) {
-                      setCurrentPage(1);
-                    }
-                    setCurrentPage(currentPage - 1);
-                  }}
+                // disabled={currentPage === 1}
+                // onClick={() => {
+                //   if (currentPage === 1) {
+                //     setCurrentPage(1);
+                //   }
+                //   setCurrentPage(currentPage - 1);
+                // }}
                 >
                   <i className="fas fa-chevron-left"></i>
                 </button>
@@ -111,7 +106,7 @@ export default function ChiTietLichPhat({}: Props) {
                 <button
                   // disabled={currentPage >= totalPages}
                   onClick={() => {
-                    setCurrentPage(currentPage + 1);
+                    // setCurrentPage(currentPage + 1);
                   }}
                 >
                   <i className="fas fa-chevron-right"></i>

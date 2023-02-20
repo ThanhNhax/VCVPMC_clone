@@ -2,9 +2,7 @@ import { Button, Upload } from "antd";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-type Props = {};
-
-export default function ThemHopDongUyQuyenMoi({}: Props) {
+export default function ThemHopDongUyQuyenMoi() {
   const navigate = useNavigate();
   return (
     <div className="themHopDingUyQuyenMoi">

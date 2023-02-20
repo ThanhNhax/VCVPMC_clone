@@ -1,7 +1,5 @@
 import React from "react";
 
-type Props = {};
-
-export default function QuanLyThietBi({}: Props) {
+export default function QuanLyThietBi() {
   return <div>bs5-na</div>;
 }
