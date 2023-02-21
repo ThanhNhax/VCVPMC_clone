@@ -192,6 +192,52 @@
 
                                         }
 
+                                        td:nth-child(7) {
+                                            position: relative;
+                                            padding: 15px;
+
+                                            &::after {
+                                                content: "";
+                                                width: 8px;
+                                                height: 8px;
+                                                border-radius: 50%;
+                                                position: absolute;
+                                                left: 0px;
+                                                top: 50%;
+                                                transform: translateY(-50%);
+                                            }
+                                        }
+
+                                        .Mới {
+                                            &::after {
+                                                background: #18E306;
+
+                                            }
+                                        }
+
+                                        .Đang {
+                                            &::after {
+                                                background: #347AFF;
+
+                                            }
+                                        }
+
+                                        .Hết {
+                                            &::after {
+                                                background: #878890;
+                                                ;
+
+                                            }
+                                        }
+
+                                        .hủy {
+                                            &::after {
+                                                background: #FF4747;
+
+                                            }
+                                        }
+
+
                                         .text_right {
                                             text-align: right;
                                         }

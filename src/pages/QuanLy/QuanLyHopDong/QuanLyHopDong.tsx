@@ -1,17 +1,68 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { AppDispatch, RootState } from "../../../redux/configStore";
+import {
+  getArrHopDongFireStore,
+  HopDongRedux,
+} from "../../../redux/hopDongReducer/hopDongReducer";
 
 export default function QuanLyHopDong() {
+  const { arrHopDong } = useSelector((state: RootState) => state.hopDong);
+  console.log({ arrHopDong });
+  const dispatch: AppDispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getArrHopDongFireStore());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   // cấu hình phân pages
-  // const [currentPage, setCurrentPage] = useState<number>(1); // Vị trí page hiện tại
-  // const [limit, setLimit] = useState<number>(10); // change số item hiển thị
-  // const indexOfLastNews = currentPage * limit; // vị trí cuối
-  // const indexOfFirstNews = indexOfLastNews - limit; // Vị trí đầu
-  // // const totalPages = Math.ceil(arrKhoBanGhi.length / limit); // Tính số tổng số pages
-  // // const newArrKho = arrKhoBanGhi.slice(indexOfFirstNews, indexOfLastNews);
-  // const [isStyleBtn, setIsStyleBtn] = useState<boolean>(false);
+  const [currentPage, setCurrentPage] = useState<number>(1); // Vị trí page hiện tại
+  const [limit, setLimit] = useState<number>(6); // change số item hiển thị
+  const indexOfLastNews = currentPage * limit; // vị trí cuối
+  const indexOfFirstNews = indexOfLastNews - limit; // Vị trí đầu
+  let totalPages: number = 1;
+  if (arrHopDong) {
+    totalPages = Math.ceil(arrHopDong?.length / limit); // Tính số tổng số pages
+  }
+
+  const newArrHopDong = arrHopDong?.slice(indexOfFirstNews, indexOfLastNews);
+  const [isStyleBtn, setIsStyleBtn] = useState<boolean>(false);
   // cấu hình phân pages
   const [isActive, setIsActive] = useState<boolean>(true);
+
+  const renderTableHopDongKhaiThac = () => {
+    return newArrHopDong?.map((hopDong: HopDongRedux, index: number) => {
+      return (
+        <tr key={index}>
+          <td>{index + 1}</td>
+          <td>{hopDong.soHopDong}</td>
+          <td>{hopDong.tenHopDong}</td>
+          <td>{hopDong.ngayTao}</td>
+          <td>{hopDong.ngayHieuLuc}</td>
+          <td>{hopDong.ngayHetHan}</td>
+          {<td className={hopDong.hieuLucHopDong}>{hopDong.hieuLucHopDong}</td>}
+
+          <td className="action">
+            <Link to={"/admin/quanLyHopDong/chiTietHopDongKhaiThac"}>
+              Xem chi tiết
+            </Link>
+          </td>
+          <td className="action">Sao chép hợp đồng</td>
+        </tr>
+      );
+    });
+  };
+  const renderButtonPage = (n: number) => {
+    let btn: any = "";
+    for (let i = 0; i < n; i++) {
+      btn += `<button
+          className=${isStyleBtn ? "btn-item-active btn-item" : "btn-item"}
+          >
+          ${i + 1}
+        </button>`;
+    }
+    return { __html: btn };
+  };
   return (
     <div className="quanLyHopDong">
       <div className="container">
@@ -269,124 +320,7 @@ export default function QuanLyHopDong() {
                         <th>Hiệu lực hợp đồng</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>HD123</td>
-                        <td>Hợp đồng kinh doanh 1</td>
-                        <td>01/04/2021 15:53:13</td>
-                        <td>02/12/2021</td>
-                        <td>02/12/2022</td>
-                        <td className="moi_thoiHan">Mới</td>
-                        <td className="action">
-                          <Link
-                            to={"/admin/quanLyHopDong/chiTietHopDongKhaiThac"}
-                          >
-                            Xem chi tiết
-                          </Link>
-                        </td>
-                        <td className="action">Sao chép hợp đồng</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>HD123</td>
-                        <td>Hợp đồng kinh doanh 1</td>
-                        <td>01/04/2021 15:53:13</td>
-                        <td>02/12/2021</td>
-                        <td>02/12/2022</td>
-                        <td className="true_thoiHan">Đang hiệu lực</td>
-                        <td className="action">Xem chi tiết</td>
-                        <td className="action">Sao chép hợp đồng</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>HD123</td>
-                        <td>Hợp đồng kinh doanh 1</td>
-                        <td>01/04/2021 15:53:13</td>
-                        <td>02/12/2021</td>
-                        <td>02/12/2022</td>
-                        <td className="true_thoiHan">Đang hiệu lực</td>
-                        <td className="action">Xem chi tiết</td>
-                        <td className="action">Sao chép hợp đồng</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>HD123</td>
-                        <td>Hợp đồng kinh doanh 1</td>
-                        <td>01/04/2021 15:53:13</td>
-                        <td>02/12/2021</td>
-                        <td>02/12/2022</td>
-                        <td className="true_thoiHan">Đang hiệu lực</td>
-                        <td className="action">Xem chi tiết</td>
-                        <td className="action">Sao chép hợp đồng</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>HD123</td>
-                        <td>Hợp đồng kinh doanh 1</td>
-                        <td>01/04/2021 15:53:13</td>
-                        <td>02/12/2021</td>
-                        <td>02/12/2022</td>
-                        <td className="moi_thoiHan">Mới</td>
-                        <td className="action">Xem chi tiết</td>
-                        <td className="action">Sao chép hợp đồng</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>HD123</td>
-                        <td>Hợp đồng kinh doanh 1</td>
-                        <td>01/04/2021 15:53:13</td>
-                        <td>02/12/2021</td>
-                        <td>02/12/2022</td>
-                        <td className="false_thoiHan">Đã huỷ</td>
-                        <td className="action">Xem chi tiết</td>
-                        <td className="action">Sao chép hợp đồng</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>HD123</td>
-                        <td>Hợp đồng kinh doanh 1</td>
-                        <td>01/04/2021 15:53:13</td>
-                        <td>02/12/2021</td>
-                        <td>02/12/2022</td>
-                        <td className="false_thoiHan">Đã huỷ</td>
-                        <td className="action">Xem chi tiết</td>
-                        <td className="action">Sao chép hợp đồng</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>HD123</td>
-                        <td>Hợp đồng kinh doanh 1</td>
-                        <td>01/04/2021 15:53:13</td>
-                        <td>02/12/2021</td>
-                        <td>02/12/2022</td>
-                        <td className="false_thoiHan">Đã huỷ</td>
-                        <td className="action">Xem chi tiết</td>
-                        <td className="action">Sao chép hợp đồng</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>HD123</td>
-                        <td>Hợp đồng kinh doanh 1</td>
-                        <td>01/04/2021 15:53:13</td>
-                        <td>02/12/2021</td>
-                        <td>02/12/2022</td>
-                        <td className="moi_thoiHan">Mới</td>
-                        <td className="action">Xem chi tiết</td>
-                        <td className="action">Sao chép hợp đồng</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>HD123</td>
-                        <td>Hợp đồng kinh doanh 1</td>
-                        <td>01/04/2021 15:53:13</td>
-                        <td>02/12/2021</td>
-                        <td>02/12/2022</td>
-                        <td className="moi_thoiHan">Mới</td>
-                        <td className="action">Xem chi tiết</td>
-                        <td className="action">Sao chép hợp đồng</td>
-                      </tr>
-                    </tbody>
+                    <tbody>{renderTableHopDongKhaiThac()}</tbody>
                   </table>
                 </div>
                 <div className="pagination-table">
@@ -394,37 +328,37 @@ export default function QuanLyHopDong() {
                     <p>
                       Hiển thị
                       <select
-                        // value={limit}
+                        value={limit}
                         onChange={(e) => {
-                          // setLimit(parseInt(e.target.value));
+                          setLimit(parseInt(e.target.value));
                         }}
                       >
-                        <option value="10">10</option>
+                        <option value="6">6</option>
                       </select>
                       hàng trong mỗi trang
                     </p>
                   </div>
                   <div className="pagination_right">
                     <button
-                    // disabled={currentPage === 1}
-                    // onClick={() => {
-                    //   if (currentPage === 1) {
-                    //     setCurrentPage(1);
-                    //   }
-                    //   setCurrentPage(currentPage - 1);
-                    // }}
+                      disabled={currentPage === 1}
+                      onClick={() => {
+                        if (currentPage === 1) {
+                          setCurrentPage(1);
+                        }
+                        setCurrentPage(currentPage - 1);
+                      }}
                     >
                       <i className="fas fa-chevron-left"></i>
                     </button>
                     <div
                       id="btnPage"
-                      // dangerouslySetInnerHTML={renderButtonPage(totalPages)}
+                      dangerouslySetInnerHTML={renderButtonPage(totalPages)}
                     ></div>
                     <button
-                    // disabled={currentPage >= totalPages}
-                    // onClick={() => {
-                    // setCurrentPage(currentPage + 1);
-                    // }}
+                      disabled={currentPage >= totalPages}
+                      onClick={() => {
+                        setCurrentPage(currentPage + 1);
+                      }}
                     >
                       <i className="fas fa-chevron-right"></i>
                     </button>

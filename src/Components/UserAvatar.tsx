@@ -1,16 +1,15 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/configStore";
-import { getUser } from "../redux/userReducer/userReducer";
+import { getUserLocal } from "../redux/userReducer/userReducer";
 import { getStoreJSON, USER } from "../util/setting";
 
 export default function UserAvatar() {
   const { user } = useSelector((state: RootState) => state.user.userLogin);
-  console.log({ user });
   const dispatch: AppDispatch = useDispatch();
   let { uid } = getStoreJSON(USER);
   useEffect(() => {
-    dispatch(getUser(uid));
+    dispatch(getUserLocal(uid));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (

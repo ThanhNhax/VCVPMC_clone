@@ -14,7 +14,6 @@ import { Modal } from "antd";
 
 export default function ThongTinCoBan() {
   const { user } = useSelector((state: RootState) => state.user.userLogin);
-  console.log({ user });
   const dispatch: AppDispatch = useDispatch();
   //Lấy uid từ localStore lên để call user
   let userStore: User = getStoreJSON(USER);

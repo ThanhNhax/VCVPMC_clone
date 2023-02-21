@@ -337,13 +337,7 @@ export default function KhoBanGhi() {
         wrapClassName="modal-video"
         width={480}
       >
-        <video
-          width="452"
-          height="247"
-          // src="https://www.youtube.com/embed/PoXDg2saXX8"
-          title="YouTube video player"
-          // frameborder="0"
-        ></video>
+        <video width="452" height="247" title="YouTube video player"></video>
       </Modal>
     </div>
   );

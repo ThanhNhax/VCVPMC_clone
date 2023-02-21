@@ -1,7 +1,12 @@
 import { Checkbox, Modal } from "antd";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { PlayListRedux } from "../redux/playListReducer/playListReducer";
+import { AppDispatch } from "../redux/configStore";
+import {
+  PlayListRedux,
+  setItemPlayList,
+} from "../redux/playListReducer/playListReducer";
 
 type Props = {
   item: PlayListRedux;
@@ -22,6 +27,12 @@ export default function ItemPlayList({ item, isCheck, isPheDuyet }: Props) {
   };
   const handleCancel = () => {
     setIsModalOpen(false);
+  };
+  const dispatch: AppDispatch = useDispatch();
+  const handleChiTiet = (item: PlayListRedux) => {
+    console.log(item.id);
+    // cập nhật itemPlayList lên redux
+    dispatch(setItemPlayList(item));
   };
   return (
     <div className="itemPlayList">
@@ -44,7 +55,7 @@ export default function ItemPlayList({ item, isCheck, isPheDuyet }: Props) {
           <div className="item-list">
             <div className="item">
               <p>Số bản ghi</p>
-              <p>{item.soBanGhi}</p>
+              <p>{item.arrBanGhi.length}</p>
             </div>
             <div className="item">
               <p>Thời lượng</p>
@@ -55,7 +66,10 @@ export default function ItemPlayList({ item, isCheck, isPheDuyet }: Props) {
             {isPheDuyet ? (
               <Checkbox checked={isCheck ? true : false} />
             ) : (
-              <Link to={"#"}>
+              <Link
+                to={"/admin/playlist/xemchitiet"}
+                onClick={() => handleChiTiet(item)}
+              >
                 <div className="bg-icon">
                   <i className="fas fa-info"></i>
                 </div>

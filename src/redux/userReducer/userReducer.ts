@@ -72,6 +72,26 @@ export const getUser = (uid: string) => {
     }
   };
 };
+// cập lại user khi reload lại trang
+export const getUserLocal = (uid: string) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const docRef = doc(db, "users", uid);
+      if (docRef) {
+        const doc = await getDoc(docRef);
+        const userFireStore: any = doc.data();
+        // Lưu lại user_Login
+        setStoreJSON(USER, userFireStore);
+        //Đưa userLogin lên redux
+        console.log({ userFireStore });
+        dispatch(setUserRedux(userFireStore));
+      }
+    } catch (err) {
+      console.log(err);
+      history.push("/");
+    }
+  };
+};
 export const getUserEdit = (uid: string) => {
   return async (dispatch: AppDispatch) => {
     try {

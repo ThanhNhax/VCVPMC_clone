@@ -126,7 +126,30 @@ export default function AddBanGhiPlaylist() {
               console.log({ khoBanGhi });
               setIsNullData(false);
               //cập nhật lên redux
-              dispatch(setNewPlayListArrBanGhiRedux(khoBanGhi));
+              // handle add trung ban ghi
+              console.log({ newArrPlayList });
+
+              if (newArrPlayList.length === 0) {
+                dispatch(setNewPlayListArrBanGhiRedux(khoBanGhi));
+              } else {
+                let id: string;
+                if (khoBanGhi.id !== null) id = khoBanGhi.id;
+                // trả về mảng  [true, false,...]
+                let tam = newArrPlayList.map((playlist: KhoBanGhiRedux) => {
+                  return playlist.id?.includes(id);
+                });
+                console.log({ tam });
+                // bắt cái kết trả về cuối cùng của mảng . mình handle nểu trả về true thì messagera còn false thêm vao  redux
+                if (tam[tam.length - 1]) {
+                  message.open({
+                    type: "warning",
+                    content: "Đã có bản ghi rồi!",
+                    duration: 0.8,
+                  });
+                } else {
+                  dispatch(setNewPlayListArrBanGhiRedux(khoBanGhi));
+                }
+              }
             }}
           >
             Thêm

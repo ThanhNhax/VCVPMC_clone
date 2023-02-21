@@ -43,10 +43,10 @@ export default function Playlist() {
     return newArrPlayList.map((item: PlayListRedux, index: number) => {
       return (
         <tr key={index}>
-          <td>{index + 1}</td>
+          <td className="text_right">{index + 1}</td>
           <td>{item.tieuDe}</td>
-          <td>{item.arrBanGhi.length}</td>
-          <td>{item.thoiLuong}</td>
+          <td className="text_right">{item.arrBanGhi.length}</td>
+          <td className="text_right">{item.thoiLuong}</td>
           <td className="td-chuDe">
             {item?.chuDe?.map((chuDe: string | null, index: number) => {
               return <p key={index}>{chuDe}</p>;

@@ -11,6 +11,7 @@ import {
   KhoBanGhiRedux,
   updateItemKhoBanGhiFireStore,
 } from "../../redux/khoBanGhi/khoBanghiReducer";
+import moment from "moment";
 
 export default function CapNhatkhoBanGhi() {
   const dispatch: AppDispatch = useDispatch();
@@ -105,7 +106,7 @@ export default function CapNhatkhoBanGhi() {
                 <div className="table_thongTin">
                   <div className="table_item">
                     <p>Ngày thêm: </p>
-                    <p>07/04.2021 - 17:45:30</p>
+                    <p>{moment(item.ngayTai).format("MM/MM/YYYY")}</p>
                   </div>
                   <div className="table_item">
                     <p>Người tải lên: </p>
@@ -131,7 +132,7 @@ export default function CapNhatkhoBanGhi() {
                 <div className="table_thongTin">
                   <div className="table_item">
                     <p>Số hợp đồng: </p>
-                    <p>BH123</p>
+                    <p>{item.soHopDong}</p>
                   </div>
                   <div className="table_item">
                     <p>Ngày nhận ủy quyền: </p>
@@ -143,7 +144,11 @@ export default function CapNhatkhoBanGhi() {
                   </div>
                   <div className="table_item">
                     <p>Trạng thái: </p>
-                    <p>Còng thời hạn</p>
+                    {item.thoiHanSuDung?.thoiHan ? (
+                      <p className="true-thoiHan">Còn thời hạn</p>
+                    ) : (
+                      <p className="false-thoiHan">Đã hết hạn</p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -154,7 +159,9 @@ export default function CapNhatkhoBanGhi() {
               <form>
                 <div className="form_profile">
                   <div className="form_title">
-                    <label htmlFor="tenBanGhi">Tên bản ghi:</label>
+                    <label htmlFor="tenBanGhi">
+                      Tên bản ghi: <i>*</i>
+                    </label>
                     <br />
                     <input
                       type="text"
@@ -165,7 +172,9 @@ export default function CapNhatkhoBanGhi() {
                     />
                   </div>
                   <div className="form_title">
-                    <label htmlFor="maISRC">Mã ISRC:</label>
+                    <label htmlFor="maISRC">
+                      Mã ISRC: <i>*</i>
+                    </label>
                     <br />
                     <input
                       type="text"
@@ -176,7 +185,9 @@ export default function CapNhatkhoBanGhi() {
                     />
                   </div>
                   <div className="form_title">
-                    <label htmlFor="caSi">Ca sĩ:</label>
+                    <label htmlFor="caSi">
+                      Ca sĩ: <i>*</i>
+                    </label>
                     <br />
                     <input
                       type="text"
@@ -187,7 +198,9 @@ export default function CapNhatkhoBanGhi() {
                     />
                   </div>
                   <div className="form_title">
-                    <label htmlFor="tacGia">Tác giả:</label>
+                    <label htmlFor="tacGia">
+                      Tác giả: <i>*</i>
+                    </label>
                     <br />
                     <input
                       type="text"
@@ -199,7 +212,9 @@ export default function CapNhatkhoBanGhi() {
                   </div>
 
                   <div className="form_title">
-                    <label htmlFor="nhaSanXuat">Nhà sản xuất:</label>
+                    <label htmlFor="nhaSanXuat">
+                      Nhà sản xuất: <i>*</i>
+                    </label>
                     <br />
                     <input
                       type="nhaSanXuat"
@@ -210,7 +225,9 @@ export default function CapNhatkhoBanGhi() {
                     />
                   </div>
                   <div className="form_title">
-                    <label htmlFor="theLoai">Thể loại:</label>
+                    <label htmlFor="theLoai">
+                      Thể loại: <i>*</i>
+                    </label>
                     <br />
                     <select
                       name="theLoai"

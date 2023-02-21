@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import hopDongReducer from "./hopDongReducer/hopDongReducer";
 import khoBanghiReducer from "./khoBanGhi/khoBanghiReducer";
 import lapLichPhatReducer from "./lapLichPhat/lapLichPhatReducer";
 import playListReducer from "./playListReducer/playListReducer";
@@ -11,6 +12,7 @@ export const store = configureStore({
     user: userReducer,
     playList: playListReducer,
     lapLichPhat: lapLichPhatReducer,
+    hopDong: hopDongReducer,
   },
 });
 

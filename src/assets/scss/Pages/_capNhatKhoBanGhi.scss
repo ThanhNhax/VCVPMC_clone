@@ -114,7 +114,8 @@
                                 margin-top: 8px;
 
                                 p:nth-child(1) {
-                                    @include text(12px, 700, #ffffff)
+                                    @include text(12px, 700, #ffffff);
+                                    margin-right: 5px;
                                 }
 
                                 p:nth-child(2) {
@@ -154,6 +155,37 @@
                                     opacity: 0.7;
                                     @include text(12px, 400, #ffffff)
                                 }
+
+                                &:last-child {
+                                    p:last-child {
+                                        position: relative;
+
+                                        &::after {
+                                            content: "";
+                                            width: 8px;
+                                            height: 8px;
+                                            border-radius: 50%;
+                                            position: absolute;
+                                            left: -15px;
+                                            top: 50%;
+                                            transform: translateY(-50%);
+                                        }
+                                    }
+
+                                    .true-thoiHan {
+                                        &::after {
+                                            content: "";
+                                            background: #347AFF;
+                                        }
+                                    }
+
+                                    .false-thoiHan {
+                                        &::after {
+                                            content: "";
+                                            background: #878891;
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -176,16 +208,19 @@
 
                     form {
                         .form_profile {
+                            margin-top: 20px;
 
                             .form_title {
-
-
                                 label {
                                     @include text(14px, 700, #f5f5f5);
+
+                                    i {
+                                        color: #FF4747;
+                                    }
                                 }
 
                                 input {
-                                    margin: 2px 0;
+                                    margin: 5px 0;
                                     border: 1px solid #727288;
                                     padding: 11px 24px 13px 16px;
                                     width: 100%;
