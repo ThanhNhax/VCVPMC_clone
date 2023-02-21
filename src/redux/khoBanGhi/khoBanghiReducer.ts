@@ -1,11 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { message } from "antd";
 import {
   collection,
   deleteDoc,
   doc,
   onSnapshot,
   query,
+  updateDoc,
 } from "firebase/firestore";
+import { history } from "../..";
 import { db } from "../../FireStore/fireStore";
 import { AppDispatch } from "../configStore";
 
@@ -111,6 +114,38 @@ export const deleteFireStore = (id: string) => {
       await deleteDoc(khoBanGhiRef);
     } catch (error) {
       console.log({ error });
+    }
+  };
+};
+
+// update item kho bản ghi
+export const updateItemKhoBanGhiFireStore = (item: KhoBanGhiRedux) => {
+  return async (dispatch: AppDispatch) => {
+    if (item.id) {
+      const khoBanGhiRef = doc(db, "khoBanGhi", item.id);
+      try {
+        updateDoc(khoBanGhiRef, {
+          caSi: item.caSi,
+          dinhDang: item.dinhDang,
+          id: item.id,
+          maISRC: item.maISRC,
+          ngayTai: item.ngayTai,
+          nhaSanXuat: item.nhaSanXuat,
+          soHopDong: item.soHopDong,
+          tacGia: item.tacGia,
+          tenBanGhi: item.tenBanGhi,
+          theLoai: item.theLoai,
+          thoiHanSuDung: item.thoiHanSuDung,
+          thoiLuong: item.thoiLuong,
+        });
+        message.open({
+          type: "success",
+          content: "Cập nhật thành công!",
+        });
+        history.push("/admin/khobanghi");
+      } catch (error) {
+        console.log({ error });
+      }
     }
   };
 };

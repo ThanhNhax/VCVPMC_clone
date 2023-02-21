@@ -1,19 +1,37 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
-import { Field, Formik, Form } from "formik";
-import * as Yup from "yup";
+import React, { useEffect, useState } from "react";
 import { history } from "../..";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../FireStore/fireStore";
 import { message } from "antd";
-import { RootState } from "../../redux/configStore";
+import { AppDispatch, RootState } from "../../redux/configStore";
+import {
+  KhoBanGhiRedux,
+  updateItemKhoBanGhiFireStore,
+} from "../../redux/khoBanGhi/khoBanghiReducer";
 
 export default function CapNhatkhoBanGhi() {
+  const dispatch: AppDispatch = useDispatch();
   //Lấy Item kho bản ghi từ redux về
-  const item = useSelector((state: RootState) => state.khoBanGhi.itemKhoBanGhi);
-  console.log(item);
+  const item: KhoBanGhiRedux = useSelector(
+    (state: RootState) => state.khoBanGhi.itemKhoBanGhi
+  );
+  console.log({ item });
+  const [tenBanGhi, setTenBanGhi] = useState<string>(
+    item.tenBanGhi ? item.tenBanGhi : ""
+  );
+  const [maISRC, setMaISRC] = useState<string>(item.maISRC ? item.maISRC : "");
+  const [caSi, setCaSi] = useState<string>(item.caSi ? item.caSi : "");
+  const [tacGia, setTacGia] = useState<string>(item.tacGia ? item.tacGia : "");
+  const [nhaSanXuat, setNhaSanXuat] = useState<string>(
+    item.nhaSanXuat ? item.nhaSanXuat : ""
+  );
+  const [theLoai, setTheLoai] = useState<string>(
+    item.theLoai ? item.theLoai : ""
+  );
+
   const navigate = useNavigate();
   useEffect(() => {
     if (item == null) {
@@ -36,20 +54,27 @@ export default function CapNhatkhoBanGhi() {
       }
     }
   };
-  const initialValues = {
-    maISRC: "",
-    tenBanGhi: "",
-    caSi: "",
-    tacGia: "",
-    nhaSanXuat: "",
-    theLoai: "",
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    let itemUpdate: KhoBanGhiRedux = {
+      caSi: caSi,
+      dinhDang: item.dinhDang ? item.dinhDang : "Aidio",
+      id: item.id,
+      maISRC: maISRC,
+      ngayTai: item.ngayTai,
+      nhaSanXuat: nhaSanXuat,
+      soHopDong: item.soHopDong,
+      tacGia: tacGia,
+      tenBanGhi: tenBanGhi,
+      theLoai: theLoai,
+      thoiHanSuDung: item.thoiHanSuDung,
+      thoiLuong: item.thoiLuong,
+    };
+    console.log({ itemUpdate });
+    dispatch(updateItemKhoBanGhiFireStore(itemUpdate));
   };
-  const loginSchema = Yup.object().shape({
-    password: Yup.string()
-      .required("Không được bỏ trống!")
-      .min(3, "Password nhiều hơn 3 ký tự!"),
-    userName: Yup.string().required("Không được bỏ trống!"),
-  });
+
   return (
     <div className="capNhatKhoBanGhi">
       <div className="capNhatKhoBanGhi_title">
@@ -60,167 +85,162 @@ export default function CapNhatkhoBanGhi() {
         <h3>Bản ghi - {item?.tenBanGhi}</h3>
       </div>
       <div className="capNhatKhoBanGhi_content">
-        <div className="content_left">
-          <div className="content_left-top">
-            <div className="thongTin">
-              <h5>Thông tin bản ghi</h5>
-              <div className="avatar">
-                <img src="../../img/Frame_433.png" alt="Frame 433.png" />
-                <div className="camera">
-                  <i className="fas fa-camera"></i>
+        <div className="wrap-content">
+          <div className="wrap">
+            <div className="content_left">
+              <div className="content_left-top">
+                <div className="thongTin">
+                  <h5>Thông tin bản ghi</h5>
+                  <div className="avatar">
+                    <img src="../../img/Frame_433.png" alt="Frame 433.png" />
+                    <div className="camera">
+                      <i className="fas fa-camera"></i>
+                    </div>
+                  </div>
+                  <div className="music">
+                    <i className="fas fa-music"></i>
+                    <span>{item?.tenBanGhi}.mp3</span>
+                  </div>
+                </div>
+                <div className="table_thongTin">
+                  <div className="table_item">
+                    <p>Ngày thêm: </p>
+                    <p>07/04.2021 - 17:45:30</p>
+                  </div>
+                  <div className="table_item">
+                    <p>Người tải lên: </p>
+                    <p>Super Admin</p>
+                  </div>
+                  <div className="table_item">
+                    <p>Người duyệt: </p>
+                    <p>
+                      Hệ thống <br />
+                      (Tự động phê duyệt)
+                    </p>
+                  </div>
+                  <div className="table_item">
+                    <p>Ngày phê duyệt: </p>
+                    <p>07/04.2021 - 17:45:50</p>
+                  </div>
                 </div>
               </div>
-              <div className="music">
-                <i className="fas fa-music"></i>
-                <span>{item?.tenBanGhi}.mp3</span>
+              <div className="content_left-bottom">
+                <div className="thongTin">
+                  <h5>Thông tin ủy quyền</h5>
+                </div>
+                <div className="table_thongTin">
+                  <div className="table_item">
+                    <p>Số hợp đồng: </p>
+                    <p>BH123</p>
+                  </div>
+                  <div className="table_item">
+                    <p>Ngày nhận ủy quyền: </p>
+                    <p>01/05/2021</p>
+                  </div>
+                  <div className="table_item">
+                    <p>Ngày hết hạn: </p>
+                    <p>01/08/2025</p>
+                  </div>
+                  <div className="table_item">
+                    <p>Trạng thái: </p>
+                    <p>Còng thời hạn</p>
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="table_thongTin">
-              <div className="table_item">
-                <p>Ngày thêm: </p>
-                <p>07/04.2021 - 17:45:30</p>
-              </div>
-              <div className="table_item">
-                <p>Người tải lên: </p>
-                <p>Super Admin</p>
-              </div>
-              <div className="table_item">
-                <p>Người duyệt: </p>
-                <p>
-                  Hệ thống <br />
-                  (Tự động phê duyệt)
-                </p>
-              </div>
-              <div className="table_item">
-                <p>Ngày phê duyệt: </p>
-                <p>07/04.2021 - 17:45:50</p>
-              </div>
-            </div>
-          </div>
-          <div className="content_left-bottom">
-            <div className="thongTin">
-              <h5>Thông tin ủy quyền</h5>
-            </div>
-            <div className="table_thongTin">
-              <div className="table_item">
-                <p>Số hợp đồng: </p>
-                <p>BH123</p>
-              </div>
-              <div className="table_item">
-                <p>Ngày nhận ủy quyền: </p>
-                <p>01/05/2021</p>
-              </div>
-              <div className="table_item">
-                <p>Ngày hết hạn: </p>
-                <p>01/08/2025</p>
-              </div>
-              <div className="table_item">
-                <p>Trạng thái: </p>
-                <p>Còng thời hạn</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="content_right">
-          <h5>Chỉnh sửa thông tin</h5>
-          <Formik
-            initialValues={initialValues}
-            validationSchema={loginSchema}
-            onSubmit={(values) => {
-              console.log({ values });
-            }}
-          >
-            {({ errors, touched }) => (
-              <Form>
+            <div className="content_right">
+              <h5>Chỉnh sửa thông tin</h5>
+
+              <form>
                 <div className="form_profile">
                   <div className="form_title">
                     <label htmlFor="tenBanGhi">Tên bản ghi:</label>
                     <br />
-                    <Field
+                    <input
                       type="text"
                       name="tenBanGhi"
                       id="tenBanGhi"
-                      value={item?.tenBanGhi}
+                      value={tenBanGhi}
+                      onChange={(e) => setTenBanGhi(e.target.value)}
                     />
-                    {errors.tenBanGhi && touched.tenBanGhi ? (
-                      <p className="text-danger">{errors.tenBanGhi}</p>
-                    ) : null}
                   </div>
                   <div className="form_title">
                     <label htmlFor="maISRC">Mã ISRC:</label>
                     <br />
-                    <Field
+                    <input
                       type="text"
                       name="maISRC"
                       id="maISRC"
-                      value={item?.maISRC}
+                      value={maISRC}
+                      onChange={(e) => setMaISRC(e.target.value)}
                     />
-                    {errors.maISRC && touched.maISRC ? (
-                      <p className="text-danger">{errors.maISRC}</p>
-                    ) : null}
                   </div>
                   <div className="form_title">
                     <label htmlFor="caSi">Ca sĩ:</label>
                     <br />
-                    <Field
+                    <input
                       type="text"
                       name="caSi"
                       id="caSi"
-                      value={item?.caSi}
+                      value={caSi}
+                      onChange={(e) => setCaSi(e.target.value)}
                     />
-                    {errors.caSi && touched.caSi ? (
-                      <p className="text-danger">{errors.caSi}</p>
-                    ) : null}
                   </div>
                   <div className="form_title">
                     <label htmlFor="tacGia">Tác giả:</label>
                     <br />
-                    <Field
+                    <input
                       type="text"
                       name="tacGia"
                       id="tacGia"
-                      value={item?.tacGia}
+                      value={tacGia}
+                      onChange={(e) => setTacGia(e.target.value)}
                     />
-                    {errors.tacGia && touched.tacGia ? (
-                      <p className="text-danger">{errors.tacGia}</p>
-                    ) : null}
                   </div>
 
                   <div className="form_title">
                     <label htmlFor="nhaSanXuat">Nhà sản xuất:</label>
                     <br />
-                    <Field
+                    <input
                       type="nhaSanXuat"
                       name="nhaSanXuat"
                       id="nhaSanXuat"
-                      value={item?.nhaSanXuat}
+                      value={nhaSanXuat}
+                      onChange={(e) => setNhaSanXuat(e.target.value)}
                     />
-                    {errors.nhaSanXuat && touched.nhaSanXuat ? (
-                      <p className="text-danger">{errors.nhaSanXuat}</p>
-                    ) : null}
                   </div>
                   <div className="form_title">
                     <label htmlFor="theLoai">Thể loại:</label>
                     <br />
-                    <Field
-                      as="select"
+                    <select
                       name="theLoai"
                       id="theLoai"
-                      value={item?.theLoai}
+                      value={theLoai}
+                      onChange={(e) => setTheLoai(e.target.value)}
                     >
-                      <option value="pop">Pop</option>
-                      <option value="ballad">Ballad</option>
-                      <option value="rock">Rock</option>
-                      <option value="edm">EDM</option>
-                    </Field>
-                    {errors.theLoai && touched.theLoai ? (
-                      <p className="text-danger">{errors.theLoai}</p>
-                    ) : null}
+                      <option defaultValue="pop">Pop</option>
+                      <option defaultValue="ballad">Ballad</option>
+                      <option defaultValue="rock">Rock</option>
+                      <option defaultValue="edm">EDM</option>
+                    </select>
                   </div>
                 </div>
-              </Form>
-            )}
-          </Formik>
+              </form>
+            </div>
+          </div>
+          <div className="capNhatKhoGhi_button">
+            <button
+              type="button"
+              onClick={() => {
+                history.push("/admin/khobanghi");
+              }}
+            >
+              Huỷ
+            </button>
+            <button type="submit" onClick={handleSubmit}>
+              Lưu
+            </button>
+          </div>
         </div>
         <div className="xoaBanGhi">
           <div className="icon" onClick={() => handleDelete(item.id)}>
@@ -228,17 +248,6 @@ export default function CapNhatkhoBanGhi() {
           </div>
           <p>Xóa bản ghi</p>
         </div>
-      </div>
-      <div className="capNhatKhoGhi_button">
-        <button
-          type="button"
-          onClick={() => {
-            history.push("/admin/khobanghi");
-          }}
-        >
-          Huỷ
-        </button>
-        <button type="submit">Lưu</button>
       </div>
     </div>
   );
