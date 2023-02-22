@@ -1,7 +1,14 @@
 import { Button, Upload } from "antd";
+import moment from "moment";
 import React from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/configStore";
 
 export default function ChinhSuaThongTin() {
+  //lấy item trên redux về để chỉnh sửa
+  const item = useSelector(
+    (state: RootState) => state.hopDong.itemHopDongUyQuyen
+  );
   return (
     <div className="chinhSuaThongTin">
       <div className="container">
@@ -11,33 +18,36 @@ export default function ChinhSuaThongTin() {
             <i className="fas fa-chevron-right"></i>Chi tiết
             <i className="fas fa-chevron-right"></i>Chỉnh sửa thông tin
           </p>
-          <h1>Hợp đồng uỷ quyền bài hát - BH123</h1>
+          <h1>Hợp đồng uỷ quyền bài hát - {item?.soHopDong}</h1>
         </div>
         <div className="container-center">
           <div className="center-top">
             <div className="from-group">
               <div className="from-item">
                 <label htmlFor="">Số hợp đồng:</label>
-                <input type="text" defaultValue={"1421566747"} />
+                <input type="text" defaultValue={item?.soHopDong} />
               </div>
               <div className="from-item">
                 <label htmlFor="">Tên hợp đồng:</label>
-                <input
-                  type="text"
-                  defaultValue={"Hợp đồng uỷ quyền tác phẩm âm nhạc"}
-                />
+                <input type="text" defaultValue={item?.tenHopDong} />
               </div>
               <div className="from-item">
                 <label htmlFor="">Ngày hiệu lực:</label>
-                <input type="date" defaultValue={"01/05/2021"} />
+                <input
+                  type="date"
+                  defaultValue={moment(item?.ngayHieuLuc).format("YYYY-MM-DD")}
+                />
               </div>
               <div className="from-item">
                 <label htmlFor="">Ngày hết hạn:</label>
-                <input type="date" defaultValue={"12/01/2021"} />
+                <input
+                  type="date"
+                  defaultValue={moment(item?.ngayHetHan).format("YYYY-MM-DD")}
+                />
               </div>
               <div className="from-item">
                 <label htmlFor="">Tình trạng:</label>
-                <select>
+                <select defaultValue={item?.hieuLucHopDong}>
                   <option value="">Đang hiệu lực</option>
                 </select>
               </div>

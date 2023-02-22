@@ -6,14 +6,17 @@ import { AppDispatch, RootState } from "../../../redux/configStore";
 import {
   getArrHopDongFireStore,
   getArrHopDongUyQuyenFireStore,
-  HopDongRedux,
+  HopDongKhaiThacRedux,
   HopDongUyQuyenRedux,
+  setItemHopDongKhaiThac,
   setItemHopDongUyQuyen,
 } from "../../../redux/hopDongReducer/hopDongReducer";
 
 export default function QuanLyHopDong() {
-  const { arrHopDong } = useSelector((state: RootState) => state.hopDong);
-  console.log({ arrHopDong });
+  const { arrHopDongKhaiThac } = useSelector(
+    (state: RootState) => state.hopDong
+  );
+  console.log({ arrHopDongKhaiThac });
   const { arrHopDongUyQuyen } = useSelector(
     (state: RootState) => state.hopDong
   );
@@ -33,9 +36,12 @@ export default function QuanLyHopDong() {
   const indexOfLastNews = currentPage * limit; // vị trí cuối
   const indexOfFirstNews = indexOfLastNews - limit; // Vị trí đầu
 
-  const totalPages = Math.ceil(arrHopDong?.length / limit); // Tính số tổng số pages
+  const totalPages = Math.ceil(arrHopDongKhaiThac?.length / limit); // Tính số tổng số pages
   const totalPagesHopDongUyQuyen = Math.ceil(arrHopDongUyQuyen?.length / limit); // Tính số tổng số pages
-  const newArrHopDong = arrHopDong?.slice(indexOfFirstNews, indexOfLastNews);
+  const newArrHopDong = arrHopDongKhaiThac?.slice(
+    indexOfFirstNews,
+    indexOfLastNews
+  );
   const newArrHopDongUyQuyen = arrHopDongUyQuyen?.slice(
     indexOfFirstNews,
     indexOfLastNews
@@ -76,26 +82,35 @@ export default function QuanLyHopDong() {
   };
 
   const renderTableHopDongKhaiThac = () => {
-    return newArrHopDong?.map((hopDong: HopDongRedux, index: number) => {
-      return (
-        <tr key={index}>
-          <td>{index + 1}</td>
-          <td>{hopDong.soHopDong}</td>
-          <td>{hopDong.tenHopDong}</td>
-          <td>{hopDong.ngayTao}</td>
-          <td>{hopDong.ngayHieuLuc}</td>
-          <td>{hopDong.ngayHetHan}</td>
-          {<td className={hopDong.hieuLucHopDong}>{hopDong.hieuLucHopDong}</td>}
+    return newArrHopDong?.map(
+      (hopDong: HopDongKhaiThacRedux, index: number) => {
+        return (
+          <tr key={index}>
+            <td>{index + 1}</td>
+            <td>{hopDong.soHopDong}</td>
+            <td>{hopDong.tenHopDong}</td>
+            <td>{hopDong.ngayTao}</td>
+            <td>{hopDong.ngayHieuLuc}</td>
+            <td>{hopDong.ngayHetHan}</td>
+            {
+              <td className={hopDong.hieuLucHopDong}>
+                {hopDong.hieuLucHopDong}
+              </td>
+            }
 
-          <td className="action">
-            <Link to={"/admin/quanLyHopDong/chiTietHopDongKhaiThac"}>
-              Xem chi tiết
-            </Link>
-          </td>
-          <td className="action">Sao chép hợp đồng</td>
-        </tr>
-      );
-    });
+            <td className="action">
+              <Link
+                to={"/admin/quanLyHopDong/chiTietHopDongKhaiThac"}
+                onClick={() => dispatch(setItemHopDongKhaiThac(hopDong))}
+              >
+                Xem chi tiết
+              </Link>
+            </td>
+            <td className="action">Sao chép hợp đồng</td>
+          </tr>
+        );
+      }
+    );
   };
   const renderButtonPage = (n: number) => {
     let btn: any = "";

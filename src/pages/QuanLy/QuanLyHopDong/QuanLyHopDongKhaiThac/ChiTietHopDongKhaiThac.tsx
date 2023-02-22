@@ -1,7 +1,13 @@
+import moment from "moment";
 import React from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../../../../redux/configStore";
 
 export default function ChiTietHopDongKhaiThac() {
+  const item = useSelector(
+    (state: RootState) => state.hopDong.itemHopDongKhaiThac
+  );
   const navigate = useNavigate();
   return (
     <div className="chiTietHopDongKhaiThac">
@@ -11,7 +17,7 @@ export default function ChiTietHopDongKhaiThac() {
             Quản lý<i className="fas fa-chevron-right"></i>Quản lý hợp đồng
             <i className="fas fa-chevron-right"></i>Chi tiết
           </p>
-          <h1>Hợp đồng khai thác - HD123 </h1>
+          <h1>Hợp đồng khai thác - {item?.soHopDong} </h1>
         </div>
         <div className="container-center">
           <div className="wrap-center">
@@ -21,19 +27,19 @@ export default function ChiTietHopDongKhaiThac() {
                   <tbody>
                     <tr>
                       <td>Tên hợp đồng:</td>
-                      <td>Hợp đồng kinh doanh</td>
+                      <td>{item?.tenHopDong}</td>
                     </tr>
                     <tr>
                       <td>Số hợp đồng:</td>
-                      <td>123</td>
+                      <td>{item?.soHopDong}</td>
                     </tr>
                     <tr>
                       <td>Ngày hiệu lực:</td>
-                      <td>02/06/2021</td>
+                      <td>{moment(item?.ngayHieuLuc).format("YYYY-MM-DD")}</td>
                     </tr>
                     <tr>
                       <td>Ngày hết hạn:</td>
-                      <td>02/06/2021</td>
+                      <td>{moment(item?.ngayHetHan).format("YYYY-MM-DD")}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -68,7 +74,9 @@ export default function ChiTietHopDongKhaiThac() {
                     </tr>
                     <tr>
                       <td>Tình trạng:</td>
-                      <td>Đang hiệu lực</td>
+                      <td className={item?.hieuLucHopDong}>
+                        {item?.hieuLucHopDong}
+                      </td>
                     </tr>
                   </tbody>
                 </table>

@@ -58,6 +58,31 @@
                                         }
                                     }
 
+                                    .hủy {
+                                        &::after {
+                                            background: #FF4747;
+                                        }
+                                    }
+
+                                    .Mới {
+                                        &::after {
+                                            background: #18E306;
+                                            ;
+                                        }
+                                    }
+
+                                    .Hết {
+                                        &::after {
+                                            background: #878890;
+                                        }
+                                    }
+
+                                    .Đang {
+                                        &::after {
+                                            background: #347AFF;
+                                        }
+                                    }
+
                                 }
                             }
                         }
@@ -125,9 +150,10 @@
                                                 left: 0;
                                                 top: 50%;
                                                 transform: translateY(-50%);
-                                                background: #347AFF;
                                             }
                                         }
+
+
                                     }
                                 }
                             }

@@ -28,7 +28,8 @@
         .container-center {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            justify-content: space-between;
+            height: 78%;
 
             .center-list {
                 display: flex;
@@ -44,7 +45,7 @@
                             td {
                                 &:first-child {
                                     label {
-                                        @include text(14px, 700, #FFFFFF);
+                                        @include text(12px, 700, #FFFFFF);
 
                                         i {
                                             color: #FF4747;
@@ -65,6 +66,11 @@
                                         @include text (14px, 400, #F5F5FF);
                                     }
 
+                                    .input_error {
+                                        outline: 1px solid #FF4747;
+                                        transition: all .5s;
+                                    }
+
                                     select {
                                         padding: 0 16px;
                                         width: 100%;
@@ -72,7 +78,7 @@
                                         background: #2B2B3F;
                                         border: 1px solid #727288;
                                         border-radius: 8px;
-                                        @include text (14px, 400, #F5F5FF);
+                                        @include text (12px, 400, #F5F5FF);
                                     }
 
                                     textarea {
@@ -82,7 +88,7 @@
                                         background: #2B2B3F;
                                         border: 1px solid #727288;
                                         border-radius: 8px;
-                                        @include text (14px, 400, #F5F5FF);
+                                        @include text (12px, 400, #F5F5FF);
                                     }
                                 }
                             }
@@ -127,7 +133,7 @@
 
                         label {
                             margin-right: 5px;
-                            @include text (14px, 700, #ffffff);
+                            @include text (12px, 700, #ffffff);
                         }
 
                         .upload-file {
@@ -154,7 +160,7 @@
                                     margin-right: 10px;
                                 }
 
-                                @include text (14px, 400, #FFFFFF);
+                                @include text (12px, 400, #FFFFFF);
 
                                 i:last-child {
                                     color: #FF4747;
@@ -173,7 +179,7 @@
                         width: 33%;
 
                         h5 {
-                            @include text (14px, 700, #ffffff);
+                            @include text (12px, 700, #ffffff);
 
                         }
 
@@ -196,7 +202,7 @@
 
                                     label {
                                         margin-left: 12px;
-                                        @include text(14px, 400, #F5F5FF);
+                                        @include text(12px, 400, #F5F5FF);
                                         cursor: pointer;
                                     }
                                 }
@@ -216,7 +222,7 @@
                                     gap: 12px;
 
                                     label {
-                                        @include text(14px, 400, #F5F5FF);
+                                        @include text(12px, 400, #F5F5FF);
                                     }
 
                                     input {
@@ -224,7 +230,7 @@
                                         background: #2B2B3F;
                                         border: 1px solid #727288;
                                         border-radius: 8px;
-                                        @include text(14px, 400, #F5F5FF);
+                                        @include text(12px, 400, #F5F5FF);
                                         width: 50%;
                                         height: 36px;
                                     }
@@ -304,7 +310,7 @@
                                                 }
 
                                                 label {
-                                                    @include text (14px, 400, #FFFFFF);
+                                                    @include text (12px, 400, #FFFFFF);
                                                 }
                                             }
                                         }
@@ -326,7 +332,7 @@
                                 &:nth-child(3) {
                                     td:last-child {
                                         input {
-                                            width: 60%;
+                                            width: 80%;
                                         }
                                     }
                                 }
@@ -369,7 +375,6 @@
         }
 
         .container-btn {
-            height: 10%;
 
             p {
                 i {

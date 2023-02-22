@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import { Button, Upload } from "antd";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../redux/configStore";
+import moment from "moment";
 
 export default function ChinhSuaHopDongKhaiThac() {
   const [isType, setIsType] = useState<boolean>(true); // để handle type password => type text
-
+  const item = useSelector(
+    (state: RootState) => state.hopDong.itemHopDongKhaiThac
+  );
   return (
     <div className="chinhSuaHopDongKhaiThac">
       <div className="container">
@@ -13,7 +18,7 @@ export default function ChinhSuaHopDongKhaiThac() {
             <i className="fas fa-chevron-right"></i>Chi tiết
             <i className="fas fa-chevron-right"></i>Chỉnh sửa hợp đồng
           </p>
-          <h1>Hợp đồng khai thác - HD123 </h1>
+          <h1>Hợp đồng khai thác - {item?.soHopDong} </h1>
         </div>
         <div className="container-center">
           <div className="center-list">
@@ -31,7 +36,7 @@ export default function ChinhSuaHopDongKhaiThac() {
                         type="text"
                         name="tenHopDong"
                         id="tenHopDong"
-                        defaultValue={"Hợp đồng kinh doanh"}
+                        defaultValue={item?.tenHopDong}
                       />
                     </td>
                   </tr>
@@ -46,7 +51,7 @@ export default function ChinhSuaHopDongKhaiThac() {
                         type="text"
                         name="soHopDong"
                         id="soHopDong"
-                        defaultValue={"123"}
+                        defaultValue={item?.soHopDong}
                       />
                     </td>
                   </tr>
@@ -61,7 +66,9 @@ export default function ChinhSuaHopDongKhaiThac() {
                         type="date"
                         name="ngayHieuLuc"
                         id="ngayHieuLuc"
-                        defaultValue={"05/22/2021"}
+                        defaultValue={moment(item?.ngayHieuLuc).format(
+                          "YYYY-MM-DD"
+                        )}
                       />
                     </td>
                   </tr>
@@ -76,7 +83,9 @@ export default function ChinhSuaHopDongKhaiThac() {
                         type="date"
                         name="ngayHetHan"
                         id="ngayHetHan"
-                        defaultValue={"30/06/2021"}
+                        defaultValue={moment(item?.ngayHetHan).format(
+                          "YYYY-MM-DD"
+                        )}
                       />
                     </td>
                   </tr>
@@ -226,10 +235,10 @@ export default function ChinhSuaHopDongKhaiThac() {
                     </td>
                     <td>
                       <input
-                        type="text"
+                        type="date"
                         name="ngaySinh"
                         id="ngaySinh"
-                        defaultValue={"10/01/1984"}
+                        defaultValue={"1984-01-10"}
                       />
                     </td>
                   </tr>
@@ -319,7 +328,7 @@ export default function ChinhSuaHopDongKhaiThac() {
                     </td>
                     <td>
                       <input
-                        type="text"
+                        type="date"
                         name="ngayCap"
                         id="ngayCap"
                         defaultValue={"10/02/2014"}

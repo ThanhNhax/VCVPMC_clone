@@ -3,14 +3,32 @@ import { collection, onSnapshot, query } from "firebase/firestore";
 import { db } from "../../FireStore/fireStore";
 import { AppDispatch } from "../configStore";
 
-export interface HopDongRedux {
+export interface HopDongKhaiThacRedux {
   id: string;
-  soHopDong: string;
-  tenHopDong: string;
   ngayTao: string;
-  ngayHieuLuc: string;
-  ngayHetHan: string;
   hieuLucHopDong: string;
+  chucVu: string;
+  cmnd: string;
+  email: string;
+  gioiTinh: string;
+  loaiHopDong: string;
+  maSoThue: string;
+  matKhau: string;
+  nganHang: string;
+  ngayCap: string;
+  ngayHetHan: string;
+  ngayHieuLuc: string;
+  ngaySinh: string;
+  nguoiDaiDien: string;
+  noiCap: string;
+  noiCuTru: string;
+  quocTich: string;
+  soDienThoai: string;
+  soHopDong: string;
+  soTaiKhoan: string;
+  tenDangNhap: string;
+  tenDonViSuDung: string;
+  tenHopDong: string;
 }
 export interface HopDongUyQuyenRedux {
   id: string;
@@ -24,25 +42,27 @@ export interface HopDongUyQuyenRedux {
   ngayHetHan: string;
 }
 export interface HopDongState {
-  arrHopDong: HopDongRedux[] | [];
   arrHopDongUyQuyen: HopDongUyQuyenRedux[] | [];
   itemHopDongUyQuyen: HopDongUyQuyenRedux | null;
+  arrHopDongKhaiThac: HopDongKhaiThacRedux[] | [];
+  itemHopDongKhaiThac: HopDongKhaiThacRedux | null;
 }
 const initialState: HopDongState = {
-  arrHopDong: [],
   arrHopDongUyQuyen: [],
   itemHopDongUyQuyen: null,
+  arrHopDongKhaiThac: [],
+  itemHopDongKhaiThac: null,
 };
 
 const hopDongReducer = createSlice({
   name: "hopDong",
   initialState,
   reducers: {
-    setArrHopDong: (
+    setArrHopDongKhaiThac: (
       state: HopDongState,
-      action: PayloadAction<HopDongRedux[]>
+      action: PayloadAction<HopDongKhaiThacRedux[]>
     ) => {
-      state.arrHopDong = [...action.payload];
+      state.arrHopDongKhaiThac = [...action.payload];
     },
     setArrHopDongUyQuyen: (
       state: HopDongState,
@@ -56,15 +76,27 @@ const hopDongReducer = createSlice({
     ) => {
       state.itemHopDongUyQuyen = action.payload;
     },
+    setItemHopDongKhaiThac: (
+      state: HopDongState,
+      action: PayloadAction<HopDongKhaiThacRedux>
+    ) => {
+      console.log(action.payload);
+      state.itemHopDongKhaiThac = action.payload;
+    },
   },
 });
 
-export const { setArrHopDong, setArrHopDongUyQuyen, setItemHopDongUyQuyen } =
-  hopDongReducer.actions;
+export const {
+  setArrHopDongKhaiThac,
+  setArrHopDongUyQuyen,
+  setItemHopDongUyQuyen,
+  setItemHopDongKhaiThac,
+} = hopDongReducer.actions;
 
 export default hopDongReducer.reducer;
 
-// kết nối firebased để lấy dữ liệu
+// kết nối firebased để lấy dữ liệu hợp đồng khai thác
+
 export const getArrHopDongFireStore = () => {
   return async (dispatch: AppDispatch) => {
     try {
@@ -75,7 +107,7 @@ export const getArrHopDongFireStore = () => {
           arrHopDong.push({ ...doc.data(), id: doc.id });
         });
         console.log("lấy từ firesStore về :", { arrHopDong });
-        dispatch(setArrHopDong(arrHopDong));
+        dispatch(setArrHopDongKhaiThac(arrHopDong));
       });
     } catch (e) {
       console.log({ e });
