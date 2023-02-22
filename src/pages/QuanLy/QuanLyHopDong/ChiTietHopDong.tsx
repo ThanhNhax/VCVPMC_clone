@@ -1,8 +1,16 @@
 import React, { useState } from "react";
-import { Button, Modal, Upload } from "antd";
+import { Button, message, Modal, Upload } from "antd";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/configStore";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../../../FireStore/fireStore";
 
 export default function ChiTietHopDong() {
+  const item = useSelector(
+    (state: RootState) => state.hopDong.itemHopDongUyQuyen
+  );
+
   const [isActive, setIsActive] = useState<boolean>(true);
 
   // cấu hình phân pages
@@ -38,6 +46,19 @@ export default function ChiTietHopDong() {
 
   const handleOkHuy = () => {
     setIsModalOpenHuy(false);
+    // updata trạng thái thành đã hủy
+    if (item?.id) {
+      const washingtonRef = doc(db, "hopDongUyQyen", item?.id);
+      updateDoc(washingtonRef, {
+        hieuLucHopDong: "Đã hủy",
+      });
+      message.open({
+        type: "success",
+        content: "Hủy thành công!",
+        duration: 0.8,
+      });
+      navigate("/admin/quanLyHopDong");
+    }
   };
 
   const handleCancelHuy = () => {
@@ -51,7 +72,7 @@ export default function ChiTietHopDong() {
             Quản lý<i className="fas fa-chevron-right"></i>Quản lý hợp đồng
             <i className="fas fa-chevron-right"></i>Chi tiết
           </p>
-          <h1>Chi tiết hợp đồng uỷ quyền bài hát - BH123</h1>
+          <h1>Chi tiết hợp đồng uỷ quyền bài hát - {item?.soHopDong}</h1>
           <div className="tag">
             <p
               className={isActive ? "active" : ""}
@@ -80,23 +101,25 @@ export default function ChiTietHopDong() {
                       <tbody>
                         <tr>
                           <td>Số hợp đồng:</td>
-                          <td>BH123</td>
+                          <td>{item?.soHopDong}</td>
                         </tr>
                         <tr>
                           <td>Tên hợp đồng:</td>
-                          <td>Hợp đồng uỷ quyền tác phẩm âm nhạc</td>
+                          <td>{item?.tenHopDong}</td>
                         </tr>
                         <tr>
                           <td>Ngày hiệu lực:</td>
-                          <td>01/05/2021</td>
+                          <td>{item?.ngayHieuLuc}</td>
                         </tr>
                         <tr>
                           <td>Ngày hết hạn:</td>
-                          <td>01/05/2021</td>
+                          <td>{item?.ngayHetHan}</td>
                         </tr>
                         <tr>
                           <td>Tình trạng:</td>
-                          <td>Còn thời hạn</td>
+                          <td className={item?.hieuLucHopDong}>
+                            {item?.hieuLucHopDong}
+                          </td>
                         </tr>
                       </tbody>
                     </table>

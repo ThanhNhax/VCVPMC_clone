@@ -128,6 +128,8 @@
                     padding: 16px 24px;
 
                     .wrap-danhSach {
+                        height: 80%;
+
                         .wrap-table {
                             height: 100%;
                             margin-bottom: 20px;
@@ -192,11 +194,12 @@
 
                                         }
 
-                                        td:nth-child(7) {
+                                        .Mới {
                                             position: relative;
                                             padding: 15px;
 
                                             &::after {
+                                                background: #18E306;
                                                 content: "";
                                                 width: 8px;
                                                 height: 8px;
@@ -208,32 +211,71 @@
                                             }
                                         }
 
-                                        .Mới {
-                                            &::after {
-                                                background: #18E306;
+                                        .Đang {
+                                            position: relative;
+                                            padding: 15px;
 
+                                            &::after {
+                                                background: #347AFF;
+                                                content: "";
+                                                width: 8px;
+                                                height: 8px;
+                                                border-radius: 50%;
+                                                position: absolute;
+                                                left: 0px;
+                                                top: 50%;
+                                                transform: translateY(-50%);
                                             }
                                         }
 
-                                        .Đang {
+                                        .Còn {
+                                            position: relative;
+                                            padding: 15px;
+
                                             &::after {
                                                 background: #347AFF;
-
+                                                content: "";
+                                                width: 8px;
+                                                height: 8px;
+                                                border-radius: 50%;
+                                                position: absolute;
+                                                left: 0px;
+                                                top: 50%;
+                                                transform: translateY(-50%);
                                             }
                                         }
 
                                         .Hết {
+                                            position: relative;
+                                            padding: 15px;
+
                                             &::after {
                                                 background: #878890;
-                                                ;
-
+                                                content: "";
+                                                width: 8px;
+                                                height: 8px;
+                                                border-radius: 50%;
+                                                position: absolute;
+                                                left: 0px;
+                                                top: 50%;
+                                                transform: translateY(-50%);
                                             }
                                         }
 
                                         .hủy {
+                                            position: relative;
+                                            padding: 15px;
+
                                             &::after {
                                                 background: #FF4747;
-
+                                                content: "";
+                                                width: 8px;
+                                                height: 8px;
+                                                border-radius: 50%;
+                                                position: absolute;
+                                                left: 0px;
+                                                top: 50%;
+                                                transform: translateY(-50%);
                                             }
                                         }
 

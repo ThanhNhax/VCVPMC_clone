@@ -1,34 +1,79 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { AppDispatch, RootState } from "../../../redux/configStore";
 import {
   getArrHopDongFireStore,
+  getArrHopDongUyQuyenFireStore,
   HopDongRedux,
+  HopDongUyQuyenRedux,
+  setItemHopDongUyQuyen,
 } from "../../../redux/hopDongReducer/hopDongReducer";
 
 export default function QuanLyHopDong() {
   const { arrHopDong } = useSelector((state: RootState) => state.hopDong);
   console.log({ arrHopDong });
+  const { arrHopDongUyQuyen } = useSelector(
+    (state: RootState) => state.hopDong
+  );
+  console.log({ arrHopDongUyQuyen });
   const dispatch: AppDispatch = useDispatch();
   useEffect(() => {
     dispatch(getArrHopDongFireStore());
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect(() => {
+    dispatch(getArrHopDongUyQuyenFireStore());
   }, []);
   // cấu hình phân pages
   const [currentPage, setCurrentPage] = useState<number>(1); // Vị trí page hiện tại
   const [limit, setLimit] = useState<number>(6); // change số item hiển thị
   const indexOfLastNews = currentPage * limit; // vị trí cuối
   const indexOfFirstNews = indexOfLastNews - limit; // Vị trí đầu
-  let totalPages: number = 1;
-  if (arrHopDong) {
-    totalPages = Math.ceil(arrHopDong?.length / limit); // Tính số tổng số pages
-  }
 
+  const totalPages = Math.ceil(arrHopDong?.length / limit); // Tính số tổng số pages
+  const totalPagesHopDongUyQuyen = Math.ceil(arrHopDongUyQuyen?.length / limit); // Tính số tổng số pages
   const newArrHopDong = arrHopDong?.slice(indexOfFirstNews, indexOfLastNews);
+  const newArrHopDongUyQuyen = arrHopDongUyQuyen?.slice(
+    indexOfFirstNews,
+    indexOfLastNews
+  );
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isStyleBtn, setIsStyleBtn] = useState<boolean>(false);
   // cấu hình phân pages
   const [isActive, setIsActive] = useState<boolean>(true);
+  const renderTableHopDongUyQuyen = () => {
+    return newArrHopDongUyQuyen.map(
+      (uyQuyen: HopDongUyQuyenRedux, index: number) => {
+        return (
+          <tr key={index}>
+            <td className="text_right">{index + 1}</td>
+            <td>{uyQuyen.soHopDong}</td>
+            <td>{uyQuyen.tenHopDong}</td>
+            <td>{uyQuyen.nguoiUyQuyen}</td>
+            <td>{uyQuyen.quyenSoHuu}</td>
+            <td className={uyQuyen.hieuLucHopDong}>{uyQuyen.hieuLucHopDong}</td>
+            <td>{uyQuyen.ngayTao}</td>
+            <td className="action">
+              <Link
+                to={"/admin/quanLyHopDong/chiTiet"}
+                onClick={() => dispatch(setItemHopDongUyQuyen(uyQuyen))}
+              >
+                Xem chi tiết
+              </Link>
+            </td>
+            {uyQuyen.hieuLucHopDong.match("hủy") ? (
+              <td className="action">Lý do hủy</td>
+            ) : (
+              <td></td>
+            )}
+          </tr>
+        );
+      }
+    );
+  };
 
   const renderTableHopDongKhaiThac = () => {
     return newArrHopDong?.map((hopDong: HopDongRedux, index: number) => {
@@ -143,122 +188,7 @@ export default function QuanLyHopDong() {
                         <th>Ngày tạo</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>HD123</td>
-                        <td>Hợp đồng uỷ quyền bài hát</td>
-                        <td>Vương Anh Tú</td>
-                        <td>Người biểu diễn</td>
-                        <td className="true_thoiHan">Còn thời hạn</td>
-                        <td>01/04/2021 15:53:13</td>
-                        <td className="action">
-                          <Link to={"/admin/quanLyHopDong/chiTiet"}>
-                            Xem chi tiết
-                          </Link>
-                        </td>
-                        <td className="action">Lý do hủy</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>HD123</td>
-                        <td>Hợp đồng uỷ quyền bài hát</td>
-                        <td>Vương Anh Tú</td>
-                        <td>Người biểu diễn</td>
-                        <td className="false_thoiHan">Còn thời hạn</td>
-                        <td>01/04/2021 15:53:13</td>
-                        <td className="action">Xem chi tiết</td>
-                        <td className="action">Lý do hủy</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>HD123</td>
-                        <td>Hợp đồng uỷ quyền bài hát</td>
-                        <td>Vương Anh Tú</td>
-                        <td>Người biểu diễn</td>
-                        <td className="true_thoiHan">Còn thời hạn</td>
-                        <td>01/04/2021 15:53:13</td>
-                        <td className="action">Xem chi tiết</td>
-                        <td className="action">Lý do hủy</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>HD123</td>
-                        <td>Hợp đồng uỷ quyền bài hát</td>
-                        <td>Vương Anh Tú</td>
-                        <td>Người biểu diễn</td>
-                        <td className="false_thoiHan">Còn thời hạn</td>
-                        <td>01/04/2021 15:53:13</td>
-                        <td className="action">Xem chi tiết</td>
-                        <td className="action">Lý do hủy</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>HD123</td>
-                        <td>Hợp đồng uỷ quyền bài hát</td>
-                        <td>Vương Anh Tú</td>
-                        <td>Người biểu diễn</td>
-                        <td className="true_thoiHan">Còn thời hạn</td>
-                        <td>01/04/2021 15:53:13</td>
-                        <td className="action">Xem chi tiết</td>
-                        <td className="action">Lý do hủy</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>HD123</td>
-                        <td>Hợp đồng uỷ quyền bài hát</td>
-                        <td>Vương Anh Tú</td>
-                        <td>Người biểu diễn</td>
-                        <td className="false_thoiHan">Còn thời hạn</td>
-                        <td>01/04/2021 15:53:13</td>
-                        <td className="action">Xem chi tiết</td>
-                        <td className="action">Lý do hủy</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>HD123</td>
-                        <td>Hợp đồng uỷ quyền bài hát</td>
-                        <td>Vương Anh Tú</td>
-                        <td>Người biểu diễn</td>
-                        <td className="true_thoiHan">Còn thời hạn</td>
-                        <td>01/04/2021 15:53:13</td>
-                        <td className="action">Xem chi tiết</td>
-                        <td className="action">Lý do hủy</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>HD123</td>
-                        <td>Hợp đồng uỷ quyền bài hát</td>
-                        <td>Vương Anh Tú</td>
-                        <td>Người biểu diễn</td>
-                        <td className="false_thoiHan">Còn thời hạn</td>
-                        <td>01/04/2021 15:53:13</td>
-                        <td className="action">Xem chi tiết</td>
-                        <td className="action">Lý do hủy</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>HD123</td>
-                        <td>Hợp đồng uỷ quyền bài hát</td>
-                        <td>Vương Anh Tú</td>
-                        <td>Người biểu diễn</td>
-                        <td className="true_thoiHan">Còn thời hạn</td>
-                        <td>01/04/2021 15:53:13</td>
-                        <td className="action">Xem chi tiết</td>
-                        <td className="action">Lý do hủy</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>HD123</td>
-                        <td>Hợp đồng uỷ quyền bài hát</td>
-                        <td>Vương Anh Tú</td>
-                        <td>Người biểu diễn</td>
-                        <td className="false_thoiHan">Còn thời hạn</td>
-                        <td>01/04/2021 15:53:13</td>
-                        <td className="action">Xem chi tiết</td>
-                        <td className="action">Lý do hủy</td>
-                      </tr>
-                    </tbody>
+                    <tbody>{renderTableHopDongUyQuyen()}</tbody>
                   </table>
                 </div>
                 <div className="pagination-table">
@@ -266,36 +196,38 @@ export default function QuanLyHopDong() {
                     <p>
                       Hiển thị
                       <select
-                      // value={limit}
-                      // onChange={(e) => {
-                      //   setLimit(parseInt(e.target.value));
-                      // }}
+                        value={limit}
+                        onChange={(e) => {
+                          setLimit(parseInt(e.target.value));
+                        }}
                       >
-                        <option value="10">10</option>
+                        <option value="6">6</option>
                       </select>
                       hàng trong mỗi trang
                     </p>
                   </div>
                   <div className="pagination_right">
                     <button
-                    // disabled={currentPage === 1}
-                    // onClick={() => {
-                    //   if (currentPage === 1) {
-                    //     setCurrentPage(1);
-                    //   }
-                    //   setCurrentPage(currentPage - 1);
-                    // }}
+                      disabled={currentPage === 1}
+                      onClick={() => {
+                        if (currentPage === 1) {
+                          setCurrentPage(1);
+                        }
+                        setCurrentPage(currentPage - 1);
+                      }}
                     >
                       <i className="fas fa-chevron-left"></i>
                     </button>
                     <div
                       id="btnPage"
-                      // dangerouslySetInnerHTML={renderButtonPage(totalPages)}
+                      dangerouslySetInnerHTML={renderButtonPage(
+                        totalPagesHopDongUyQuyen
+                      )}
                     ></div>
                     <button
-                      // disabled={currentPage >= totalPages}
+                      disabled={currentPage >= totalPagesHopDongUyQuyen}
                       onClick={() => {
-                        // setCurrentPage(currentPage + 1);
+                        setCurrentPage(currentPage + 1);
                       }}
                     >
                       <i className="fas fa-chevron-right"></i>

@@ -63,7 +63,7 @@
                     width: 90%;
 
                     .center-list {
-                        height: 50%;
+                        height: 43%;
                         display: flex;
                         justify-content: space-between;
 
@@ -121,6 +121,11 @@
 
                         &:first-child {
                             .center-item:first-child {
+                                tr {
+                                    td:first-child {
+                                        width: 33%;
+                                    }
+                                }
 
                                 tr:last-child {
                                     td:last-child {
@@ -133,11 +138,53 @@
                                             width: 8px;
                                             height: 8px;
                                             border-radius: 50%;
-                                            background: #347AFF;
                                             left: 0;
                                             top: 50%;
                                             transform: translateY(-50%);
                                         }
+                                    }
+                                }
+
+                                .Mới {
+
+
+                                    &::after {
+                                        background: #18E306;
+
+                                    }
+                                }
+
+                                .Đang {
+
+
+                                    &::after {
+                                        background: #347AFF;
+
+                                    }
+                                }
+
+                                .Còn {
+
+                                    &::after {
+                                        background: #347AFF;
+
+                                    }
+                                }
+
+                                .Hết {
+
+                                    &::after {
+                                        background: #878890;
+
+                                    }
+                                }
+
+                                .hủy {
+
+
+                                    &::after {
+                                        background: #FF4747;
+
                                     }
                                 }
                             }
@@ -239,6 +286,7 @@
                             justify-content: center;
                             background: rgba(114, 114, 136, 0.5);
                             border-radius: 50%;
+                            cursor: pointer;
 
                             i {
                                 font-size: 26px;

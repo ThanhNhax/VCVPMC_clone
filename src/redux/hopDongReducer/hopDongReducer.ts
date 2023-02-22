@@ -4,6 +4,7 @@ import { db } from "../../FireStore/fireStore";
 import { AppDispatch } from "../configStore";
 
 export interface HopDongRedux {
+  id: string;
   soHopDong: string;
   tenHopDong: string;
   ngayTao: string;
@@ -11,11 +12,26 @@ export interface HopDongRedux {
   ngayHetHan: string;
   hieuLucHopDong: string;
 }
+export interface HopDongUyQuyenRedux {
+  id: string;
+  soHopDong: string;
+  tenHopDong: string;
+  ngayTao: string;
+  hieuLucHopDong: string;
+  nguoiUyQuyen: string;
+  quyenSoHuu: string;
+  ngayHieuLuc: string;
+  ngayHetHan: string;
+}
 export interface HopDongState {
-  arrHopDong: HopDongRedux[] | null;
+  arrHopDong: HopDongRedux[] | [];
+  arrHopDongUyQuyen: HopDongUyQuyenRedux[] | [];
+  itemHopDongUyQuyen: HopDongUyQuyenRedux | null;
 }
 const initialState: HopDongState = {
-  arrHopDong: null,
+  arrHopDong: [],
+  arrHopDongUyQuyen: [],
+  itemHopDongUyQuyen: null,
 };
 
 const hopDongReducer = createSlice({
@@ -28,10 +44,23 @@ const hopDongReducer = createSlice({
     ) => {
       state.arrHopDong = [...action.payload];
     },
+    setArrHopDongUyQuyen: (
+      state: HopDongState,
+      action: PayloadAction<HopDongUyQuyenRedux[]>
+    ) => {
+      state.arrHopDongUyQuyen = action.payload;
+    },
+    setItemHopDongUyQuyen: (
+      state: HopDongState,
+      action: PayloadAction<HopDongUyQuyenRedux>
+    ) => {
+      state.itemHopDongUyQuyen = action.payload;
+    },
   },
 });
 
-export const { setArrHopDong } = hopDongReducer.actions;
+export const { setArrHopDong, setArrHopDongUyQuyen, setItemHopDongUyQuyen } =
+  hopDongReducer.actions;
 
 export default hopDongReducer.reducer;
 
@@ -47,6 +76,24 @@ export const getArrHopDongFireStore = () => {
         });
         console.log("lấy từ firesStore về :", { arrHopDong });
         dispatch(setArrHopDong(arrHopDong));
+      });
+    } catch (e) {
+      console.log({ e });
+    }
+  };
+};
+// kết nối firebased để lấy dữ liệu arr hượp đồng ủy quyền
+export const getArrHopDongUyQuyenFireStore = () => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const result = query(collection(db, "hopDongUyQyen"));
+      onSnapshot(result, (querySnapshot) => {
+        let arrHopDongUyQuyen: any = [];
+        querySnapshot.forEach((doc) => {
+          arrHopDongUyQuyen.push({ ...doc.data(), id: doc.id });
+        });
+        console.log("lấy từ firesStore về :", { arrHopDongUyQuyen });
+        dispatch(setArrHopDongUyQuyen(arrHopDongUyQuyen));
       });
     } catch (e) {
       console.log({ e });
