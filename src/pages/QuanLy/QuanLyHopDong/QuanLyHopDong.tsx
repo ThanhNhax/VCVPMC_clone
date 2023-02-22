@@ -316,7 +316,13 @@ export default function QuanLyHopDong() {
           </div>
           <div className="center-right">
             <div className="bg_icon">
-              <Link to={"/admin/quanLyHopDong/themHopDongKhaiThacMoi"}>
+              <Link
+                to={
+                  isActive
+                    ? "/admin/quanLyHopDong/themHopDongUyQuyenMoi"
+                    : "/admin/quanLyHopDong/themHopDongKhaiThacMoi"
+                }
+              >
                 <i className="far fa-edit"></i>
               </Link>
             </div>

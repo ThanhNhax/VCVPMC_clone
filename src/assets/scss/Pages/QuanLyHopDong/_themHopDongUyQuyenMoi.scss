@@ -64,7 +64,7 @@
                             }
                         }
 
-                        @include text(14px, 700, #FFAC69);
+                        @include text(12px, 700, #FFAC69);
                     }
 
                     table {
@@ -74,7 +74,7 @@
                         tbody {
                             tr {
                                 td {
-                                    @include text(14px, 700, #FFFFFF);
+                                    @include text(12px, 700, #FFFFFF);
 
                                     &:last-child {
                                         opacity: .8;
@@ -88,7 +88,7 @@
                     .from-item {
 
                         label {
-                            @include text(14px, 700, #ffffff);
+                            @include text(12px, 700, #ffffff);
 
                             i {
                                 color: red;
@@ -97,11 +97,14 @@
 
                         input {
                             width: 60%;
+                            height: 36px;
+                            padding: 0px 5px;
                             background: #2B2B3F;
                             border: 1px solid #727288;
                             border-radius: 8px;
                             height: 36px;
-                            @include text(14px, 400, #ffffff);
+                            @include text(12px, 400, #ffffff);
+                            margin: 2px 0;
                         }
                     }
 
@@ -110,6 +113,28 @@
 
                             display: flex;
                             justify-content: space-between;
+
+                            &:nth-child(3) {
+                                input {
+                                    &::-webkit-calendar-picker-indicator {
+                                        background-color: #FF7506;
+                                        padding: 5px;
+                                        cursor: pointer;
+                                        border-radius: 3px;
+                                    }
+                                }
+                            }
+
+                            &:nth-child(4) {
+                                input {
+                                    &::-webkit-calendar-picker-indicator {
+                                        background-color: #FF7506;
+                                        padding: 5px;
+                                        cursor: pointer;
+                                        border-radius: 3px;
+                                    }
+                                }
+                            }
                         }
                     }
 
@@ -168,7 +193,7 @@
                             align-items: center;
 
                             label {
-                                @include text(14px, 700, #ffffff);
+                                @include text(12px, 700, #ffffff);
 
                                 i {
                                     color: red;
@@ -181,7 +206,10 @@
                                 border: 1px solid #727288;
                                 border-radius: 8px;
                                 height: 36px;
-                                @include text(14px, 400, #ffffff);
+                                padding: 0 5px;
+                                @include text(12px, 400, #ffffff);
+                                margin: 2px 0;
+
 
                             }
 
@@ -191,7 +219,7 @@
                                 border: 1px solid #727288;
                                 border-radius: 8px;
                                 height: 36px;
-                                @include text(14px, 400, #ffffff);
+                                @include text(12px, 400, #ffffff);
 
                             }
                         }
@@ -219,28 +247,133 @@
                                         margin-right: 10px;
                                     }
                                 }
+
+                                &:nth-child(4) {
+                                    input {
+                                        &::-webkit-calendar-picker-indicator {
+                                            background-color: #FF7506;
+                                            padding: 5px;
+                                            cursor: pointer;
+                                            border-radius: 3px;
+                                        }
+                                    }
+                                }
                             }
                         }
 
                         &:nth-child(2) {
-
                             .from-item {
-
                                 &:last-child {
                                     input {
                                         height: 72px;
                                     }
                                 }
+
+                                &:nth-child(4) {
+                                    .from-radio {
+                                        display: flex;
+                                        width: 60%;
+                                        align-items: center;
+
+                                        input {
+                                            margin-right: 5px;
+                                            width: 20px;
+                                        }
+
+                                        label {
+                                            margin-right: 10px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        &:last-child {
+                            .from-item:first-child {
+                                textarea {
+                                    padding: 12px 24px 12px 16px;
+                                    background: #2B2B3F;
+                                    border: 1px solid #727288;
+                                    border-radius: 8px;
+                                    width: 60%;
+                                    @include text(12px, 400, #ffffff);
+
+                                    &::-webkit-scrollbar {
+
+                                        width: 6px;
+                                        background: #3E3E5B;
+                                        border-radius: 16px;
+                                    }
+
+                                    &::-webkit-scrollbar-thumb {
+
+                                        background: rgba(114, 114, 136, 0.5);
+                                        border-radius: 16px;
+                                    }
+                                }
+
+
                             }
                         }
                     }
 
+                }
+
+                .toChuc {
+                    .from-group {
+                        height: 100%;
+
+                        &:nth-child(2) {
+                            height: 217px;
+                            overflow-y: scroll;
+                            gap: 5px;
+                            padding-right: 5px;
+
+                            &::-webkit-scrollbar {
+
+                                width: 6px;
+                                background: #3E3E5B;
+                                border-radius: 16px;
+                            }
+
+                            &::-webkit-scrollbar-thumb {
+
+                                background: rgba(114, 114, 136, 0.5);
+                                border-radius: 16px;
+                            }
+
+                            .from-item {
+                                &:nth-child(3) {
+                                    input {
+                                        &::-webkit-calendar-picker-indicator {
+                                            background-color: #FF7506;
+                                            padding: 5px;
+                                            cursor: pointer;
+                                            border-radius: 3px;
+                                        }
+                                    }
+                                }
+
+                                &:nth-child(6) {
+                                    input {
+                                        &::-webkit-calendar-picker-indicator {
+                                            background-color: #FF7506;
+                                            padding: 5px;
+                                            cursor: pointer;
+                                            border-radius: 3px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
 
         .content-bottom {
             height: 15%;
+            padding-top: 10px;
 
             p {
                 i {
