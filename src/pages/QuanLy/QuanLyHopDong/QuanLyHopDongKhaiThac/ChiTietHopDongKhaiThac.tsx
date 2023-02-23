@@ -1,14 +1,24 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from "react";
 import moment from "moment";
-import React from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../../../redux/configStore";
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from "../../../../FireStore/fireStore";
+import { message } from "antd";
 
 export default function ChiTietHopDongKhaiThac() {
   const item = useSelector(
     (state: RootState) => state.hopDong.itemHopDongKhaiThac
   );
   const navigate = useNavigate();
+  console.log({ item });
+  useEffect(() => {
+    if (item === null) {
+      navigate("/admin/quanLyHopDong");
+    }
+  }, [item]);
   return (
     <div className="chiTietHopDongKhaiThac">
       <div className="container">
@@ -35,11 +45,11 @@ export default function ChiTietHopDongKhaiThac() {
                     </tr>
                     <tr>
                       <td>Ngày hiệu lực:</td>
-                      <td>{moment(item?.ngayHieuLuc).format("YYYY-MM-DD")}</td>
+                      <td>{moment(item?.ngayHieuLuc).format("DD-MM-YYYY")}</td>
                     </tr>
                     <tr>
                       <td>Ngày hết hạn:</td>
-                      <td>{moment(item?.ngayHetHan).format("YYYY-MM-DD")}</td>
+                      <td>{moment(item?.ngayHetHan).format("DD-MM-YYYY")}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -88,31 +98,31 @@ export default function ChiTietHopDongKhaiThac() {
                   <tbody>
                     <tr>
                       <td>Tên đơn vị sử dụng:</td>
-                      <td>Công ty TNHH MTV Âu Lạc</td>
+                      <td>{item?.tenDonViSuDung}</td>
                     </tr>
                     <tr>
                       <td>Người đại diện:</td>
-                      <td>Nguyễn văn A</td>
+                      <td>{item?.nguoiDaiDien}</td>
                     </tr>
                     <tr>
                       <td>Chức vụ:</td>
-                      <td>Giám đốc</td>
+                      <td>{item?.chucVu}</td>
                     </tr>
                     <tr>
                       <td>Ngày sinh:</td>
-                      <td>01/05/1984</td>
+                      <td>{moment(item?.ngaySinh).format("DD/MM/YYYY")}</td>
                     </tr>
                     <tr>
                       <td>Quốc tịch:</td>
-                      <td>Việt Nam</td>
+                      <td>{item?.quocTich}</td>
                     </tr>
                     <tr>
                       <td>Số điện thoại:</td>
-                      <td>123456789012</td>
+                      <td>{item?.soDienThoai}</td>
                     </tr>
                     <tr>
                       <td>Email:</td>
-                      <td>nguyenvana@gmail.com</td>
+                      <td>{item?.email}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -122,30 +132,27 @@ export default function ChiTietHopDongKhaiThac() {
                   <tbody>
                     <tr>
                       <td>Giới tính:</td>
-                      <td>Nam</td>
+                      <td>{item?.gioiTinh}</td>
                     </tr>
                     <tr>
                       <td>CMND/ CCCD:</td>
-                      <td>123456789012</td>
+                      <td>{item?.cmnd}</td>
                     </tr>
                     <tr>
                       <td>Ngày cấp:</td>
-                      <td>02/06/2005</td>
+                      <td>{moment(item?.ngayCap).format("DD-MM-YYYY")}</td>
                     </tr>
                     <tr>
                       <td>Nơi cấp:</td>
-                      <td>Tp.Hồ Chí Minh</td>
+                      <td>{item?.noiCap}</td>
                     </tr>
                     <tr>
                       <td>Mã số thuế:</td>
-                      <td>123456789012</td>
+                      <td>{item?.maSoThue}</td>
                     </tr>
                     <tr>
                       <td>Nơi cư trú:</td>
-                      <td>
-                        69/53, Nguyễn Gia Trí, Phường 25, Quận Bình Thạnh, Thành
-                        phố Hồ Chí Minh
-                      </td>
+                      <td>{item?.noiCuTru}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -155,25 +162,25 @@ export default function ChiTietHopDongKhaiThac() {
                   <tbody>
                     <tr>
                       <td>Tên đăng nhập:</td>
-                      <td>vuonganhtu123</td>
+                      <td>{item?.tenDangNhap}</td>
                     </tr>
                     <tr>
                       <td>Mật khẩu:</td>
                       <td>
                         <input
                           type="password"
-                          defaultValue={11111111}
+                          defaultValue={item?.matKhau}
                           readOnly
                         />
                       </td>
                     </tr>
                     <tr>
                       <td>Số tài khoản:</td>
-                      <td>123456789012</td>
+                      <td>{item?.soTaiKhoan}</td>
                     </tr>
                     <tr>
                       <td>Ngân hàng:</td>
-                      <td>ACB - Ngân hàng TMCP Á Châu</td>
+                      <td>{item?.nganHang}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -195,7 +202,20 @@ export default function ChiTietHopDongKhaiThac() {
               <p>Chỉnh sửa</p>
             </div>
             <div className="menu-item">
-              <div className="bg-icon">
+              <div
+                className="bg-icon"
+                onClick={() => {
+                  if (item) {
+                    deleteDoc(doc(db, "hopDong", item?.id));
+                    message.open({
+                      type: "success",
+                      content: "Hủy thành công!",
+                      duration: 0.8,
+                    });
+                    navigate("/admin/quanLyHopDong");
+                  }
+                }}
+              >
                 <i className="fas fa-times"></i>
               </div>
               <p>Huỷ hợp đồng</p>

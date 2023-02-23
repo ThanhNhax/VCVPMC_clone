@@ -6,54 +6,52 @@ import { HopDongKhaiThacRedux } from "../../../../redux/hopDongReducer/hopDongRe
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../../../FireStore/fireStore";
 import { useNavigate } from "react-router-dom";
-
+export const initialValusHopDongKhaiThac: HopDongKhaiThacRedux = {
+  id: "",
+  hieuLucHopDong: "",
+  ngayTao: "",
+  tenHopDong: "",
+  soHopDong: "",
+  ngayHieuLuc: "",
+  ngayHetHan: "",
+  tenDonViSuDung: "",
+  nguoiDaiDien: "",
+  chucVu: "",
+  ngaySinh: "",
+  quocTich: "",
+  soDienThoai: "",
+  email: "",
+  gioiTinh: "",
+  cmnd: "",
+  ngayCap: "",
+  noiCap: "",
+  maSoThue: "",
+  noiCuTru: "",
+  loaiHopDong: "",
+  tenDangNhap: "",
+  matKhau: "",
+  soTaiKhoan: "",
+  nganHang: "",
+};
 export default function ThemHopDongKhaiThacMoi() {
   const navigate = useNavigate();
   const [isType, setIsType] = useState<boolean>(true); // để handle type password => type text
-  const initialValus: HopDongKhaiThacRedux = {
-    id: "",
-    hieuLucHopDong: "",
-    ngayTao: "",
-    tenHopDong: "",
-    soHopDong: "",
-    ngayHieuLuc: "",
-    ngayHetHan: "",
-    tenDonViSuDung: "",
-    nguoiDaiDien: "",
-    chucVu: "",
-    ngaySinh: "",
-    quocTich: "",
-    soDienThoai: "",
-    email: "",
-    gioiTinh: "",
-    cmnd: "",
-    ngayCap: "",
-    noiCap: "",
-    maSoThue: "",
-    noiCuTru: "",
-    loaiHopDong: "",
-    tenDangNhap: "",
-    matKhau: "",
-    soTaiKhoan: "",
-    nganHang: "",
-  };
-  const schema = Yup.object({
-    tenHopDong: Yup.string(),
-    soHopDong: Yup.string(),
-    // ngayHieuLuc: Yup.string(),
-    // ngayHetHan: Yup.string(),
-    tenDonViSuDung: Yup.string(),
-    nguoiDaiDien: Yup.string(),
-    chucVu: Yup.string(),
-    // ngaySinh: Yup.string(),
-    // quocTich: Yup.string(),
-    email: Yup.string(),
-    gioiTinh: Yup.string(),
-    cmnd: Yup.string(),
-    // ngayCap: Yup.string(),
-    noiCap: Yup.string(),
-    tenDangNhap: Yup.string(),
-    matKhau: Yup.string(),
+
+  const schema = Yup.object().shape({
+    tenHopDong: Yup.string().required(),
+    soHopDong: Yup.string().required(),
+    ngayHieuLuc: Yup.string().required(),
+    ngayHetHan: Yup.string().required(),
+    tenDonViSuDung: Yup.string().required(),
+    nguoiDaiDien: Yup.string().required(),
+    chucVu: Yup.string().required(),
+    ngaySinh: Yup.string().required(),
+    email: Yup.string().required(),
+    cmnd: Yup.string().required(),
+    ngayCap: Yup.string().required(),
+    noiCap: Yup.string().required(),
+    tenDangNhap: Yup.string().required(),
+    matKhau: Yup.string().required(),
   });
 
   return (
@@ -67,10 +65,18 @@ export default function ThemHopDongKhaiThacMoi() {
           <h1>Thêm hợp đồng khai thác mới</h1>
         </div>
         <Formik
-          initialValues={initialValus}
+          initialValues={initialValusHopDongKhaiThac}
           validationSchema={schema}
           onSubmit={(value: HopDongKhaiThacRedux) => {
-            // console.log("submit");
+            console.log("submit");
+            value.hieuLucHopDong = "Mới";
+            let ngayTao = new Date();
+            value.ngayTao =
+              `${ngayTao.getDate()}` +
+              "/" +
+              `${ngayTao.getMonth() + 1}` +
+              "/" +
+              `${ngayTao.getFullYear()}`;
             console.log({ value });
             // add lên  fireSore
             try {
@@ -202,6 +208,7 @@ export default function ThemHopDongKhaiThacMoi() {
                             name="loaiHopDong"
                             id="tronGoi"
                             value="Trọn gói"
+                            checked
                           />
                           <label htmlFor="tronGoi">Trọn gói</label>
                         </div>
@@ -413,6 +420,7 @@ export default function ThemHopDongKhaiThacMoi() {
                                 name="gioiTinh"
                                 id="nam"
                                 value="Nam"
+                                checked
                               />
                               <label htmlFor="nam">Nam</label>
                             </div>
@@ -547,7 +555,7 @@ export default function ThemHopDongKhaiThacMoi() {
                               />
                               <i
                                 onClick={() => {
-                                  setIsType(isType ? false : true);
+                                  setIsType((pre) => !pre);
                                 }}
                                 id={isType ? "" : "doiMau"}
                                 className="fa fa-eye"
