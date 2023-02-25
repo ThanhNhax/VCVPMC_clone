@@ -242,6 +242,22 @@
                         }
                     }
 
+                    .disabled {
+                        width: 52px;
+                        height: 52px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        background: rgba(114, 114, 136, 0.5);
+                        border-radius: 50%;
+                        cursor: pointer;
+
+                        i {
+                            font-size: 26px;
+                            color: #878890;
+                        }
+                    }
+
                     p {
                         text-align: center;
                         @include text (12px, 500, #FFFFFF);

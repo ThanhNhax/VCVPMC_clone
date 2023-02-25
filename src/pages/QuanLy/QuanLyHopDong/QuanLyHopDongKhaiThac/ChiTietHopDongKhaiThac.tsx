@@ -1,12 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../../../redux/configStore";
-import { deleteDoc, doc } from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../../FireStore/fireStore";
-import { message } from "antd";
+import { message, Modal } from "antd";
+import { handleGiaTriPhanPhoi } from "./ThemHopDongKhaiThacMoi";
 
 export default function ChiTietHopDongKhaiThac() {
   const item = useSelector(
@@ -19,6 +20,32 @@ export default function ChiTietHopDongKhaiThac() {
       navigate("/admin/quanLyHopDong");
     }
   }, [item]);
+  const [isModalOpenHuy, setIsModalOpenHuy] = useState(false);
+
+  const showModalHuy = () => {
+    setIsModalOpenHuy(true);
+  };
+
+  const handleOkHuy = () => {
+    setIsModalOpenHuy(false);
+    // updata trạng thái thành đã hủy
+    if (item?.id) {
+      const washingtonRef = doc(db, "hopDong", item?.id);
+      updateDoc(washingtonRef, {
+        hieuLucHopDong: "Đã hủy",
+      });
+      message.open({
+        type: "success",
+        content: "Hủy thành công!",
+        duration: 0.8,
+      });
+      navigate("/admin/quanLyHopDong");
+    }
+  };
+
+  const handleCancelHuy = () => {
+    setIsModalOpenHuy(false);
+  };
   return (
     <div className="chiTietHopDongKhaiThac">
       <div className="container">
@@ -72,16 +99,41 @@ export default function ChiTietHopDongKhaiThac() {
                   <tbody>
                     <tr>
                       <td>Loại hợp đồng:</td>
-                      <td>Trọn gói</td>
+                      <td>
+                        {item?.loaiHopDong?.tronGoi?.giaTriHopDong !== 0
+                          ? "Trọn gói"
+                          : "Lượt Phát"}
+                      </td>
                     </tr>
-                    <tr>
-                      <td>Giá trị hợp đồng (VNĐ):</td>
-                      <td>365.000.000</td>
-                    </tr>
-                    <tr>
-                      <td>Giá trị phân phối (VNĐ/ngày):</td>
-                      <td>1.000.000</td>
-                    </tr>
+                    {item?.loaiHopDong.tronGoi.giaTriHopDong !== 0 ? (
+                      <>
+                        <tr>
+                          <td>Giá trị hợp đồng (VNĐ):</td>
+                          <td>{item?.loaiHopDong?.tronGoi?.giaTriHopDong}</td>
+                        </tr>
+                        <tr>
+                          <td>Giá trị phân phối (VNĐ/ngày):</td>
+                          <td>
+                            {handleGiaTriPhanPhoi(
+                              `${item?.loaiHopDong?.tronGoi?.giaTriHopDong}`,
+                              `${item?.ngayHieuLuc}`,
+                              `${item?.ngayHetHan}`
+                            )}
+                          </td>
+                        </tr>
+                      </>
+                    ) : (
+                      <>
+                        <tr>
+                          <td>
+                            Giá trị lượt pháp
+                            <br />
+                            (VNĐ)/lượt
+                          </td>
+                          <td>{item.loaiHopDong.luotPhat.giaTriLuotPhat}</td>
+                        </tr>
+                      </>
+                    )}
                     <tr>
                       <td>Tình trạng:</td>
                       <td className={item?.hieuLucHopDong}>
@@ -114,7 +166,9 @@ export default function ChiTietHopDongKhaiThac() {
                     </tr>
                     <tr>
                       <td>Quốc tịch:</td>
-                      <td>{item?.quocTich}</td>
+                      <td>
+                        {item?.quocTich === "VN" ? "Việt Nam" : item?.quocTich}
+                      </td>
                     </tr>
                     <tr>
                       <td>Số điện thoại:</td>
@@ -190,11 +244,15 @@ export default function ChiTietHopDongKhaiThac() {
           <div className="menu">
             <div className="menu-item">
               <div
-                className="bg-icon"
+                className={
+                  item?.hieuLucHopDong === "Mới" ? "bg-icon" : "disabled"
+                }
                 onClick={() =>
-                  navigate(
-                    "/admin/quanLyHopDong/chiTietHopDongKhaiThac/chinhSuaHopDongKhaiThac"
-                  )
+                  item?.hieuLucHopDong === "Mới"
+                    ? navigate(
+                        "/admin/quanLyHopDong/chiTietHopDongKhaiThac/chinhSuaHopDongKhaiThac"
+                      )
+                    : null
                 }
               >
                 <i className="fa fa-edit"></i>
@@ -202,20 +260,7 @@ export default function ChiTietHopDongKhaiThac() {
               <p>Chỉnh sửa</p>
             </div>
             <div className="menu-item">
-              <div
-                className="bg-icon"
-                onClick={() => {
-                  if (item) {
-                    deleteDoc(doc(db, "hopDong", item?.id));
-                    message.open({
-                      type: "success",
-                      content: "Hủy thành công!",
-                      duration: 0.8,
-                    });
-                    navigate("/admin/quanLyHopDong");
-                  }
-                }}
-              >
+              <div className="bg-icon" onClick={showModalHuy}>
                 <i className="fas fa-times"></i>
               </div>
               <p>Huỷ hợp đồng</p>
@@ -223,6 +268,23 @@ export default function ChiTietHopDongKhaiThac() {
           </div>
         </div>
       </div>
+      <Modal
+        open={isModalOpenHuy}
+        onOk={handleOkHuy}
+        onCancel={handleCancelHuy}
+        footer={null}
+        wrapClassName="modal-huyHopDongUyQuyen"
+        width={720}
+      >
+        <div className="container">
+          <h1>Hủy hợp đồng khai thác</h1>
+          <textarea placeholder="Cho chúng tôi biết lý do bạn muốn huỷ hợp đồng khai thác này..." />
+          <div className="content-btn">
+            <button onClick={handleCancelHuy}>Quay lại</button>
+            <button onClick={handleOkHuy}>Huỷ hợp đồng</button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }

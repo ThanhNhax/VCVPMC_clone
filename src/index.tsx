@@ -36,7 +36,6 @@ import ChiTietLichPhat from "./pages/LapLichPhat/ChiTietLichPhat";
 import EditLichPhat from "./pages/LapLichPhat/EditLichPhat";
 import ApLichChoThietBi from "./pages/LapLichPhat/ApLichChoThietBi";
 import QuanLyHopDong from "./pages/QuanLy/QuanLyHopDong/QuanLyHopDong";
-import QuanLyThietBi from "./pages/QuanLy/QuanLyThietBi";
 import ThemHopDongUyQuyenMoi from "./pages/QuanLy/QuanLyHopDong/ThemHopDongUyQuyenMoi";
 import ThemThongTinBanGhi from "./pages/QuanLy/QuanLyHopDong/ThemThongTinBanGhi";
 import ChiTietHopDong from "./pages/QuanLy/QuanLyHopDong/ChiTietHopDong";
@@ -44,6 +43,8 @@ import ChinhSuaThongTin from "./pages/QuanLy/QuanLyHopDong/ChinhSuaThongTin";
 import ChiTietHopDongKhaiThac from "./pages/QuanLy/QuanLyHopDong/QuanLyHopDongKhaiThac/ChiTietHopDongKhaiThac";
 import ChinhSuaHopDongKhaiThac from "./pages/QuanLy/QuanLyHopDong/QuanLyHopDongKhaiThac/ChinhSuaHopDongKhaiThac";
 import ThemHopDongKhaiThacMoi from "./pages/QuanLy/QuanLyHopDong/QuanLyHopDongKhaiThac/ThemHopDongKhaiThacMoi";
+import QuanLyDonViSuDung from "./pages/QuanLy/DonViSuDung/QuanLyDonViSuDung";
+import ChiTietDonViSuDung from "./pages/QuanLy/DonViSuDung/ChiTietDonViSuDung";
 export const history: any = createBrowserHistory();
 
 const root = ReactDOM.createRoot(
@@ -144,8 +145,12 @@ root.render(
               element={<ChinhSuaThongTin />}
             ></Route>
             <Route
-              path="/admin/quanLyThietBi"
-              element={<QuanLyThietBi />}
+              path="/admin/donViSuDung"
+              element={<QuanLyDonViSuDung />}
+            ></Route>
+            <Route
+              path="/admin/donViSuDung/chiTiet"
+              element={<ChiTietDonViSuDung />}
             ></Route>
             {/* <Route path="*" element={<Navigate to={"/admin"} />}></Route> */}
           </Route>

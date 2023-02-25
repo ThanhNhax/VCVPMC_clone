@@ -145,7 +145,6 @@ export const getArrPlayListFireStore = () => {
         querySnapshot.forEach((doc) => {
           arrPlayList.push({ ...doc.data(), id: doc.id });
         });
-        console.log("lấy từ firesStore về :", { arrPlayList });
         dispatch(setArrPlayList(arrPlayList));
       });
     } catch (error) {

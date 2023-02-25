@@ -3,6 +3,15 @@ import { collection, onSnapshot, query } from "firebase/firestore";
 import { db } from "../../FireStore/fireStore";
 import { AppDispatch } from "../configStore";
 
+export interface LoaiHopDong {
+  tronGoi: {
+    giaTriHopDong: number;
+    giaTriPhanPhoi: number;
+  };
+  luotPhat: {
+    giaTriLuotPhat: number;
+  };
+}
 export interface HopDongKhaiThacRedux {
   id: string;
   ngayTao: string;
@@ -11,7 +20,7 @@ export interface HopDongKhaiThacRedux {
   cmnd: string;
   email: string;
   gioiTinh: string;
-  loaiHopDong: string;
+  loaiHopDong: LoaiHopDong;
   maSoThue: string;
   matKhau: string;
   nganHang: string;
@@ -31,15 +40,32 @@ export interface HopDongKhaiThacRedux {
   tenHopDong: string;
 }
 export interface HopDongUyQuyenRedux {
-  id: string;
-  soHopDong: string;
-  tenHopDong: string;
-  ngayTao: string;
-  hieuLucHopDong: string;
   nguoiUyQuyen: string;
   quyenSoHuu: string;
-  ngayHieuLuc: string;
+  ngayTao: string;
+  hieuLucHopDong: string;
+  chucVu: string;
+  cmnd: string;
+  email: string;
+  gioiTinh: string;
+  id: string;
+  maSoThue: string;
+  matKhau: string;
+  nganHang: string;
+  ngayCap: string;
   ngayHetHan: string;
+  ngayHieuLuc: string;
+  ngaySinh: string;
+  nguoiDaiDien: string;
+  noiCap: string;
+  noiCuTru: string;
+  quocTich: string;
+  soDienThoai: string;
+  soHopDong: string;
+  soTaiKhoan: string;
+  tenDangNhap: string;
+  tenHopDong: string;
+  tenToChuc: string;
 }
 export interface HopDongState {
   arrHopDongUyQuyen: HopDongUyQuyenRedux[] | [];

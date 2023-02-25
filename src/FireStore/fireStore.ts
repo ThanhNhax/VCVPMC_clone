@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { addDoc, collection, getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -23,14 +23,13 @@ export const auth = getAuth(app);
 ///
 
 // let data = {
+//   tenTaiKhoảnQuanTri: "Cty TNHH TM DV ABCEDEF",
 //   soHopDong: "HD123",
-//   tenHopDong: "Hợp đồng kinh doanh 1",
-//   nguoiUyQuyen: "Vương Anh Tú",
-//   quyenSohuu: "Người biểu diễn",
-//   ngayTao: "01/04/2021 15:53:13",
-//   ngayHieuLuc: "02/12/2021",
+//   admin: "admin1",
+//   nguoiDung: 21,
+//   thietBiDuocChiDinh: 15,
 //   ngayHetHan: "02/12/2022",
-//   hieuLucHopDong: "Còn thời hạn",
+//   trangThai: false,
 //   id: "",
 // };
-// addDoc(collection(db, "hopDongUyQyen"), data);
+// addDoc(collection(db, "quanLyDonViSuDung"), data);

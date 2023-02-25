@@ -1,18 +1,40 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from "react";
-import { Button, Upload } from "antd";
+import React, { useState, useEffect, useMemo } from "react";
+import { Button, message, Upload } from "antd";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/configStore";
 import moment from "moment";
 import { Field, Form, Formik } from "formik";
 import { HopDongKhaiThacRedux } from "../../../../redux/hopDongReducer/hopDongReducer";
 import { useNavigate } from "react-router-dom";
+import { schema } from "./ThemHopDongKhaiThacMoi";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../../../../FireStore/fireStore";
+
+export const get_day_of_time = (d1: Date, d2: Date) => {
+  let ms1 = d1.getTime();
+  let ms2 = d2.getTime();
+  return Math.ceil((ms2 - ms1) / (24 * 60 * 60 * 1000));
+};
 
 export default function ChinhSuaHopDongKhaiThac() {
   const navigate = useNavigate();
   const [isType, setIsType] = useState<boolean>(true); // để handle type password => type text
   const item = useSelector(
     (state: RootState) => state.hopDong.itemHopDongKhaiThac
+  );
+  const [quocTich, setQuocTich] = useState<string>(
+    item?.quocTich ? item.quocTich : ""
+  );
+  const [toggleLoaiHopDong, setToggleLoaiHopDong] = useState<boolean>(
+    item?.loaiHopDong.tronGoi.giaTriHopDong === 0 ? false : true
+  );
+
+  const [giaTriHopDong, setGiaTriHopDong] = useState<string>(
+    `${item?.loaiHopDong.tronGoi.giaTriHopDong}`
+  );
+  const [giaTriLuotPhat, setGiaTriLuotPhat] = useState<string>(
+    `${item?.loaiHopDong.luotPhat.giaTriLuotPhat}`
   );
   console.log({ item });
   let initialValue: HopDongKhaiThacRedux = {
@@ -27,7 +49,7 @@ export default function ChinhSuaHopDongKhaiThac() {
     nguoiDaiDien: "",
     chucVu: "",
     ngaySinh: "",
-    quocTich: "",
+    quocTich: quocTich,
     soDienThoai: "",
     email: "",
     gioiTinh: "",
@@ -36,19 +58,87 @@ export default function ChinhSuaHopDongKhaiThac() {
     noiCap: "",
     maSoThue: "",
     noiCuTru: "",
-    loaiHopDong: "",
+    loaiHopDong: {
+      tronGoi: { giaTriHopDong: 0, giaTriPhanPhoi: 0 },
+      luotPhat: { giaTriLuotPhat: 0 },
+    },
     tenDangNhap: "",
     matKhau: "",
     soTaiKhoan: "",
     nganHang: "",
   };
+
+  if (item) {
+    initialValue = {
+      chucVu: item.chucVu,
+      cmnd: item.cmnd,
+      email: item.email,
+      tenDangNhap: item.tenDangNhap,
+      gioiTinh: item.gioiTinh,
+      hieuLucHopDong: item.hieuLucHopDong,
+      id: item.id,
+      loaiHopDong: {
+        tronGoi: {
+          giaTriHopDong: parseInt(giaTriHopDong),
+          giaTriPhanPhoi: 0,
+        },
+        luotPhat: {
+          giaTriLuotPhat: parseInt(giaTriLuotPhat),
+        },
+      },
+      maSoThue: item.maSoThue,
+      matKhau: item.matKhau,
+      nganHang: item.nganHang,
+      ngayCap: item.ngayCap,
+      ngayHetHan: item.ngayHetHan,
+      ngayHieuLuc: item.ngayHieuLuc,
+      ngaySinh: item.ngaySinh,
+      ngayTao: item.ngayTao,
+      nguoiDaiDien: item.nguoiDaiDien,
+      noiCap: item.noiCap,
+      noiCuTru: item.noiCuTru,
+      quocTich: quocTich,
+      soDienThoai: item.soDienThoai,
+      soHopDong: item.soHopDong,
+      soTaiKhoan: item.soTaiKhoan,
+      tenDonViSuDung: item.tenDonViSuDung,
+      tenHopDong: item.tenHopDong,
+    };
+    console.log({ initialValue });
+  }
   useEffect(() => {
-    if (item) {
-      initialValue = item;
-    } else {
-      navigate("/admin/quanLyHopDong/chiTietHopDongKhaiThac");
+    if (item === null) {
+      navigate("/admin/quanLyHopDong");
     }
-  }, []);
+  });
+
+  const handleGiaTriPhanPhoi = (
+    giaTriHopDong: string,
+    d1: string,
+    d2: string
+  ) => {
+    if (item) {
+      const ngayHieuLuc = new Date(d1);
+      const ngayHetHan = new Date(d2);
+      const totileDay = get_day_of_time(ngayHieuLuc, ngayHetHan);
+      return (parseInt(giaTriHopDong) / totileDay).toFixed(3);
+    }
+    return 0;
+  };
+
+  // const memoHandleGiaTriPhanPhoi = useMemo(
+  //   () =>
+  //     handleGiaTriPhanPhoi(
+  //       `${item?.loaiHopDong?.tronGoi?.giaTriHopDong}`,
+  //       `${item?.ngayHieuLuc}`,
+  //       `${item?.ngayHetHan}`
+  //     ),
+  //   [
+  //     item?.loaiHopDong?.tronGoi?.giaTriHopDong,
+  //     item?.ngayHieuLuc,
+  //     item?.ngayHetHan,
+  //   ]
+  // );
 
   return (
     <div className="chinhSuaHopDongKhaiThac">
@@ -63,8 +153,27 @@ export default function ChinhSuaHopDongKhaiThac() {
         </div>
         <Formik
           initialValues={initialValue}
+          validationSchema={schema}
           onSubmit={(value) => {
+            value.quocTich = quocTich;
+            console.log({ quocTich });
+            value.loaiHopDong.luotPhat.giaTriLuotPhat =
+              parseInt(giaTriLuotPhat);
+            value.loaiHopDong.tronGoi.giaTriHopDong = parseInt(giaTriHopDong);
             console.log({ value });
+            // update data len fireStore thông qua setDoc() để ghi đề toàn
+            try {
+              if (item) {
+                setDoc(doc(db, "hopDong", item.id), value);
+                message.open({
+                  type: "success",
+                  content: "Cập nhật thành công!!",
+                  duration: 0.8,
+                });
+              }
+            } catch (e) {
+              console.log(e);
+            }
           }}
         >
           {({ errors, touched }) => (
@@ -85,7 +194,11 @@ export default function ChinhSuaHopDongKhaiThac() {
                               type="text"
                               name="tenHopDong"
                               id="tenHopDong"
-                              value={item?.tenHopDong}
+                              className={
+                                errors.tenHopDong && touched.tenHopDong
+                                  ? "input_error"
+                                  : ""
+                              }
                             />
                           </td>
                         </tr>
@@ -100,7 +213,11 @@ export default function ChinhSuaHopDongKhaiThac() {
                               type="text"
                               name="soHopDong"
                               id="soHopDong"
-                              value={item?.soHopDong}
+                              className={
+                                errors.soHopDong && touched.soHopDong
+                                  ? "input_error"
+                                  : ""
+                              }
                             />
                           </td>
                         </tr>
@@ -115,9 +232,11 @@ export default function ChinhSuaHopDongKhaiThac() {
                               type="date"
                               name="ngayHieuLuc"
                               id="ngayHieuLuc"
-                              value={moment(item?.ngayHieuLuc).format(
-                                "yyyy-MM-DD"
-                              )}
+                              className={
+                                errors.ngayHieuLuc && touched.ngayHieuLuc
+                                  ? "input_error"
+                                  : ""
+                              }
                             />
                           </td>
                         </tr>
@@ -132,9 +251,11 @@ export default function ChinhSuaHopDongKhaiThac() {
                               type="date"
                               name="ngayHetHan"
                               id="ngayHetHan"
-                              value={moment(item?.ngayHetHan).format(
-                                "yyyy-MM-DD"
-                              )}
+                              className={
+                                errors.ngayHetHan && touched.ngayHetHan
+                                  ? "input_error"
+                                  : ""
+                              }
                             />
                           </td>
                         </tr>
@@ -166,12 +287,15 @@ export default function ChinhSuaHopDongKhaiThac() {
                     <div className="checked-item">
                       <div className="form-group">
                         <div className="wrap-form">
-                          <Field
+                          <input
                             type="radio"
                             name="loaiHopDong"
                             id="tronGoi"
-                            value="Trọn gói"
-                            checked
+                            checked={toggleLoaiHopDong}
+                            onChange={() => {
+                              setToggleLoaiHopDong(true);
+                              setGiaTriLuotPhat("0");
+                            }}
                           />
                           <label htmlFor="tronGoi">Trọn gói</label>
                         </div>
@@ -183,7 +307,13 @@ export default function ChinhSuaHopDongKhaiThac() {
                             <br />
                             (VNĐ)
                           </label>
-                          <input type="text" id="giaTriHopDong" />
+                          <input
+                            type="text"
+                            id="giaTriHopDong"
+                            name="tronGoi"
+                            value={giaTriHopDong}
+                            onChange={(e) => setGiaTriHopDong(e.target.value)}
+                          />
                         </div>
                         <div className="form-group">
                           <label htmlFor="giaTriPhanPhoi">
@@ -191,18 +321,31 @@ export default function ChinhSuaHopDongKhaiThac() {
                             <br />
                             (VNĐ/ngày)
                           </label>
-                          <input type="text" id="giaTriPhanPhoi" />
+                          <input
+                            type="text"
+                            id="giaTriPhanPhoi"
+                            readOnly
+                            value={handleGiaTriPhanPhoi(
+                              giaTriHopDong,
+                              `${item?.ngayHieuLuc}`,
+                              `${item?.ngayHetHan}`
+                            )}
+                          />
                         </div>
                       </div>
                     </div>
                     <div className="checked-item">
                       <div className="form-group">
                         <div className="wrap-form">
-                          <Field
+                          <input
                             type="radio"
                             name="loaiHopDong"
                             id="luotPhat"
-                            value="Lượt phát"
+                            checked={!toggleLoaiHopDong}
+                            onChange={() => {
+                              setToggleLoaiHopDong(false);
+                              setGiaTriHopDong("0");
+                            }}
                           />
                           <label htmlFor="luotPhat">Lượt phát</label>
                         </div>
@@ -214,10 +357,11 @@ export default function ChinhSuaHopDongKhaiThac() {
                             <br />
                             (VNĐ)/lượt
                           </label>
-                          <Field
+                          <input
                             type="text"
-                            name="giaTriLuotPhat"
                             id="giaTriLuotPhat"
+                            value={giaTriLuotPhat}
+                            onChange={(e) => setGiaTriLuotPhat(e.target.value)}
                           />
                         </div>
                       </div>
@@ -239,7 +383,11 @@ export default function ChinhSuaHopDongKhaiThac() {
                               type="text"
                               name="tenDonViSuDung"
                               id="tenDonViSuDung"
-                              value={item?.tenDonViSuDung}
+                              className={
+                                errors.tenDonViSuDung && touched.tenDonViSuDung
+                                  ? "input_error"
+                                  : ""
+                              }
                             />
                           </td>
                         </tr>
@@ -254,7 +402,11 @@ export default function ChinhSuaHopDongKhaiThac() {
                               type="text"
                               name="nguoiDaiDien"
                               id="nguoiDaiDien"
-                              value={item?.nguoiDaiDien}
+                              className={
+                                errors.nguoiDaiDien && touched.nguoiDaiDien
+                                  ? "input_error"
+                                  : ""
+                              }
                             />
                           </td>
                         </tr>
@@ -269,7 +421,11 @@ export default function ChinhSuaHopDongKhaiThac() {
                               type="text"
                               name="chucVu"
                               id="chucVu"
-                              value={item?.chucVu}
+                              className={
+                                errors.chucVu && touched.tenHopDong
+                                  ? "input_error"
+                                  : ""
+                              }
                             />
                           </td>
                         </tr>
@@ -284,7 +440,11 @@ export default function ChinhSuaHopDongKhaiThac() {
                               type="date"
                               name="ngaySinh"
                               id="ngaySinh"
-                              value={item?.ngaySinh}
+                              className={
+                                errors.ngaySinh && touched.tenHopDong
+                                  ? "input_error"
+                                  : ""
+                              }
                             />
                           </td>
                         </tr>
@@ -295,14 +455,18 @@ export default function ChinhSuaHopDongKhaiThac() {
                             </label>
                           </td>
                           <td>
-                            <Field
-                              as="select"
+                            <select
                               name="quocTich"
                               id="quocTich"
-                              value={item?.quocTich}
+                              value={quocTich}
+                              onChange={(e) => setQuocTich(e.target.value)}
                             >
-                              <option value="Việt Nam">Việt Nam</option>
-                            </Field>
+                              <option value="">Other</option>
+                              <option value="VN">Việt Nam</option>
+                              <option value="NY">New York</option>
+                              <option value="SF">San Francisco</option>
+                              <option value="CH">Chicago</option>
+                            </select>
                           </td>
                         </tr>
                         <tr>
@@ -314,7 +478,6 @@ export default function ChinhSuaHopDongKhaiThac() {
                               type="text"
                               name="soDienThoai"
                               id="soDienThoai"
-                              value={item?.soDienThoai}
                             />
                           </td>
                         </tr>
@@ -329,7 +492,11 @@ export default function ChinhSuaHopDongKhaiThac() {
                               type="text"
                               name="email"
                               id="email"
-                              value={item?.email}
+                              className={
+                                errors.email && touched.email
+                                  ? "input_error"
+                                  : ""
+                              }
                             />
                           </td>
                         </tr>
@@ -373,7 +540,14 @@ export default function ChinhSuaHopDongKhaiThac() {
                             </label>
                           </td>
                           <td>
-                            <Field type="text" name="CMND" id="CMND" />
+                            <Field
+                              type="text"
+                              name="cmnd"
+                              id="CMND"
+                              className={
+                                errors.cmnd && touched.cmnd ? "input_error" : ""
+                              }
+                            />
                           </td>
                         </tr>
                         <tr>
@@ -387,7 +561,11 @@ export default function ChinhSuaHopDongKhaiThac() {
                               type="date"
                               name="ngayCap"
                               id="ngayCap"
-                              value={moment(item?.ngayCap).format("yyyy-MM-DD")}
+                              className={
+                                errors.ngayCap && touched.ngayCap
+                                  ? "input_error"
+                                  : ""
+                              }
                             />
                           </td>
                         </tr>
@@ -438,7 +616,11 @@ export default function ChinhSuaHopDongKhaiThac() {
                               type="text"
                               id="tenDangNhap"
                               name="tenDangNhap"
-                              value={item?.tenDangNhap}
+                              className={
+                                errors.tenDangNhap && touched.tenDangNhap
+                                  ? "input_error"
+                                  : ""
+                              }
                             />
                           </td>
                         </tr>
@@ -454,7 +636,11 @@ export default function ChinhSuaHopDongKhaiThac() {
                                 type={isType ? "password" : "test"}
                                 name="matKhau"
                                 id="matKhau"
-                                value={item?.matKhau}
+                                className={
+                                  errors.matKhau && touched.matKhau
+                                    ? "input_error"
+                                    : ""
+                                }
                               />
                               <i
                                 onClick={() => {
@@ -475,7 +661,6 @@ export default function ChinhSuaHopDongKhaiThac() {
                               type="text"
                               name="soTaiKhoan"
                               id="soTaiKhoan"
-                              value={item?.soTaiKhoan}
                             />
                           </td>
                         </tr>
@@ -484,12 +669,7 @@ export default function ChinhSuaHopDongKhaiThac() {
                             <label htmlFor="nganHang">Ngân hàng:</label>
                           </td>
                           <td>
-                            <Field
-                              type="text"
-                              name="nganHang"
-                              id="nganHang"
-                              value={item?.nganHang}
-                            />
+                            <Field type="text" name="nganHang" id="nganHang" />
                           </td>
                         </tr>
                       </tbody>

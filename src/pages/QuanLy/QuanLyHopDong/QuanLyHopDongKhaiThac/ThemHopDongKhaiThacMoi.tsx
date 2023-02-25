@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { Button, message, Upload } from "antd";
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
@@ -6,53 +6,90 @@ import { HopDongKhaiThacRedux } from "../../../../redux/hopDongReducer/hopDongRe
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../../../FireStore/fireStore";
 import { useNavigate } from "react-router-dom";
-export const initialValusHopDongKhaiThac: HopDongKhaiThacRedux = {
-  id: "",
-  hieuLucHopDong: "",
-  ngayTao: "",
-  tenHopDong: "",
-  soHopDong: "",
-  ngayHieuLuc: "",
-  ngayHetHan: "",
-  tenDonViSuDung: "",
-  nguoiDaiDien: "",
-  chucVu: "",
-  ngaySinh: "",
-  quocTich: "",
-  soDienThoai: "",
-  email: "",
-  gioiTinh: "",
-  cmnd: "",
-  ngayCap: "",
-  noiCap: "",
-  maSoThue: "",
-  noiCuTru: "",
-  loaiHopDong: "",
-  tenDangNhap: "",
-  matKhau: "",
-  soTaiKhoan: "",
-  nganHang: "",
+import { get_day_of_time } from "./ChinhSuaHopDongKhaiThac";
+
+export const schema = Yup.object().shape({
+  tenHopDong: Yup.string().required(),
+  soHopDong: Yup.string().required(),
+  ngayHieuLuc: Yup.string(),
+  ngayHetHan: Yup.string(),
+  tenDonViSuDung: Yup.string().required(),
+  nguoiDaiDien: Yup.string().required(),
+  chucVu: Yup.string().required(),
+  ngaySinh: Yup.string().required(),
+  email: Yup.string().required(),
+  cmnd: Yup.string().required(),
+  ngayCap: Yup.string().required(),
+  noiCap: Yup.string().required(),
+  tenDangNhap: Yup.string().required(),
+  matKhau: Yup.string().required(),
+});
+export const handleGiaTriPhanPhoi = (
+  giaTriHopDong: string,
+  d1: string,
+  d2: string
+) => {
+  const ngayHieuLuc = new Date(d1);
+  const ngayHetHan = new Date(d2);
+  const totalDay = get_day_of_time(ngayHieuLuc, ngayHetHan);
+  if (totalDay === 0) return 0;
+  return (parseFloat(giaTriHopDong) / totalDay).toFixed(3);
 };
+
 export default function ThemHopDongKhaiThacMoi() {
+  const [quocTich, setQuocTich] = useState<string>("");
+  const [toggleLoaiHopDong, setToggleLoaiHopDong] = useState<boolean>(true);
+  console.log({ toggleLoaiHopDong });
+  console.log({ quocTich });
   const navigate = useNavigate();
   const [isType, setIsType] = useState<boolean>(true); // để handle type password => type text
 
-  const schema = Yup.object().shape({
-    tenHopDong: Yup.string().required(),
-    soHopDong: Yup.string().required(),
-    ngayHieuLuc: Yup.string().required(),
-    ngayHetHan: Yup.string().required(),
-    tenDonViSuDung: Yup.string().required(),
-    nguoiDaiDien: Yup.string().required(),
-    chucVu: Yup.string().required(),
-    ngaySinh: Yup.string().required(),
-    email: Yup.string().required(),
-    cmnd: Yup.string().required(),
-    ngayCap: Yup.string().required(),
-    noiCap: Yup.string().required(),
-    tenDangNhap: Yup.string().required(),
-    matKhau: Yup.string().required(),
-  });
+  const [ngayHieuLuc, setNgayHieuLuc] = useState<string>("");
+  const [ngayHetHan, setNgayHetHan] = useState<string>("");
+  const [giaTriHopDong, setGiaTriHopDong] = useState<string>("");
+  const [giaTriLuotPhat, setGiaTriLuotPhat] = useState<string>("");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+  const momeHandleGiaTriPhanPhoi = useMemo(
+    () => handleGiaTriPhanPhoi(giaTriHopDong, ngayHieuLuc, ngayHetHan),
+    [giaTriHopDong, ngayHieuLuc, ngayHetHan]
+  );
+
+  const initialValusHopDongKhaiThac: HopDongKhaiThacRedux = {
+    id: "",
+    hieuLucHopDong: "",
+    ngayTao: "",
+    tenHopDong: "",
+    soHopDong: ngayHetHan,
+    ngayHieuLuc: ngayHieuLuc,
+    ngayHetHan: "",
+    tenDonViSuDung: "",
+    nguoiDaiDien: "",
+    chucVu: "",
+    ngaySinh: "",
+    quocTich: quocTich,
+    soDienThoai: "",
+    email: "",
+    gioiTinh: "Nam",
+    cmnd: "",
+    ngayCap: "",
+    noiCap: "",
+    maSoThue: "",
+    noiCuTru: "",
+    loaiHopDong: {
+      tronGoi: {
+        giaTriHopDong: parseInt(giaTriHopDong),
+        giaTriPhanPhoi: 0,
+      },
+      luotPhat: {
+        giaTriLuotPhat: 0,
+      },
+    },
+    tenDangNhap: "",
+    matKhau: "",
+    soTaiKhoan: "",
+    nganHang: "",
+  };
 
   return (
     <div className="chinhSuaHopDongKhaiThac">
@@ -66,10 +103,17 @@ export default function ThemHopDongKhaiThacMoi() {
         </div>
         <Formik
           initialValues={initialValusHopDongKhaiThac}
-          validationSchema={schema}
+          // validationSchema={schema}
           onSubmit={(value: HopDongKhaiThacRedux) => {
-            console.log("submit");
+            //gán lại ngày hết hạn ngày hiệu lúc ,giá trị hợp đồng
+            value.ngayHetHan = ngayHetHan;
+            value.ngayHieuLuc = ngayHieuLuc;
+            value.loaiHopDong.tronGoi.giaTriHopDong = parseInt(giaTriHopDong);
+            value.loaiHopDong.luotPhat.giaTriLuotPhat =
+              parseInt(giaTriLuotPhat);
+            // gán hiệu lực hợp đồng là mới tạo
             value.hieuLucHopDong = "Mới";
+            // gán ngày tạo là ngày hiện tại
             let ngayTao = new Date();
             value.ngayTao =
               `${ngayTao.getDate()}` +
@@ -77,10 +121,14 @@ export default function ThemHopDongKhaiThacMoi() {
               `${ngayTao.getMonth() + 1}` +
               "/" +
               `${ngayTao.getFullYear()}`;
+            // gán quốc tịch bằng state
+            value.quocTich = quocTich;
+
             console.log({ value });
             // add lên  fireSore
             try {
               addDoc(collection(db, "hopDong"), value);
+              console.log("add firestore", { value });
               navigate("/admin/quanLyHopDong");
               message.open({
                 type: "success",
@@ -144,10 +192,12 @@ export default function ThemHopDongKhaiThacMoi() {
                             </label>
                           </td>
                           <td>
-                            <Field
+                            <input
                               type="date"
                               name="ngayHieuLuc"
                               id="ngayHieuLuc"
+                              value={ngayHieuLuc}
+                              onChange={(e) => setNgayHieuLuc(e.target.value)}
                               className={
                                 errors.ngayHieuLuc && touched.ngayHieuLuc
                                   ? "input_error"
@@ -163,10 +213,12 @@ export default function ThemHopDongKhaiThacMoi() {
                             </label>
                           </td>
                           <td>
-                            <Field
+                            <input
                               type="date"
                               name="ngayHetHan"
                               id="ngayHetHan"
+                              value={ngayHetHan}
+                              onChange={(e) => setNgayHetHan(e.target.value)}
                               className={
                                 errors.ngayHetHan && touched.ngayHetHan
                                   ? "input_error"
@@ -203,12 +255,15 @@ export default function ThemHopDongKhaiThacMoi() {
                     <div className="checked-item">
                       <div className="form-group">
                         <div className="wrap-form">
-                          <Field
+                          <input
                             type="radio"
                             name="loaiHopDong"
                             id="tronGoi"
-                            value="Trọn gói"
-                            checked
+                            checked={toggleLoaiHopDong}
+                            onChange={() => {
+                              setToggleLoaiHopDong(true);
+                              setGiaTriLuotPhat("0");
+                            }}
                           />
                           <label htmlFor="tronGoi">Trọn gói</label>
                         </div>
@@ -220,10 +275,14 @@ export default function ThemHopDongKhaiThacMoi() {
                             <br />
                             (VNĐ)
                           </label>
-                          <Field
+                          <input
                             type="text"
-                            value={"214.500.000"}
                             id="giaTriHopDong"
+                            name="loaiHopDong.tronGoi.giaTriHopDong"
+                            value={giaTriHopDong}
+                            onChange={(e) => {
+                              setGiaTriHopDong(e.target.value);
+                            }}
                           />
                         </div>
                         <div className="form-group">
@@ -232,11 +291,15 @@ export default function ThemHopDongKhaiThacMoi() {
                             <br />
                             (VNĐ/ngày)
                           </label>
-                          <Field
+                          <input
                             type="text"
                             id="giaTriPhanPhoi"
-                            value={"1.500.000"}
                             readOnly
+                            value={
+                              momeHandleGiaTriPhanPhoi === "NaN"
+                                ? 0
+                                : momeHandleGiaTriPhanPhoi
+                            }
                           />
                         </div>
                       </div>
@@ -244,11 +307,15 @@ export default function ThemHopDongKhaiThacMoi() {
                     <div className="checked-item">
                       <div className="form-group">
                         <div className="wrap-form">
-                          <Field
+                          <input
                             type="radio"
-                            name="loaiHopDong"
                             id="luotPhat"
-                            value="Lượt phát"
+                            name="loaiHopDong"
+                            checked={!toggleLoaiHopDong}
+                            onChange={() => {
+                              setToggleLoaiHopDong(false);
+                              setGiaTriHopDong("0");
+                            }}
                           />
                           <label htmlFor="luotPhat">Lượt phát</label>
                         </div>
@@ -260,10 +327,11 @@ export default function ThemHopDongKhaiThacMoi() {
                             <br />
                             (VNĐ)/lượt
                           </label>
-                          <Field
+                          <input
                             type="text"
-                            name="giaTriLuotPhat"
                             id="giaTriLuotPhat"
+                            value={giaTriLuotPhat}
+                            onChange={(e) => setGiaTriLuotPhat(e.target.value)}
                           />
                         </div>
                       </div>
@@ -357,17 +425,18 @@ export default function ThemHopDongKhaiThacMoi() {
                             </label>
                           </td>
                           <td>
-                            <Field
-                              component="select"
+                            <select
                               id="quocTich"
                               name="quocTich"
+                              value={quocTich}
+                              onChange={(e) => setQuocTich(e.target.value)}
                             >
                               <option value="Việt Nam">Việt Nam</option>
                               <option value="NY">New York</option>
                               <option value="SF">San Francisco</option>
                               <option value="CH">Chicago</option>
                               <option value="OTHER">Other</option>
-                            </Field>
+                            </select>
                           </td>
                         </tr>
                         <tr>

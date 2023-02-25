@@ -3,6 +3,8 @@ import hopDongReducer from "./hopDongReducer/hopDongReducer";
 import khoBanghiReducer from "./khoBanGhi/khoBanghiReducer";
 import lapLichPhatReducer from "./lapLichPhat/lapLichPhatReducer";
 import playListReducer from "./playListReducer/playListReducer";
+import quanLyDonViSuDungReducer from "./quanLyDonViSuDung/quanLyDonViSuDungReducer";
+import quanLyThietBiReducer from "./quanLyThietBi/quanLyThietBiReducer";
 import userReducer from "./userReducer/userReducer";
 // ...
 
@@ -13,6 +15,7 @@ export const store = configureStore({
     playList: playListReducer,
     lapLichPhat: lapLichPhatReducer,
     hopDong: hopDongReducer,
+    quanLyDonViSuDung: quanLyDonViSuDungReducer,
   },
 });
 
