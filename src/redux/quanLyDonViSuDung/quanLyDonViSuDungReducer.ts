@@ -3,11 +3,20 @@ import { collection, onSnapshot, query } from "firebase/firestore";
 import { db } from "../../FireStore/fireStore";
 import { AppDispatch } from "../configStore";
 
+export interface NguoiDungDonViRedux {
+  tenNguoiDung: string;
+  vaiTro: string;
+  email: string;
+  tenDangNhap: string;
+  capNhatlanCuoi: string;
+  trangThai: boolean;
+  id: string;
+}
 export interface DonViSuDungRedux {
+  arrNguoiDung: NguoiDungDonViRedux[] | [];
   tenTaiKhoảnQuanTri: string;
   soHopDong: string;
   admin: string;
-  nguoiDung: number;
   thietBiDuocChiDinh: number;
   ngayHetHan: string;
   trangThai: boolean;
@@ -15,9 +24,11 @@ export interface DonViSuDungRedux {
 }
 export interface DonViSuDungState {
   arrDonViSuDung: DonViSuDungRedux[] | [];
+  itemDonViSuDung: DonViSuDungRedux | null;
 }
 const initialState: DonViSuDungState = {
   arrDonViSuDung: [],
+  itemDonViSuDung: null,
 };
 
 const quanLyDonViSuDungReducer = createSlice({
@@ -30,10 +41,23 @@ const quanLyDonViSuDungReducer = createSlice({
     ) => {
       state.arrDonViSuDung = action.payload;
     },
+    setItemDonViSuDungRedux: (
+      state: DonViSuDungState,
+      action: PayloadAction<DonViSuDungRedux>
+    ) => {
+      state.itemDonViSuDung = action.payload;
+    },
+    // setArrNguoiDung: (
+    //   state: DonViSuDungState,
+    //   action: PayloadAction<NguoiDungDonViRedux>
+    // ) => {
+    //   state.itemDonViSuDung?.arrNguoiDung.push(action.payload);
+    // },
   },
 });
 
-export const { setArrDonViSuDungRedux } = quanLyDonViSuDungReducer.actions;
+export const { setArrDonViSuDungRedux, setItemDonViSuDungRedux } =
+  quanLyDonViSuDungReducer.actions;
 
 export default quanLyDonViSuDungReducer.reducer;
 
@@ -46,6 +70,7 @@ export const getArrQuanLyDonViSuDungFireStore = () => {
         querySnapshot.forEach((doc) => {
           arrDonViSuDung.push({ ...doc.data(), id: doc.id });
         });
+        console.log({ arrDonViSuDung });
         dispatch(setArrDonViSuDungRedux(arrDonViSuDung));
       });
     } catch (error) {

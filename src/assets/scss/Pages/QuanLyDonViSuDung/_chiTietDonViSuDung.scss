@@ -1,0 +1,54 @@
+.chiTietDonViSuDung {
+    .container {
+        .container-top {}
+
+        .container-content {
+            .menu {
+                width: 100px;
+                height: 360px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+                align-items: center;
+                padding: 16px;
+
+                .menu-item {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 10px;
+
+                    .bg_icon {
+                        width: 52px;
+                        height: 52px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        background: rgba(114, 114, 136, 0.5);
+                        border-radius: 50%;
+                        cursor: pointer;
+
+                        i {
+                            font-size: 26px;
+                            color: rgba(255, 117, 6, 1);
+                        }
+                    }
+
+                    p {
+                        text-align: center;
+                        @include text (12px, 500, #ffffff);
+                        opacity: 0.7;
+                    }
+
+                    &:nth-child(2) {
+                        .bg_icon {
+                            i {
+                                color: rgba(255, 71, 71, 1);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

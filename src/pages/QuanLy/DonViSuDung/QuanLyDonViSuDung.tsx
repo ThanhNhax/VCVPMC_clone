@@ -7,6 +7,7 @@ import {} from "../../../redux/quanLyThietBi/quanLyThietBiReducer";
 import {
   DonViSuDungRedux,
   getArrQuanLyDonViSuDungFireStore,
+  setItemDonViSuDungRedux,
 } from "../../../redux/quanLyDonViSuDung/quanLyDonViSuDungReducer";
 import { Link } from "react-router-dom";
 
@@ -18,12 +19,12 @@ export default function QuanLyDonViSuDung() {
   const dispatch: AppDispatch = useDispatch();
   // cấu hình phân pages
   const [currentPage, setCurrentPage] = useState<number>(1); // Vị trí page hiện tại
-  const [limit, setLimit] = useState<number>(13); // change số item hiển thị
-  const indexOfLastNews = currentPage * limit; // vị trí cuối
-  const indexOfFirstNews = indexOfLastNews - limit; // Vị trí đầu
+  // const [limit, setLimit] = useState<number>(13); // change số item hiển thị
+  // const indexOfLastNews = currentPage * limit; // vị trí cuối
+  // const indexOfFirstNews = indexOfLastNews - limit; // Vị trí đầu
   // const totalPages = Math.ceil(arrPlayList.length / limit); // Tính số tổng số pages
   // const newArrPlayList = arrPlayList.slice(indexOfFirstNews, indexOfLastNews);
-  const [isStyleBtn] = useState<boolean>(false);
+  // const [isStyleBtn] = useState<boolean>(false);
   // cấu hình phân pages
 
   // handle switch
@@ -33,9 +34,7 @@ export default function QuanLyDonViSuDung() {
     else thietBi.trangThai = true;
     console.log({ thietBi });
   };
-  useEffect(() => {
-    dispatch(getArrQuanLyDonViSuDungFireStore());
-  }, []);
+
   const renderTable = () => {
     return arrDonViSuDung.map((thietBi: DonViSuDungRedux, index: number) => (
       <tr key={index}>
@@ -46,7 +45,7 @@ export default function QuanLyDonViSuDung() {
         <td>{thietBi.tenTaiKhoảnQuanTri}</td>
         <td>{thietBi.soHopDong}</td>
         <td>{thietBi.admin}</td>
-        <td className="text_right">{thietBi.nguoiDung}</td>
+        <td className="text_right">{thietBi.arrNguoiDung.length}</td>
         <td className="text_right">{thietBi.thietBiDuocChiDinh}</td>
         <td>{thietBi.ngayHetHan}</td>
         <td>
@@ -57,11 +56,19 @@ export default function QuanLyDonViSuDung() {
           {thietBi.trangThai ? "Đang kích hoạt" : "Ngừng kích hoạt"}
         </td>
         <td className="action">
-          <Link to={"/admin/donViSuDung/chiTiet"}>Xem chi tiết</Link>
+          <Link
+            to={"/admin/donViSuDung/chiTiet"}
+            onClick={() => dispatch(setItemDonViSuDungRedux(thietBi))}
+          >
+            Xem chi tiết
+          </Link>
         </td>
       </tr>
     ));
   };
+  useEffect(() => {
+    dispatch(getArrQuanLyDonViSuDungFireStore());
+  }, []);
   return (
     <div className="quanLyDonViSuDung">
       <div className="container">
@@ -79,7 +86,7 @@ export default function QuanLyDonViSuDung() {
                   type="search"
                   name="search"
                   id="search"
-                  placeholder="Tên hợp đồng, số hợp đồng, người uỷ quyền..."
+                  placeholder="Tên khoản giá trị, số hợp đồng,..."
                 />
                 <i className="fas fa-search"></i>
               </div>

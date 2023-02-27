@@ -1,27 +1,54 @@
-import { Checkbox } from "antd";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../../redux/configStore";
+import { Checkbox } from "antd";
+import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { RootState } from "../../../redux/configStore";
+import { NguoiDungDonViRedux } from "../../../redux/quanLyDonViSuDung/quanLyDonViSuDungReducer";
 
 export default function ChiTietDonViSuDung() {
-  const dispatch: AppDispatch = useDispatch();
+  const item = useSelector(
+    (state: RootState) => state.quanLyDonViSuDung.itemDonViSuDung
+  );
+  const navigate = useNavigate();
+  if (item === null) navigate("/admin/donViSuDung");
   // cấu hình phân pages
   const [currentPage, setCurrentPage] = useState<number>(1); // Vị trí page hiện tại
-  const [limit, setLimit] = useState<number>(13); // change số item hiển thị
-  const indexOfLastNews = currentPage * limit; // vị trí cuối
-  const indexOfFirstNews = indexOfLastNews - limit; // Vị trí đầu
+  // const [limit, setLimit] = useState<number>(13); // change số item hiển thị
+  // const indexOfLastNews = currentPage * limit; // vị trí cuối
+  // const indexOfFirstNews = indexOfLastNews - limit; // Vị trí đầu
   // const totalPages = Math.ceil(arrPlayList.length / limit); // Tính số tổng số pages
   // const newArrPlayList = arrPlayList.slice(indexOfFirstNews, indexOfLastNews);
-  const [isStyleBtn] = useState<boolean>(false);
+  // const [isStyleBtn] = useState<boolean>(false);
   // cấu hình phân pages
+
+  const renderTable = () => {
+    return item?.arrNguoiDung.map((nguoiDung: NguoiDungDonViRedux, index) => (
+      <tr key={index}>
+        <td>
+          <Checkbox />
+        </td>
+        <td className="text_right">{index + 1}</td>
+        <td>{nguoiDung.tenNguoiDung}</td>
+        <td>{nguoiDung.vaiTro}</td>
+        <td>{nguoiDung.email}</td>
+        <td>{nguoiDung.tenDangNhap}</td>
+        <td>{nguoiDung.capNhatlanCuoi}</td>
+        <td className="action">
+          <Link to="">Xem chi tiết</Link>
+        </td>
+      </tr>
+    ));
+  };
   return (
     <div className="chiTietDonViSuDung quanLyDonViSuDung">
       <div className="container">
         <div className="container-top">
           <p>
             Quản lý <i className="fas fa-chevron-right"></i>Đơn vị sử dụng
+            <i className="fas fa-chevron-right"></i> Chi tết
           </p>
-          <h1>Danh sách đơn vị sử dụng</h1>
+
+          <h1>Đơn vị sử dụng - {item?.tenTaiKhoảnQuanTri}</h1>
         </div>
         <div className="container-content">
           <div className="wrap-content">
@@ -31,7 +58,7 @@ export default function ChiTietDonViSuDung() {
                   type="search"
                   name="search"
                   id="search"
-                  placeholder="Tên hợp đồng, số hợp đồng, người uỷ quyền..."
+                  placeholder="Tên bản ghi, tên ca sĩ, tác giả,..."
                 />
                 <i className="fas fa-search"></i>
               </div>
@@ -45,17 +72,16 @@ export default function ChiTietDonViSuDung() {
                         <Checkbox></Checkbox>
                       </th>
                       <th>STT</th>
-                      <th>Tên tài khoản quản trị</th>
-                      <th>Số hợp đồng</th>
-                      <th>Admin</th>
-                      <th>Người dùng</th>
-                      <th>Thiết bị được chỉ định</th>
-                      <th>Ngày hết hạn</th>
+                      <th>Tên người dùng</th>
+                      <th>Vai trò</th>
+                      <th>Email</th>
+                      <th>Tên đăng nhập</th>
+                      <th>Cập nhật lần cuối</th>
                       <th>Trạng thái</th>
                       <th></th>
                     </tr>
                   </thead>
-                  {/* <tbody>{renderTable()}</tbody> */}
+                  <tbody>{renderTable()}</tbody>
                 </table>
               </div>
               <div className="pagination-table">
@@ -95,10 +121,29 @@ export default function ChiTietDonViSuDung() {
             </div>
           </div>
           <div className="menu">
-            <div className="bg_icon">
-              <i className="fas fa-times"></i>
+            <div className="menu-item">
+              <div
+                className="bg_icon"
+                onClick={() =>
+                  navigate("/admin/donViSuDung/chiTiet/themNguoiDung")
+                }
+              >
+                <i className="fas fa-plus"></i>
+              </div>
+              <p>Thêm người dùng</p>
             </div>
-            <p>Xóa</p>
+            <div className="menu-item">
+              <div className="bg_icon">
+                <i className="fas fa-trash-alt"></i>
+              </div>
+              <p>Xóa</p>
+            </div>
+            <div className="menu-item">
+              <div className="bg_icon">
+                <i className="fas fa-user-friends"></i>
+              </div>
+              <p>Vai trò</p>
+            </div>
           </div>
         </div>
       </div>
