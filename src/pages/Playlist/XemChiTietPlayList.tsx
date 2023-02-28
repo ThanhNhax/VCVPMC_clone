@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { message, Modal } from "antd";
 import { deleteDoc, doc } from "firebase/firestore";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,6 +7,7 @@ import { db } from "../../FireStore/fireStore";
 import { RootState } from "../../redux/configStore";
 import { KhoBanGhiRedux } from "../../redux/khoBanGhi/khoBanghiReducer";
 import { deleteArrBanGhiRedux } from "../../redux/playListReducer/playListReducer";
+import { tongThoiLuong } from "./EditPlayList";
 
 export default function XemChiTietPlayList() {
   const styleI = {
@@ -136,6 +137,11 @@ export default function XemChiTietPlayList() {
       }
     );
   };
+
+  const menoTongThoiLong = useMemo(
+    () => tongThoiLuong(itemPlayList.arrBanGhi),
+    [itemPlayList.arrBanGhi]
+  );
   return (
     <div className="xemChiTietPlayList">
       <div className="container">
@@ -171,7 +177,7 @@ export default function XemChiTietPlayList() {
                     </tr>
                     <tr>
                       <td>Tổng thời lượng:</td>
-                      <td>{itemPlayList.thoiLuong}</td>
+                      <td>{menoTongThoiLong}</td>
                     </tr>
                   </tbody>
                 </table>

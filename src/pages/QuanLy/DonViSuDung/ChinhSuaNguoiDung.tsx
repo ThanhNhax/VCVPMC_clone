@@ -1,7 +1,8 @@
-import React from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from "react";
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../../FireStore/fireStore";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/configStore";
@@ -9,17 +10,20 @@ import { message } from "antd";
 import { useNavigate } from "react-router-dom";
 import {
   NguoiDungDonViRedux,
-  setArrNguoiDung,
+  updateNguoiDung,
 } from "../../../redux/quanLyDonViSuDung/quanLyDonViSuDungReducer";
 
-export default function ThemNguoiDung() {
+export default function ChinhSuaNguoiDung() {
   const item = useSelector(
-    (state: RootState) => state.quanLyDonViSuDung.itemDonViSuDung
+    (state: RootState) => state.quanLyDonViSuDung.itemNguoiDung
   );
   console.log({ item });
   const navigate = useNavigate();
+  useEffect(() => {
+    if (!item) navigate("/admin/donViSuDung");
+  }, []);
   const dispatch: AppDispatch = useDispatch();
-  const initialValues: NguoiDungDonViRedux = {
+  let initialValues: NguoiDungDonViRedux = {
     id: "",
     tenNguoiDung: "",
     email: "",
@@ -30,6 +34,8 @@ export default function ThemNguoiDung() {
     capNhatlanCuoi: "",
     trangThai: false,
   };
+  if (item) initialValues = item;
+  console.log({ initialValues });
   const validationSchema = Yup.object().shape({
     matKhau: Yup.string().required().min(6),
     matKhauNhapLai: Yup.string()
@@ -42,18 +48,18 @@ export default function ThemNguoiDung() {
     vaiTro: Yup.string().required(),
   });
   return (
-    <div className="ThemNguoiDung">
+    <div className="chinhSuaNguoiDung">
       <div className="container">
         <div className="container-top">
           <p>
             Quản lý <i className="fas fa-chevron-right"></i>
-            <span
-              style={{ cursor: "pointer" }}
-              onClick={() => navigate("/admin/donViSuDung")}
-            >
+            <span onClick={() => navigate("/admin/donViSuDung")}>
               Đơn vị sử dụng
             </span>
-            <i className="fas fa-chevron-right"></i>Chi tiết
+            <i className="fas fa-chevron-right"></i>
+            <span onClick={() => navigate("/admin/donViSuDung/chiTiet")}>
+              Chi tiết
+            </span>
             <i className="fas fa-chevron-right"></i>Thêm người dùng
           </p>
           <h1>Thêm người dùng</h1>
@@ -72,34 +78,13 @@ export default function ThemNguoiDung() {
                 `${ngayTao.getMonth() + 1}` +
                 "/" +
                 `${ngayTao.getFullYear()}`;
-              // setDoc vào arrNguoiDung
-
-              try {
-                if (item) {
-                  let newArrNguoiDung: NguoiDungDonViRedux[] = [
-                    ...item.arrNguoiDung,
-                    value,
-                  ];
-
-                  setDoc(
-                    doc(db, "quanLyDonViSuDung", item.id),
-                    {
-                      arrNguoiDung: newArrNguoiDung,
-                    },
-                    { merge: true }
-                  );
-                  dispatch(setArrNguoiDung(newArrNguoiDung));
-                  message.open({
-                    type: "success",
-                    content: "Thêm người dùng thành công!",
-                    duration: 0.8,
-                  });
-                  // chuyển tới trang chi tiết của đơn vị sử dụng
-                  navigate("/admin/donViSuDung/chiTiet");
-                }
-              } catch (e) {
-                console.log(e);
-              }
+              // cập nhật item người dung thay đổi lên redux
+              dispatch(updateNguoiDung(value));
+              message.open({
+                type: "success",
+                content: "Cập nhật thành công !",
+              });
+              navigate("/admin/donViSuDung/chiTiet");
             }}
           >
             {({ errors, touched }) => (
@@ -198,6 +183,25 @@ export default function ThemNguoiDung() {
                         }
                       />
                     </div>
+                    <div className="form-group">
+                      <label htmlFor="matKhauNhapLai">
+                        Trạng thái người dùng: <i>*</i>
+                      </label>
+                      <div className="form-radio">
+                        <div className="wrap-radio">
+                          <Field type="radio" name="trangThai" value="true" />
+                          <label htmlFor="">Đã kích hoạt</label>
+                        </div>
+                        <div className="wrap-radio">
+                          <Field
+                            type="radio"
+                            name="trangThai"
+                            value={"false"}
+                          />
+                          <label htmlFor="">Ngưng kích hoạt</label>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div className="form-btn">
@@ -205,7 +209,14 @@ export default function ThemNguoiDung() {
                     <i>*</i>là những trường thông tin bắt buộc
                   </p>
                   <div className="btn">
-                    <button type="button">Hủy</button>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        navigate("/admin/donViSuDung/chiTiet/thongTinNguoiDung")
+                      }
+                    >
+                      Hủy
+                    </button>
                     <button type="submit">Lưu</button>
                   </div>
                 </div>

@@ -1,28 +1,53 @@
-import React, { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from "react";
 import { Checkbox } from "antd";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { RootState } from "../../../redux/configStore";
-import { NguoiDungDonViRedux } from "../../../redux/quanLyDonViSuDung/quanLyDonViSuDungReducer";
+import { AppDispatch, RootState } from "../../../redux/configStore";
+import {
+  NguoiDungDonViRedux,
+  setIndexItemNguoiDung,
+  setItemNguoiDung,
+} from "../../../redux/quanLyDonViSuDung/quanLyDonViSuDungReducer";
 
 export default function ChiTietDonViSuDung() {
   const item = useSelector(
     (state: RootState) => state.quanLyDonViSuDung.itemDonViSuDung
   );
+  console.log({ item });
+  const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
-  if (item === null) navigate("/admin/donViSuDung");
+  useEffect(() => {
+    if (!item) navigate("/admin/donViSuDung");
+  }, []);
   // cấu hình phân pages
   const [currentPage, setCurrentPage] = useState<number>(1); // Vị trí page hiện tại
-  // const [limit, setLimit] = useState<number>(13); // change số item hiển thị
-  // const indexOfLastNews = currentPage * limit; // vị trí cuối
-  // const indexOfFirstNews = indexOfLastNews - limit; // Vị trí đầu
-  // const totalPages = Math.ceil(arrPlayList.length / limit); // Tính số tổng số pages
-  // const newArrPlayList = arrPlayList.slice(indexOfFirstNews, indexOfLastNews);
-  // const [isStyleBtn] = useState<boolean>(false);
-  // cấu hình phân pages
 
+  const indexOfLastNews = currentPage * 13; // vị trí cuối
+  const indexOfFirstNews = indexOfLastNews - 13; // Vị trí đầu
+  let totalPages = 1;
+  if (item) {
+    totalPages = Math.ceil(item?.arrNguoiDung.length / 13); // Tính số tổng số pages
+  }
+  const newArrNguoiDung = item?.arrNguoiDung.slice(
+    indexOfFirstNews,
+    indexOfLastNews
+  );
+  const [isStyleBtn] = useState<boolean>(false);
+  // cấu hình phân pages
+  const renderButtonPage = (n: number) => {
+    let btn: any = "";
+    for (let i = 0; i < n; i++) {
+      btn += `<button
+          className=${isStyleBtn ? "btn-item-active btn-item" : "btn-item"}
+          >
+          ${i + 1}
+        </button>`;
+    }
+    return { __html: btn };
+  };
   const renderTable = () => {
-    return item?.arrNguoiDung.map((nguoiDung: NguoiDungDonViRedux, index) => (
+    return newArrNguoiDung?.map((nguoiDung: NguoiDungDonViRedux, index) => (
       <tr key={index}>
         <td>
           <Checkbox />
@@ -34,7 +59,15 @@ export default function ChiTietDonViSuDung() {
         <td>{nguoiDung.tenDangNhap}</td>
         <td>{nguoiDung.capNhatlanCuoi}</td>
         <td className="action">
-          <Link to="">Xem chi tiết</Link>
+          <Link
+            to="/admin/donViSuDung/chiTiet/thongTinNguoiDung"
+            onClick={() => {
+              dispatch(setItemNguoiDung(nguoiDung));
+              dispatch(setIndexItemNguoiDung(`${index}`));
+            }}
+          >
+            Xem chi tiết
+          </Link>
         </td>
       </tr>
     ));
@@ -44,7 +77,13 @@ export default function ChiTietDonViSuDung() {
       <div className="container">
         <div className="container-top">
           <p>
-            Quản lý <i className="fas fa-chevron-right"></i>Đơn vị sử dụng
+            Quản lý <i className="fas fa-chevron-right"></i>
+            <span
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate("/admin/donViSuDung")}
+            >
+              Đơn vị sử dụng
+            </span>
             <i className="fas fa-chevron-right"></i> Chi tết
           </p>
 
@@ -106,10 +145,10 @@ export default function ChiTietDonViSuDung() {
                   </button>
                   <div
                     id="btnPage"
-                    // dangerouslySetInnerHTML={renderButtonPage(totalPages)}
+                    dangerouslySetInnerHTML={renderButtonPage(totalPages)}
                   ></div>
                   <button
-                    // disabled={currentPage >= totalPages}
+                    disabled={currentPage >= totalPages}
                     onClick={() => {
                       setCurrentPage(currentPage + 1);
                     }}

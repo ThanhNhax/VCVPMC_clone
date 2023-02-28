@@ -131,6 +131,7 @@ export const {
   setNewPlayListArrBanGhiRedux,
   deleteArrBanghiPlaylist,
   setNewPlayList,
+  clearNewPlaylistRedux,
 } = playListReducer.actions;
 
 export default playListReducer.reducer;

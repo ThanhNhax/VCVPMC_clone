@@ -13,6 +13,7 @@ import {
 export default function Playlist() {
   //Lấy Arr playList từ reudux về
   const { arrPlayList } = useSelector((state: RootState) => state.playList);
+  console.log({ arrPlayList });
   const dispatch: AppDispatch = useDispatch();
   // cấu hình phân pages
   const [currentPage, setCurrentPage] = useState<number>(1); // Vị trí page hiện tại
@@ -36,8 +37,6 @@ export default function Playlist() {
     // cập nhật itemPlayList lên redux
     dispatch(setItemPlayList(item));
   };
-  ////
-  // handle thoi luong
 
   const renderPlayListTable = () => {
     return newArrPlayList.map((item: PlayListRedux, index: number) => {
@@ -52,7 +51,7 @@ export default function Playlist() {
               return <p key={index}>{chuDe}</p>;
             })}
           </td>
-          <td>{moment(item.ngayTao).format("DD/mm/yyy")}</td>
+          <td>{item.ngayTao}</td>
           <td>{item.nguoiTao}</td>
           <td className="action">
             <Link

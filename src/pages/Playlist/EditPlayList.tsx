@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { message, Modal, Switch } from "antd";
 import { doc, setDoc } from "firebase/firestore";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +12,35 @@ import {
 } from "../../redux/playListReducer/playListReducer";
 
 const tagsData = ["Pop", "EDM", "Lofi", "Ballad", "Chill", "Mashup"];
+
+export const tongThoiLuong = (arr: KhoBanGhiRedux[]) => {
+  let tam: string = "";
+  let gio: number = 0;
+  let phut: number = 0;
+  let giay: number = 0;
+
+  arr.map((banGhi: KhoBanGhiRedux) => {
+    if (banGhi.thoiLuong) {
+      let index = banGhi.thoiLuong.search(":");
+      console.log({ index });
+      giay += parseInt(
+        banGhi.thoiLuong.slice(index + 1, banGhi.thoiLuong.length)
+      );
+      phut += parseInt(banGhi.thoiLuong.slice(0, index));
+      console.log({ giay, phut }, banGhi.thoiLuong);
+      if (giay >= 60) {
+        giay = giay - 60;
+        phut += 1;
+      } else if (phut > 59) {
+        phut = 0;
+        gio += 1;
+      }
+      tam = gio + ":" + phut + ":" + giay;
+      console.log({ tam });
+    }
+  });
+  return tam;
+};
 
 export default function EditPlayList() {
   // Lấy itemPlayList tuef redux về
@@ -63,44 +92,19 @@ export default function EditPlayList() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  console.log("tong thoi Luong:", tongThoiLuong(itemPlayList.arrBanGhi));
   const handleSubmit = async () => {
     console.log("id: ", itemPlayList.id, itemPlayList);
     if (itemPlayList.id !== undefined) {
       const itemPlaylistRef = doc(db, "playList", itemPlayList.id);
-      let tongThoiLuong: string = "";
-      let gio: number = 0;
-      let phut: number = 0;
-      let giay: number = 0;
 
-      itemPlayList.arrBanGhi.map((banGhi: KhoBanGhiRedux) => {
-        if (banGhi.thoiLuong) {
-          let index = banGhi.thoiLuong.search(":");
-          console.log({ index });
-          giay += parseInt(
-            banGhi.thoiLuong.slice(index + 1, banGhi.thoiLuong.length)
-          );
-          phut += parseInt(banGhi.thoiLuong.slice(0, index));
-          console.log({ giay, phut }, banGhi.thoiLuong);
-          if (giay > 59) {
-            giay = 0;
-            phut += 1;
-          } else if (phut > 59) {
-            phut = 0;
-            gio += 1;
-          }
-          tongThoiLuong = gio + ":" + phut + ":" + giay;
-          console.log({ tongThoiLuong });
-        }
-        return tongThoiLuong;
-      }); // handle  o day
-      console.log({ tongThoiLuong });
       try {
         setDoc(
           itemPlaylistRef,
           {
             arrBanGhi: itemPlayList.arrBanGhi,
             chuDe: selectedTags,
-            thoiLuong: tongThoiLuong,
+            thoiLuong: tongThoiLuong(itemPlayList.arrBanGhi),
           },
           { merge: true }
         );
@@ -199,10 +203,7 @@ export default function EditPlayList() {
           <div className="center-left">
             <div className="left-title">
               <div className="title-top title-item">
-                <div
-                  className="img"
-                  // onClick={showModal}
-                ></div>
+                <div className="img" onClick={showModal}></div>
                 <h3>Tiêu đề</h3>
                 <input
                   type="text"
@@ -228,7 +229,7 @@ export default function EditPlayList() {
                     </tr>
                     <tr>
                       <td>Tổng thời lượng:</td>
-                      <td>01:02:3</td>
+                      <td>{tongThoiLuong(itemPlayList.arrBanGhi)}</td>
                     </tr>
                   </tbody>
                 </table>

@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/configStore";
 import {
+  clearNewPlaylistRedux,
   deleteArrBanghiPlaylist,
   PlayListRedux,
 } from "../../redux/playListReducer/playListReducer";
@@ -15,6 +16,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../FireStore/fireStore";
 import { KhoBanGhiRedux } from "../../redux/khoBanGhi/khoBanghiReducer";
 import moment from "moment";
+import { tongThoiLuong } from "./EditPlayList";
 
 const tagsData = ["Pop", "EDM", "Lofi", "Ballad", "Chill", "Mashup"];
 
@@ -149,36 +151,10 @@ export default function AddPlayList() {
         duration: 0.8,
       });
     } else {
-      let tongThoiLuong: string = "";
-      let gio: number = 0;
-      let phut: number = 0;
-      let giay: number = 0;
-
-      newPlayList.arrBanGhi.map((banGhi: KhoBanGhiRedux) => {
-        if (banGhi.thoiLuong) {
-          let index = banGhi.thoiLuong.search(":");
-          console.log({ index });
-          giay += parseInt(
-            banGhi.thoiLuong.slice(index + 1, banGhi.thoiLuong.length)
-          );
-          phut += parseInt(banGhi.thoiLuong.slice(0, index));
-          console.log({ giay, phut }, banGhi.thoiLuong);
-          if (giay > 59) {
-            giay = 0;
-            phut += 1;
-          } else if (phut > 59) {
-            phut = 0;
-            gio += 1;
-          }
-          tongThoiLuong = gio + ":" + phut + ":" + giay;
-          console.log({ tongThoiLuong });
-        }
-        return tongThoiLuong;
-      });
       const d = new Date();
 
       let ngayTao =
-        d.getDate() + ":" + (d.getMonth() + 1) + ":" + d.getFullYear();
+        d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
       console.log(ngayTao);
 
       let newItem: PlayListRedux = {
@@ -187,11 +163,11 @@ export default function AddPlayList() {
         chuDe: [...selectedTags],
         desc: newPlayList.desc,
         id: newPlayList.id,
-        ngayTao: `${ngayTao}`,
+        ngayTao: ngayTao,
         nguoiTao: user?.ho + " " + user?.ten,
         tieuDe: tieuDe,
         soBanGhi: newPlayList.soBanGhi,
-        thoiLuong: tongThoiLuong,
+        thoiLuong: tongThoiLuong(newPlayList.arrBanGhi),
       };
       console.log({ newItem });
       try {
@@ -205,6 +181,8 @@ export default function AddPlayList() {
             duration: 0.8,
           });
           navigate("/admin/playlist");
+          // clear newItemPlaylist
+          dispatch(clearNewPlaylistRedux());
         }
       } catch (e) {
         console.log(e);
