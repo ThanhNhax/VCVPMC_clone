@@ -48,6 +48,8 @@ import ChiTietDonViSuDung from "./pages/QuanLy/DonViSuDung/ChiTietDonViSuDung";
 import ThemNguoiDung from "./pages/QuanLy/DonViSuDung/ThemNguoiDung";
 import ThongTinNguoiDung from "./pages/QuanLy/DonViSuDung/ThongTinNguoiDung";
 import ChinhSuaNguoiDung from "./pages/QuanLy/DonViSuDung/ChinhSuaNguoiDung";
+import DoiTacUyQuyen from "./pages/QuanLy/DoiTacUyQuyen/DoiTacUyQuyen";
+import CapNhatDoiTacUyQuyen from "./pages/QuanLy/DoiTacUyQuyen/CapNhatDoiTacUyQuyen";
 export const history: any = createBrowserHistory();
 
 const root = ReactDOM.createRoot(
@@ -166,6 +168,14 @@ root.render(
             <Route
               path="/admin/donViSuDung/chiTiet/thongTinNguoiDung/chinhSuaThongTin"
               element={<ChinhSuaNguoiDung />}
+            ></Route>
+            <Route
+              path="/admin/quanLyUyQuyen"
+              element={<DoiTacUyQuyen />}
+            ></Route>
+            <Route
+              path="/admin/quanLyUyQuyen/capNhat"
+              element={<CapNhatDoiTacUyQuyen />}
             ></Route>
             {/* <Route path="*" element={<Navigate to={"/admin"} />}></Route> */}
           </Route>

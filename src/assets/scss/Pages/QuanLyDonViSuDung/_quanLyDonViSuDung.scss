@@ -137,45 +137,13 @@
                                     }
 
                                     .action {
+
                                         a {
                                             @include text(12px, 600, #FF7506);
+
                                         }
                                     }
 
-                                    .true_thoiHan {
-
-                                        position: relative;
-                                        padding-left: 10px;
-
-                                        &::before {
-                                            content: "";
-                                            position: absolute;
-                                            display: block;
-                                            width: 8px;
-                                            height: 8px;
-                                            border-radius: 50%;
-                                            background-color: blue;
-                                            top: 5px;
-                                            left: 0;
-                                        }
-                                    }
-
-                                    .false_thoiHan {
-                                        position: relative;
-                                        padding-left: 10px;
-
-                                        &::before {
-                                            content: "";
-                                            position: absolute;
-                                            display: block;
-                                            width: 8px;
-                                            height: 8px;
-                                            border-radius: 50%;
-                                            background-color: #878890;
-                                            top: 5px;
-                                            left: 0;
-                                        }
-                                    }
                                 }
                             }
                         }

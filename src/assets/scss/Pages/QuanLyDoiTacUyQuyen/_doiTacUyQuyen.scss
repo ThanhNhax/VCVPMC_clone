@@ -1,0 +1,209 @@
+.doiTacUyQuyen {
+    height: 90%;
+    padding: 0 80px 0 40px;
+
+    .container {
+        width: 100%;
+        height: 100%;
+
+        .container-top {
+            height: 15%;
+
+            p {
+                @include text (16px, 600, #F5F5FF);
+                opacity: 0.5;
+
+                i {
+                    margin: 0 13px;
+                    color: #FFAC69;
+                }
+
+                span {
+                    cursor: pointer;
+                }
+            }
+
+            h1 {
+                @include text(24px, 700, #ffffff);
+            }
+
+            #input_search {
+                position: relative;
+                width: 35%;
+
+                input {
+                    width: 100%;
+                    height: 36px;
+                    background: #2b2b3f;
+                    border-radius: 8px;
+                    border: 2px solid #1e1e2e;
+                    padding-left: 5px;
+                }
+
+                i {
+                    color: #f5f5ff;
+                    font-size: 18px;
+                    position: absolute;
+                    bottom: 8px;
+                    right: 15px;
+                }
+            }
+        }
+
+        .wrap-table {
+            height: 75%;
+            background: rgba(47, 47, 65, 0.7);
+            border-radius: 16px 16px 0 0;
+
+            table {
+                width: 100%;
+                padding: 16px 24px;
+
+                thead {
+                    tr {
+                        height: 30px;
+
+                        th {
+                            @include text(12px, 700, #ffac69);
+                            margin: 0 10px;
+                            text-align: left;
+                            padding: 0 10px;
+                        }
+                    }
+                }
+
+                tbody {
+                    tr:last-child {
+                        &::after {
+                            position: absolute;
+                            bottom: 0;
+                            left: 0;
+                            content: '';
+                            height: 0;
+                            width: 0;
+                            background: rgb(97, 96, 96);
+                        }
+                    }
+
+                    tr {
+                        position: relative;
+                        transition: all .5s;
+
+                        &:hover {
+                            background: #878890;
+                        }
+
+                        &::after {
+                            position: absolute;
+                            left: 0;
+                            bottom: 0;
+                            content: '';
+                            height: 1px;
+                            width: 100%;
+                            background: rgb(97, 96, 96);
+                        }
+
+
+                        td {
+                            text-align: left;
+                            padding: 0px 10px;
+                            @include text(12px, 400, #FFFFFF);
+                            border: none;
+
+                            &:nth-child(7) {
+                                button {
+                                    margin-right: 5px;
+                                }
+                            }
+                        }
+
+                        .text_right {
+                            text-align: right;
+                        }
+
+                        .action {
+                            @include text(12px, 600, #FF7506);
+                            text-decoration: underline;
+                            cursor: pointer;
+                        }
+                    }
+                }
+            }
+        }
+
+        .pagination-table {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(47, 47, 65, 0.7);
+            border-radius: 0 0 16px 16px;
+            padding: 0 24px 24px;
+
+            .pagination_left {
+                p {
+                    @include text (14px, 400, #F5F5FF);
+
+                    select {
+                        margin: 0 5px;
+                        @include text(16px, 400, #ff7506);
+                        background: rgba(47, 47, 65, 0.7);
+                        border: 1px solid #ff7506;
+                        border-radius: 8px;
+                        padding: 5px 10px;
+
+                        option {
+                            margin: 8px 0;
+                            background: #3e3e5b;
+                            border: 2px solid #1e1e2e;
+                            @include text(16px, 400, #ffffff);
+
+                        }
+                    }
+                }
+            }
+
+            .pagination_right {
+                width: 100px;
+                display: flex;
+                justify-content: space-evenly;
+                gap: 5px;
+                align-items: center;
+
+                #btnPage {
+                    display: flex;
+                    gap: 5px;
+
+                    button {
+                        width: 26px;
+                        height: 26px;
+                        @include button (14px, 500, #FFF9F4, rgba(47, 47, 65, 0.7), 1px solid rgba(47, 47, 65, 0.7), 0, 50%, rgba(255, 117, 6, 1), #FFF9F4);
+                        margin: auto;
+
+                        &:disabled {
+                            background: rgba(#000000, 0);
+                            color: #878890;
+
+                        }
+                    }
+                }
+
+                button {
+                    &:disabled {
+                        background: rgba(#000000, 0);
+                        color: #878890;
+
+                        &:hover {
+                            background: rgba(#000000, 0);
+                            color: #878890;
+                        }
+                    }
+
+
+                    @include button (14px, 500, #FFF9F4, rgba(47, 47, 65, 0.7), 1px solid rgba(47, 47, 65, 0.7), 0, 50%,
+                        rgba(47, 47, 65, 0.7), #ff7506);
+                    margin: auto
+                }
+            }
+        }
+    }
+}

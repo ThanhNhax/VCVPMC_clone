@@ -1,6 +1,12 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getFirestore,
+  setDoc,
+} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -22,21 +28,16 @@ export const auth = getAuth(app);
 
 ///
 
-// let arrNguoiDung = [
-//   {
-//     tenNguoiDung: "Nguyen Van A",
-//     vaiTro: "QC",
-//     email: "nguyenvanb@gmail.com",
-//     tenDangNhap: "nguyenvanb",
-//     capNhatlanCuoi: "02/12/2022",
-//     trangThai: false,
-//     id: "",
-//   },
-// ];
-// setDoc(
-//   doc(db, "quanLyDonViSuDung", "rG4Qt3uiRgBsLhwcdtEu"),
-//   {
-//     arrNguoiDung,
-//   },
-//   { merge: true }
-// );
+// let data = {
+//   tenNguoiDung: "Nguyen Van A",
+//   email: "nguyenvanb@gmail.com",
+//   soDienThoi: "1212121212",
+//   vaiTro: "QA",
+//   tenDangNhap: "nguyenvanb",
+//   matKhau: "123123",
+//   matKhauNhapLai: "123123",
+//   trangThai: false,
+//   id: "",
+// };
+
+// addDoc(collection(db, "quanLyDoiTacUyQuyen"), data);

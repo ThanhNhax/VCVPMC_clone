@@ -2,26 +2,28 @@
 import React, { useEffect } from "react";
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../redux/configStore";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/configStore";
 import { message } from "antd";
 import { useNavigate } from "react-router-dom";
-import {
-  NguoiDungDonViRedux,
-  updateNguoiDung,
-} from "../../../redux/quanLyDonViSuDung/quanLyDonViSuDungReducer";
+
+import { DoiTacUyQuyenRedux } from "../../../redux/quanLyDoiTacUyQuyen/quanLyDoiTacUyQuyen";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../../../FireStore/fireStore";
 
 export default function ChinhSuaNguoiDung() {
+  const navigate = useNavigate();
   const item = useSelector(
-    (state: RootState) => state.quanLyDonViSuDung.itemNguoiDung
+    (state: RootState) => state.doiTacUyQuyen.itemDoiTacUyQuyen
   );
   console.log({ item });
-  const navigate = useNavigate();
   useEffect(() => {
-    if (!item) navigate("/admin/donViSuDung");
+    if (!item) {
+      navigate("/admin/quanLyUyQuyen");
+    }
   }, []);
-  const dispatch: AppDispatch = useDispatch();
-  let initialValues: NguoiDungDonViRedux = {
+
+  let initialValues: DoiTacUyQuyenRedux = {
     id: "",
     tenNguoiDung: "",
     email: "",
@@ -29,8 +31,9 @@ export default function ChinhSuaNguoiDung() {
     tenDangNhap: "",
     matKhau: "",
     matKhauNhapLai: "",
-    capNhatlanCuoi: "",
-    trangThai: false,
+    trangThai: "false",
+    ngayHetHan: "",
+    soDienThoi: "",
   };
   if (item) initialValues = item;
   console.log({ initialValues });
@@ -40,10 +43,6 @@ export default function ChinhSuaNguoiDung() {
       .required()
       .min(6)
       .oneOf([Yup.ref("matKhau"), null], "Passwords must match"),
-    tenNguoiDung: Yup.string().required(),
-    tenDangNhap: Yup.string().required(),
-    email: Yup.string().required().email(),
-    vaiTro: Yup.string().required(),
   });
   return (
     <div className="chinhSuaNguoiDung">
@@ -51,38 +50,36 @@ export default function ChinhSuaNguoiDung() {
         <div className="container-top">
           <p>
             Quản lý <i className="fas fa-chevron-right"></i>
-            <span onClick={() => navigate("/admin/donViSuDung")}>
-              Đơn vị sử dụng
+            <span onClick={() => navigate("/admin/quanLyUyQuyen")}>
+              Đối tác uỷ quyền
             </span>
-            <i className="fas fa-chevron-right"></i>
-            <span onClick={() => navigate("/admin/donViSuDung/chiTiet")}>
-              Chi tiết
-            </span>
-            <i className="fas fa-chevron-right"></i>Thêm người dùng
+            <i className="fas fa-chevron-right"></i>Cập nhật thông tin người
+            dùng
           </p>
-          <h1>Thêm người dùng</h1>
+          <h1>Cập nhật thông tin</h1>
         </div>
         <div className="container-form">
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={(value: NguoiDungDonViRedux) => {
+            onSubmit={(value: DoiTacUyQuyenRedux) => {
               console.log({ value });
-              // gán ngày tạo là ngày hiện tại
-              let ngayTao = new Date();
-              value.capNhatlanCuoi =
-                `${ngayTao.getDate()}` +
-                "/" +
-                `${ngayTao.getMonth() + 1}` +
-                "/" +
-                `${ngayTao.getFullYear()}`;
-              // cập nhật item người dung thay đổi lên redux
-              dispatch(updateNguoiDung(value));
-              message.open({
-                type: "success",
-                content: "Cập nhật thành công !",
-              });
-              navigate("/admin/donViSuDung/chiTiet");
+              // update len fireStore
+              try {
+                if (item) {
+                  setDoc(doc(db, "quanLyDoiTacUyQuyen", item.id), value, {
+                    merge: true,
+                  });
+
+                  message.open({
+                    type: "success",
+                    content: "Cập nhật thành công !",
+                  });
+                  //   navigate("/admin/quanLyUyQuyen")
+                }
+              } catch (e) {
+                console.log(e);
+              }
             }}
           >
             {({ errors, touched }) => (
@@ -97,6 +94,7 @@ export default function ChinhSuaNguoiDung() {
                         type="text"
                         id="tenNguoiDung"
                         name="tenNguoiDung"
+                        readOnly
                         className={
                           errors.tenNguoiDung && touched.tenNguoiDung
                             ? "input-error"
@@ -112,9 +110,21 @@ export default function ChinhSuaNguoiDung() {
                         type="email"
                         id="email"
                         name="email"
+                        readOnly
                         className={
                           errors.email && touched.email ? "input-error" : ""
                         }
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="soDienThoi">
+                        Số điện thoại <i>*</i>
+                      </label>
+                      <Field
+                        type="text"
+                        id="soDienThoi"
+                        name="soDienThoi"
+                        readOnly
                       />
                     </div>
                     <div className="form-group">
@@ -122,6 +132,7 @@ export default function ChinhSuaNguoiDung() {
                         Vai trò <i>*</i>
                       </label>
                       <Field
+                        readOnly
                         as="select"
                         id="vaiTro"
                         name="vaiTro"
@@ -146,6 +157,7 @@ export default function ChinhSuaNguoiDung() {
                         type="text"
                         id="tenDangNhap"
                         name="tenDangNhap"
+                        readOnly
                         className={
                           errors.tenDangNhap && touched.tenNguoiDung
                             ? "input-error"
@@ -183,11 +195,11 @@ export default function ChinhSuaNguoiDung() {
                     </div>
                     <div className="form-group">
                       <label htmlFor="matKhauNhapLai">
-                        Trạng thái người dùng: <i>*</i>
+                        Trạng thái <i>*</i>
                       </label>
                       <div className="form-radio">
                         <div className="wrap-radio">
-                          <Field type="radio" name="trangThai" value="true" />
+                          <Field type="radio" name="trangThai" value={"true"} />
                           <label htmlFor="">Đã kích hoạt</label>
                         </div>
                         <div className="wrap-radio">
@@ -209,9 +221,7 @@ export default function ChinhSuaNguoiDung() {
                   <div className="btn">
                     <button
                       type="button"
-                      onClick={() =>
-                        navigate("/admin/donViSuDung/chiTiet/thongTinNguoiDung")
-                      }
+                      onClick={() => navigate("/admin/quanLyUyQuyen")}
                     >
                       Hủy
                     </button>
