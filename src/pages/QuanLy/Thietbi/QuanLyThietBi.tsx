@@ -6,9 +6,12 @@ import { AppDispatch, RootState } from "../../../redux/configStore";
 import {
   getArrQuanLyThietBiFireStore,
   QuanLyThietBiRedux,
+  setItemThietBi,
 } from "../../../redux/quanLyThietBi/quanLyThietBiReducer";
+import { useNavigate } from "react-router-dom";
 
 export default function QuanLyThietBi() {
+  const navigate = useNavigate();
   const { arrQuanLyThietBi } = useSelector(
     (state: RootState) => state.quanLyThietBi
   );
@@ -21,14 +24,20 @@ export default function QuanLyThietBi() {
   const renderTableLeft = () => {
     return arrQuanLyThietBi.map(
       (thietBi: QuanLyThietBiRedux, index: number) => (
-        <tr key={index}>
+        <tr
+          key={index}
+          onClick={() => {
+            dispatch(setItemThietBi(thietBi));
+            navigate("/admin/quanLyThietBi/chiTiet");
+          }}
+        >
           <td>
             <Checkbox />
           </td>
           <td className="text_right">{index + 1}</td>
           <td>{thietBi.tenThietBi}</td>
-          <td>
-            {thietBi.trangThai ? "Đang kích hoạt |" : "Ngừng kích hoạt "}{" "}
+          <td className={thietBi.kichHoat ? "true" : "false"}>
+            {thietBi.kichHoat ? "Đang kích hoạt |" : "Ngừng kích hoạt "}
             {thietBi.kichHoat && thietBi.trangThai ? "Đang hoạt động" : ""}
           </td>
         </tr>
@@ -41,16 +50,17 @@ export default function QuanLyThietBi() {
         <tr
           key={index}
           onClick={() => {
-            alert("chi tiet");
+            dispatch(setItemThietBi(thietBi));
+            navigate("/admin/quanLyThietBi/chiTiet");
           }}
         >
-          <td>{thietBi.hanHopDong}</td>
-          <td>{thietBi.tenDangNhap}</td>
-          <td>{thietBi.diaChi}</td>
-          <td>{thietBi.memory}</td>
-          <td>{thietBi.macAddresss}</td>
-          <td>{thietBi.skuId}</td>
-          <td>{thietBi.hanBaoHanh}</td>
+          <td>{thietBi.hanHopDong ? thietBi.hanHopDong : "-"}</td>
+          <td>{thietBi.tenDangNhap ? thietBi.tenDangNhap : "-"}</td>
+          <td>{thietBi.diaChi ? thietBi.diaChi : "-"}</td>
+          <td>{thietBi.memory ? thietBi.memory : "-"}</td>
+          <td>{thietBi.macAddresss ? thietBi.macAddresss : "-"}</td>
+          <td>{thietBi.skuId ? thietBi.skuId : "-"}</td>
+          <td>{thietBi.hanBaoHanh ? thietBi.hanBaoHanh : "-"}</td>
         </tr>
       )
     );
@@ -201,18 +211,21 @@ export default function QuanLyThietBi() {
           </div>
           <div className="menu">
             <div className="menu-item">
-              <div className="bg-icon">
+              <div
+                className="bg-icon"
+                onClick={() => navigate("/admin/quanLyThietBi/themMoi")}
+              >
                 <i className="fas fa-plus"></i>
               </div>
               <p>Thêm thiết bị</p>
             </div>
-            <div className="menu-item">
+            <div className="menu-item " aria-disabled>
               <div className="bg-icon">
                 <i className="fas fa-power-off"></i>
               </div>
               <p>Kích hoạt thiết bị</p>
             </div>
-            <div className="menu-item">
+            <div className="menu-item" aria-disabled>
               <div className="bg-icon">
                 <i className="fas fa-lock"></i>
               </div>

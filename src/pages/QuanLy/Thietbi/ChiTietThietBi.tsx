@@ -1,6 +1,35 @@
-import React from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { Modal } from "antd";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { RootState } from "../../../redux/configStore";
 
 export default function ChiTietThietBi() {
+  const item = useSelector(
+    (state: RootState) => state.quanLyThietBi.itemTietBi
+  );
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!item) {
+      navigate("/admin/quanLyThietBi");
+    }
+  }, []);
+
+  // xử  lý modal popup
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   return (
     <div className="ChiTietThietBi">
       <div className="container">
@@ -9,14 +38,16 @@ export default function ChiTietThietBi() {
             Danh sách thiết bị<i className="fas fa-chevron-right"></i>Chi tiết
             thiết bị
           </p>
-          <h1>Thông tin thiết bị - Device12233444</h1>
+          <h1>Thông tin thiết bị - {item?.tenThietBi}</h1>
         </div>
         <div className="container-content">
           <div className="content">
             <div className="content-item">
               <h5>Thông tin thiết bị</h5>
               <img src="../../img/Frame_534.png" alt="Frame_534.png" />
-              <p>Hoạt động</p>
+              <p className={item?.trangThai ? "true" : "false"}>
+                {item?.trangThai ? "Hoạt động" : "Ngừng kích hoạt"}
+              </p>
               <table>
                 <tbody>
                   <tr>
@@ -30,32 +61,32 @@ export default function ChiTietThietBi() {
               </table>
             </div>
             <div className="content-item">
-              <h5>DEVICE12233444</h5>
+              <h5>{item?.tenThietBi}</h5>
               <table>
                 <tbody>
                   <tr>
                     <td>SKU/ID:</td>
-                    <td>SKU/ID:</td>
+                    <td>{item?.skuId}</td>
                   </tr>
                   <tr>
                     <td>Địa chỉ Mac:</td>
-                    <td>SKU/ID:</td>
+                    <td>{item?.diaChi}</td>
                   </tr>
                   <tr>
                     <td>Tên đăng nhập:</td>
-                    <td>SKU/ID:</td>
+                    <td>{item?.tenDangNhap}</td>
                   </tr>
                   <tr>
                     <td>Định dạng:</td>
-                    <td>SKU/ID:</td>
+                    <td>{item?.dinhDang}</td>
                   </tr>
                   <tr>
                     <td>Vị trí:</td>
-                    <td>SKU/ID:</td>
+                    <td>{item?.viTri}</td>
                   </tr>
                   <tr>
                     <td>Thời hạn bảo hành:</td>
-                    <td>SKU/ID:</td>
+                    <td>{item?.hanBaoHanh}</td>
                   </tr>
                   <tr>
                     <td>Trạng thái thiết bị:</td>
@@ -99,10 +130,10 @@ export default function ChiTietThietBi() {
           </div>
           <div className="menu">
             <div className="menu-item">
-              <div className="bg-icon">
+              <div className="bg-icon" onClick={showModal}>
                 <i className="fas fa-edit"></i>
               </div>
-              <p>Khôi phục mật khẩu</p>
+              <p>Chỉnh sửa</p>
             </div>
             <div className="menu-item">
               <div className="bg-icon">
@@ -119,6 +150,22 @@ export default function ChiTietThietBi() {
           </div>
         </div>
       </div>
+      <Modal
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        footer={null}
+        wrapClassName="modal-video"
+        width={480}
+      >
+        <video
+          width="452"
+          height="247"
+          // src="https://www.youtube.com/embed/PoXDg2saXX8"
+          title="YouTube video player"
+          // frameborder="0"
+        ></video>
+      </Modal>
     </div>
   );
 }

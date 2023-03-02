@@ -1,0 +1,190 @@
+.ThemMoiThietBi {
+    height: 90%;
+    width: 100%;
+
+    .container {
+        height: 100%;
+        width: 100%;
+        padding-left: 40px;
+
+        .container-top {
+            p {
+                @include text (16px, 600, #F5F5FF);
+                opacity: 0.5;
+
+                i {
+                    margin: 0 13px;
+                    color: #FFAC69;
+                }
+            }
+
+            h1 {
+                @include text(36px, 700, #ffffff);
+            }
+        }
+
+        .container-form {
+            .wrap-form {
+                display: flex;
+                justify-content: flex-start;
+                gap: 50px;
+
+                .form-group {
+                    width: 40%;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 12px;
+
+                    .form-item {
+                        display: flex;
+                        justify-content: space-between;
+                        gap: 10px;
+                        align-items: center;
+
+                        label {
+                            @include text(16px, 700, #ffffff);
+
+
+                            i {
+                                color: rgba(255, 71, 71, 1);
+                            }
+                        }
+
+                        input {
+                            width: 300px;
+                            background: #2B2B3F;
+                            @include text(16px, 700, #ffffff);
+                            border: 1px solid #727288;
+                            border-radius: 8px;
+                            padding: 11px 24px 13px 16px;
+
+                        }
+
+                        .input-error {
+                            border: 2px solid red;
+                        }
+
+                        textarea {
+                            width: 300px;
+                            background: #2B2B3F;
+                            @include text(16px, 700, #ffffff);
+                            border: 1px solid #727288;
+                            border-radius: 8px;
+                            padding: 11px 24px 13px 16px;
+
+                        }
+
+                        select {
+                            width: 300px;
+                            background: #2B2B3F;
+                            @include text(16px, 700, #ffffff);
+                            border: 1px solid #727288;
+                            border-radius: 8px;
+                            padding: 11px 24px 13px 16px;
+                        }
+
+                        .thongTin {
+                            select {
+                                width: 300px;
+                            }
+
+                            .thongTin-bot {
+                                display: flex;
+                                gap: 10px;
+                                margin-top: 10px;
+                                justify-content: flex-end;
+
+                                .bg-thongTin {
+                                    width: 20px;
+                                    height: 20px;
+                                    border-radius: 50%;
+                                    position: relative;
+                                    border: 2px solid rgba(255, 117, 6, 1);
+
+                                    i {
+                                        position: absolute;
+                                        top: 50%;
+                                        left: 50%;
+                                        transform: translate(-55%, -50%);
+                                        color: rgba(255, 117, 6, 1);
+                                        font-size: 12px;
+                                    }
+
+                                }
+
+                                p {
+                                    @include text(16px, 700, #ffffff);
+                                }
+                            }
+                        }
+
+                        .password {
+                            position: relative;
+
+                            .fa-eye {
+                                color: #fff;
+                                position: absolute;
+                                top: 18px;
+                                right: 25px;
+                            }
+
+                            #doiMau {
+                                color: #ff7506 !important;
+                            }
+                        }
+                    }
+
+                    &:first-child {
+                        .form-item {
+                            &:nth-child(4) {
+                                justify-content: flex-start;
+                                gap: 20px;
+
+                                input {
+                                    width: 200px;
+
+                                    &::-webkit-calendar-picker-indicator {
+                                        background-color: #FF7506;
+                                        padding: 5px;
+                                        cursor: pointer;
+                                        border-radius: 3px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .form-btn {
+                p {
+                    i {
+                        color: red;
+                    }
+
+                    @include text(12px, 500, #F5F5FF);
+                    opacity: .5;
+                }
+
+                .btn {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 32px;
+
+                    button {
+                        width: 168px;
+
+                        &:nth-child(1) {
+                            @include button (16px, 600, #FF7506, #1E1E2E, 12px 32px, 1px solid #FF7506, 8px, #FF7506, #ffffff)
+                        }
+
+                        &:nth-child(2) {
+                            @include button (16px, 600, #ffffff, #FF7506, 12px 32px, 1px solid #FF7506, 8px, #1E1E2E, #FF7506)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

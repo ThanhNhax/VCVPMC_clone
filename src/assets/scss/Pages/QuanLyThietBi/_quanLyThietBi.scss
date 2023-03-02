@@ -30,12 +30,12 @@
                     .wrap-select {
                         select {
                             padding: 12px 12px 12px 16px;
-                            background: #1E1E2E;
+                            background: #1e1e2e;
                             /* Orange/4 default */
                             margin-right: 24px;
-                            border: 1px solid #FF7506;
+                            border: 1px solid #ff7506;
                             border-radius: 8px;
-                            @include text(16px, 400, #F5F5FF);
+                            @include text(16px, 400, #f5f5ff);
                         }
                     }
 
@@ -89,7 +89,6 @@
                                     height: 24px;
 
                                     tr {
-
                                         .stt {
                                             text-align: right;
                                         }
@@ -99,7 +98,6 @@
                                             margin: 0 10px;
                                             text-align: left;
                                             padding: 0 10px;
-
                                         }
                                     }
                                 }
@@ -110,7 +108,7 @@
                                             position: absolute;
                                             bottom: 0;
                                             left: 0;
-                                            content: '';
+                                            content: "";
                                             height: 0;
                                             width: 0;
                                             background: rgb(97, 96, 96);
@@ -119,23 +117,42 @@
 
                                     tr {
                                         position: relative;
+                                        cursor: pointer;
 
                                         &::after {
                                             position: absolute;
                                             left: 0;
                                             bottom: 0;
-                                            content: '';
+                                            content: "";
                                             height: 1px;
                                             width: 100%;
                                             background: rgb(97, 96, 96);
                                         }
 
-
                                         td {
                                             text-align: left;
                                             padding: 0px 10px;
-                                            @include text(12px, 400, #FFFFFF);
+                                            @include text(12px, 400, #ffffff);
                                             border: none;
+
+                                            &:nth-child(4) {
+                                                padding-left: 15px;
+                                                position: relative;
+
+                                                &::after {
+                                                    content: "";
+                                                    position: absolute;
+                                                    width: 8px;
+                                                    height: 8px;
+                                                    border-radius: 50%;
+                                                    top: 50%;
+                                                    left: 0;
+                                                    transform: translateY(-50%);
+
+                                                }
+                                            }
+
+
                                         }
 
                                         .text_right {
@@ -143,44 +160,23 @@
                                         }
 
                                         .action {
-                                            @include text(12px, 600, #FF7506);
+                                            @include text(12px, 600, #ff7506);
                                             text-decoration: underline;
                                         }
 
-                                        .true_thoiHan {
-
-                                            position: relative;
-                                            padding-left: 10px;
-
-                                            &::before {
-                                                content: "";
-                                                position: absolute;
-                                                display: block;
-                                                width: 8px;
-                                                height: 8px;
-                                                border-radius: 50%;
-                                                background-color: blue;
-                                                top: 5px;
-                                                left: 0;
+                                        .true {
+                                            &::after {
+                                                background: rgba(24, 227, 6, 1);
                                             }
                                         }
 
-                                        .false_thoiHan {
-                                            position: relative;
-                                            padding-left: 10px;
-
-                                            &::before {
-                                                content: "";
-                                                position: absolute;
-                                                display: block;
-                                                width: 8px;
-                                                height: 8px;
-                                                border-radius: 50%;
-                                                background-color: #878890;
-                                                top: 5px;
-                                                left: 0;
+                                        .false {
+                                            &::after {
+                                                background: rgba(255, 71, 71, 1);
                                             }
                                         }
+
+
                                     }
                                 }
                             }
@@ -199,7 +195,6 @@
                                     height: 24px;
 
                                     tr {
-
                                         .stt {
                                             text-align: right;
                                         }
@@ -209,7 +204,6 @@
                                             margin: 0 10px;
                                             text-align: left;
                                             padding: 0 10px;
-
                                         }
                                     }
                                 }
@@ -220,7 +214,7 @@
                                             position: absolute;
                                             bottom: 0;
                                             left: 0;
-                                            content: '';
+                                            content: "";
                                             height: 0;
                                             width: 0;
                                             background: rgb(97, 96, 96);
@@ -230,22 +224,22 @@
                                     tr {
                                         position: relative;
                                         height: 22px;
+                                        cursor: pointer;
 
                                         &::after {
                                             position: absolute;
                                             left: 0;
                                             bottom: 0;
-                                            content: '';
+                                            content: "";
                                             height: 1px;
                                             width: 100%;
                                             background: rgb(97, 96, 96);
                                         }
 
-
                                         td {
                                             text-align: left;
                                             padding: 0px 10px;
-                                            @include text(12px, 400, #FFFFFF);
+                                            @include text(12px, 400, #ffffff);
                                             border: none;
                                         }
 
@@ -254,52 +248,16 @@
                                         }
 
                                         .action {
-                                            @include text(12px, 600, #FF7506);
+                                            @include text(12px, 600, #ff7506);
                                             text-decoration: underline;
-                                        }
-
-                                        .true_thoiHan {
-
-                                            position: relative;
-                                            padding-left: 10px;
-
-                                            &::before {
-                                                content: "";
-                                                position: absolute;
-                                                display: block;
-                                                width: 8px;
-                                                height: 8px;
-                                                border-radius: 50%;
-                                                background-color: blue;
-                                                top: 5px;
-                                                left: 0;
-                                            }
-                                        }
-
-                                        .false_thoiHan {
-                                            position: relative;
-                                            padding-left: 10px;
-
-                                            &::before {
-                                                content: "";
-                                                position: absolute;
-                                                display: block;
-                                                width: 8px;
-                                                height: 8px;
-                                                border-radius: 50%;
-                                                background-color: #878890;
-                                                top: 5px;
-                                                left: 0;
-                                            }
                                         }
                                     }
                                 }
                             }
 
                             &::-webkit-scrollbar {
-
                                 height: 8px;
-                                background: #3E3E5B;
+                                background: #3e3e5b;
                                 border-radius: 16px;
                                 // custom scrollbar
                             }
@@ -323,7 +281,7 @@
 
                         .pagination_left {
                             p {
-                                @include text (14px, 400, #F5F5FF);
+                                @include text(14px, 400, #f5f5ff);
 
                                 select {
                                     margin: 0 5px;
@@ -338,7 +296,6 @@
                                         background: #3e3e5b;
                                         border: 2px solid #1e1e2e;
                                         @include text(16px, 400, #ffffff);
-
                                     }
                                 }
                             }
@@ -358,13 +315,20 @@
                                 button {
                                     width: 26px;
                                     height: 26px;
-                                    @include button (14px, 500, #FFF9F4, rgba(47, 47, 65, 0.7), 1px solid rgba(47, 47, 65, 0.7), 0, 50%, rgba(255, 117, 6, 1), #FFF9F4);
+                                    @include button(14px,
+                                        500,
+                                        #fff9f4,
+                                        rgba(47, 47, 65, 0.7),
+                                        1px solid rgba(47, 47, 65, 0.7),
+                                        0,
+                                        50%,
+                                        rgba(255, 117, 6, 1),
+                                        #fff9f4);
                                     margin: auto;
 
                                     &:disabled {
                                         background: rgba(#000000, 0);
                                         color: #878890;
-
                                     }
                                 }
                             }
@@ -380,10 +344,16 @@
                                     }
                                 }
 
-
-                                @include button (14px, 500, #FFF9F4, rgba(47, 47, 65, 0.7), 1px solid rgba(47, 47, 65, 0.7), 0, 50%,
-                                    rgba(47, 47, 65, 0.7), #ff7506);
-                                margin: auto
+                                @include button(14px,
+                                    500,
+                                    #fff9f4,
+                                    rgba(47, 47, 65, 0.7),
+                                    1px solid rgba(47, 47, 65, 0.7),
+                                    0,
+                                    50%,
+                                    rgba(47, 47, 65, 0.7),
+                                    #ff7506);
+                                margin: auto;
                             }
                         }
                     }
@@ -415,6 +385,7 @@
                         justify-content: center;
                         background: rgba(114, 114, 136, 0.5);
                         border-radius: 50%;
+                        cursor: pointer;
 
                         i {
                             font-size: 26px;
@@ -424,10 +395,51 @@
 
                     p {
                         text-align: center;
-                        @include text (12px, 500, #ffffff);
+                        @include text(12px, 500, #ffffff);
                         line-height: 18px;
                         opacity: 0.7;
                     }
+
+                    &:nth-child(2) {
+                        position: relative;
+
+                        &:hover {
+                            &::after {
+                                position: absolute;
+                                width: 267px;
+                                height: 18px;
+                                content: 'Chỉ chọn các thiết bị đang ngừng kích hoạt';
+                                background: #3E3E50;
+                                border-radius: 8px 0px 8px 8px;
+                                @include text(12px, 500, #878891);
+                                bottom: 0;
+                                right: 0;
+                                padding: 10px;
+                            }
+                        }
+
+                    }
+
+                    &:nth-child(3) {
+                        position: relative;
+
+                        &:hover {
+                            &::after {
+                                position: absolute;
+                                width: 267px;
+                                height: 18px;
+                                content: 'Chỉ chọn các thiết bị đang hoạt động';
+                                background: #3E3E50;
+                                border-radius: 8px 0px 8px 8px;
+                                @include text(12px, 500, #878891);
+                                bottom: 0;
+                                right: 0;
+                                padding: 10px;
+                            }
+                        }
+
+                    }
+
 
                     &:last-child {
                         .bg-icon {
@@ -436,6 +448,16 @@
                             }
                         }
                     }
+                }
+
+                div[aria-disabled="true"] {
+                    .bg-icon {
+
+                        i {
+                            color: rgba(135, 136, 144, 1);
+                        }
+                    }
+
                 }
             }
         }

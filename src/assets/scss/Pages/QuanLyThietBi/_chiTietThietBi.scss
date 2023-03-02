@@ -24,6 +24,7 @@
         }
 
         .container-content {
+            margin-top: 40px;
             display: flex;
             justify-content: space-between;
 
@@ -33,6 +34,7 @@
                 width: 90%;
                 display: flex;
                 justify-content: space-evenly;
+                padding-bottom: 40px;
 
                 .content-item {
                     height: 390px;
@@ -47,8 +49,33 @@
                     }
 
                     p {
+                        position: relative;
                         margin-bottom: 24px;
                         @include text(14px, 400, #ffffff);
+                        padding-left: 15px;
+
+                        &::after {
+                            content: "";
+                            position: absolute;
+                            width: 8px;
+                            height: 8px;
+                            border-radius: 50%;
+                            left: 0;
+                            top: 50%;
+                            transform: translateY(-50%);
+                        }
+                    }
+
+                    .true {
+                        &::after {
+                            background: rgba(24, 227, 6, 1);
+                        }
+                    }
+
+                    .false {
+                        &::after {
+                            background: rgba(255, 71, 71, 1);
+                        }
                     }
 
                     table {
@@ -139,6 +166,7 @@
                         justify-content: center;
                         background: rgba(114, 114, 136, 0.5);
                         border-radius: 50%;
+                        cursor: pointer;
 
                         i {
                             font-size: 26px;

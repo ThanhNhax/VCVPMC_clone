@@ -15,12 +15,21 @@ export interface QuanLyThietBiRedux {
   macAddresss: string;
   skuId: string;
   hanBaoHanh: string;
+  dinhDang: string;
+  viTri: string;
+  thongTin: string;
+  ghiChu: string;
+  password: string;
+  passwordComfirm: string;
+  vaiTro: string;
 }
 export interface QuanLyThietBiState {
   arrQuanLyThietBi: QuanLyThietBiRedux[] | [];
+  itemTietBi: QuanLyThietBiRedux | null;
 }
 const initialState: QuanLyThietBiState = {
   arrQuanLyThietBi: [],
+  itemTietBi: null,
 };
 
 const quanLyThietBiReducer = createSlice({
@@ -33,10 +42,17 @@ const quanLyThietBiReducer = createSlice({
     ) => {
       state.arrQuanLyThietBi = action.payload;
     },
+    setItemThietBi: (
+      state: QuanLyThietBiState,
+      action: PayloadAction<QuanLyThietBiRedux>
+    ) => {
+      state.itemTietBi = action.payload;
+    },
   },
 });
 
-export const { setArrQuanLyThietBiRedux } = quanLyThietBiReducer.actions;
+export const { setArrQuanLyThietBiRedux, setItemThietBi } =
+  quanLyThietBiReducer.actions;
 
 export default quanLyThietBiReducer.reducer;
 
