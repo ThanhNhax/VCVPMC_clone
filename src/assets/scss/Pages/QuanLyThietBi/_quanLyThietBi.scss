@@ -1,0 +1,443 @@
+.quanLyThietBi {
+    height: 90%;
+    width: 100%;
+
+    .container {
+        padding-left: 40px;
+        width: 100%;
+        height: 100%;
+
+        .container-top {
+            h1 {
+                @include text(24px, 700, #ffffff);
+            }
+        }
+
+        .container-content {
+            height: 95%;
+            display: flex;
+            justify-content: space-between;
+
+            .content {
+                width: 90%;
+                height: 100%;
+
+                .content-top {
+                    display: flex;
+                    justify-content: space-between;
+                    margin: 12px 0;
+
+                    .wrap-select {
+                        select {
+                            padding: 12px 12px 12px 16px;
+                            background: #1E1E2E;
+                            /* Orange/4 default */
+                            margin-right: 24px;
+                            border: 1px solid #FF7506;
+                            border-radius: 8px;
+                            @include text(16px, 400, #F5F5FF);
+                        }
+                    }
+
+                    .search {
+                        width: 40%;
+
+                        #input_search {
+                            position: relative;
+                            width: 100%;
+
+                            input {
+                                width: 100%;
+                                height: 36px;
+                                background: #2b2b3f;
+                                border-radius: 8px;
+                                border: 2px solid #1e1e2e;
+                                height: 100%;
+                                padding: 12px 12px 12px 16px;
+                            }
+
+                            i {
+                                color: #f5f5ff;
+                                font-size: 18px;
+                                position: absolute;
+                                bottom: 8px;
+                                right: 15px;
+                            }
+                        }
+                    }
+                }
+
+                .content-table {
+                    height: 85%;
+
+                    .wrap-table {
+                        width: 100%;
+                        height: 85%;
+                        background: rgba(47, 47, 65, 0.7);
+                        border-radius: 16px 16px 0 0;
+                        display: flex;
+
+                        .wrap {
+                            width: 45%;
+                            height: 100%;
+
+                            table {
+                                width: 100%;
+                                padding: 16px 0 16px 24px;
+
+                                thead {
+                                    height: 24px;
+
+                                    tr {
+
+                                        .stt {
+                                            text-align: right;
+                                        }
+
+                                        th {
+                                            @include text(12px, 700, #ffac69);
+                                            margin: 0 10px;
+                                            text-align: left;
+                                            padding: 0 10px;
+
+                                        }
+                                    }
+                                }
+
+                                tbody {
+                                    tr:last-child {
+                                        &::after {
+                                            position: absolute;
+                                            bottom: 0;
+                                            left: 0;
+                                            content: '';
+                                            height: 0;
+                                            width: 0;
+                                            background: rgb(97, 96, 96);
+                                        }
+                                    }
+
+                                    tr {
+                                        position: relative;
+
+                                        &::after {
+                                            position: absolute;
+                                            left: 0;
+                                            bottom: 0;
+                                            content: '';
+                                            height: 1px;
+                                            width: 100%;
+                                            background: rgb(97, 96, 96);
+                                        }
+
+
+                                        td {
+                                            text-align: left;
+                                            padding: 0px 10px;
+                                            @include text(12px, 400, #FFFFFF);
+                                            border: none;
+                                        }
+
+                                        .text_right {
+                                            text-align: right;
+                                        }
+
+                                        .action {
+                                            @include text(12px, 600, #FF7506);
+                                            text-decoration: underline;
+                                        }
+
+                                        .true_thoiHan {
+
+                                            position: relative;
+                                            padding-left: 10px;
+
+                                            &::before {
+                                                content: "";
+                                                position: absolute;
+                                                display: block;
+                                                width: 8px;
+                                                height: 8px;
+                                                border-radius: 50%;
+                                                background-color: blue;
+                                                top: 5px;
+                                                left: 0;
+                                            }
+                                        }
+
+                                        .false_thoiHan {
+                                            position: relative;
+                                            padding-left: 10px;
+
+                                            &::before {
+                                                content: "";
+                                                position: absolute;
+                                                display: block;
+                                                width: 8px;
+                                                height: 8px;
+                                                border-radius: 50%;
+                                                background-color: #878890;
+                                                top: 5px;
+                                                left: 0;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        .wrap-table-scroll {
+                            width: 55%;
+                            overflow-x: scroll;
+
+                            table {
+                                width: 1000px;
+
+                                padding: 16px 24px 16px 0px;
+
+                                thead {
+                                    height: 24px;
+
+                                    tr {
+
+                                        .stt {
+                                            text-align: right;
+                                        }
+
+                                        th {
+                                            @include text(12px, 700, #ffac69);
+                                            margin: 0 10px;
+                                            text-align: left;
+                                            padding: 0 10px;
+
+                                        }
+                                    }
+                                }
+
+                                tbody {
+                                    tr:last-child {
+                                        &::after {
+                                            position: absolute;
+                                            bottom: 0;
+                                            left: 0;
+                                            content: '';
+                                            height: 0;
+                                            width: 0;
+                                            background: rgb(97, 96, 96);
+                                        }
+                                    }
+
+                                    tr {
+                                        position: relative;
+                                        height: 22px;
+
+                                        &::after {
+                                            position: absolute;
+                                            left: 0;
+                                            bottom: 0;
+                                            content: '';
+                                            height: 1px;
+                                            width: 100%;
+                                            background: rgb(97, 96, 96);
+                                        }
+
+
+                                        td {
+                                            text-align: left;
+                                            padding: 0px 10px;
+                                            @include text(12px, 400, #FFFFFF);
+                                            border: none;
+                                        }
+
+                                        .text_right {
+                                            text-align: right;
+                                        }
+
+                                        .action {
+                                            @include text(12px, 600, #FF7506);
+                                            text-decoration: underline;
+                                        }
+
+                                        .true_thoiHan {
+
+                                            position: relative;
+                                            padding-left: 10px;
+
+                                            &::before {
+                                                content: "";
+                                                position: absolute;
+                                                display: block;
+                                                width: 8px;
+                                                height: 8px;
+                                                border-radius: 50%;
+                                                background-color: blue;
+                                                top: 5px;
+                                                left: 0;
+                                            }
+                                        }
+
+                                        .false_thoiHan {
+                                            position: relative;
+                                            padding-left: 10px;
+
+                                            &::before {
+                                                content: "";
+                                                position: absolute;
+                                                display: block;
+                                                width: 8px;
+                                                height: 8px;
+                                                border-radius: 50%;
+                                                background-color: #878890;
+                                                top: 5px;
+                                                left: 0;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            &::-webkit-scrollbar {
+
+                                height: 8px;
+                                background: #3E3E5B;
+                                border-radius: 16px;
+                                // custom scrollbar
+                            }
+
+                            &::-webkit-scrollbar-thumb {
+                                width: 85px;
+                                background: rgba(114, 114, 136, 0.5);
+                                border-radius: 16px;
+                            }
+                        }
+                    }
+
+                    .pagination-table {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        background: rgba(47, 47, 65, 0.7);
+                        border-radius: 0 0 16px 16px;
+                        padding: 0 24px;
+                        height: 15%;
+
+                        .pagination_left {
+                            p {
+                                @include text (14px, 400, #F5F5FF);
+
+                                select {
+                                    margin: 0 5px;
+                                    @include text(16px, 400, #ff7506);
+                                    background: rgba(47, 47, 65, 0.7);
+                                    border: 1px solid #ff7506;
+                                    border-radius: 8px;
+                                    padding: 5px 10px;
+
+                                    option {
+                                        margin: 8px 0;
+                                        background: #3e3e5b;
+                                        border: 2px solid #1e1e2e;
+                                        @include text(16px, 400, #ffffff);
+
+                                    }
+                                }
+                            }
+                        }
+
+                        .pagination_right {
+                            width: 100px;
+                            display: flex;
+                            justify-content: space-evenly;
+                            gap: 5px;
+                            align-items: center;
+
+                            #btnPage {
+                                display: flex;
+                                gap: 5px;
+
+                                button {
+                                    width: 26px;
+                                    height: 26px;
+                                    @include button (14px, 500, #FFF9F4, rgba(47, 47, 65, 0.7), 1px solid rgba(47, 47, 65, 0.7), 0, 50%, rgba(255, 117, 6, 1), #FFF9F4);
+                                    margin: auto;
+
+                                    &:disabled {
+                                        background: rgba(#000000, 0);
+                                        color: #878890;
+
+                                    }
+                                }
+                            }
+
+                            button {
+                                &:disabled {
+                                    background: rgba(#000000, 0);
+                                    color: #878890;
+
+                                    &:hover {
+                                        background: rgba(#000000, 0);
+                                        color: #878890;
+                                    }
+                                }
+
+
+                                @include button (14px, 500, #FFF9F4, rgba(47, 47, 65, 0.7), 1px solid rgba(47, 47, 65, 0.7), 0, 50%,
+                                    rgba(47, 47, 65, 0.7), #ff7506);
+                                margin: auto
+                            }
+                        }
+                    }
+                }
+            }
+
+            .menu {
+                width: 100px;
+                height: 530px;
+                background: #2f2f41;
+                border-radius: 16px 0px 0px 16px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+
+                .menu-item {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 16px;
+                    gap: 10px;
+
+                    .bg-icon {
+                        width: 52px;
+                        height: 52px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        background: rgba(114, 114, 136, 0.5);
+                        border-radius: 50%;
+
+                        i {
+                            font-size: 26px;
+                            color: #ff7506;
+                        }
+                    }
+
+                    p {
+                        text-align: center;
+                        @include text (12px, 500, #ffffff);
+                        line-height: 18px;
+                        opacity: 0.7;
+                    }
+
+                    &:last-child {
+                        .bg-icon {
+                            i {
+                                color: rgba(255, 71, 71, 1);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

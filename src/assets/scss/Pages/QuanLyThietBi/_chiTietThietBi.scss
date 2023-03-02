@@ -1,0 +1,159 @@
+.ChiTietThietBi {
+    height: 90%;
+    width: 100%;
+
+    .container {
+        height: 100%;
+        width: 100%;
+        padding-left: 40px;
+
+        .container-top {
+            p {
+                @include text (16px, 600, #F5F5FF);
+                opacity: 0.5;
+
+                i {
+                    margin: 0 13px;
+                    color: #FFAC69;
+                }
+            }
+
+            h1 {
+                @include text(36px, 700, #ffffff);
+            }
+        }
+
+        .container-content {
+            display: flex;
+            justify-content: space-between;
+
+            .content {
+                background: rgba(43, 43, 63, 1);
+                border-radius: 8px;
+                width: 90%;
+                display: flex;
+                justify-content: space-evenly;
+
+                .content-item {
+                    height: 390px;
+
+                    h5 {
+                        margin: 24px 0;
+                        @include text (24px, 700, rgba(255, 117, 6, 1));
+                    }
+
+                    img {
+                        margin-bottom: 32px;
+                    }
+
+                    p {
+                        margin-bottom: 24px;
+                        @include text(14px, 400, #ffffff);
+                    }
+
+                    table {
+                        width: 340px;
+
+                        tbody {
+                            tr {
+                                td {
+                                    &:first-child {
+                                        display: flex;
+                                        width: 70px;
+                                        @include text(16px, 700, #ffffff);
+                                    }
+
+                                    &:last-child {
+                                        padding: 0 16px;
+                                        @include text(16px, 400, #ffffff);
+                                        opacity: 0.7;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    &:nth-child(2) {
+                        table {
+                            height: 308px;
+
+                            tbody {
+                                tr {
+                                    height: 36px;
+
+                                    td {
+                                        &:first-child {
+                                            display: table-cell;
+                                            width: 160px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    &:last-child {
+                        display: flex;
+                        justify-content: space-between;
+                        flex-direction: column;
+
+                        table {
+                            tbody {
+                                tr {
+                                    height: 36px;
+
+                                    td {
+                                        &:first-child {
+                                            width: 160px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .menu {
+                width: 100px;
+                height: 400px;
+                background: #2f2f41;
+                border-radius: 16px 0px 0px 16px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+
+                .menu-item {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 16px;
+                    gap: 10px;
+
+                    .bg-icon {
+                        width: 52px;
+                        height: 52px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        background: rgba(114, 114, 136, 0.5);
+                        border-radius: 50%;
+
+                        i {
+                            font-size: 26px;
+                            color: #ff7506;
+                        }
+                    }
+
+                    p {
+                        text-align: center;
+                        @include text (12px, 500, #ffffff);
+                        line-height: 18px;
+                        opacity: 0.7;
+                    }
+                }
+            }
+        }
+    }
+}

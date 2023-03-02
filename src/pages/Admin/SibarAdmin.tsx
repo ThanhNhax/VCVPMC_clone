@@ -10,7 +10,7 @@ export default function SibarAdmin({ setToggle }: Props) {
     <div className="left">
       <div className="left_top" onClick={setToggle}>
         <div className="top-logo">
-          <img src="../img/vcpmc_logo.png" alt="logo_vcpmc" />
+          <img src="../../img/vcpmc_logo.png" alt="logo_vcpmc" />
         </div>
       </div>
       <nav className="navbar_amdin">

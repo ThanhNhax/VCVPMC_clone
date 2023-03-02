@@ -29,15 +29,17 @@ export const auth = getAuth(app);
 ///
 
 // let data = {
-//   tenNguoiDung: "Nguyen Van A",
-//   email: "nguyenvanb@gmail.com",
-//   soDienThoi: "1212121212",
-//   vaiTro: "QA",
-//   tenDangNhap: "nguyenvanb",
-//   matKhau: "123123",
-//   matKhauNhapLai: "123123",
-//   trangThai: false,
 //   id: "",
+//   tenThietBi: "Device A12231",
+//   trangThai: true,
+//   kichHoai: true,
+//   hanHopDong: "21/04/2021",
+//   tenDangNhap: "123.12.156.10",
+//   diaChi: "86/33, Âu Cơ, Phường 9, Tân Bình, TP Hồ Chí Minh",
+//   memory: "0.00GB/32GB",
+//   macAddresss: "123.12.156.10",
+//   skuId: "12341234123",
+//   hanBaoHanh: "21/04/2021",
 // };
 
-// addDoc(collection(db, "quanLyDoiTacUyQuyen"), data);
+// addDoc(collection(db, "quanLyThietBi"), data);

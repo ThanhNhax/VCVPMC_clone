@@ -18,6 +18,7 @@ export const store = configureStore({
     hopDong: hopDongReducer,
     quanLyDonViSuDung: quanLyDonViSuDungReducer,
     doiTacUyQuyen: quanLyDoiTacUyQuyen,
+    quanLyThietBi: quanLyThietBiReducer,
   },
 });
 

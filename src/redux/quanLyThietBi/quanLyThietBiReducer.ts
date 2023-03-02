@@ -4,14 +4,17 @@ import { db } from "../../FireStore/fireStore";
 import { AppDispatch } from "../configStore";
 
 export interface QuanLyThietBiRedux {
-  tenTaiKhoảnQuanTri: string;
-  soHopDong: string;
-  admin: string;
-  nguoiDung: number;
-  thietBiDuocChiDinh: number;
-  ngayHetHan: string;
-  trangThai: boolean;
   id: string;
+  tenThietBi: string;
+  trangThai: boolean;
+  kichHoat: boolean;
+  hanHopDong: string;
+  tenDangNhap: string;
+  diaChi: string;
+  memory: string;
+  macAddresss: string;
+  skuId: string;
+  hanBaoHanh: string;
 }
 export interface QuanLyThietBiState {
   arrQuanLyThietBi: QuanLyThietBiRedux[] | [];
