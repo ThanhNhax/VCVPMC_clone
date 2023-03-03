@@ -75,7 +75,7 @@ export default function SibarAdmin({ setToggle }: Props) {
               <p>Cài đặt</p>
               <i className="fas fa-ellipsis-v"></i>
               <div className="dropdown-quanly">
-                <Link to="/admin/quanLyHopDong">Phân quyền người</Link>
+                <Link to="/admin/phanQuyenNguoiDung">Phân quyền người</Link>
 
                 <Link to="/admin/quanLyThietBi">Cấu hình</Link>
 
