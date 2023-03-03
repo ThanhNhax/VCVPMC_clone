@@ -1,9 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Modal } from "antd";
+import { message, Modal } from "antd";
+import { Field, Formik, Form } from "formik";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../../redux/configStore";
+import * as Yup from "yup";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../../../FireStore/fireStore";
 
 export default function ChiTietThietBi() {
   const item = useSelector(
@@ -30,6 +34,22 @@ export default function ChiTietThietBi() {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+
+  const initValue = {
+    macAddresss: item?.macAddresss,
+    tenThietBi: item?.tenThietBi,
+    tenDangNhap: item?.tenDangNhap,
+    skuId: item?.skuId,
+    viTri: item?.viTri,
+    trangThai: item?.trangThai,
+  };
+  const Schema = Yup.object().shape({
+    macAddresss: Yup.string().required("Không được bỏ trống!"),
+    tenThietBi: Yup.string().required("Không được bỏ trống!"),
+    tenDangNhap: Yup.string().required("Không được bỏ trống!"),
+    skuId: Yup.string().required("Không được bỏ trống!"),
+    trangThai: Yup.string().required("Không được bỏ trống!"),
+  });
   return (
     <div className="ChiTietThietBi">
       <div className="container">
@@ -155,16 +175,129 @@ export default function ChiTietThietBi() {
         onOk={handleOk}
         onCancel={handleCancel}
         footer={null}
-        wrapClassName="modal-video"
-        width={480}
+        wrapClassName="modal-chinhSuaThietBi"
+        width={623}
       >
-        <video
-          width="452"
-          height="247"
-          // src="https://www.youtube.com/embed/PoXDg2saXX8"
-          title="YouTube video player"
-          // frameborder="0"
-        ></video>
+        <h5>Chỉnh sửa thông tin thiết bị</h5>
+        <Formik
+          initialValues={initValue}
+          validationSchema={Schema}
+          onSubmit={(value) => {
+            console.log({ value });
+            // update  các field thay đổi
+            try {
+              if (item) {
+                updateDoc(doc(db, "quanLyThietBi", item?.id), value);
+                message.open({
+                  type: "success",
+                  content: "Cập nhật thành công!",
+                  duration: 0.8,
+                });
+                handleOk();
+              }
+            } catch (e) {
+              console.log(e);
+            }
+          }}
+        >
+          {({ errors, touched }) => (
+            <Form className="form-chinhSua">
+              <div id="wrap-form">
+                <div className="form-group">
+                  <label htmlFor="tenThietBi">
+                    Tên thiết bị: <i>*</i>
+                  </label>
+                  <Field
+                    type="text"
+                    name="tenThietBi"
+                    id="tenThietBi"
+                    className={
+                      errors.tenThietBi && touched.tenThietBi
+                        ? "input-error"
+                        : ""
+                    }
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="skuId">
+                    SKU/ID: <i>*</i>
+                  </label>
+                  <Field
+                    type="text"
+                    name="skuId"
+                    id="skuId"
+                    className={
+                      errors.skuId && touched.skuId ? "input-error" : ""
+                    }
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="macAddresss">
+                    Địa chỉ Mac: <i>*</i>
+                  </label>
+                  <Field
+                    type="text"
+                    name="macAddresss"
+                    id="macAddresss"
+                    className={
+                      errors.macAddresss && touched.macAddresss
+                        ? "input-error"
+                        : ""
+                    }
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="tenDangNhap">
+                    Tên đăng nhập: <i>*</i>
+                  </label>
+                  <Field
+                    type="text"
+                    name="tenDangNhap"
+                    id="tenDangNhap"
+                    className={
+                      errors.tenDangNhap && touched.tenDangNhap
+                        ? "input-error"
+                        : ""
+                    }
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="viTri">Vị trí:</label>
+                  <Field type="text" name="viTri" id="viTri" />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="">
+                    Trạng thái thiết bị: <i>*</i>
+                  </label>
+                  <div className="form-item">
+                    <Field
+                      type="radio"
+                      name="trangThai"
+                      id="daKichHoat"
+                      value={"true"}
+                    />
+                    <label htmlFor="daKichHoat">Đã kích hoạt</label>
+                  </div>
+                  <div className="form-item">
+                    <Field
+                      type="radio"
+                      name="trangThai"
+                      id="ngungKichHoat"
+                      value={"false"}
+                    />
+                    <label htmlFor="ngungKichHoat">Ngừng kích hoạt</label>
+                  </div>
+                </div>
+                <div className="form-btn">
+                  <button type="button" onClick={handleCancel}>
+                    Hủy
+                  </button>
+                  <button type="submit">Lưu</button>
+                </div>
+              </div>
+            </Form>
+          )}
+        </Formik>
       </Modal>
     </div>
   );
