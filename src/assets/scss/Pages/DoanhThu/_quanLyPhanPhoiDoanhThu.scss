@@ -1,0 +1,339 @@
+.QuanLyPhanPhoiDoanhThu {
+    height: 90%;
+    padding-left: 40px;
+
+    .container {
+        width: 100%;
+        height: 100%;
+
+        .container-top {
+            height: 10%;
+
+            p {
+                @include text (16px, 600, #F5F5FF);
+                opacity: 0.5;
+
+                i {
+                    margin: 0 13px;
+                    color: #FFAC69;
+                }
+
+                span {
+                    cursor: pointer;
+                }
+            }
+
+            h1 {
+                margin-top: 10px;
+                @include text(24px, 700, #ffffff);
+            }
+
+        }
+
+        .container-content {
+            height: 90%;
+            display: flex;
+            justify-content: space-between;
+
+            .content {
+                height: 100%;
+                width: 90%;
+
+                .content-top {
+                    margin: 10px 0;
+                    display: flex;
+                    justify-content: space-between;
+
+                    .form-group {
+                        label {
+                            @include text(16px, 600, #FFFFFF);
+                        }
+
+                        input {
+                            height: 36px;
+                            padding: 12px 12px 12px 16px;
+                            width: 264px;
+                            background: #1E1E2E;
+                            border: 1px solid #727288;
+                            border-radius: 8px;
+                            margin-left: 9px;
+                            @include text(16px, 400, #FFFFFF);
+
+                            &::-webkit-calendar-picker-indicator {
+                                background-color: #FF7506;
+                                padding: 5px;
+                                cursor: pointer;
+                                border-radius: 3px;
+                            }
+                        }
+                    }
+
+                    #input_search {
+                        position: relative;
+                        width: 35%;
+
+                        input {
+                            width: 100%;
+                            height: 36px;
+                            background: #2b2b3f;
+                            border-radius: 8px;
+                            border: 2px solid #1e1e2e;
+                            padding-left: 5px;
+                        }
+
+                        i {
+                            color: #f5f5ff;
+                            font-size: 18px;
+                            position: absolute;
+                            top: 50%;
+                            transform: translateY(-50%);
+                            right: 15px;
+                        }
+                    }
+                }
+
+                .content-table {
+                    height: 85%;
+
+                    h2 {
+                        @include text (24px, 700, #E5E5E5);
+                        margin-bottom: 10px;
+                    }
+
+                    .wrap-table {
+                        height: 75%;
+                        background: rgba(47, 47, 65, 0.7);
+                        border-radius: 16px 16px 0 0;
+
+                        table {
+                            width: 100%;
+                            padding: 16px 24px;
+
+                            thead {
+                                tr {
+
+                                    .stt {
+                                        text-align: right;
+                                    }
+
+                                    th {
+                                        @include text(12px, 700, #ffac69);
+                                        margin: 0 10px;
+                                        text-align: left;
+                                        padding: 0 10px;
+
+                                    }
+                                }
+                            }
+
+                            tbody {
+                                tr:last-child {
+                                    &::after {
+                                        position: absolute;
+                                        bottom: 0;
+                                        left: 0;
+                                        content: '';
+                                        height: 0;
+                                        width: 0;
+                                        background: rgb(97, 96, 96);
+                                    }
+                                }
+
+                                tr {
+                                    position: relative;
+                                    transition: all .5s;
+
+                                    &:hover {
+                                        background: #878890;
+                                    }
+
+                                    &::after {
+                                        position: absolute;
+                                        left: 0;
+                                        bottom: 0;
+                                        content: '';
+                                        height: 1px;
+                                        width: 100%;
+                                        background: rgb(97, 96, 96);
+                                    }
+
+
+                                    td {
+                                        text-align: left;
+                                        padding: 0px 10px;
+                                        @include text(12px, 400, #FFFFFF);
+                                        border: none;
+                                    }
+
+                                    .text_right {
+                                        text-align: right;
+                                    }
+
+                                    .action {
+                                        cursor: pointer;
+                                        @include text(12px, 600, #FF7506);
+                                        text-decoration: underline;
+                                    }
+
+                                    .true_thoiHan {
+
+                                        position: relative;
+                                        padding-left: 10px;
+
+                                        &::before {
+                                            content: "";
+                                            position: absolute;
+                                            display: block;
+                                            width: 8px;
+                                            height: 8px;
+                                            border-radius: 50%;
+                                            background-color: blue;
+                                            top: 5px;
+                                            left: 0;
+                                        }
+                                    }
+
+                                    .false_thoiHan {
+                                        position: relative;
+                                        padding-left: 10px;
+
+                                        &::before {
+                                            content: "";
+                                            position: absolute;
+                                            display: block;
+                                            width: 8px;
+                                            height: 8px;
+                                            border-radius: 50%;
+                                            background-color: #878890;
+                                            top: 5px;
+                                            left: 0;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    .pagination-table {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        background: rgba(47, 47, 65, 0.7);
+                        border-radius: 0 0 16px 16px;
+                        padding: 0 24px;
+                        height: 15%;
+
+                        .pagination_left {
+                            p {
+                                @include text (14px, 400, #F5F5FF);
+
+                                select {
+                                    margin: 0 5px;
+                                    @include text(16px, 400, #ff7506);
+                                    background: rgba(47, 47, 65, 0.7);
+                                    border: 1px solid #ff7506;
+                                    border-radius: 8px;
+                                    padding: 5px 10px;
+
+                                    option {
+                                        margin: 8px 0;
+                                        background: #3e3e5b;
+                                        border: 2px solid #1e1e2e;
+                                        @include text(16px, 400, #ffffff);
+
+                                    }
+                                }
+                            }
+                        }
+
+                        .pagination_right {
+                            width: 100px;
+                            display: flex;
+                            justify-content: space-evenly;
+                            gap: 5px;
+                            align-items: center;
+
+                            #btnPage {
+                                display: flex;
+                                gap: 5px;
+
+                                button {
+                                    width: 26px;
+                                    height: 26px;
+                                    @include button (14px, 500, #FFF9F4, rgba(47, 47, 65, 0.7), 1px solid rgba(47, 47, 65, 0.7), 0, 50%, rgba(255, 117, 6, 1), #FFF9F4);
+                                    margin: auto;
+
+                                    &:disabled {
+                                        background: rgba(#000000, 0);
+                                        color: #878890;
+
+                                    }
+                                }
+                            }
+
+                            button {
+                                &:disabled {
+                                    background: rgba(#000000, 0);
+                                    color: #878890;
+
+                                    &:hover {
+                                        background: rgba(#000000, 0);
+                                        color: #878890;
+                                    }
+                                }
+
+
+                                @include button (14px, 500, #FFF9F4, rgba(47, 47, 65, 0.7), 1px solid rgba(47, 47, 65, 0.7), 0, 50%,
+                                    rgba(47, 47, 65, 0.7), #ff7506);
+                                margin: auto
+                            }
+                        }
+                    }
+                }
+            }
+
+            .menu {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding: 16px;
+                width: 110px;
+                height: 130px;
+                background: #2f2f41;
+                border-radius: 16px 0px 0px 16px;
+
+                .menu-item {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 10px;
+                    flex-direction: column;
+
+                    .bg-icon {
+                        width: 52px;
+                        height: 52px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        background: rgba(114, 114, 136, 0.5);
+                        border-radius: 50%;
+
+                        i {
+                            font-size: 26px;
+                            color: #ff7506;
+                        }
+                    }
+
+                    p {
+                        text-align: center;
+                        @include text (12px, 500, #ffffff);
+                        line-height: 18px;
+                        opacity: 0.7;
+
+                    }
+                }
+            }
+        }
+    }
+}

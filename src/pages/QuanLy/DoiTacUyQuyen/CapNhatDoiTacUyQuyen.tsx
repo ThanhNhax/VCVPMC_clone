@@ -75,7 +75,7 @@ export default function ChinhSuaNguoiDung() {
                     type: "success",
                     content: "Cập nhật thành công !",
                   });
-                  //   navigate("/admin/quanLyUyQuyen")
+                  navigate("/admin/quanLyUyQuyen");
                 }
               } catch (e) {
                 console.log(e);

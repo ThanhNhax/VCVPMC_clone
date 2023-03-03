@@ -60,10 +60,12 @@ export default function SibarAdmin({ setToggle }: Props) {
               <p>Doanh thu</p>
               <i className="fas fa-ellipsis-v"></i>
               <div className="dropdown-quanly">
-                <Link to="/admin/quanLyUyQuyen">Báo cáo doanh thu</Link>
-                <Link to="/admin/quanLyHopDong">Lịch sử đối soát</Link>
+                <Link to="admin/doanhThu/phanPhoiDoanhThu">
+                  Báo cáo doanh thu
+                </Link>
+                <Link to="/admin/lichSuaDoiSoat">Lịch sử đối soát</Link>
 
-                <Link to="/admin/quanLyThietBi">Phân phối doanh thu</Link>
+                <Link to="/admin/phanPhoiDoanhThu">Phân phối doanh thu</Link>
               </div>
             </div>
           </li>

@@ -194,6 +194,7 @@ export default function ChiTietThietBi() {
                   duration: 0.8,
                 });
                 handleOk();
+                navigate("/admin/quanLyThietBi");
               }
             } catch (e) {
               console.log(e);
