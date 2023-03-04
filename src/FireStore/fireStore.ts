@@ -30,16 +30,14 @@ export const auth = getAuth(app);
 
 // let data = {
 //   id: "",
-//   tenThietBi: "Device A12231",
-//   trangThai: true,
-//   kichHoai: true,
-//   hanHopDong: "21/04/2021",
-//   tenDangNhap: "123.12.156.10",
-//   diaChi: "86/33, Âu Cơ, Phường 9, Tân Bình, TP Hồ Chí Minh",
-//   memory: "0.00GB/32GB",
-//   macAddresss: "123.12.156.10",
-//   skuId: "12341234123",
-//   hanBaoHanh: "21/04/2021",
+//   tenNhomNguoiDung: "Super Admin",
+//   vaiTro: "System Admin",
+
+//   moTa: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+//   email: "cidas@gmail.com",
+//   soDienThoai: "0212 5932 1214",
+//   ngayHetHan: "02/12/2024",
+//   matKhau: "123123",
 // };
 
-// addDoc(collection(db, "quanLyThietBi"), data);
+// addDoc(collection(db, "phanQuyenNguoidDung"), data);

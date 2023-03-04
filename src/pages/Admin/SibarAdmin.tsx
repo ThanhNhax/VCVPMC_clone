@@ -77,11 +77,11 @@ export default function SibarAdmin({ setToggle }: Props) {
               <div className="dropdown-quanly">
                 <Link to="/admin/phanQuyenNguoiDung">Phân quyền người</Link>
 
-                <Link to="/admin/quanLyThietBi">Cấu hình</Link>
+                <Link to="/admin/cauHinh">Cấu hình</Link>
 
                 <Link to="/admin/quanLyUyQuyen">Quản lý hợp đồng</Link>
 
-                <Link to="/admin/donViSuDung">Thông tin tác phẩm</Link>
+                <Link to="/admin/thongTinTacPham">Thông tin tác phẩm</Link>
                 <Link to="/admin/donViSuDung">Chu kỳ đối soát</Link>
               </div>
             </div>

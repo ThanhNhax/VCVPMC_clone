@@ -57,7 +57,13 @@ import QuanLyPhanPhoiDoanhThu from "./pages/DoanhThu/QuanLyPhanPhoiDoanhThu";
 import ChiTietDoanhThu from "./pages/DoanhThu/ChiTietDoanhThu";
 import LichSuDoiSoat from "./pages/DoanhThu/LichSuDoiSoat/LichSuDoiSoat";
 import ChiTietLichSuaDoiSoat from "./pages/DoanhThu/LichSuDoiSoat/ChiTietLichSuaDoiSoat";
-import PhanQuyenNguoiDung from "./pages/CaiDat/PhanQuyenNguoiDung";
+import PhanQuyenNguoiDung from "./pages/CaiDat/PhanQuyenNguoiDung/PhanQuyenNguoiDung";
+import ThemMoiPhanQuyenNguoiDung from "./pages/CaiDat/PhanQuyenNguoiDung/ThemMoiPhanQuyenNguoiDung";
+import ChinhSuaPhanQuyenNguoiDung from "./pages/CaiDat/PhanQuyenNguoiDung/ChinhSuaPhanQuyenNguoiDung";
+import ThemMoiVaiTroNguoiDungTrenHeThong from "./pages/CaiDat/PhanQuyenNguoiDung/ThemMoiVaiTroNguoiDungTrenHeThong";
+import ChinhSuaVaiTroNguoiDungTrenHeThong from "./pages/CaiDat/PhanQuyenNguoiDung/ChinhSuaVaiTroNguoiDungTrenHeThong";
+import CauHinh from "./pages/CaiDat/CauHinh/CauHinh";
+import ThongTinTacPham from "./pages/CaiDat/ThongTinTacPham/ThongTinTacPham";
 export const history: any = createBrowserHistory();
 
 const root = ReactDOM.createRoot(
@@ -216,6 +222,27 @@ root.render(
             <Route
               path="/admin/phanQuyenNguoiDung"
               element={<PhanQuyenNguoiDung />}
+            ></Route>
+            <Route
+              path="/admin/phanQuyenNguoiDung/themMoi"
+              element={<ThemMoiPhanQuyenNguoiDung />}
+            ></Route>
+            <Route
+              path="/admin/phanQuyenNguoiDung/chinhSua"
+              element={<ChinhSuaPhanQuyenNguoiDung />}
+            ></Route>
+            <Route
+              path="/admin/phanQuyenNguoiDung/themMoiVaiTro"
+              element={<ThemMoiVaiTroNguoiDungTrenHeThong />}
+            ></Route>
+            <Route
+              path="/admin/phanQuyenNguoiDung/chinhSuaVaiTroNguoiDungTrenHeThong"
+              element={<ChinhSuaVaiTroNguoiDungTrenHeThong />}
+            ></Route>
+            <Route path="/admin/cauHinh" element={<CauHinh />}></Route>
+            <Route
+              path="/admin/thongTinTacPham"
+              element={<ThongTinTacPham />}
             ></Route>
             {/* <Route path="*" element={<Navigate to={"/admin"} />}></Route> */}
           </Route>

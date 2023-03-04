@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import hopDongReducer from "./hopDongReducer/hopDongReducer";
 import khoBanghiReducer from "./khoBanGhi/khoBanghiReducer";
 import lapLichPhatReducer from "./lapLichPhat/lapLichPhatReducer";
+import phanQuyenNguoiDungReducer from "./phanQuyenNguoiDung/phanQuyenNguoiDungReducer";
 import playListReducer from "./playListReducer/playListReducer";
 import quanLyDoiTacUyQuyen from "./quanLyDoiTacUyQuyen/quanLyDoiTacUyQuyen";
 import quanLyDonViSuDungReducer from "./quanLyDonViSuDung/quanLyDonViSuDungReducer";
@@ -19,6 +20,7 @@ export const store = configureStore({
     quanLyDonViSuDung: quanLyDonViSuDungReducer,
     doiTacUyQuyen: quanLyDoiTacUyQuyen,
     quanLyThietBi: quanLyThietBiReducer,
+    phanQuyenNguoiDung: phanQuyenNguoiDungReducer,
   },
 });
 

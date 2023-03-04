@@ -8,7 +8,6 @@ import { RootState } from "../../../redux/configStore";
 import * as Yup from "yup";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../FireStore/fireStore";
-
 export default function ChiTietThietBi() {
   const item = useSelector(
     (state: RootState) => state.quanLyThietBi.itemTietBi
