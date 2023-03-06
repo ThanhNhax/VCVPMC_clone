@@ -64,6 +64,10 @@ import ThemMoiVaiTroNguoiDungTrenHeThong from "./pages/CaiDat/PhanQuyenNguoiDung
 import ChinhSuaVaiTroNguoiDungTrenHeThong from "./pages/CaiDat/PhanQuyenNguoiDung/ChinhSuaVaiTroNguoiDungTrenHeThong";
 import CauHinh from "./pages/CaiDat/CauHinh/CauHinh";
 import ThongTinTacPham from "./pages/CaiDat/ThongTinTacPham/ThongTinTacPham";
+import QuanLyHopDongCaiDat from "./pages/CaiDat/QuanLyHopDong/QuanLyHopDongCaiDat";
+import ChinhSuaLoaiHopDong from "./pages/CaiDat/QuanLyHopDong/ChinhSuaLoaiHopDong";
+import CanhBaoHetHan from "./pages/CaiDat/QuanLyHopDong/CanhBaoHetHan";
+import ChuKyDoiSoat from "./pages/CaiDat/ChuKyDoiSoat/ChuKyDoiSoat";
 export const history: any = createBrowserHistory();
 
 const root = ReactDOM.createRoot(
@@ -243,6 +247,22 @@ root.render(
             <Route
               path="/admin/thongTinTacPham"
               element={<ThongTinTacPham />}
+            ></Route>
+            <Route
+              path="/admin/caiDat/quanLyHopDong"
+              element={<QuanLyHopDongCaiDat />}
+            ></Route>
+            <Route
+              path="/admin/caiDat/quanLyHopDong/chinhSua"
+              element={<ChinhSuaLoaiHopDong />}
+            ></Route>
+            <Route
+              path="/admin/caiDat/quanLyHopDong/chinhSuaCanhBao"
+              element={<CanhBaoHetHan />}
+            ></Route>
+            <Route
+              path="/admin/chuKyDoiSoat"
+              element={<ChuKyDoiSoat />}
             ></Route>
             {/* <Route path="*" element={<Navigate to={"/admin"} />}></Route> */}
           </Route>

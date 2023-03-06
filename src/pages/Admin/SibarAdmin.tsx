@@ -79,10 +79,10 @@ export default function SibarAdmin({ setToggle }: Props) {
 
                 <Link to="/admin/cauHinh">Cấu hình</Link>
 
-                <Link to="/admin/quanLyUyQuyen">Quản lý hợp đồng</Link>
+                <Link to="/admin/caiDat/quanLyHopDong">Quản lý hợp đồng</Link>
 
                 <Link to="/admin/thongTinTacPham">Thông tin tác phẩm</Link>
-                <Link to="/admin/donViSuDung">Chu kỳ đối soát</Link>
+                <Link to="/admin/chuKyDoiSoat">Chu kỳ đối soát</Link>
               </div>
             </div>
           </li>
