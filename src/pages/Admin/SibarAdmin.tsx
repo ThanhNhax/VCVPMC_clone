@@ -92,11 +92,11 @@ export default function SibarAdmin({ setToggle }: Props) {
               <p>Hỗ trợ</p>
               <i className="fas fa-ellipsis-v"></i>
               <div className="dropdown-quanly">
-                <Link to="/admin/quanLyHopDong">Hướng dẵn sử dụng</Link>
+                <Link to="/admin/huongDanSuDung">Hướng dẵn sử dụng</Link>
 
-                <Link to="/admin/quanLyThietBi">Tải app</Link>
+                <Link to="/admin/taiApp">Tải app</Link>
 
-                <Link to="/admin/quanLyUyQuyen">Feedback</Link>
+                <Link to="/admin/feedback">Feedback</Link>
               </div>
             </div>
           </li>

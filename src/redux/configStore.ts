@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import feedbackReducer from "./feedback/feedbackReducer";
 import hopDongReducer from "./hopDongReducer/hopDongReducer";
 import khoBanghiReducer from "./khoBanGhi/khoBanghiReducer";
 import lapLichPhatReducer from "./lapLichPhat/lapLichPhatReducer";
@@ -7,6 +8,7 @@ import playListReducer from "./playListReducer/playListReducer";
 import quanLyDoiTacUyQuyen from "./quanLyDoiTacUyQuyen/quanLyDoiTacUyQuyen";
 import quanLyDonViSuDungReducer from "./quanLyDonViSuDung/quanLyDonViSuDungReducer";
 import quanLyThietBiReducer from "./quanLyThietBi/quanLyThietBiReducer";
+import theLoaiTacPhamReducer from "./theLoaiTacPham/theLoaiTacPhamReducer";
 import userReducer from "./userReducer/userReducer";
 // ...
 
@@ -21,6 +23,8 @@ export const store = configureStore({
     doiTacUyQuyen: quanLyDoiTacUyQuyen,
     quanLyThietBi: quanLyThietBiReducer,
     phanQuyenNguoiDung: phanQuyenNguoiDungReducer,
+    theLoaiTacPham: theLoaiTacPhamReducer,
+    feedback: feedbackReducer,
   },
 });
 

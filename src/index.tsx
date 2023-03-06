@@ -68,6 +68,11 @@ import QuanLyHopDongCaiDat from "./pages/CaiDat/QuanLyHopDong/QuanLyHopDongCaiDa
 import ChinhSuaLoaiHopDong from "./pages/CaiDat/QuanLyHopDong/ChinhSuaLoaiHopDong";
 import CanhBaoHetHan from "./pages/CaiDat/QuanLyHopDong/CanhBaoHetHan";
 import ChuKyDoiSoat from "./pages/CaiDat/ChuKyDoiSoat/ChuKyDoiSoat";
+import ChinhSuaTacPham from "./pages/CaiDat/ThongTinTacPham/ChinhSuaTacPham";
+import TaiApp from "./pages/HoTro/TaiApp";
+import HuongDanSuDung from "./pages/HoTro/HuongDanSuDung";
+import Feedback from "./pages/HoTro/Feedback";
+import AdminFeedback from "./pages/HoTro/AdminFeedback";
 export const history: any = createBrowserHistory();
 
 const root = ReactDOM.createRoot(
@@ -263,6 +268,20 @@ root.render(
             <Route
               path="/admin/chuKyDoiSoat"
               element={<ChuKyDoiSoat />}
+            ></Route>
+            <Route
+              path="/admin/thongTinTacPham/chinhSua"
+              element={<ChinhSuaTacPham />}
+            ></Route>
+            <Route path="/admin/taiApp" element={<TaiApp />}></Route>
+            <Route
+              path="/admin/huongDanSuDung"
+              element={<HuongDanSuDung />}
+            ></Route>
+            <Route path="/admin/feedback" element={<Feedback />}></Route>
+            <Route
+              path="/admin/adminFeedback"
+              element={<AdminFeedback />}
             ></Route>
             {/* <Route path="*" element={<Navigate to={"/admin"} />}></Route> */}
           </Route>

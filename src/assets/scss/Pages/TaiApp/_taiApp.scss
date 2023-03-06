@@ -1,0 +1,89 @@
+.TaiApp {
+
+    padding-left: 60px;
+    position: relative;
+    height: 90%;
+
+    #img-bg {
+        position: absolute;
+        top: -10%;
+        left: -50px;
+        height: 424.15px;
+        z-index: 1;
+    }
+
+    #img-bg2 {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 200px;
+    }
+
+    .container {
+        width: 100%;
+        height: 100%;
+
+        .container-top {
+            margin-bottom: 24px;
+
+            p {
+                @include text (16px, 600, #F5F5FF);
+                opacity: 0.5;
+
+                i {
+                    margin: 0 13px;
+                    color: #FFAC69;
+                }
+            }
+
+            h1 {
+                @include text(24px, 700, #ffffff);
+            }
+        }
+
+        .content {
+            text-align: center;
+            height: 80%;
+
+            h1 {
+                @include text(64px, 700, #FFF9F4);
+
+                b {
+                    color: rgba(255, 117, 6, 1);
+                }
+            }
+
+            p {
+                @include text(32px, 400, #FFFFFF);
+
+                b {
+                    font-weight: 700;
+                }
+            }
+
+            .card {
+                margin-top: 30px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 30px;
+
+                .item {
+                    width: 320px;
+                    height: 343px;
+                    background: rgba(47, 47, 65, 0.7);
+                    border-radius: 16px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-evenly;
+                    align-items: center;
+
+                    img {
+                        width: 168px;
+                    }
+                }
+            }
+        }
+    }
+
+}

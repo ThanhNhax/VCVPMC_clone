@@ -1,6 +1,34 @@
-import React from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { AppDispatch, RootState } from "../../../redux/configStore";
+import {
+  getArrTheLoaiTacPhamFireStore,
+  TheLoaiTacPhamRedux,
+} from "../../../redux/theLoaiTacPham/theLoaiTacPhamReducer";
 
 export default function ThongTinTacPham() {
+  const navigate = useNavigate();
+  const { arrTheLoaiTacPham } = useSelector(
+    (state: RootState) => state.theLoaiTacPham
+  );
+  console.log({ arrTheLoaiTacPham });
+  const dispatch: AppDispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getArrTheLoaiTacPhamFireStore());
+  }, []);
+  const renderTable = () => {
+    return arrTheLoaiTacPham.map(
+      (tacPham: TheLoaiTacPhamRedux, index: number) => (
+        <tr key={index}>
+          <td className="text_right">{index + 1}</td>
+          <td>{tacPham.tenTheLoai}</td>
+          <td>{tacPham.moTa}</td>
+        </tr>
+      )
+    );
+  };
   return (
     <div className="ThongTinTacPham">
       <div className="container">
@@ -22,16 +50,7 @@ export default function ThongTinTacPham() {
                     <th>Mô tả</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td className="text_right">1</td>
-                    <td>Pop</td>
-                    <td>
-                      Nhạc pop là một thể loại của nhạc đương đại và rất phổ
-                      biến trong làng nhạc đại chúng.
-                    </td>
-                  </tr>
-                </tbody>
+                <tbody>{renderTable()}</tbody>
               </table>
             </div>
             <div className="pagination-table">
@@ -79,7 +98,10 @@ export default function ThongTinTacPham() {
             </div>
           </div>
           <div className="menu">
-            <div className="bg-icon">
+            <div
+              className="bg-icon"
+              onClick={() => navigate("/admin/thongTinTacPham/chinhSua")}
+            >
               <i className="fa fa-edit"></i>
             </div>
             <p>Chỉnh sửa</p>

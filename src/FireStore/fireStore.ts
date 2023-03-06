@@ -27,17 +27,3 @@ export const db = getFirestore(app);
 export const auth = getAuth(app);
 
 ///
-
-// let data = {
-//   id: "",
-//   tenNhomNguoiDung: "Super Admin",
-//   vaiTro: "System Admin",
-
-//   moTa: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
-//   email: "cidas@gmail.com",
-//   soDienThoai: "0212 5932 1214",
-//   ngayHetHan: "02/12/2024",
-//   matKhau: "123123",
-// };
-
-// addDoc(collection(db, "phanQuyenNguoidDung"), data);
