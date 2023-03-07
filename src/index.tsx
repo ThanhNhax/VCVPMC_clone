@@ -73,6 +73,7 @@ import TaiApp from "./pages/HoTro/TaiApp";
 import HuongDanSuDung from "./pages/HoTro/HuongDanSuDung";
 import Feedback from "./pages/HoTro/Feedback";
 import AdminFeedback from "./pages/HoTro/AdminFeedback";
+import BaoCaoDoanhThu from "./pages/DoanhThu/BaoCaoDoanhThu/BaoCaoDoanhThu";
 export const history: any = createBrowserHistory();
 
 const root = ReactDOM.createRoot(
@@ -282,6 +283,10 @@ root.render(
             <Route
               path="/admin/adminFeedback"
               element={<AdminFeedback />}
+            ></Route>
+            <Route
+              path="/admin/baoCaoDoanhThu"
+              element={<BaoCaoDoanhThu />}
             ></Route>
             {/* <Route path="*" element={<Navigate to={"/admin"} />}></Route> */}
           </Route>
