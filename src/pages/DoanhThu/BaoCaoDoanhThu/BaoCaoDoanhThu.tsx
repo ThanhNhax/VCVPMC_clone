@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   LineChart,
   Line,
@@ -11,7 +12,7 @@ import {
 } from "recharts";
 const data = [
   {
-    ngay: "2",
+    ngay: "1",
     luotPhat: 500,
   },
   {
@@ -137,6 +138,7 @@ const data = [
 ];
 
 export default function BaoCaoDoanhThu() {
+  const navigate = useNavigate();
   const [isThang, setIsThang] = useState<boolean>(true);
   console.log({ isThang });
   return (
@@ -265,7 +267,10 @@ export default function BaoCaoDoanhThu() {
             </div>
           </div>
           <div className="menu">
-            <div className="bg-icon">
+            <div
+              className="bg-icon"
+              onClick={() => navigate("/admin/baoCaoDoanhThu/chiTiet")}
+            >
               <i className="fas fa-receipt"></i>
             </div>
             <p>Báo cáo chi tiết</p>

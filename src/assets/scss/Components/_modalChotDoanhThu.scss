@@ -1,0 +1,55 @@
+.modal-chotDoanhThu {
+
+    .ant-modal {
+        padding: 0;
+
+        .ant-modal-content {
+            background: #3E3E5B;
+            border-radius: 16px;
+            padding: 40px;
+
+            .ant-modal-close {
+                display: none;
+            }
+
+            .ant-modal-body {
+
+                h5 {
+                    text-align: center;
+                    @include text (24px, 700, #F5F5FF);
+                    margin-bottom: 24px;
+                }
+
+                .wrap-p {
+                    p {
+                        @include text(16px, 400, #FFFFFF);
+
+                        &:first-child {
+                            margin-bottom: 24px;
+                        }
+                    }
+                }
+
+                .form-btn {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 40px;
+                    margin-top: 48px;
+
+                    button {
+                        width: 168px;
+                    }
+
+                    button:nth-child(1) {
+                        @include button (16px, 600, #FF7506, rgba(0, 0, 0, 0), 12px 32px, 1px solid #FF7506, 8px, #FF7506, #ffffff)
+                    }
+
+                    button:nth-child(2) {
+                        @include button (16px, 600, #ffffff, #FF7506, 12px 32px, 1px solid #FF7506, 8px, rgba(0, 0, 0, 0), #FF7506)
+                    }
+                }
+            }
+        }
+    }
+}
