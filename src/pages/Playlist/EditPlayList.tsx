@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useMemo, useState } from "react";
 import { message, Modal, Switch } from "antd";
 import { doc, setDoc } from "firebase/firestore";
@@ -10,8 +11,13 @@ import {
   deleteArrBanGhiRedux,
   setItemPlayList,
 } from "../../redux/playListReducer/playListReducer";
+import {
+  getArrTabFireStore,
+  getArrTheLoaiTacPhamFireStore,
+  TheLoaiTacPhamRedux,
+} from "../../redux/theLoaiTacPham/theLoaiTacPhamReducer";
 
-const tagsData = ["Pop", "EDM", "Lofi", "Ballad", "Chill", "Mashup"];
+// const tagsData = ["Pop", "EDM", "Lofi", "Ballad", "Chill", "Mashup"];
 
 export const tongThoiLuong = (arr: KhoBanGhiRedux[]) => {
   let tam: string = "";
@@ -43,7 +49,10 @@ export const tongThoiLuong = (arr: KhoBanGhiRedux[]) => {
 };
 
 export default function EditPlayList() {
-  // Lấy itemPlayList tuef redux về
+  // Lấy data tag về từ redux
+  const { arrTag } = useSelector((state: RootState) => state.theLoaiTacPham);
+
+  // Lấy itemPlayList từ redux về
   const { itemPlayList } = useSelector((state: RootState) => state.playList);
   console.log({ itemPlayList });
   const dispatch: AppDispatch = useDispatch();
@@ -89,7 +98,11 @@ export default function EditPlayList() {
     if (itemPlayList?.id === "") {
       navigate("/admin/playlist");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  //call date  thể loại để  render ra các tag thể loại
+  useEffect(() => {
+    dispatch(getArrTabFireStore());
+    console.log("call The loai");
   }, []);
 
   console.log("tong thoi Luong:", tongThoiLuong(itemPlayList.arrBanGhi));
@@ -265,7 +278,7 @@ export default function EditPlayList() {
                     id="search-tag"
                     value={valueSearch}
                     onChange={(e) => {
-                      const arrChuDe = handleSearch(tagsData, e.target.value);
+                      const arrChuDe = handleSearch(arrTag, e.target.value);
                       setArrChuDeSearch(arrChuDe);
                       setValueSearch(e.target.value);
                     }}

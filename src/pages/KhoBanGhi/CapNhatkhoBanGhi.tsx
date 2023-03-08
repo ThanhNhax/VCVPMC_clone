@@ -60,7 +60,7 @@ export default function CapNhatkhoBanGhi() {
     e.preventDefault();
     let itemUpdate: KhoBanGhiRedux = {
       caSi: caSi,
-      dinhDang: item.dinhDang ? item.dinhDang : "Aidio",
+      dinhDang: item.dinhDang ? item.dinhDang : "Audio",
       id: item.id,
       maISRC: maISRC,
       ngayTai: item.ngayTai,

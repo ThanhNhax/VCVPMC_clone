@@ -129,8 +129,26 @@ export default function BaoCaoChiTiet() {
                       <td>8/8</td>
                       <td>321.000</td>
                       <td>22/04/2021</td>
-                      <td className="action">Chi tiết doanh thu</td>
-                      <td className="action">Lịch sử đồng bộ trên thiết bị</td>
+                      <td
+                        className="action"
+                        onClick={() =>
+                          navigate(
+                            "/admin/baoCaoDoanhThu/chiTiet/chiTietDoanhThu"
+                          )
+                        }
+                      >
+                        Chi tiết doanh thu
+                      </td>
+                      <td
+                        className="action"
+                        onClick={() =>
+                          navigate(
+                            "/admin/baoCaoDoanhThu/chiTiet/lichSuDongBoThietBi"
+                          )
+                        }
+                      >
+                        Lịch sử đồng bộ trên thiết bị
+                      </td>
                     </tr>
                   </tbody>
                 </table>
