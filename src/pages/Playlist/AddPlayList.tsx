@@ -16,12 +16,12 @@ import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../FireStore/fireStore";
 import { KhoBanGhiRedux } from "../../redux/khoBanGhi/khoBanghiReducer";
 import moment from "moment";
-import { tongThoiLuong } from "./EditPlayList";
-
-const tagsData = ["Pop", "EDM", "Lofi", "Ballad", "Chill", "Mashup"];
+import { handleSearch, tongThoiLuong } from "./EditPlayList";
 
 export default function AddPlayList() {
   const { user } = useSelector((state: RootState) => state.user.userLogin);
+  //lấy arrTag từ redux về
+  const { arrTag } = useSelector((state: RootState) => state.theLoaiTacPham);
 
   console.log({ user });
   const dispatch: AppDispatch = useDispatch();
@@ -193,9 +193,6 @@ export default function AddPlayList() {
   console.log(selectedTags);
   const [arrChuDeSearch, setArrChuDeSearch] = useState<string[]>([]);
   const [valueSearch, setValueSearch] = useState<string>("");
-  const handleSearch = (arr: string[], string: string) => {
-    return arr.filter((el) => el.toLowerCase().includes(string.toLowerCase()));
-  };
 
   return (
     <div className="addPlaylist">
@@ -252,6 +249,7 @@ export default function AddPlayList() {
                         <span>{tag}</span>
                         <i
                           onClick={() => {
+                            // eslint-disable-next-line @typescript-eslint/no-unused-vars
                             let selectedTagsDelete = selectedTags.splice(
                               index,
                               1
@@ -269,8 +267,9 @@ export default function AddPlayList() {
                     id="search-tag"
                     value={valueSearch}
                     onChange={(e) => {
-                      const arrChuDe = handleSearch(tagsData, e.target.value);
+                      const arrChuDe = handleSearch(arrTag, e.target.value);
                       setArrChuDeSearch(arrChuDe);
+                      setValueSearch(e.target.value);
                     }}
                     placeholder="Nhập chủ đề"
                   />

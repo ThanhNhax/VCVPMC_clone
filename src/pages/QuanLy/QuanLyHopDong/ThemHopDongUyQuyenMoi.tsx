@@ -5,6 +5,7 @@ import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../../FireStore/fireStore";
+import { ngayTao } from "../../HoTro/Feedback";
 
 export default function ThemHopDongUyQuyenMoi() {
   const navigate = useNavigate();
@@ -73,13 +74,8 @@ export default function ThemHopDongUyQuyenMoi() {
             // gán hiệu lực hợp đồng là mới tạo
             value.hieuLucHopDong = "Mới";
             // set ngày tạo là ngày hiện tại
-            let ngayTao = new Date();
-            value.ngayTao =
-              `${ngayTao.getDate()}` +
-              "/" +
-              `${ngayTao.getMonth() + 1}` +
-              "/" +
-              `${ngayTao.getFullYear()}`;
+            value.ngayTao = ngayTao;
+
             // gán quốc tịch bằng state
             value.quocTich = quocTich;
             console.log({ value });

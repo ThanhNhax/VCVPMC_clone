@@ -1,7 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Button, Upload } from "antd";
 import moment from "moment";
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { RootState } from "../../../redux/configStore";
 
 export default function ChinhSuaThongTin() {
@@ -9,6 +11,13 @@ export default function ChinhSuaThongTin() {
   const item = useSelector(
     (state: RootState) => state.hopDong.itemHopDongUyQuyen
   );
+  console.log({ item });
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!item) {
+      navigate("/admin/quanLyHopDong");
+    }
+  }, []);
   return (
     <div className="chinhSuaThongTin">
       <div className="container">
@@ -112,7 +121,12 @@ export default function ChinhSuaThongTin() {
                 <div className="from-item">
                   <label htmlFor="">Pháp nhân ủy quyền:</label>
                   <div className="from-radio">
-                    <input type="radio" name="uyQuyen" id="caNhan" checked />
+                    <input
+                      type="radio"
+                      name="uyQuyen"
+                      id="caNhan"
+                      defaultChecked
+                    />
                     <label htmlFor="caNhan">Cá nhân</label>
                     <input type="radio" name="uyQuyen" id="toChuc" />
                     <label htmlFor="toChuc">Tổ chức</label>
@@ -129,7 +143,12 @@ export default function ChinhSuaThongTin() {
                     Giới tính:<i>*</i>
                   </label>
                   <div className="from-radio">
-                    <input type="radio" name="gioiTinh" id="nam" checked />
+                    <input
+                      type="radio"
+                      name="gioiTinh"
+                      id="nam"
+                      defaultChecked
+                    />
                     <label htmlFor="nam">Nam</label>
                     <input type="radio" name="gioiTinh" id="nu" />
                     <label htmlFor="nu">Nữ</label>
@@ -227,14 +246,13 @@ export default function ChinhSuaThongTin() {
             <i>*</i>là những trường thông tin bắt buộc
           </p>
           <div className="button">
-            <button>Hủy</button>
             <button
-            //   onClick={() =>
-            //     // navigate("/admin/quanLyHopDong/themThongTinBanGhi")
-            //   }
+              type="button"
+              onClick={() => navigate("/admin/quanLyHopDong/chiTiet")}
             >
-              Tạo
+              Hủy
             </button>
+            <button>Tạo</button>
           </div>
         </div>
       </div>

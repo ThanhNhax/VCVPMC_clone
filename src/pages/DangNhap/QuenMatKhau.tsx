@@ -69,7 +69,7 @@ export default function QuenMatKhau() {
       </div>
       <div className="link_dangNhap">
         <p className="link_dangNhap-p" onClick={() => history.push("/")}>
-          Quay lại đăng nhập{" "}
+          Quay lại đăng nhập
         </p>
       </div>
     </div>

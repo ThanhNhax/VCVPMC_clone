@@ -40,6 +40,7 @@ export default function Playlist() {
 
   const renderPlayListTable = () => {
     return newArrPlayList.map((item: PlayListRedux, index: number) => {
+      const newChuDe = item.chuDe.slice(0, 6);
       return (
         <tr key={index}>
           <td className="text_right">{index + 1}</td>
@@ -47,9 +48,16 @@ export default function Playlist() {
           <td className="text_right">{item.arrBanGhi.length}</td>
           <td className="text_right">{item.thoiLuong}</td>
           <td className="td-chuDe">
-            {item?.chuDe?.map((chuDe: string | null, index: number) => {
-              return <p key={index}>{chuDe}</p>;
-            })}
+            {item.chuDe.length < 5
+              ? item.chuDe.map((chuDe: string | null, index: number) => {
+                  return <p key={index}>{chuDe}</p>;
+                })
+              : newChuDe.map((chuDe: string | null, index: number) => {
+                  if (index >= 5) {
+                    return <p>...</p>;
+                  }
+                  return <p key={index}>{chuDe}</p>;
+                })}
           </td>
           <td>{item.ngayTao}</td>
           <td>{item.nguoiTao}</td>

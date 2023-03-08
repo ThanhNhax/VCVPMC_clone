@@ -1,6 +1,7 @@
 .dang_nhap {
     background: #1e1e2e;
     color: #ffffff;
+    height: 100vh;
 
     .dang_nhap--header {
         padding-right: 80px;
@@ -12,6 +13,7 @@
     }
 
     .dang_nhap_content {
+        height: 91%;
         margin: 0px auto;
         width: 35%;
         background: #1e1e2e;
@@ -19,14 +21,20 @@
 
         .logo {
             margin: auto;
-            width: 240px;
-            height: 240px;
+            width: 150px;
+            height: 150px;
             background: #ffffff;
             border-radius: 50%;
+
+            img {
+                width: 100%;
+            }
 
         }
 
         .content {
+            height: 70%;
+
             h1 {
                 text-align: center;
                 margin-top: 40px;
@@ -37,13 +45,10 @@
 
         form {
             .form_title {
-                margin-bottom: 20px;
-
                 label {
                     @include text(16px, 600, #fff);
                     line-height: 24px;
                     opacity: 0.7;
-                    margin-bottom: 8px;
                 }
 
                 input {
@@ -91,12 +96,6 @@
                 gap: 10px;
                 margin-top: 20px;
 
-                // #ghi_nho {
-                //     color: #347aff;
-                //     display: block;
-                //     border: 2px solid blue;
-                // }
-
                 span {
                     @include text(16px, 400, #fff);
                 }
@@ -105,9 +104,9 @@
             .form_button {
                 display: flex;
                 justify-content: center;
+                margin: 40px 0;
 
                 button {
-                    margin: 48px 0 60px;
                     @include button(24px,
                         400,
                         #fff,
@@ -127,7 +126,6 @@
 
             a {
                 color: #ff7506;
-                margin-bottom: 51px;
                 text-decoration: underline;
             }
         }

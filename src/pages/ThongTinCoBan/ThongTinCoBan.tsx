@@ -7,10 +7,13 @@ import { getStoreJSON, USER } from "../../util/setting";
 import { dangXuat, getUser, User } from "../../redux/userReducer/userReducer";
 import { NavLink } from "react-router-dom";
 import { auth } from "../../FireStore/fireStore";
+import * as Yup from "yup";
 
 //modal
 
-import { Modal } from "antd";
+import { message, Modal } from "antd";
+import { Field, Form, Formik } from "formik";
+import { updatePassword } from "firebase/auth";
 
 export default function ThongTinCoBan() {
   const { user } = useSelector((state: RootState) => state.user.userLogin);
@@ -40,6 +43,20 @@ export default function ThongTinCoBan() {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+
+  const initialValues = {
+    passwordHienTai: "",
+    passwordMoi: "",
+    passwordNhapLai: "",
+  };
+  const loginSchema = Yup.object().shape({
+    passwordHienTai: Yup.string().required().min(6),
+    passwordMoi: Yup.string().required().min(6),
+    passwordNhapLai: Yup.string()
+      .required()
+      .min(6)
+      .oneOf([Yup.ref("passwordMoi"), null], "Passwords must match"),
+  });
   // modal
   return (
     <div className="thongtincoban">
@@ -185,65 +202,108 @@ export default function ThongTinCoBan() {
           footer={null}
           wrapClassName="modal_doiMatKhau"
         >
-          <form>
-            <h5>Thay đổi mật khẩu</h5>
-            <div className="form-title">
-              <label htmlFor="passwordHienTai">Mật khẩu hiện tại:</label>
-              <div className="password">
-                <input type="password" id="passwordHienTai" />
-                <i
-                  onClick={() => {
-                    setIsType(isType ? false : true);
-                  }}
-                  id={isType ? "" : "doiMau"}
-                  className="fa fa-eye"
-                ></i>
-              </div>
-            </div>
-            <div className="form-title">
-              <label htmlFor="passwordMoi">Mật khẩu mới:</label>
-              <div className="password">
-                <input type="password" id="passwordMoi" />
-                <i
-                  onClick={() => {
-                    setIsType(isType ? false : true);
-                  }}
-                  id={isType ? "" : "doiMau"}
-                  className="fa fa-eye"
-                ></i>
-              </div>
-            </div>
-            <div className="form-title">
-              <label htmlFor="passwordNhapLai">
-                Nhập lại mật khẩu hiện tại:
-              </label>
-              <div className="password">
-                <input type="password" id="passwordNhapLai" />
+          <Formik
+            initialValues={initialValues}
+            validationSchema={loginSchema}
+            onSubmit={(values) => {
+              console.log({ values });
+              const user = auth.currentUser;
+              console.log({ user });
+              const newPassword = values.passwordNhapLai;
 
-                <i
-                  onClick={() => {
-                    setIsType(isType ? false : true);
-                  }}
-                  id={isType ? "" : "doiMau"}
-                  className="fa fa-eye"
-                ></i>
-              </div>
-            </div>
-            <div className="form-btn">
-              <button type="button" onClick={() => setIsModalOpen(false)}>
-                Hủy
-              </button>
-              <button
-                type="submit"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setIsModalOpen(false);
-                }}
-              >
-                Lưu
-              </button>
-            </div>
-          </form>
+              if (user) {
+                updatePassword(user, newPassword)
+                  .then(() => {
+                    // Update successful.
+                    console.log("thanh coong");
+                  })
+                  .catch((error: any) => {
+                    console.log(error);
+                  });
+              }
+            }}
+          >
+            {({ errors, touched }) => (
+              <Form>
+                <h5>Thay đổi mật khẩu</h5>
+                <div className="form-title">
+                  <label htmlFor="passwordHienTai">Mật khẩu hiện tại:</label>
+                  <div className="password">
+                    <Field
+                      type={isType ? "password" : "text"}
+                      id="passwordHienTai"
+                      name="passwordHienTai"
+                      className={
+                        errors.passwordHienTai && touched.passwordHienTai
+                          ? "input-error"
+                          : ""
+                      }
+                    />
+                    <i
+                      onClick={() => {
+                        setIsType(isType ? false : true);
+                      }}
+                      id={isType ? "" : "doiMau"}
+                      className="fa fa-eye"
+                    ></i>
+                  </div>
+                </div>
+                <div className="form-title">
+                  <label htmlFor="passwordMoi">Mật khẩu mới:</label>
+                  <div className="password">
+                    <Field
+                      type={isType ? "password" : "text"}
+                      id="passwordMoi"
+                      name="passwordMoi"
+                      className={
+                        errors.passwordMoi && touched.passwordMoi
+                          ? "input-error"
+                          : ""
+                      }
+                    />
+                    <i
+                      onClick={() => {
+                        setIsType(isType ? false : true);
+                      }}
+                      id={isType ? "" : "doiMau"}
+                      className="fa fa-eye"
+                    ></i>
+                  </div>
+                </div>
+                <div className="form-title">
+                  <label htmlFor="passwordNhapLai">
+                    Nhập lại mật khẩu hiện tại:
+                  </label>
+                  <div className="password">
+                    <Field
+                      type={isType ? "password" : "text"}
+                      id="passwordNhapLai"
+                      name="passwordNhapLai"
+                      className={
+                        errors.passwordNhapLai && touched.passwordNhapLai
+                          ? "input-error"
+                          : ""
+                      }
+                    />
+
+                    <i
+                      onClick={() => {
+                        setIsType(isType ? false : true);
+                      }}
+                      id={isType ? "" : "doiMau"}
+                      className="fa fa-eye"
+                    ></i>
+                  </div>
+                </div>
+                <div className="form-btn">
+                  <button type="button" onClick={() => setIsModalOpen(false)}>
+                    Hủy
+                  </button>
+                  <button type="submit">Lưu</button>
+                </div>
+              </Form>
+            )}
+          </Formik>
         </Modal>
       </div>
     </div>

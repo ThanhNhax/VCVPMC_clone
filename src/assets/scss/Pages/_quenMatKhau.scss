@@ -22,18 +22,12 @@
             }
 
             input {
-                margin-top: 8px;
                 margin-bottom: 54px;
                 padding: 11px 24px 13px 16px;
                 color: #ffffff;
                 width: 100%;
                 height: 48px;
-
-                /* Background/BG_Lighter */
-
                 background: #2B2B3F;
-                /* Text & stroke/Text and stroke 2 */
-
                 border: 1px solid #727288;
                 border-radius: 8px;
 
@@ -50,7 +44,6 @@
             align-items: center;
 
             button {
-                margin-bottom: 54px;
                 @include button (18px, 500, #ffffff, #FF7506, 16px 24px, 1px solid #FF7506, 8px, #1e1e2e, #ff7506)
             }
         }

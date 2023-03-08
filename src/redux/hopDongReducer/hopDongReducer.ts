@@ -40,6 +40,7 @@ export interface HopDongKhaiThacRedux {
   tenHopDong: string;
 }
 export interface HopDongUyQuyenRedux {
+  diaChi: String;
   nguoiUyQuyen: string;
   quyenSoHuu: string;
   ngayTao: string;

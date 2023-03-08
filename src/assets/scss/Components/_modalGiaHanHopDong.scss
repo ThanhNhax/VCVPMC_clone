@@ -45,11 +45,10 @@
                                 }
 
                                 input {
+                                    margin-left: 8px;
                                     @include text(16px, 400, #F5F5FF);
                                     padding: 11px 16px 13px;
                                     background: #2B2B3F;
-                                    /* Text & stroke/Text and stroke 2 */
-
                                     border: 1px solid #727288;
                                     border-radius: 8px;
                                 }
@@ -95,8 +94,6 @@
                                     background: #2B2B3F;
                                     border-radius: 8px;
                                     @include text (16px, 400, #F5F5FF);
-
-
                                 }
 
                                 input:disabled {

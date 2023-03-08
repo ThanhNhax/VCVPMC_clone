@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { message, Modal, Switch } from "antd";
 import { doc, setDoc } from "firebase/firestore";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,14 +11,11 @@ import {
   deleteArrBanGhiRedux,
   setItemPlayList,
 } from "../../redux/playListReducer/playListReducer";
-import {
-  getArrTabFireStore,
-  getArrTheLoaiTacPhamFireStore,
-  TheLoaiTacPhamRedux,
-} from "../../redux/theLoaiTacPham/theLoaiTacPhamReducer";
+import { getArrTabFireStore } from "../../redux/theLoaiTacPham/theLoaiTacPhamReducer";
 
-// const tagsData = ["Pop", "EDM", "Lofi", "Ballad", "Chill", "Mashup"];
-
+export const handleSearch = (arr: string[], string: string) => {
+  return arr.filter((el) => el.toLowerCase().includes(string.toLowerCase()));
+};
 export const tongThoiLuong = (arr: KhoBanGhiRedux[]) => {
   let tam: string = "";
   let gio: number = 0;
@@ -28,12 +25,10 @@ export const tongThoiLuong = (arr: KhoBanGhiRedux[]) => {
   arr.map((banGhi: KhoBanGhiRedux) => {
     if (banGhi.thoiLuong) {
       let index = banGhi.thoiLuong.search(":");
-      console.log({ index });
       giay += parseInt(
         banGhi.thoiLuong.slice(index + 1, banGhi.thoiLuong.length)
       );
       phut += parseInt(banGhi.thoiLuong.slice(0, index));
-      console.log({ giay, phut }, banGhi.thoiLuong);
       if (giay >= 60) {
         giay = giay - 60;
         phut += 1;
@@ -42,7 +37,6 @@ export const tongThoiLuong = (arr: KhoBanGhiRedux[]) => {
         gio += 1;
       }
       tam = gio + ":" + phut + ":" + giay;
-      console.log({ tam });
     }
   });
   return tam;
@@ -196,11 +190,10 @@ export default function EditPlayList() {
   };
 
   const [arrChuDeSearch, setArrChuDeSearch] = useState<string[]>([]);
-  const [selectedTags, setSelectedTags] = useState<string[]>(["Chill", "Lofi"]);
+  const [selectedTags, setSelectedTags] = useState<string[]>(
+    itemPlayList.chuDe
+  );
   const [valueSearch, setValueSearch] = useState<string>("");
-  const handleSearch = (arr: string[], string: string) => {
-    return arr.filter((el) => el.toLowerCase().includes(string.toLowerCase()));
-  };
 
   return (
     <div className="editplaylist">

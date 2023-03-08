@@ -358,6 +358,7 @@
                             justify-content: space-between;
                             align-items: center;
                             height: 10%;
+                            width: 100%;
 
                             .pagination_left {
                                 p {
@@ -383,7 +384,7 @@
                             }
 
                             .pagination_right {
-                                width: 100px;
+                                width: 30%;
                                 display: flex;
                                 justify-content: space-evenly;
                                 gap: 5px;

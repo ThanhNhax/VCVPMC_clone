@@ -1,28 +1,28 @@
-import React, { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from "react";
 import { Button, message, Modal, Upload } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/configStore";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../FireStore/fireStore";
+import moment from "moment";
 
 export default function ChiTietHopDong() {
+  const [isActive, setIsActive] = useState<boolean>(true);
   const item = useSelector(
     (state: RootState) => state.hopDong.itemHopDongUyQuyen
   );
-
-  const [isActive, setIsActive] = useState<boolean>(true);
-
-  // cấu hình phân pages
-  // const [currentPage, setCurrentPage] = useState<number>(1); // Vị trí page hiện tại
-  // const [limit, setLimit] = useState<number>(13); // change số item hiển thị
-  // const indexOfLastNews = currentPage * limit; // vị trí cuối
-  // const indexOfFirstNews = indexOfLastNews - limit; // Vị trí đầu
-  // // const totalPages = Math.ceil(arrPlayList.length / limit); // Tính số tổng số pages
-  // // const newArrPlayList = arrPlayList.slice(indexOfFirstNews, indexOfLastNews);
-  // const [isStyleBtn, setIsStyleBtn] = useState<boolean>(false);
-  // cấu hình phân pages
   const navigate = useNavigate();
+  const [isToChuc, setIsToChuc] = useState<boolean>(
+    item?.tenToChuc !== "" ? true : false
+  );
+  console.log({ item });
+  useEffect(() => {
+    if (!item) {
+      navigate("/admin/quanLyHopDong");
+    }
+  }, []);
 
   // xử  lý modal popup
   const [isChecked, setIsChecked] = useState<boolean>(true);
@@ -64,6 +64,14 @@ export default function ChiTietHopDong() {
   const handleCancelHuy = () => {
     setIsModalOpenHuy(false);
   };
+  console.log(item?.ngayHetHan);
+  const d = new Date(`${moment(item?.ngayHetHan).format("YYYY-MM-DD")}`);
+  console.log("miliseo:", d.getDate());
+
+  const tuNgay =
+    d.getDate() + 1 + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+  console.log({ tuNgay });
+
   return (
     <div className="chiTietHopDong">
       <div className="container">
@@ -176,7 +184,11 @@ export default function ChiTietHopDong() {
                   </div>
                 </div>
               </div>
-              <div className="center-list">
+              {/* hiển thị khi pháp nhan ủy quyền là cá nhân */}
+              <div
+                className="center-list"
+                style={!isToChuc ? { display: "flex" } : { display: "none" }}
+              >
                 <div className="center-item">
                   <div className="item-title">
                     <h5>Thông tin pháp nhân uỷ quyền</h5>
@@ -184,30 +196,121 @@ export default function ChiTietHopDong() {
                       <tbody>
                         <tr>
                           <td>Pháp nhân uỷ quyền:</td>
-                          <td>Tổ chức</td>
+                          <td>
+                            {item?.tenToChuc !== "" ? "Tổ Chức" : "Cá nhân"}
+                          </td>
                         </tr>
                         <tr>
-                          <td>Tên tổ chức:</td>
-                          <td>Cty TNHH TM DV ABCEDEF</td>
+                          <td>Tên người uỷ quyền:</td>
+                          <td>{item?.nguoiUyQuyen}</td>
+                        </tr>
+                        <tr>
+                          <td>Ngày sinh:</td>
+                          <td>{item?.ngaySinh}</td>
+                        </tr>
+                        <tr>
+                          <td>Giới tính:</td>
+                          <td>{item?.gioiTinh}</td>
+                        </tr>
+                        <tr>
+                          <td>Số điện thoại:</td>
+                          <td>{item?.soDienThoai}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div className="center-item">
+                  <div className="item-title">
+                    <table>
+                      <tbody>
+                        <tr>
+                          <td>Số CMND/ CCCD:</td>
+                          <td>{item?.cmnd}</td>
+                        </tr>
+                        <tr>
+                          <td>Ngày cấp:</td>
+                          <td>{item?.ngayCap}</td>
+                        </tr>
+                        <tr>
+                          <td>Nơi cấp:</td>
+                          <td>{item?.noiCap}</td>
                         </tr>
                         <tr>
                           <td>Mã số thuế:</td>
-                          <td>92387489</td>
+                          <td>{item?.maSoThue}</td>
+                        </tr>
+                        <tr>
+                          <td>Nơi cư trú:</td>
+                          <td>{item?.noiCuTru}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div className="center-item">
+                  <div className="item-title">
+                    <table>
+                      <tbody>
+                        <tr>
+                          <td>Email:</td>
+                          <td>{item?.email}</td>
+                        </tr>
+                        <tr>
+                          <td>Tài khoản đăng nhập:</td>
+                          <td>{item?.tenDangNhap}</td>
+                        </tr>
+                        <tr>
+                          <td>Mật khẩu:</td>
+                          <td>{item?.matKhau}</td>
+                        </tr>
+                        <tr>
+                          <td>Số tài khoản:</td>
+                          <td>{item?.soTaiKhoan}</td>
                         </tr>
                         <tr>
                           <td>Ngân hàng:</td>
-                          <td>ACB - Ngân hàng Á Châu</td>
+                          <td>{item?.nganHang}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="center-list"
+                style={isToChuc ? { display: "flex" } : { display: "none" }}
+              >
+                <div className="center-item">
+                  <div className="item-title">
+                    <h5>Thông tin pháp nhân uỷ quyền</h5>
+                    <table>
+                      <tbody>
+                        <tr>
+                          <td>Pháp nhân uỷ quyền:</td>
+                          <td>
+                            {item?.tenToChuc !== "" ? "Tổ Chức" : "Cá nhân"}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Tên tổ chức:</td>
+                          <td>{item?.tenToChuc}</td>
+                        </tr>
+                        <tr>
+                          <td>Mã số thuế:</td>
+                          <td>{item?.maSoThue}</td>
+                        </tr>
+                        <tr>
+                          <td>Ngân hàng:</td>
+                          <td>{item?.nganHang}</td>
                         </tr>
                         <tr>
                           <td>Quốc tịch:</td>
-                          <td>Việt Nam</td>
+                          <td>{item?.quocTich}</td>
                         </tr>
                         <tr>
                           <td>Địa chỉ:</td>
-                          <td>
-                            69/53, Nguyễn Gia Trí, Phường 25, Quận Bình Thạnh,
-                            Thành phố Hồ Chí Minh
-                          </td>
+                          <td>{item?.diaChi}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -219,31 +322,31 @@ export default function ChiTietHopDong() {
                       <tbody>
                         <tr>
                           <td>Người đại diện:</td>
-                          <td>Nguyễn Văn A</td>
+                          <td>{item?.nguoiDaiDien}</td>
                         </tr>
                         <tr>
                           <td>Chức vụ:</td>
-                          <td>Giám đốc</td>
+                          <td>{item?.chucVu}</td>
                         </tr>
                         <tr>
                           <td>Ngày sinh:</td>
-                          <td>11/01/1988</td>
+                          <td>{item?.ngaySinh}</td>
                         </tr>
                         <tr>
                           <td>Giới tính:</td>
-                          <td>Nam</td>
+                          <td>{item?.gioiTinh}</td>
                         </tr>
                         <tr>
                           <td>CMND/CCCD:</td>
-                          <td>24147456</td>
+                          <td>{item?.cmnd}</td>
                         </tr>
                         <tr>
                           <td>Ngày cấp:</td>
-                          <td>2/05/2008</td>
+                          <td>{item?.ngayCap}</td>
                         </tr>
                         <tr>
                           <td>Nơi cấp:</td>
-                          <td>Tp.Hồ Chí Minh</td>
+                          <td>{item?.noiCap}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -255,26 +358,23 @@ export default function ChiTietHopDong() {
                       <tbody>
                         <tr>
                           <td>Quốc tịch:</td>
-                          <td>Việt Nam</td>
+                          <td>{item?.quocTich}</td>
                         </tr>
                         <tr>
                           <td>Nơi cư trú:</td>
-                          <td>
-                            69/53, Nguyễn Gia Trí, Phường 25, Quận Bình Thạnh,
-                            Thành phố Hồ Chí Minh
-                          </td>
+                          <td>{item?.noiCuTru}</td>
                         </tr>
                         <tr>
                           <td>Số điện thoại:</td>
-                          <td>012456789</td>
+                          <td>{item?.soDienThoai}</td>
                         </tr>
                         <tr>
                           <td>Tên đăng nhập:</td>
-                          <td>nguyenvana1</td>
+                          <td>{item?.tenDangNhap}</td>
                         </tr>
                         <tr>
                           <td>Mật khẩu:</td>
-                          <td>123456</td>
+                          <td>{item?.matKhau}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -308,203 +408,6 @@ export default function ChiTietHopDong() {
               </div>
             </div>
           </div>
-          <div
-            className="container-tacPhamUyQuyen"
-            style={!isActive ? { display: "flex" } : { display: "none" }}
-          >
-            <div className="wrap-tacPhamUyQuyen-content">
-              <div className="tacPhamUyQuyen-title">
-                <div className="title-item">
-                  <label htmlFor="">Tình trạng phê duyệt</label>
-                  <select>
-                    <option value="">Tất cả</option>
-                    <option value="">Mới</option>
-                    <option value="">Đã phê duyệt</option>
-                    <option value="">Từ chối</option>
-                  </select>
-                </div>
-                <div className="title-search">
-                  <input
-                    type="search"
-                    name="search"
-                    id="search"
-                    placeholder="Tên bản ghi, tên ca sĩ, tác giả,..."
-                  />
-                  <i className="fas fa-search"></i>
-                </div>
-              </div>
-              <div className="tacPhamUyQuyen-table">
-                <div className="wrap-table">
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>STT</th>
-                        <th>Tên bản ghi</th>
-                        <th>Mã ISRC</th>
-                        <th>Ca sĩ</th>
-                        <th>Tác giả</th>
-                        <th>Ngày tải</th>
-                        <th>Tình trạng</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>
-                          <div className="td-tenBanGhi">
-                            <p>Gorgeous Wooden Bike</p>
-                            <div className="td-chucNang">
-                              <p>Ballad</p>
-                              <i className="fas fa-circle"></i>
-                              <p>Audio</p>
-                              <i className="fas fa-circle"></i>
-                              <p>3:12</p>
-                            </div>
-                          </div>
-                        </td>
-                        <td>VNA1423525</td>
-                        <td>Vương Anh Tú</td>
-                        <td>Vương Phong</td>
-                        <td>01/04/2021 15:53:13</td>
-                        <td className="tinhTrang moi">Mới</td>
-                        <td className="action">Nghe</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>
-                          <div className="td-tenBanGhi">
-                            <p>Gorgeous Wooden Bike</p>
-                            <div className="td-chucNang">
-                              <p>Ballad</p>
-                              <i className="fas fa-circle"></i>
-                              <p>Audio</p>
-                              <i className="fas fa-circle"></i>
-                              <p>3:12</p>
-                            </div>
-                          </div>
-                        </td>
-                        <td>VNA1423525</td>
-                        <td>Vương Anh Tú</td>
-                        <td>Vương Phong</td>
-                        <td>01/04/2021 15:53:13</td>
-                        <td className="tinhTrang daPheDuyet">Đã phê duyệt</td>
-                        <td className="action">Nghe</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>
-                          <div className="td-tenBanGhi">
-                            <p>Gorgeous Wooden Bike</p>
-                            <div className="td-chucNang">
-                              <p>Ballad</p>
-                              <i className="fas fa-circle"></i>
-                              <p>Audio</p>
-                              <i className="fas fa-circle"></i>
-                              <p>3:12</p>
-                            </div>
-                          </div>
-                        </td>
-                        <td>VNA1423525</td>
-                        <td>Vương Anh Tú</td>
-                        <td>Vương Phong</td>
-                        <td>01/04/2021 15:53:13</td>
-                        <td className="tinhTrang biTuChoi">Bị từ chối</td>
-                        <td className="action">Nghe</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>
-                          <div className="td-tenBanGhi">
-                            <p>Gorgeous Wooden Bike</p>
-                            <div className="td-chucNang">
-                              <p>Ballad</p>
-                              <i className="fas fa-circle"></i>
-                              <p>Audio</p>
-                              <i className="fas fa-circle"></i>
-                              <p>3:12</p>
-                            </div>
-                          </div>
-                        </td>
-                        <td>VNA1423525</td>
-                        <td>Vương Anh Tú</td>
-                        <td>Vương Phong</td>
-                        <td>01/04/2021 15:53:13</td>
-                        <td className="tinhTrang moi">Mới</td>
-                        <td className="action">Nghe</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div className="pagination-table">
-                  <div className="pagination_left">
-                    <p>
-                      Hiển thị
-                      <input defaultValue="13"></input>
-                      hàng trong mỗi trang
-                    </p>
-                  </div>
-                  <div className="pagination_right">
-                    <button
-                    // disabled={currentPage === 1}
-                    // onClick={() => {
-                    //   if (currentPage === 1) {
-                    //     setCurrentPage(1);
-                    //   }
-                    //   setCurrentPage(currentPage - 1);
-                    // }}
-                    >
-                      <i className="fas fa-chevron-left"></i>
-                    </button>
-                    <div
-                      id="btnPage"
-                      // dangerouslySetInnerHTML={renderButtonPage(totalPages)}
-                    ></div>
-                    <button
-                    // disabled={currentPage >= totalPages}
-                    // onClick={() => {
-                    //   setCurrentPage(currentPage + 1);
-                    // }}
-                    >
-                      <i className="fas fa-chevron-right"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="menu">
-              <div className="menu-list">
-                <div className="menu-item">
-                  <div
-                    className="bg-icon"
-                    onClick={() =>
-                      navigate("/admin/quanLyHopDong/chiTiet/chinhSuaThongTin")
-                    }
-                  >
-                    <i className="fas fa-edit"></i>
-                  </div>
-                  <p>Chỉnh sửa tác phẩm</p>
-                </div>
-                <div className="menu-item">
-                  <div className="bg-icon" onClick={showModal}>
-                    <i className="fas fa-file-alt"></i>
-                  </div>
-                  <p>Gia hạn hợp đồng</p>
-                </div>
-                <div className="menu-item">
-                  <div className="bg-icon" onClick={showModalHuy}>
-                    <i className="fas fa-undo-alt"></i>
-                  </div>
-                  <p>Hủy hợp đồng</p>
-                </div>
-                <div className="menu-item">
-                  <div className="bg-icon">
-                    <i className="fas fa-plus"></i>
-                  </div>
-                  <p>Thêm bản ghi</p>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
       <Modal
@@ -522,7 +425,7 @@ export default function ChiTietHopDong() {
               <p>
                 Thời gian gia hạn <i>*</i>
               </p>
-              <p>Từ ngày: 02/08/2021</p>
+              <p>Từ ngày: {moment(tuNgay).format("DD/MM/YYYY")}</p>
               <div className="form-group">
                 <label htmlFor="">Đến ngày:</label>
                 <input type="date" name="" id="" />
