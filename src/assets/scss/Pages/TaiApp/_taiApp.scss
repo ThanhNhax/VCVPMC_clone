@@ -81,6 +81,11 @@
                     img {
                         width: 168px;
                     }
+
+                    button {
+                        width: 160px;
+                        @include button (16px, 500, #FFFFFF, #FF7506, 16px 12px, 1px solid #FF7506, 8px, rgba(0, 0, 0, 0), #FF7506)
+                    }
                 }
             }
         }

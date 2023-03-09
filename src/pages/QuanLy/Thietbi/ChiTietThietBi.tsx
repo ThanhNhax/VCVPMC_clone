@@ -8,9 +8,13 @@ import { RootState } from "../../../redux/configStore";
 import * as Yup from "yup";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../FireStore/fireStore";
+import { QuanLyThietBiRedux } from "../../../redux/quanLyThietBi/quanLyThietBiReducer";
 export default function ChiTietThietBi() {
   const item = useSelector(
     (state: RootState) => state.quanLyThietBi.itemTietBi
+  );
+  const [isTrangThai, setIsTrangThai] = useState<boolean>(
+    item?.trangThai ? item.trangThai : false
   );
   const navigate = useNavigate();
   useEffect(() => {
@@ -34,20 +38,35 @@ export default function ChiTietThietBi() {
     setIsModalOpen(false);
   };
 
-  const initValue = {
-    macAddresss: item?.macAddresss,
-    tenThietBi: item?.tenThietBi,
-    tenDangNhap: item?.tenDangNhap,
-    skuId: item?.skuId,
-    viTri: item?.viTri,
-    trangThai: item?.trangThai,
+  let initValue: QuanLyThietBiRedux = {
+    macAddresss: "",
+    tenThietBi: "",
+    tenDangNhap: "",
+    skuId: "",
+    viTri: "",
+    trangThai: false,
+    diaChi: "",
+    dinhDang: "",
+    ghiChu: "",
+    hanBaoHanh: "",
+    hanHopDong: "",
+    id: "",
+    kichHoat: false,
+    memory: "",
+    password: "",
+    passwordComfirm: "",
+    thongTin: "",
+    vaiTro: "",
   };
+  if (item) {
+    initValue = item;
+  }
   const Schema = Yup.object().shape({
-    macAddresss: Yup.string().required("Không được bỏ trống!"),
-    tenThietBi: Yup.string().required("Không được bỏ trống!"),
-    tenDangNhap: Yup.string().required("Không được bỏ trống!"),
-    skuId: Yup.string().required("Không được bỏ trống!"),
-    trangThai: Yup.string().required("Không được bỏ trống!"),
+    macAddresss: Yup.string().required(),
+    tenThietBi: Yup.string().required(),
+    tenDangNhap: Yup.string().required(),
+    skuId: Yup.string().required(),
+    trangThai: Yup.string().required(),
   });
   return (
     <div className="ChiTietThietBi">
@@ -181,12 +200,14 @@ export default function ChiTietThietBi() {
         <Formik
           initialValues={initValue}
           validationSchema={Schema}
-          onSubmit={(value) => {
-            console.log({ value });
+          onSubmit={(value: QuanLyThietBiRedux) => {
+            let newValue = { ...value };
+            newValue.trangThai = isTrangThai;
+            console.log({ newValue });
             // update  các field thay đổi
             try {
               if (item) {
-                updateDoc(doc(db, "quanLyThietBi", item?.id), value);
+                updateDoc(doc(db, "quanLyThietBi", item?.id), newValue);
                 message.open({
                   type: "success",
                   content: "Cập nhật thành công!",
@@ -270,20 +291,22 @@ export default function ChiTietThietBi() {
                     Trạng thái thiết bị: <i>*</i>
                   </label>
                   <div className="form-item">
-                    <Field
+                    <input
                       type="radio"
                       name="trangThai"
                       id="daKichHoat"
-                      value={"true"}
+                      checked={isTrangThai}
+                      onChange={(e) => setIsTrangThai(true)}
                     />
                     <label htmlFor="daKichHoat">Đã kích hoạt</label>
                   </div>
                   <div className="form-item">
-                    <Field
+                    <input
                       type="radio"
                       name="trangThai"
                       id="ngungKichHoat"
-                      value={"false"}
+                      checked={!isTrangThai}
+                      onChange={(e) => setIsTrangThai(false)}
                     />
                     <label htmlFor="ngungKichHoat">Ngừng kích hoạt</label>
                   </div>

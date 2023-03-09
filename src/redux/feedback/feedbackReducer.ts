@@ -6,9 +6,11 @@ import { AppDispatch } from "../configStore";
 
 interface FeedbackState {
   arrFeedback: [] | FeedbackRedux[];
+  itemFeedback: FeedbackRedux | null;
 }
 const initialState: FeedbackState = {
   arrFeedback: [],
+  itemFeedback: null,
 };
 
 const feedbackReducer = createSlice({
@@ -21,10 +23,16 @@ const feedbackReducer = createSlice({
     ) => {
       state.arrFeedback = actions.payload;
     },
+    setitemFeedback: (
+      state: FeedbackState,
+      actions: PayloadAction<FeedbackRedux>
+    ) => {
+      state.itemFeedback = actions.payload;
+    },
   },
 });
 
-export const { setArrFeedback } = feedbackReducer.actions;
+export const { setArrFeedback, setitemFeedback } = feedbackReducer.actions;
 
 export default feedbackReducer.reducer;
 

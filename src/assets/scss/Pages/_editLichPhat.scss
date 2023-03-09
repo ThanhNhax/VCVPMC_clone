@@ -185,6 +185,7 @@
                                 width: calc(100%/7);
                                 @include text(12px, 700, #ffac69);
                                 border: 1px solid #ffac69;
+
                             }
                         }
                     }
@@ -232,6 +233,10 @@
                                         @include text(12px, 700, #ffac69);
                                         border: none;
                                         opacity: 1;
+                                    }
+
+                                    &:hover {
+                                        background: #727288;
                                     }
                                 }
                             }

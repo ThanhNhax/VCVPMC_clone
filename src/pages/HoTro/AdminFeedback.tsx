@@ -2,11 +2,16 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/configStore";
-import { getArrFeedbackFireStore } from "../../redux/feedback/feedbackReducer";
+import {
+  getArrFeedbackFireStore,
+  setitemFeedback,
+} from "../../redux/feedback/feedbackReducer";
 import { FeedbackRedux } from "./Feedback";
 
 export default function AdminFeedback() {
   const { arrFeedback } = useSelector((state: RootState) => state.feedback);
+  const { itemFeedback } = useSelector((state: RootState) => state.feedback);
+  console.log({ itemFeedback });
   const dispatch: AppDispatch = useDispatch();
   useEffect(() => {
     dispatch(getArrFeedbackFireStore());
@@ -34,7 +39,14 @@ export default function AdminFeedback() {
   };
   const renderFeedback = () => {
     return newArr.map((feedback: FeedbackRedux, index: number) => (
-      <div className="list-item" key={index}>
+      <div
+        className="list-item"
+        key={index}
+        onClick={() => {
+          // handle add item feedback leen Redux
+          dispatch(setitemFeedback(feedback));
+        }}
+      >
         <div className="avatar">
           <img src={feedback.avatar} alt={feedback.avatar} />
         </div>
@@ -96,7 +108,39 @@ export default function AdminFeedback() {
             </div>
           </div>
           <div className="content-right">
-            {/* <img src="../../img/icon/Frame-396.png" alt="Frame-396.png" /> */}
+            <div
+              className="wrap-none-feedback"
+              style={
+                itemFeedback === null
+                  ? { display: "block" }
+                  : { display: "none" }
+              }
+            ></div>
+            <div
+              className="wrap-feedback"
+              style={
+                itemFeedback !== null
+                  ? { display: "block" }
+                  : { display: "none" }
+              }
+            >
+              <div className="right-top">
+                <div className="wrap-avatar">
+                  <div className="avatar">
+                    <img
+                      src={itemFeedback?.avatar}
+                      alt="itemFeedback?.avatar"
+                    />
+                  </div>
+                  <h3>{itemFeedback?.tenNguoiDung}</h3>
+                </div>
+                <p>
+                  {itemFeedback?.ngayGui.time} {itemFeedback?.ngayGui.ngay}
+                </p>
+              </div>
+              <h5>Chủ đề: {itemFeedback?.vanDe}</h5>
+              <p>{itemFeedback?.noiDung}</p>
+            </div>
           </div>
         </div>
       </div>

@@ -85,8 +85,8 @@ export default function EditLichPhat() {
               <div className="left-bottom">
                 <h5>Danh sách Playlist</h5>
                 <div className="listPlaylist">
-                  {data.map((data) => (
-                    <div className="list-item">
+                  {data.map((data, index: number) => (
+                    <div className="list-item" key={index}>
                       <p>{data.ten}</p>
                       <div className="title-bottom">
                         <p>Thời lượng:</p>

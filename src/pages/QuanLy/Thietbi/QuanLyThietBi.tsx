@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Checkbox } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/configStore";
@@ -9,8 +10,18 @@ import {
   setItemThietBi,
 } from "../../../redux/quanLyThietBi/quanLyThietBiReducer";
 import { useNavigate } from "react-router-dom";
-
+import type { CheckboxChangeEvent } from "antd/es/checkbox";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../../../FireStore/fireStore";
+interface Disabled {
+  trangThai: boolean;
+  id: string;
+}
 export default function QuanLyThietBi() {
+  const [isArrDisabled, setIsArrDisabled] = useState<Disabled[]>([]);
+  const [isDisabled, setIsDisabled] = useState<boolean>(true);
+  console.log({ isDisabled });
+  console.log({ isArrDisabled });
   const navigate = useNavigate();
   const { arrQuanLyThietBi } = useSelector(
     (state: RootState) => state.quanLyThietBi
@@ -20,25 +31,79 @@ export default function QuanLyThietBi() {
 
   useEffect(() => {
     dispatch(getArrQuanLyThietBiFireStore());
+    console.log("get arrQuanLyThietbi");
   }, []);
+  const handleKichHoat = () => {
+    if (isArrDisabled.length === 0) {
+      setIsDisabled(true);
+    } else {
+      let tam = isArrDisabled.some(
+        (item) => !isArrDisabled[0].trangThai === item.trangThai
+      );
+      console.log({ tam });
+      if (tam) {
+        setIsDisabled(true);
+      } else {
+        setIsDisabled(false);
+      }
+    }
+  };
+  const onChange = (e: CheckboxChangeEvent, thietBi: QuanLyThietBiRedux) => {
+    let newValue: Disabled = {
+      trangThai: thietBi.trangThai,
+      id: thietBi.id,
+    };
+    if (e.target.checked) {
+      setIsArrDisabled([...isArrDisabled, newValue]);
+    } else {
+      let index = isArrDisabled.findIndex((item) => item.id === thietBi.id);
+      console.log({ index });
+      let newArrDisable = isArrDisabled.splice(index, 1);
+      setIsArrDisabled([...isArrDisabled]);
+    }
+    if (isArrDisabled.length === 0) {
+      setIsDisabled(true);
+    }
+  };
+  useEffect(() => {
+    handleKichHoat();
+    console.log("re-render");
+  }, [isArrDisabled.length]);
+
   const renderTableLeft = () => {
     return arrQuanLyThietBi.map(
       (thietBi: QuanLyThietBiRedux, index: number) => (
-        <tr
-          key={index}
-          onClick={() => {
-            dispatch(setItemThietBi(thietBi));
-            navigate("/admin/quanLyThietBi/chiTiet");
-          }}
-        >
+        <tr key={index}>
           <td>
-            <Checkbox />
+            <Checkbox onChange={(e) => onChange(e, thietBi)}></Checkbox>
           </td>
-          <td className="text_right">{index + 1}</td>
-          <td>{thietBi.tenThietBi}</td>
-          <td className={thietBi.kichHoat ? "true" : "false"}>
-            {thietBi.kichHoat ? "Đang kích hoạt |" : "Ngừng kích hoạt "}
-            {thietBi.kichHoat && thietBi.trangThai ? "Đang hoạt động" : ""}
+          <td
+            className="text_right"
+            onClick={() => {
+              dispatch(setItemThietBi(thietBi));
+              navigate("/admin/quanLyThietBi/chiTiet");
+            }}
+          >
+            {index + 1}
+          </td>
+          <td
+            onClick={() => {
+              dispatch(setItemThietBi(thietBi));
+              navigate("/admin/quanLyThietBi/chiTiet");
+            }}
+          >
+            {thietBi.tenThietBi}
+          </td>
+          <td
+            className={thietBi.trangThai ? "true" : "false"}
+            onClick={() => {
+              dispatch(setItemThietBi(thietBi));
+              navigate("/admin/quanLyThietBi/chiTiet");
+            }}
+          >
+            {thietBi.trangThai
+              ? "Đang kích hoạt | Đang hoạt động"
+              : "Ngừng kích hoạt "}
           </td>
         </tr>
       )
@@ -65,6 +130,7 @@ export default function QuanLyThietBi() {
       )
     );
   };
+
   return (
     <div className="quanLyThietBi">
       <div className="container">
@@ -84,38 +150,14 @@ export default function QuanLyThietBi() {
                 </select>
                 <select>
                   <option value="">Ẩn hiện cột</option>
-                  <option value="">
-                    <Checkbox />
-                    MAC Address
-                  </option>
-                  <option value="">
-                    <Checkbox />
-                    Memory
-                  </option>
-                  <option value="">
-                    <Checkbox />
-                    SKU/ID
-                  </option>
-                  <option value="">
-                    <Checkbox />
-                    Hạn bảo hành
-                  </option>
-                  <option value="">
-                    <Checkbox />
-                    Tên đăng nhập
-                  </option>
-                  <option value="">
-                    <Checkbox />
-                    Trạng thái
-                  </option>
-                  <option value="">
-                    <Checkbox />
-                    Địa điểm
-                  </option>
-                  <option value="">
-                    <Checkbox />
-                    Hạn hợp đồng
-                  </option>
+                  <option value="">MAC Address</option>
+                  <option value="">Memory</option>
+                  <option value="">SKU/ID</option>
+                  <option value="">Hạn bảo hành</option>
+                  <option value="">Tên đăng nhập</option>
+                  <option value="">Trạng thái</option>
+                  <option value="">Địa điểm</option>
+                  <option value="">Hạn hợp đồng</option>
                 </select>
               </div>
               <div className="search">
@@ -219,17 +261,43 @@ export default function QuanLyThietBi() {
               </div>
               <p>Thêm thiết bị</p>
             </div>
-            <div className="menu-item " aria-disabled>
+            <div
+              className="menu-item "
+              aria-disabled={isDisabled}
+              onClick={() => {
+                let arrThietBiNew: QuanLyThietBiRedux[] = [];
+                // eslint-disable-next-line array-callback-return
+                isArrDisabled.map((item: Disabled) => {
+                  let newItem = arrQuanLyThietBi.find(
+                    (thietBi) => thietBi.id === item.id
+                  );
+                  if (newItem) {
+                    arrThietBiNew.push(newItem);
+                    updateDoc(doc(db, "quanLyThietBi", newItem.id), {
+                      trangThai: !newItem.trangThai,
+                    });
+                  }
+                });
+              }}
+            >
               <div className="bg-icon">
                 <i className="fas fa-power-off"></i>
               </div>
-              <p>Kích hoạt thiết bị</p>
+              <p>
+                {isDisabled || isArrDisabled[0]?.trangThai
+                  ? "Ngừng kích hoạt thiết bị"
+                  : " Kích hoạt thiết bị"}
+              </p>
             </div>
-            <div className="menu-item" aria-disabled>
+            <div className="menu-item" aria-disabled={isDisabled}>
               <div className="bg-icon">
                 <i className="fas fa-lock"></i>
               </div>
-              <p>Khoá thiết bị</p>
+              <p>
+                {isDisabled || isArrDisabled[0]?.trangThai
+                  ? "Khoá thiết bị"
+                  : "Mở khóa thiết bị"}
+              </p>
             </div>
             <div className="menu-item">
               <div className="bg-icon">

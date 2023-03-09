@@ -29,12 +29,6 @@ export default function QuanLyDonViSuDung() {
 
   // handle switch
 
-  const handleClick = (thietBi: DonViSuDungRedux) => {
-    if (thietBi.trangThai) thietBi.trangThai = false;
-    else thietBi.trangThai = true;
-    console.log({ thietBi });
-  };
-
   const renderTable = () => {
     return arrDonViSuDung.map((thietBi: DonViSuDungRedux, index: number) => (
       <tr key={index}>
@@ -49,10 +43,7 @@ export default function QuanLyDonViSuDung() {
         <td className="text_right">{thietBi.thietBiDuocChiDinh}</td>
         <td>{thietBi.ngayHetHan}</td>
         <td>
-          <Switch
-            defaultChecked={thietBi.trangThai}
-            onClick={() => handleClick(thietBi)}
-          />
+          <Switch defaultChecked={thietBi.trangThai} />
           {thietBi.trangThai ? "Đang kích hoạt" : "Ngừng kích hoạt"}
         </td>
         <td className="action">

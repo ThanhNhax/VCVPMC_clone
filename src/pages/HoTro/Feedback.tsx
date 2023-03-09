@@ -54,7 +54,7 @@ export default function Feedback() {
             initialValues={initialValues}
             validationSchema={schema}
             onSubmit={async (values) => {
-              let tenNguoiDung: string = user?.ho.slice(0, 2) + "." + user?.ten;
+              let tenNguoiDung: string = user?.ho + " " + user?.ten;
               if (user) {
                 values.avatar = user.avatar;
               }
