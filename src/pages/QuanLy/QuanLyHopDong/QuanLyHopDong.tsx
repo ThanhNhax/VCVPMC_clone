@@ -70,7 +70,7 @@ export default function QuanLyHopDong() {
                 Xem chi tiết
               </Link>
             </td>
-            {uyQuyen.hieuLucHopDong.match("hủy") ? (
+            {uyQuyen?.hieuLucHopDong?.match("hủy") ? (
               <td className="action">Lý do hủy</td>
             ) : (
               <td></td>

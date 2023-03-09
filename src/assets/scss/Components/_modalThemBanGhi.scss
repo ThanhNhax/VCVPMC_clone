@@ -56,6 +56,10 @@
                                 }
                             }
 
+                            .input-error {
+                                border: 2px solid red;
+                            }
+
                             #input_file {
                                 margin-left: 10px;
                                 border: 1px solid #FFAC69;
@@ -93,6 +97,10 @@
                                     @include text (16px,
                                         400,
                                         #F5F5FF);
+                                }
+
+                                .input-error {
+                                    border: 2px solid red;
                                 }
                             }
                         }

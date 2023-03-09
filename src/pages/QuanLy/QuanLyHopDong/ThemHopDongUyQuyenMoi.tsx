@@ -1,18 +1,26 @@
 import React, { useState } from "react";
-import { Button, message, Upload } from "antd";
+import { Button, Upload } from "antd";
 import { useNavigate } from "react-router-dom";
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
-import { addDoc, collection } from "firebase/firestore";
-import { db } from "../../../FireStore/fireStore";
 import { ngayTao } from "../../HoTro/Feedback";
+import { AppDispatch } from "../../../redux/configStore";
+import { useDispatch } from "react-redux";
+import {
+  HopDongUyQuyenRedux,
+  setNewHopDongUyQuyen,
+} from "../../../redux/hopDongReducer/hopDongReducer";
 
 export default function ThemHopDongUyQuyenMoi() {
   const navigate = useNavigate();
+  const dispatch: AppDispatch = useDispatch();
   const [isActive, setIsActive] = useState<boolean>(true);
   const [quocTich, setQuocTich] = useState<string>("");
 
-  const initialValues = {
+  const initialValues: HopDongUyQuyenRedux = {
+    arrTacPhamUyQuyen: [],
+    diaChi: "",
+    quyenSoHuu: "",
     id: "",
     soHopDong: "",
     tenHopDong: "",
@@ -69,8 +77,8 @@ export default function ThemHopDongUyQuyenMoi() {
         </div>
         <Formik
           initialValues={initialValues}
-          // validationSchema={schemaCaNhan}
-          onSubmit={(value) => {
+          validationSchema={schemaCaNhan}
+          onSubmit={(value: HopDongUyQuyenRedux) => {
             // gán hiệu lực hợp đồng là mới tạo
             value.hieuLucHopDong = "Mới";
             // set ngày tạo là ngày hiện tại
@@ -81,14 +89,10 @@ export default function ThemHopDongUyQuyenMoi() {
             console.log({ value });
             // add lên  fireSore
             try {
-              addDoc(collection(db, "hopDongUyQyen"), value);
-              console.log("add firestore", { value });
+              //lưu lên redux
+              dispatch(setNewHopDongUyQuyen(value));
+
               navigate("/admin/quanLyHopDong/themThongTinBanGhi");
-              message.open({
-                type: "success",
-                content: "Tạo thành công!",
-                duration: 0.8,
-              });
             } catch (e) {
               console.log(e);
             }
@@ -647,7 +651,12 @@ export default function ThemHopDongUyQuyenMoi() {
                   <i>*</i>là những trường thông tin bắt buộc
                 </p>
                 <div className="button">
-                  <button type="button">Hủy</button>
+                  <button
+                    type="button"
+                    onClick={() => navigate("/admin/quanLyHopDong")}
+                  >
+                    Hủy
+                  </button>
                   <button type="submit">Tạo</button>
                 </div>
               </div>

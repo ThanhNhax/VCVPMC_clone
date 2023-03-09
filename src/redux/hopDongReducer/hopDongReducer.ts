@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { collection, onSnapshot, query } from "firebase/firestore";
 import { db } from "../../FireStore/fireStore";
 import { AppDispatch } from "../configStore";
+import { KhoBanGhiRedux } from "../khoBanGhi/khoBanghiReducer";
 
 export interface LoaiHopDong {
   tronGoi: {
@@ -67,18 +68,21 @@ export interface HopDongUyQuyenRedux {
   tenDangNhap: string;
   tenHopDong: string;
   tenToChuc: string;
+  arrTacPhamUyQuyen: [] | KhoBanGhiRedux[];
 }
 export interface HopDongState {
   arrHopDongUyQuyen: HopDongUyQuyenRedux[] | [];
   itemHopDongUyQuyen: HopDongUyQuyenRedux | null;
   arrHopDongKhaiThac: HopDongKhaiThacRedux[] | [];
   itemHopDongKhaiThac: HopDongKhaiThacRedux | null;
+  newHopDongUyQuyen: HopDongUyQuyenRedux | null;
 }
 const initialState: HopDongState = {
   arrHopDongUyQuyen: [],
   itemHopDongUyQuyen: null,
   arrHopDongKhaiThac: [],
   itemHopDongKhaiThac: null,
+  newHopDongUyQuyen: null,
 };
 
 const hopDongReducer = createSlice({
@@ -107,8 +111,13 @@ const hopDongReducer = createSlice({
       state: HopDongState,
       action: PayloadAction<HopDongKhaiThacRedux>
     ) => {
-      console.log(action.payload);
       state.itemHopDongKhaiThac = action.payload;
+    },
+    setNewHopDongUyQuyen: (
+      state: HopDongState,
+      action: PayloadAction<HopDongUyQuyenRedux>
+    ) => {
+      state.newHopDongUyQuyen = action.payload;
     },
   },
 });
@@ -118,6 +127,7 @@ export const {
   setArrHopDongUyQuyen,
   setItemHopDongUyQuyen,
   setItemHopDongKhaiThac,
+  setNewHopDongUyQuyen,
 } = hopDongReducer.actions;
 
 export default hopDongReducer.reducer;

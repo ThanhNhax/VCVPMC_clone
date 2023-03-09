@@ -247,6 +247,16 @@
                                 height: 36px;
                                 @include text(14px, 600, #F5F5FF);
                             }
+
+                            textarea {
+                                padding: 11px 24px 13px 16px;
+                                width: 60%;
+                                background: #2B2B3F;
+                                border: 1px solid #727288;
+                                border-radius: 8px;
+                                height: 36px;
+                                @include text(14px, 600, #F5F5FF);
+                            }
                         }
 
                         &:first-child {
@@ -280,8 +290,8 @@
                             .from-item {
 
                                 &:last-child {
-                                    input {
-                                        height: 72px;
+                                    textarea {
+                                        height: 65px;
                                     }
                                 }
                             }

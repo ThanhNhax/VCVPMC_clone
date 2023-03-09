@@ -36,6 +36,7 @@ export interface KhoBanGhiRedux {
   dinhDang: string | null;
   nhaSanXuat: string | null;
   thoiHanSuDung: ThoiHanSuDung;
+  trangThai?: string;
 }
 export interface KhoBanGhiState {
   itemKhoBanGhi: KhoBanGhiRedux;

@@ -5,7 +5,6 @@ import {
   Line,
   XAxis,
   YAxis,
-  CartesianGrid,
   Tooltip,
   Legend,
   ResponsiveContainer,
@@ -250,17 +249,11 @@ export default function BaoCaoDoanhThu() {
                       bottom: 5,
                     }}
                   >
-                    <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="ngay" />
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Line
-                      type="monotone"
-                      dataKey="luotPhat"
-                      stroke="#FF7506"
-                      activeDot={{ r: 10 }}
-                    />
+                    <Line type="monotone" dataKey="luotPhat" stroke="#FF7506" />
                   </LineChart>
                 </ResponsiveContainer>
               </div>

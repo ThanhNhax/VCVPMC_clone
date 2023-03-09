@@ -103,7 +103,7 @@ export default function ThemHopDongKhaiThacMoi() {
         </div>
         <Formik
           initialValues={initialValusHopDongKhaiThac}
-          // validationSchema={schema}
+          validationSchema={schema}
           onSubmit={(value: HopDongKhaiThacRedux) => {
             //gán lại ngày hết hạn ngày hiệu lúc ,giá trị hợp đồng
             value.ngayHetHan = ngayHetHan;

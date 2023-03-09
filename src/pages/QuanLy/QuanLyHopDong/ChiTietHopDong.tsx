@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { Button, message, Modal, Upload } from "antd";
@@ -7,9 +8,11 @@ import { RootState } from "../../../redux/configStore";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../FireStore/fireStore";
 import moment from "moment";
+import { KhoBanGhiRedux } from "../../../redux/khoBanGhi/khoBanghiReducer";
 
 export default function ChiTietHopDong() {
   const [isActive, setIsActive] = useState<boolean>(true);
+  console.log({ isActive });
   const item = useSelector(
     (state: RootState) => state.hopDong.itemHopDongUyQuyen
   );
@@ -71,6 +74,35 @@ export default function ChiTietHopDong() {
   const tuNgay =
     d.getDate() + 1 + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
   console.log({ tuNgay });
+  const renderTableTacPham = () => {
+    return item?.arrTacPhamUyQuyen.map(
+      (tacPham: KhoBanGhiRedux, index: number) => (
+        <tr key={index}>
+          <td className="text_right">{index + 1}</td>
+          <td>
+            <div className="td-tenBanGhi">
+              <p>{tacPham.tenBanGhi}</p>
+              <div className="td-chucNang">
+                <p>{tacPham.theLoai}</p>
+                <i className="fas fa-circle"></i>
+                <p>{tacPham.dinhDang}</p>
+                <i className="fas fa-circle"></i>
+                <p>{tacPham.thoiLuong}</p>
+              </div>
+            </div>
+          </td>
+          <td>{tacPham.maISRC}</td>
+          <td>{tacPham.caSi}</td>
+          <td>{tacPham.tacGia}</td>
+          <td>{tacPham.ngayTai}</td>
+          <td className={tacPham?.trangThai + " tinhTrang"}>
+            {tacPham?.trangThai}
+          </td>
+          <td className="action">Nghe</td>
+        </tr>
+      )
+    );
+  };
 
   return (
     <div className="chiTietHopDong">
@@ -395,7 +427,7 @@ export default function ChiTietHopDong() {
                 <p>Chỉnh sửa hợp đồng</p>
               </div>
               <div className="menu-item">
-                <div className="bg-icon" onClick={() => setIsModalOpen(true)}>
+                <div className="bg-icon" onClick={showModal}>
                   <i className="fas fa-file-alt"></i>
                 </div>
                 <p>Gia hạn hợp đồng</p>
@@ -405,6 +437,118 @@ export default function ChiTietHopDong() {
                   <i className="fas fa-times"></i>
                 </div>
                 <p>Huỷ hợp đồng</p>
+              </div>
+            </div>
+          </div>
+          <div
+            className="container-tacPhamUyQuyen"
+            style={!isActive ? { display: "flex" } : { display: "none" }}
+          >
+            <div className="wrap-tacPhamUyQuyen-content">
+              <div className="tacPhamUyQuyen-title">
+                <div className="title-item">
+                  <label htmlFor="">Tình trạng phê duyệt</label>
+                  <select>
+                    <option value="">Tất cả</option>
+                    <option value="">Mới</option>
+                    <option value="">Đã phê duyệt</option>
+                    <option value="">Từ chối</option>
+                  </select>
+                </div>
+                <div className="title-search">
+                  <input
+                    type="search"
+                    name="search"
+                    id="search"
+                    placeholder="Tên bản ghi, tên ca sĩ, tác giả,..."
+                  />
+                  <i className="fas fa-search"></i>
+                </div>
+              </div>
+              <div className="tacPhamUyQuyen-table">
+                <div className="wrap-table">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>STT</th>
+                        <th>Tên bản ghi</th>
+                        <th>Mã ISRC</th>
+                        <th>Ca sĩ</th>
+                        <th>Tác giả</th>
+                        <th>Ngày tải</th>
+                        <th>Tình trạng</th>
+                      </tr>
+                    </thead>
+                    <tbody>{renderTableTacPham()}</tbody>
+                  </table>
+                </div>
+                <div className="pagination-table">
+                  <div className="pagination_left">
+                    <p>
+                      Hiển thị
+                      <input defaultValue="13"></input>
+                      hàng trong mỗi trang
+                    </p>
+                  </div>
+                  <div className="pagination_right">
+                    <button
+                    // disabled={currentPage === 1}
+                    // onClick={() => {
+                    //   if (currentPage === 1) {
+                    //     setCurrentPage(1);
+                    //   }
+                    //   setCurrentPage(currentPage - 1);
+                    // }}
+                    >
+                      <i className="fas fa-chevron-left"></i>
+                    </button>
+                    <div
+                      id="btnPage"
+                      // dangerouslySetInnerHTML={renderButtonPage(totalPages)}
+                    ></div>
+                    <button
+                    // disabled={currentPage >= totalPages}
+                    // onClick={() => {
+                    //   setCurrentPage(currentPage + 1);
+                    // }}
+                    >
+                      <i className="fas fa-chevron-right"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="menu">
+              <div className="menu-list">
+                <div className="menu-item">
+                  <div
+                    className="bg-icon"
+                    onClick={() =>
+                      navigate("/admin/quanLyHopDong/chiTiet/chinhSuaThongTin")
+                    }
+                  >
+                    <i className="fas fa-edit"></i>
+                  </div>
+                  <p>Chỉnh sửa tác phẩm</p>
+                </div>
+                <div className="menu-item">
+                  <div className="bg-icon" onClick={showModal}>
+                    <i className="fas fa-file-alt"></i>
+                  </div>
+                  <p>Gia hạn hợp đồng</p>
+                </div>
+                <div className="menu-item">
+                  <div className="bg-icon" onClick={showModalHuy}>
+                    <i className="fas fa-undo-alt"></i>
+                  </div>
+                  <p>Hủy hợp đồng</p>
+                </div>
+                <div className="menu-item">
+                  <div className="bg-icon">
+                    <i className="fas fa-plus"></i>
+                  </div>
+                  <p>Thêm bản ghi</p>
+                </div>
               </div>
             </div>
           </div>

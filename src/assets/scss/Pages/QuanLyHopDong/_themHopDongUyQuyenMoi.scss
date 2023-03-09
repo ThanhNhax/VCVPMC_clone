@@ -426,12 +426,17 @@
                 align-items: center;
                 gap: 32px;
 
-                button:nth-child(1) {
-                    @include button (16px, 600, #FF7506, #1E1E2E, 12px 32px, 1px solid #FF7506, 8px, #FF7506, #ffffff)
-                }
+                button {
+                    width: 168px;
+                    cursor: pointer;
 
-                button:nth-child(2) {
-                    @include button (16px, 600, #ffffff, #FF7506, 12px 32px, 1px solid #FF7506, 8px, #1E1E2E, #FF7506)
+                    &:nth-child(1) {
+                        @include button (16px, 600, #FF7506, #1E1E2E, 12px 32px, 1px solid #FF7506, 8px, #FF7506, #ffffff)
+                    }
+
+                    &:nth-child(2) {
+                        @include button (16px, 600, #ffffff, #FF7506, 12px 32px, 1px solid #FF7506, 8px, #1E1E2E, #FF7506)
+                    }
                 }
             }
         }
