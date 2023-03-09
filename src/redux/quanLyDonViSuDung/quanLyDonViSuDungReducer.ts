@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { collection, doc, onSnapshot, query, setDoc } from "firebase/firestore";
 import { db } from "../../FireStore/fireStore";
@@ -77,6 +78,7 @@ const quanLyDonViSuDungReducer = createSlice({
       action: PayloadAction<NguoiDungDonViRedux>
     ) => {
       if (state.itemDonViSuDung) {
+        console.log(action.payload);
         state.itemDonViSuDung.arrNguoiDung[parseInt(action.payload.id)] =
           action.payload;
         try {
@@ -90,6 +92,25 @@ const quanLyDonViSuDungReducer = createSlice({
         }
       }
     },
+    deleteNguoiDung: (
+      state: DonViSuDungState,
+      action: PayloadAction<number[]>
+    ) => {
+      if (state.itemDonViSuDung) {
+        let newArrNguoiDung = [...state.itemDonViSuDung?.arrNguoiDung];
+        action.payload.map((id: number) => {
+          newArrNguoiDung.splice(id, 1);
+        });
+        setDoc(
+          doc(db, "quanLyDonViSuDung", state.itemDonViSuDung.id),
+          {
+            arrNguoiDung: newArrNguoiDung,
+          },
+          { merge: true }
+        );
+        state.itemDonViSuDung.arrNguoiDung = newArrNguoiDung;
+      }
+    },
   },
 });
 
@@ -100,6 +121,7 @@ export const {
   setItemNguoiDung,
   setIndexItemNguoiDung,
   updateNguoiDung,
+  deleteNguoiDung,
 } = quanLyDonViSuDungReducer.actions;
 
 export default quanLyDonViSuDungReducer.reducer;

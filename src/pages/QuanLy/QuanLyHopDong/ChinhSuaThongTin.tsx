@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Button, Upload } from "antd";
 import { Field, Form, Formik } from "formik";
-import moment from "moment";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -77,7 +76,7 @@ export default function ChinhSuaThongTin() {
 
         <Formik
           initialValues={initialValues}
-          // validationSchema={loginSchema}
+          validationSchema={loginSchema}
           onSubmit={async (values) => {
             console.log({ values });
           }}

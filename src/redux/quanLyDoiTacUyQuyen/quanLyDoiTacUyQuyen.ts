@@ -11,7 +11,7 @@ export interface DoiTacUyQuyenRedux {
   tenDangNhap: string;
   matKhau: string;
   matKhauNhapLai: string;
-  trangThai: string;
+  trangThai: boolean;
   id: string;
   ngayHetHan: string;
 }

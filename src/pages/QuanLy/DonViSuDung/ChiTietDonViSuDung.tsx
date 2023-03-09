@@ -5,10 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { AppDispatch, RootState } from "../../../redux/configStore";
 import {
+  deleteNguoiDung,
   NguoiDungDonViRedux,
   setIndexItemNguoiDung,
   setItemNguoiDung,
 } from "../../../redux/quanLyDonViSuDung/quanLyDonViSuDungReducer";
+import { CheckboxChangeEvent } from "antd/es/checkbox";
 
 export default function ChiTietDonViSuDung() {
   const item = useSelector(
@@ -16,6 +18,8 @@ export default function ChiTietDonViSuDung() {
   );
   console.log({ item });
   const dispatch: AppDispatch = useDispatch();
+  const [arrIdNguoiDung, setArrIdNguoiDung] = useState<number[]>([]);
+  console.log({ arrIdNguoiDung });
   const navigate = useNavigate();
   useEffect(() => {
     if (!item) navigate("/admin/donViSuDung");
@@ -50,7 +54,19 @@ export default function ChiTietDonViSuDung() {
     return newArrNguoiDung?.map((nguoiDung: NguoiDungDonViRedux, index) => (
       <tr key={index}>
         <td>
-          <Checkbox />
+          <Checkbox
+            onChange={(e: CheckboxChangeEvent) => {
+              if (e.target.checked) {
+                setArrIdNguoiDung([...arrIdNguoiDung, index]);
+              } else {
+                let newArr = [...arrIdNguoiDung];
+                let indexDelete = newArr.findIndex((item) => item === index);
+                newArr.splice(indexDelete, 1);
+                console.log({ newArr });
+                setArrIdNguoiDung(newArr);
+              }
+            }}
+          />
         </td>
         <td className="text_right">{index + 1}</td>
         <td>{nguoiDung.tenNguoiDung}</td>
@@ -172,7 +188,13 @@ export default function ChiTietDonViSuDung() {
               <p>Thêm người dùng</p>
             </div>
             <div className="menu-item">
-              <div className="bg_icon">
+              <div
+                className="bg_icon"
+                onClick={() => {
+                  dispatch(deleteNguoiDung(arrIdNguoiDung));
+                  navigate("/admin/donViSuDung");
+                }}
+              >
                 <i className="fas fa-trash-alt"></i>
               </div>
               <p>Xóa</p>

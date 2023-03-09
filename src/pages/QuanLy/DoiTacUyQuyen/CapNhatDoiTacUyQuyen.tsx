@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { useSelector } from "react-redux";
@@ -22,6 +22,9 @@ export default function ChinhSuaNguoiDung() {
       navigate("/admin/quanLyUyQuyen");
     }
   }, []);
+  const [iseTrangThai, setIsTrangThai] = useState<boolean>(
+    item?.trangThai ? item?.trangThai : false
+  );
 
   let initialValues: DoiTacUyQuyenRedux = {
     id: "",
@@ -31,7 +34,7 @@ export default function ChinhSuaNguoiDung() {
     tenDangNhap: "",
     matKhau: "",
     matKhauNhapLai: "",
-    trangThai: "false",
+    trangThai: false,
     ngayHetHan: "",
     soDienThoi: "",
   };
@@ -63,11 +66,13 @@ export default function ChinhSuaNguoiDung() {
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={(value: DoiTacUyQuyenRedux) => {
-              console.log({ value });
+              let newValue = { ...value };
+              newValue.trangThai = iseTrangThai;
+              console.log({ newValue });
               // update len fireStore
               try {
                 if (item) {
-                  setDoc(doc(db, "quanLyDoiTacUyQuyen", item.id), value, {
+                  setDoc(doc(db, "quanLyDoiTacUyQuyen", item.id), newValue, {
                     merge: true,
                   });
 
@@ -199,16 +204,24 @@ export default function ChinhSuaNguoiDung() {
                       </label>
                       <div className="form-radio">
                         <div className="wrap-radio">
-                          <Field type="radio" name="trangThai" value={"true"} />
-                          <label htmlFor="">Đã kích hoạt</label>
-                        </div>
-                        <div className="wrap-radio">
-                          <Field
+                          <input
                             type="radio"
                             name="trangThai"
-                            value={"false"}
+                            id="daKichHoat"
+                            checked={iseTrangThai}
+                            onChange={() => setIsTrangThai(false)}
                           />
-                          <label htmlFor="">Ngưng kích hoạt</label>
+                          <label htmlFor="daKichHoat">Đã kích hoạt</label>
+                        </div>
+                        <div className="wrap-radio">
+                          <input
+                            type="radio"
+                            name="trangThai"
+                            id="ngungKichHoat"
+                            checked={!iseTrangThai}
+                            onChange={() => setIsTrangThai(false)}
+                          />
+                          <label htmlFor="ngungKichHoat">Ngưng kích hoạt</label>
                         </div>
                       </div>
                     </div>

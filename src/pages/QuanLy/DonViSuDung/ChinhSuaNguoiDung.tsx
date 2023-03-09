@@ -1,21 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/configStore";
-import { message } from "antd";
 import { useNavigate } from "react-router-dom";
 import {
   NguoiDungDonViRedux,
   updateNguoiDung,
 } from "../../../redux/quanLyDonViSuDung/quanLyDonViSuDungReducer";
+import { message } from "antd";
+import { ngayTao } from "../../HoTro/Feedback";
 
 export default function ChinhSuaNguoiDung() {
   const item = useSelector(
     (state: RootState) => state.quanLyDonViSuDung.itemNguoiDung
   );
   console.log({ item });
+  const [isTrangThai, setIsTrangThai] = useState<boolean>(
+    item?.trangThai ? item.trangThai : false
+  );
+  console.log({ isTrangThai });
   const navigate = useNavigate();
   useEffect(() => {
     if (!item) navigate("/admin/donViSuDung");
@@ -58,7 +63,8 @@ export default function ChinhSuaNguoiDung() {
             <span onClick={() => navigate("/admin/donViSuDung/chiTiet")}>
               Chi tiết
             </span>
-            <i className="fas fa-chevron-right"></i>Thêm người dùng
+            <i className="fas fa-chevron-right"></i>Thông tin người dùng
+            <i className="fas fa-chevron-right"></i>Chỉnh sửa thông tin
           </p>
           <h1>Thêm người dùng</h1>
         </div>
@@ -67,17 +73,14 @@ export default function ChinhSuaNguoiDung() {
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={(value: NguoiDungDonViRedux) => {
-              console.log({ value });
               // gán ngày tạo là ngày hiện tại
-              let ngayTao = new Date();
-              value.capNhatlanCuoi =
-                `${ngayTao.getDate()}` +
-                "/" +
-                `${ngayTao.getMonth() + 1}` +
-                "/" +
-                `${ngayTao.getFullYear()}`;
+              let newValue = { ...value };
+              newValue.trangThai = isTrangThai;
+              newValue.capNhatlanCuoi = ngayTao;
+              console.log({ newValue });
+
               // cập nhật item người dung thay đổi lên redux
-              dispatch(updateNguoiDung(value));
+              dispatch(updateNguoiDung(newValue));
               message.open({
                 type: "success",
                 content: "Cập nhật thành công !",
@@ -187,16 +190,24 @@ export default function ChinhSuaNguoiDung() {
                       </label>
                       <div className="form-radio">
                         <div className="wrap-radio">
-                          <Field type="radio" name="trangThai" value="true" />
-                          <label htmlFor="">Đã kích hoạt</label>
-                        </div>
-                        <div className="wrap-radio">
-                          <Field
+                          <input
                             type="radio"
                             name="trangThai"
-                            value={"false"}
+                            defaultChecked={isTrangThai}
+                            id="daKichHoat"
+                            onChange={() => setIsTrangThai(true)}
                           />
-                          <label htmlFor="">Ngưng kích hoạt</label>
+                          <label htmlFor="daKichHoat">Đã kích hoạt</label>
+                        </div>
+                        <div className="wrap-radio">
+                          <input
+                            type="radio"
+                            name="trangThai"
+                            defaultChecked={!isTrangThai}
+                            id="ngungKichHoat"
+                            onChange={() => setIsTrangThai(false)}
+                          />
+                          <label htmlFor="ngungKichHoat">Ngưng kích hoạt</label>
                         </div>
                       </div>
                     </div>

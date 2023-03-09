@@ -143,21 +143,14 @@
                 p {
                     @include text (14px, 400, #F5F5FF);
 
-                    select {
+                    input {
+                        width: 50px;
                         margin: 0 5px;
                         @include text(16px, 400, #ff7506);
                         background: rgba(47, 47, 65, 0.7);
                         border: 1px solid #ff7506;
                         border-radius: 8px;
                         padding: 5px 10px;
-
-                        option {
-                            margin: 8px 0;
-                            background: #3e3e5b;
-                            border: 2px solid #1e1e2e;
-                            @include text(16px, 400, #ffffff);
-
-                        }
                     }
                 }
             }

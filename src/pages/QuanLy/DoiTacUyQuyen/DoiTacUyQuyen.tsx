@@ -31,12 +31,8 @@ export default function DoiTacUyQuyen() {
           <td>{uyQuyen.ngayHetHan}</td>
           <td>{uyQuyen.soDienThoi}</td>
           <td>
-            <Switch
-              defaultChecked={uyQuyen.trangThai === "true" ? true : false}
-            />
-            {uyQuyen.trangThai === "true"
-              ? "Đang kích hoạt"
-              : "Ngừng kích hoạt"}
+            <Switch checked={uyQuyen.trangThai} />
+            {uyQuyen.trangThai ? "Đang kích hoạt" : "Ngừng kích hoạt"}
           </td>
           <td
             className="action"

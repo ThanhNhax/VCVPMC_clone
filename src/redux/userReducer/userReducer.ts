@@ -36,7 +36,6 @@ const userReducer = createSlice({
   reducers: {
     setUserRedux: (state: UserState, actions: PayloadAction<User>) => {
       let { payload } = actions;
-      console.log({ payload });
       state.userLogin.user = payload;
     },
     setUserAccessToken: (state: UserState, action: PayloadAction<string>) => {
@@ -83,7 +82,6 @@ export const getUserLocal = (uid: string) => {
         // Lưu lại user_Login
         setStoreJSON(USER, userFireStore);
         //Đưa userLogin lên redux
-        console.log({ userFireStore });
         dispatch(setUserRedux(userFireStore));
       }
     } catch (err) {
