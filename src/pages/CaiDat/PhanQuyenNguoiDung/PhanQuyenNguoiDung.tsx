@@ -9,11 +9,19 @@ import {
   PhanQuyenNguoiDungRedux,
   setItemPhanQuyenNguoiDung,
 } from "../../../redux/phanQuyenNguoiDung/phanQuyenNguoiDungReducer";
+import moment from "moment";
+import {
+  getArrVaiTroNguoiDungFireStore,
+  VaiTroNguoiDungRedux,
+} from "../../../redux/vaiTroNguoiDung/vaiTroNguoiDungReducer";
 
 export default function PhanQuyenNguoiDung() {
   // lấy data từ redux về
   const { arrPhanQuyenNguoiDung } = useSelector(
     (state: RootState) => state.phanQuyenNguoiDung
+  );
+  const { arrVaiTroNguoiDung } = useSelector(
+    (state: RootState) => state.vaiTroNguoiDung
   );
   const [toggle, setToggle] = useState<boolean>(true);
   const navigate = useNavigate();
@@ -21,7 +29,9 @@ export default function PhanQuyenNguoiDung() {
   useEffect(() => {
     // lấy dât từ fireStore về đổ lên redux
     dispatch(getArrPhanQuyenNguoiDungFireStore());
+    dispatch(getArrVaiTroNguoiDungFireStore());
   }, []);
+
   // cấu hình phân pages
   const [currentPage, setCurrentPage] = useState<number>(1); // Vị trí page hiện tại
   const [limit, setLimit] = useState<number>(12); // change số item hiển thị
@@ -56,12 +66,12 @@ export default function PhanQuyenNguoiDung() {
           <td>{nguoiDung.tenDangNhap}</td>
           <td>{nguoiDung.vaiTro}</td>
           <td>
-            <Switch defaultChecked={nguoiDung.trangThai} />
+            <Switch checked={nguoiDung.trangThai} />
             {nguoiDung.trangThai ? "Đang kích hoạt" : "Ngừng kích hoạt"}
           </td>
           <td>{nguoiDung.email}</td>
           <td>{nguoiDung.soDienThoai}</td>
-          <td>{nguoiDung.ngayHetHan}</td>
+          <td>{moment(nguoiDung.ngayHetHan).format("DD/MM/YYYY")}</td>
           <td
             className="action"
             onClick={() => {
@@ -73,6 +83,35 @@ export default function PhanQuyenNguoiDung() {
           </td>
         </tr>
       )
+    );
+  };
+
+  const renderTableVaiTro = () => {
+    return arrVaiTroNguoiDung.map(
+      (vaiTro: VaiTroNguoiDungRedux, index: number) => {
+        return (
+          <tr key={index}>
+            <td className="text_right">{index + 1}</td>
+            <td>{vaiTro.tenNhomNguoiDung}</td>
+            <td>{1}</td>
+            <td>{vaiTro.vaiTro}</td>
+            <td>{vaiTro.moTa}</td>
+            <td
+              className="action"
+              onClick={() =>
+                navigate(
+                  "/admin/phanQuyenNguoiDung/chinhSuaVaiTroNguoiDungTrenHeThong"
+                )
+              }
+            >
+              Cập nhật
+            </td>
+            <td className="action" style={{ color: " #FF4747" }}>
+              Xóa
+            </td>
+          </tr>
+        );
+      }
     );
   };
   return (
@@ -196,32 +235,7 @@ export default function PhanQuyenNguoiDung() {
                       <th>Mô tả</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <td className="text_right">1</td>
-                      <td>Super Admin</td>
-                      <td>1</td>
-                      <td>System Admin</td>
-                      <td>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua
-                      </td>
-                      <td
-                        className="action"
-                        onClick={() =>
-                          navigate(
-                            "/admin/phanQuyenNguoiDung/chinhSuaVaiTroNguoiDungTrenHeThong"
-                          )
-                        }
-                      >
-                        Cập nhật
-                      </td>
-                      <td className="action" style={{ color: " #FF4747" }}>
-                        Xóa
-                      </td>
-                    </tr>
-                  </tbody>
+                  <tbody>{renderTableVaiTro()}</tbody>
                 </table>
               </div>
               <div className="pagination-table">

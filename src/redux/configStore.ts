@@ -10,6 +10,7 @@ import quanLyDonViSuDungReducer from "./quanLyDonViSuDung/quanLyDonViSuDungReduc
 import quanLyThietBiReducer from "./quanLyThietBi/quanLyThietBiReducer";
 import theLoaiTacPhamReducer from "./theLoaiTacPham/theLoaiTacPhamReducer";
 import userReducer from "./userReducer/userReducer";
+import vaiTroNguoiDungReducer from "./vaiTroNguoiDung/vaiTroNguoiDungReducer";
 // ...
 
 export const store = configureStore({
@@ -25,6 +26,7 @@ export const store = configureStore({
     phanQuyenNguoiDung: phanQuyenNguoiDungReducer,
     theLoaiTacPham: theLoaiTacPhamReducer,
     feedback: feedbackReducer,
+    vaiTroNguoiDung: vaiTroNguoiDungReducer,
   },
 });
 

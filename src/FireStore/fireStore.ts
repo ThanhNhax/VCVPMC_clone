@@ -28,31 +28,9 @@ export const auth = getAuth(app);
 
 ///
 // const data = {
-//   chucVu: "",
-//   cmnd: "123123123",
-//   email: "thanhnha.k13@gmail.com",
-//   gioiTinh: "",
-//   hieuLucHopDong: "Đã hủy",
-//   id: "",
-//   maSoThue: "123123123",
-//   matKhau: "123123",
-//   nganHang: "ABC",
-//   ngayCap: "2023-02-24",
-//   ngayHetHan: "2023-02-24",
-//   ngayHieuLuc: "2023-02-24",
-//   ngaySinh: "2023-02-24",
-//   ngayTao: "24/2/2023",
-//   nguoiDaiDien: "",
-//   noiCap: "Tp.Hồ Chi Minh",
-//   noiCuTru: "Quang Trung Gò Vấp",
-//   quocTich: "",
-//   soDienThoai: "1212121212",
-//   soHopDong: "1234",
-//   soTaiKhoan: "123123123",
-//   tenDangNhap: "thanhnha.k13@gmail.com",
-//   tenHopDong: "Hợp đồng mới",
-//   tenNguoiUyQuyen: "Nguyễn Văn A",
-//   tenToChuc: "",
+//   tenNhomNguoiDung: "Kế toán",
+//   vaiTro: "Lisences",
+//   moTa: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
 // };
 
-// setDoc(doc(db, "hopDongUyQyen", "3OR2tIbd7cr1lezkMczK"), data, { merge: true });
+// addDoc(collection(db, "vaiTroNguoiDung"), data);
