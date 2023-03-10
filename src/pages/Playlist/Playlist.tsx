@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import ItemPlayList from "../../Components/ItemPlayList";
 import { AppDispatch, RootState } from "../../redux/configStore";
-import moment from "moment";
 import {
   getArrPlayListFireStore,
   PlayListRedux,
@@ -33,7 +32,6 @@ export default function Playlist() {
   }, []);
 
   const handleChiTiet = (item: PlayListRedux) => {
-    console.log(item.id);
     // cập nhật itemPlayList lên redux
     dispatch(setItemPlayList(item));
   };
@@ -54,7 +52,7 @@ export default function Playlist() {
                 })
               : newChuDe.map((chuDe: string | null, index: number) => {
                   if (index >= 5) {
-                    return <p>...</p>;
+                    return <p key={index}>...</p>;
                   }
                   return <p key={index}>{chuDe}</p>;
                 })}

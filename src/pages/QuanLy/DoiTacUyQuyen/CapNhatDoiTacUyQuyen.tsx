@@ -208,8 +208,8 @@ export default function ChinhSuaNguoiDung() {
                             type="radio"
                             name="trangThai"
                             id="daKichHoat"
-                            checked={iseTrangThai}
-                            onChange={() => setIsTrangThai(false)}
+                            defaultChecked={iseTrangThai}
+                            onChange={() => setIsTrangThai(true)}
                           />
                           <label htmlFor="daKichHoat">Đã kích hoạt</label>
                         </div>
@@ -218,7 +218,7 @@ export default function ChinhSuaNguoiDung() {
                             type="radio"
                             name="trangThai"
                             id="ngungKichHoat"
-                            checked={!iseTrangThai}
+                            defaultChecked={!iseTrangThai}
                             onChange={() => setIsTrangThai(false)}
                           />
                           <label htmlFor="ngungKichHoat">Ngưng kích hoạt</label>

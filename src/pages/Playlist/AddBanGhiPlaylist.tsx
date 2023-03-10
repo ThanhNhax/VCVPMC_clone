@@ -138,7 +138,6 @@ export default function AddBanGhiPlaylist() {
                 let tam = newArrPlayList.map((playlist: KhoBanGhiRedux) => {
                   return playlist.id?.includes(id);
                 });
-                console.log({ tam });
                 // bắt cái kết trả về cuối cùng của mảng . mình handle nểu trả về true thì messagera còn false thêm vao  redux
                 if (tam[tam.length - 1]) {
                   message.open({

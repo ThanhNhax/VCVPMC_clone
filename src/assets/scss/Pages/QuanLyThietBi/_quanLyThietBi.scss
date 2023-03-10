@@ -187,7 +187,7 @@
                             overflow-x: scroll;
 
                             table {
-                                width: 1000px;
+                                width: 1200px;
 
                                 padding: 16px 24px 16px 0px;
 
@@ -195,9 +195,6 @@
                                     height: 24px;
 
                                     tr {
-                                        .stt {
-                                            text-align: right;
-                                        }
 
                                         th {
                                             @include text(12px, 700, #ffac69);

@@ -8,6 +8,7 @@ import {
   query,
 } from "firebase/firestore";
 import { db } from "../../FireStore/fireStore";
+import { tongThoiLuong } from "../../pages/Playlist/EditPlayList";
 import { AppDispatch } from "../configStore";
 import { KhoBanGhiRedux } from "../khoBanGhi/khoBanghiReducer";
 
@@ -158,33 +159,6 @@ export const getArrPlayListFireStore = () => {
 export const addNewPlaylist = (playlist: PlayListRedux) => {
   return async (dispatch: AppDispatch) => {
     try {
-      let tongThoiLuong: string = "";
-      let gio: number = 0;
-      let phut: number = 0;
-      let giay: number = 0;
-
-      playlist.arrBanGhi.map((banGhi: KhoBanGhiRedux) => {
-        if (banGhi.thoiLuong) {
-          let index = banGhi.thoiLuong.search(":");
-          console.log({ index });
-          giay += parseInt(
-            banGhi.thoiLuong.slice(index + 1, banGhi.thoiLuong.length)
-          );
-          phut += parseInt(banGhi.thoiLuong.slice(0, index));
-          console.log({ giay, phut }, banGhi.thoiLuong);
-          if (giay > 59) {
-            giay = 0;
-            phut += 1;
-          } else if (phut > 59) {
-            phut = 0;
-            gio += 1;
-          }
-          tongThoiLuong = gio + ":" + phut + ":" + giay;
-        }
-        return tongThoiLuong;
-      });
-
-      console.log("addNewOlaylist: ", playlist);
       const docRef = await addDoc(collection(db, "playList"), {
         arrBanGhi: playlist.arrBanGhi,
         chuDe: playlist.chuDe,
@@ -192,7 +166,7 @@ export const addNewPlaylist = (playlist: PlayListRedux) => {
         ngayTao: "",
         nguoiTao: "",
         soBanGhi: 0,
-        thoiLuong: tongThoiLuong,
+        thoiLuong: tongThoiLuong(playlist.arrBanGhi),
         tieuDe: "",
         id: "",
       });
@@ -213,7 +187,6 @@ export const getItemPlayList = (id: string) => {
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        console.log("Document data:", docSnap.data());
         newItem = docSnap.data();
         newItem.id = docRef.id;
         dispatch(setNewPlayList(newItem));

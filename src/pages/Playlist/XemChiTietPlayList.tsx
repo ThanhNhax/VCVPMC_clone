@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useMemo, useEffect } from "react";
 import { message, Modal } from "antd";
 import { deleteDoc, doc } from "firebase/firestore";
 import { useDispatch, useSelector } from "react-redux";
@@ -69,9 +70,11 @@ export default function XemChiTietPlayList() {
     }
   };
 
-  if (itemPlayList?.id === "") {
-    navigate("/admin/playlist");
-  }
+  useEffect(() => {
+    if (itemPlayList?.id === "") {
+      navigate("/admin/playlist");
+    }
+  }, []);
   const renderButtonPage = (n: number) => {
     let btn: any = "";
     for (let i = 0; i < n; i++) {

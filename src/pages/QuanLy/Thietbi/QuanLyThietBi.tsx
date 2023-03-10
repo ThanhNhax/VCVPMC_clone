@@ -11,8 +11,9 @@ import {
 } from "../../../redux/quanLyThietBi/quanLyThietBiReducer";
 import { useNavigate } from "react-router-dom";
 import type { CheckboxChangeEvent } from "antd/es/checkbox";
-import { doc, updateDoc } from "firebase/firestore";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../FireStore/fireStore";
+import moment from "moment";
 interface Disabled {
   trangThai: boolean;
   id: string;
@@ -125,7 +126,11 @@ export default function QuanLyThietBi() {
           <td>{thietBi.memory ? thietBi.memory : "-"}</td>
           <td>{thietBi.macAddresss ? thietBi.macAddresss : "-"}</td>
           <td>{thietBi.skuId ? thietBi.skuId : "-"}</td>
-          <td>{thietBi.hanBaoHanh ? thietBi.hanBaoHanh : "-"}</td>
+          <td>
+            {thietBi.hanBaoHanh
+              ? moment(thietBi.hanBaoHanh).format("DD/MM/YYYY")
+              : "-"}
+          </td>
         </tr>
       )
     );
@@ -300,7 +305,15 @@ export default function QuanLyThietBi() {
               </p>
             </div>
             <div className="menu-item">
-              <div className="bg-icon">
+              <div
+                className="bg-icon"
+                onClick={() => {
+                  console.log("handleDelete");
+                  isArrDisabled.map((check: Disabled) => {
+                    deleteDoc(doc(db, "quanLyThietBi", check.id));
+                  });
+                }}
+              >
                 <i className="far fa-trash-alt"></i>
               </div>
               <p>Xoá thiết bịị</p>

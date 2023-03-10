@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
-import { Space, Switch, Tag } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import { Switch } from "antd";
 import type { UploadProps } from "antd";
 import { Button, message, Upload } from "antd";
 import { useNavigate } from "react-router-dom";
@@ -14,16 +13,14 @@ import {
 } from "../../redux/playListReducer/playListReducer";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../FireStore/fireStore";
-import { KhoBanGhiRedux } from "../../redux/khoBanGhi/khoBanghiReducer";
-import moment from "moment";
 import { handleSearch, tongThoiLuong } from "./EditPlayList";
+import { ngayTao } from "../HoTro/Feedback";
 
 export default function AddPlayList() {
   const { user } = useSelector((state: RootState) => state.user.userLogin);
   //lấy arrTag từ redux về
   const { arrTag } = useSelector((state: RootState) => state.theLoaiTacPham);
 
-  console.log({ user });
   const dispatch: AppDispatch = useDispatch();
   //lấy newPlaylist  từ redux
   const { newPlayList } = useSelector((state: RootState) => state.playList);
@@ -49,10 +46,8 @@ export default function AddPlayList() {
   // cấu hình phân pages
   // xử ky arrBanGhi == null
   const [isNullData, setIsNullData] = useState<boolean>(true);
-  console.log({ isNullData });
   // lấy tiêu đề
   const [tieuDe, setTieuDe] = useState<string>("");
-  console.log(tieuDe);
   const styleI = {
     color: "#347AFF",
     opacity: "0.7",
@@ -84,11 +79,6 @@ export default function AddPlayList() {
         };
       });
     },
-  };
-
-  // xử lý toogle
-  const onChange = (checked: boolean) => {
-    console.log(`switch to ${checked}`);
   };
 
   const renderBanGhiTable = () => {
@@ -123,7 +113,6 @@ export default function AddPlayList() {
               className="action"
               onClick={() => {
                 if (newPlayList.arrBanGhi !== undefined) {
-                  console.log("newPlaylist.arBanGhi !== undef");
                   const indexDelete = newPlayList.arrBanGhi.findIndex(
                     (item) => item?.id === khoBanGhi?.id
                   );
@@ -153,10 +142,6 @@ export default function AddPlayList() {
     } else {
       const d = new Date();
 
-      let ngayTao =
-        d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
-      console.log(ngayTao);
-
       let newItem: PlayListRedux = {
         anhBia: "",
         arrBanGhi: newPlayList.arrBanGhi,
@@ -167,7 +152,7 @@ export default function AddPlayList() {
         nguoiTao: user?.ho + " " + user?.ten,
         tieuDe: tieuDe,
         soBanGhi: newPlayList.soBanGhi,
-        thoiLuong: tongThoiLuong(newPlayList.arrBanGhi),
+        thoiLuong: newPlayList.thoiLuong,
       };
       console.log({ newItem });
       try {
@@ -233,7 +218,9 @@ export default function AddPlayList() {
                 </div>
                 <div className="item">
                   <p>Tổng thời lượng</p>
-                  <p className="text-right">{newPlayList.thoiLuong}</p>
+                  <p className="text-right">
+                    {tongThoiLuong(newPlayList.arrBanGhi)}
+                  </p>
                 </div>
               </div>
               <div className="left-item title-item">
@@ -249,11 +236,7 @@ export default function AddPlayList() {
                         <span>{tag}</span>
                         <i
                           onClick={() => {
-                            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                            let selectedTagsDelete = selectedTags.splice(
-                              index,
-                              1
-                            );
+                            selectedTags.splice(index, 1);
                             setSelectedTags([...selectedTags]);
                           }}
                         >
@@ -293,7 +276,7 @@ export default function AddPlayList() {
               </div>
               <div className="title-bottom title-item">
                 <div className="bottom-item">
-                  <Switch defaultChecked onChange={onChange} />
+                  <Switch defaultChecked />
                   <p>Hiển thị ở chế độ công khai</p>
                 </div>
               </div>
@@ -325,7 +308,7 @@ export default function AddPlayList() {
                 <div className="btn-list">
                   <button
                     type="button"
-                    onClick={() => navigate("/admin/playlist/xemchitiet")}
+                    onClick={() => navigate("/admin/playlist")}
                   >
                     Hủy
                   </button>
