@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 // Cấu hình router-dom
 //setup router dom
 import {
+  Navigate,
   Route,
   Routes,
   unstable_HistoryRouter as HistoryRouter,
@@ -89,7 +90,7 @@ root.render(
         <Route>
           <Route path="" element={<TemplateUser />}>
             <Route index element={<DangNhap />}></Route>
-            {/* <Route path="*" element={<Navigate to={"/"} />}></Route> */}
+            <Route path="*" element={<Navigate to={""} />}></Route>
             <Route path="/quenMatKhau" element={<QuenMatKhau />}></Route>
             <Route path="/capNhatMatKhau" element={<CapnhatMatKhau />}></Route>
             <Route path="/linkError" element={<LinkError />}></Route>
@@ -106,7 +107,7 @@ root.render(
             <Route
               path="/admin/khobanghi/capnhat"
               element={<CapNhatkhoBanGhi />}
-            ></Route>{" "}
+            ></Route>
             <Route
               path="/admin/khobanghi/quanLyPheDuyet"
               element={<QuanLyPheDuyet />}
@@ -303,7 +304,10 @@ root.render(
               path="/admin/baoCaoDoanhThu/chiTiet/lichSuDongBoThietBi"
               element={<LichSuDongBoThietBi />}
             ></Route>
-            {/* <Route path="*" element={<Navigate to={"/admin"} />}></Route> */}
+            <Route
+              path="*"
+              element={<Navigate to={"/admin/khobanghi"} />}
+            ></Route>
           </Route>
         </Route>
       </Routes>
