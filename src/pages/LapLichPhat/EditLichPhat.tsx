@@ -8,41 +8,6 @@ import {
   PlayListRedux,
 } from "../../redux/playListReducer/playListReducer";
 
-const data = [
-  {
-    ten: "Playlist 1",
-    thoiLuong: "02:00:00",
-  },
-  {
-    ten: "Playlist 1",
-    thoiLuong: "02:00:00",
-  },
-  {
-    ten: "Playlist 1",
-    thoiLuong: "02:00:00",
-  },
-  {
-    ten: "Playlist 1",
-    thoiLuong: "02:00:00",
-  },
-  {
-    ten: "Playlist 1",
-    thoiLuong: "02:00:00",
-  },
-  {
-    ten: "Playlist 1",
-    thoiLuong: "02:00:00",
-  },
-  {
-    ten: "Playlist 1",
-    thoiLuong: "02:00:00",
-  },
-  {
-    ten: "Playlist 1",
-    thoiLuong: "02:00:00",
-  },
-];
-
 export default function EditLichPhat() {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
