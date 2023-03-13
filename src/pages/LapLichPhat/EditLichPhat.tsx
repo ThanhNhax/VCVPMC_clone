@@ -1,5 +1,12 @@
-import React from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { AppDispatch, RootState } from "../../redux/configStore";
+import {
+  getArrPlayListFireStore,
+  PlayListRedux,
+} from "../../redux/playListReducer/playListReducer";
 
 const data = [
   {
@@ -38,6 +45,11 @@ const data = [
 
 export default function EditLichPhat() {
   const navigate = useNavigate();
+  const dispatch: AppDispatch = useDispatch();
+  const { arrPlayList } = useSelector((state: RootState) => state.playList);
+  useEffect(() => {
+    dispatch(getArrPlayListFireStore());
+  }, []);
   return (
     <div className="editLichPhat">
       <div className="editLichPhat-title">
@@ -85,9 +97,9 @@ export default function EditLichPhat() {
               <div className="left-bottom">
                 <h5>Danh sách Playlist</h5>
                 <div className="listPlaylist">
-                  {data.map((data, index: number) => (
+                  {arrPlayList.map((data: PlayListRedux, index: number) => (
                     <div className="list-item" key={index}>
-                      <p>{data.ten}</p>
+                      <p>{data.tieuDe}</p>
                       <div className="title-bottom">
                         <p>Thời lượng:</p>
                         <p>{data.thoiLuong}</p>

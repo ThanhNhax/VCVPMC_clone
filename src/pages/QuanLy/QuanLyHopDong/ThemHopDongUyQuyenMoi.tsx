@@ -55,7 +55,7 @@ export default function ThemHopDongUyQuyenMoi() {
     tenHopDong: Yup.string().required(),
     ngayHieuLuc: Yup.string().required(),
     ngayHetHan: Yup.string().required(),
-    tenNguoiUyQuyen: Yup.string().required(),
+    // tenNguoiUyQuyen: Yup.string().required(),
     ngaySinh: Yup.string().required(),
     cmnd: Yup.string().required(),
     ngayCap: Yup.string().required(),
@@ -79,6 +79,7 @@ export default function ThemHopDongUyQuyenMoi() {
           initialValues={initialValues}
           validationSchema={schemaCaNhan}
           onSubmit={(value: HopDongUyQuyenRedux) => {
+            console.log("handle Submit");
             // gán hiệu lực hợp đồng là mới tạo
             value.hieuLucHopDong = "Mới";
             // set ngày tạo là ngày hiện tại
@@ -239,17 +240,7 @@ export default function ThemHopDongUyQuyenMoi() {
                         <label htmlFor="">
                           Tên người uỷ quyền: <i>*</i>
                         </label>
-                        <Field
-                          type="text"
-                          name="tenNguoiUyQuyen"
-                          className={
-                            isActive &&
-                            errors.nguoiUyQuyen &&
-                            touched.nguoiUyQuyen
-                              ? "input_error"
-                              : ""
-                          }
-                        />
+                        <Field type="text" name="tenNguoiUyQuyen" />
                       </div>
                       <div className="from-item">
                         <label htmlFor="">
@@ -261,6 +252,7 @@ export default function ThemHopDongUyQuyenMoi() {
                             name="gioiTinh"
                             id="nam"
                             value="Nam"
+                            defaultChecked
                           />
                           <label htmlFor="nam">Nam</label>
                           <Field
@@ -518,6 +510,7 @@ export default function ThemHopDongUyQuyenMoi() {
                             name="gioiTinh"
                             id="nam"
                             value="Nam"
+                            defaultChecked
                           />
                           <label htmlFor="nam">Nam</label>
                           <input
@@ -592,7 +585,7 @@ export default function ThemHopDongUyQuyenMoi() {
                     <div className="from-group">
                       <div className="from-item">
                         <label htmlFor="">Nơi cư trú:</label>
-                        <Field type="textarea" name="noiCuTru" />
+                        <Field as="textarea" name="noiCuTru" />
                       </div>
                       <div className="from-item">
                         <label htmlFor="">Số điện thoại:</label>

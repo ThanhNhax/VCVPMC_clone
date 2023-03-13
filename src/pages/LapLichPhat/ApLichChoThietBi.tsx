@@ -1,6 +1,13 @@
-import React from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from "react";
 import { Checkbox } from "antd";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../redux/configStore";
+import {
+  getArrQuanLyThietBiFireStore,
+  QuanLyThietBiRedux,
+} from "../../redux/quanLyThietBi/quanLyThietBiReducer";
 
 export default function ApLichChoThietbi() {
   // cấu hình phân pages
@@ -14,6 +21,32 @@ export default function ApLichChoThietbi() {
   // cấu hình phân pages
 
   const navigate = useNavigate();
+  const dispatch: AppDispatch = useDispatch();
+  const { arrQuanLyThietBi } = useSelector(
+    (state: RootState) => state.quanLyThietBi
+  );
+  console.log({ arrQuanLyThietBi });
+  useEffect(() => {
+    dispatch(getArrQuanLyThietBiFireStore());
+  }, []);
+  const renderTable = () => {
+    return arrQuanLyThietBi.map(
+      (thietBi: QuanLyThietBiRedux, index: number) => (
+        <tr key={index}>
+          <td>
+            <Checkbox />
+          </td>
+          <td className="text_right">{index + 1}</td>
+          <td>{thietBi.tenThietBi}</td>
+          <td>{thietBi.macAddresss}</td>
+          <td>{thietBi.skuId}</td>
+          <td>{thietBi.id}</td>
+          <td>{thietBi.tenDangNhap}</td>
+          <td>{thietBi.diaChi}</td>
+        </tr>
+      )
+    );
+  };
   return (
     <div className="apLichChoThietBi">
       <p>
@@ -40,31 +73,7 @@ export default function ApLichChoThietbi() {
                   <th>Đia điểm hoạt động</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Lịch phát số 1</td>
-                  <td>22/05/2022 - 30/05/2022</td>
-                  <td onClick={() => navigate("/admin/lapLichPhat/chiTiet")}>
-                    Xem chi tiết
-                  </td>
-                  <td>Xóa</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Lịch phát số 1</td>
-                  <td>22/05/2022 - 30/05/2022</td>
-                  <td>Xem chi tiết</td>
-                  <td>Xóa</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Lịch phát số 1</td>
-                  <td>22/05/2022 - 30/05/2022</td>
-                  <td>Xem chi tiết</td>
-                  <td>Xóa</td>
-                </tr>
-              </tbody>
+              <tbody>{renderTable()}</tbody>
             </table>
             <div className="pagination-table">
               <div className="pagination_left">
@@ -107,8 +116,7 @@ export default function ApLichChoThietbi() {
             <div
               className="bg_icon"
               onClick={() => {
-                // navigate("/admin/addplaylist");
-                // console.log("/admin/addplaylist");
+                navigate("/admin/lapLichPhat/editLichPhat");
               }}
             >
               <i className="fas fa-check"></i>
@@ -119,8 +127,7 @@ export default function ApLichChoThietbi() {
             <div
               className="bg_icon"
               onClick={() => {
-                // navigate("/admin/addplaylist");
-                // console.log("/admin/addplaylist");
+                navigate("/admin/lapLichPhat/editLichPhat");
               }}
             >
               <i className="fas fa-times"></i>

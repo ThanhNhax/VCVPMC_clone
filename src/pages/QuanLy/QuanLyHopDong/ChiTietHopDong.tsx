@@ -109,7 +109,10 @@ export default function ChiTietHopDong() {
       <div className="container">
         <div className="container-top">
           <p>
-            Quản lý<i className="fas fa-chevron-right"></i>Quản lý hợp đồng
+            Quản lý<i className="fas fa-chevron-right"></i>{" "}
+            <span onClick={() => navigate("/admin/quanLyHopDong")}>
+              Quản lý hợp đồng
+            </span>
             <i className="fas fa-chevron-right"></i>Chi tiết
           </p>
           <h1>Chi tiết hợp đồng uỷ quyền bài hát - {item?.soHopDong}</h1>
@@ -294,7 +297,18 @@ export default function ChiTietHopDong() {
                         </tr>
                         <tr>
                           <td>Mật khẩu:</td>
-                          <td>{item?.matKhau}</td>
+                          <td>
+                            <div className="list-dot">
+                              <div className="dot"></div>
+                              <div className="dot"></div>
+                              <div className="dot"></div>
+                              <div className="dot"></div>
+                              <div className="dot"></div>
+                              <div className="dot"></div>
+                              <div className="dot"></div>
+                              <div className="dot"></div>
+                            </div>
+                          </td>
                         </tr>
                         <tr>
                           <td>Số tài khoản:</td>
@@ -406,7 +420,18 @@ export default function ChiTietHopDong() {
                         </tr>
                         <tr>
                           <td>Mật khẩu:</td>
-                          <td>{item?.matKhau}</td>
+                          <td>
+                            <div className="list-dot">
+                              <div className="dot"></div>
+                              <div className="dot"></div>
+                              <div className="dot"></div>
+                              <div className="dot"></div>
+                              <div className="dot"></div>
+                              <div className="dot"></div>
+                              <div className="dot"></div>
+                              <div className="dot"></div>
+                            </div>
+                          </td>
                         </tr>
                       </tbody>
                     </table>
@@ -417,9 +442,15 @@ export default function ChiTietHopDong() {
             <div className="menu">
               <div className="menu-item">
                 <div
-                  className="bg-icon"
+                  className={
+                    item?.hieuLucHopDong === "Mới" ? "bg-icon" : "disabled"
+                  }
                   onClick={() =>
-                    navigate("/admin/quanLyHopDong/chiTiet/chinhSuaThongTin")
+                    item?.hieuLucHopDong === "Mới"
+                      ? navigate(
+                          "/admin/quanLyHopDong/chiTiet/chinhSuaThongTin"
+                        )
+                      : null
                   }
                 >
                   <i className="fas fa-edit"></i>

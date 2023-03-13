@@ -17,6 +17,10 @@
                     color: #FFAC69;
                 }
 
+                span {
+                    cursor: pointer;
+                }
+
             }
 
             h1 {
@@ -110,6 +114,18 @@
 
                                                 &:last-child {
                                                     @include text (14px, 400, #F5F5FF);
+                                                }
+
+                                                .list-dot {
+                                                    display: flex;
+                                                    gap: 4px;
+
+                                                    .dot {
+                                                        width: 8px;
+                                                        height: 8px;
+                                                        background: #ffffff;
+                                                        border-radius: 50%;
+                                                    }
                                                 }
                                             }
 
@@ -270,6 +286,8 @@
                                     td:first-child {
                                         width: 45%;
                                     }
+
+
                                 }
                             }
 
@@ -325,6 +343,22 @@
                             i {
                                 font-size: 26px;
                                 color: #ff7506;
+                            }
+                        }
+
+                        .disabled {
+                            width: 52px;
+                            height: 52px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            background: rgba(114, 114, 136, 0.5);
+                            border-radius: 50%;
+                            cursor: pointer;
+
+                            i {
+                                font-size: 26px;
+                                color: #878890;
                             }
                         }
 
