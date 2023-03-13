@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { collection, onSnapshot, query } from "firebase/firestore";
+import { message } from "antd";
+import { collection, doc, onSnapshot, query, setDoc } from "firebase/firestore";
+import { history } from "../..";
 import { db } from "../../FireStore/fireStore";
 import { AppDispatch } from "../configStore";
 import { KhoBanGhiRedux } from "../khoBanGhi/khoBanghiReducer";
@@ -166,6 +168,22 @@ export const getArrHopDongUyQuyenFireStore = () => {
       });
     } catch (e) {
       console.log({ e });
+    }
+  };
+};
+export const updateItemHopDongUyQuyen = (item: HopDongUyQuyenRedux) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      setDoc(doc(db, "hopDongUyQyen", item.id), item);
+      dispatch(setItemHopDongUyQuyen(item));
+      message.open({
+        type: "success",
+        content: "Cập nhật thành công!",
+        duration: 0.8,
+      });
+      history.push("/admin/quanLyHopDong/chiTiet");
+    } catch (e) {
+      console.log(e);
     }
   };
 };

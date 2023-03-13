@@ -71,8 +71,17 @@
                                     border-radius: 8px;
                                     color: #F5F5FF;
 
+                                    &::-webkit-calendar-picker-indicator {
+                                        background-color: #FF7506;
+                                        padding: 5px;
+                                        cursor: pointer;
+                                        border-radius: 3px;
+                                    }
                                 }
 
+                                .input-error {
+                                    border: 2px solid red;
+                                }
 
                                 i {
                                     position: absolute;
@@ -93,6 +102,10 @@
                                 border-radius: 8px;
                                 color: #F5F5FF;
 
+                            }
+
+                            .input-error {
+                                border: 2px solid red;
                             }
                         }
                     }

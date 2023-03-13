@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
@@ -29,6 +30,16 @@ export default function QuanLyThietBi() {
   );
   console.log({ arrQuanLyThietBi });
   const dispatch: AppDispatch = useDispatch();
+  // cấu hình phân pages
+  const [currentPage, setCurrentPage] = useState<number>(1); // Vị trí page hiện tại
+  const [limit, setLimit] = useState<number>(12); // change số item hiển thị
+  const indexOfLastNews = currentPage * limit; // vị trí cuối
+  const indexOfFirstNews = indexOfLastNews - limit; // Vị trí đầu
+  const totalPages = Math.ceil(arrQuanLyThietBi.length / limit); // Tính số tổng số pages
+  const newArr = arrQuanLyThietBi.slice(indexOfFirstNews, indexOfLastNews);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [isStyleBtn, setIsStyleBtn] = useState<boolean>(false);
+  // cấu hình phân pages
 
   useEffect(() => {
     dispatch(getArrQuanLyThietBiFireStore());
@@ -72,68 +83,75 @@ export default function QuanLyThietBi() {
   }, [isArrDisabled.length]);
 
   const renderTableLeft = () => {
-    return arrQuanLyThietBi.map(
-      (thietBi: QuanLyThietBiRedux, index: number) => (
-        <tr key={index}>
-          <td>
-            <Checkbox onChange={(e) => onChange(e, thietBi)}></Checkbox>
-          </td>
-          <td
-            className="text_right"
-            onClick={() => {
-              dispatch(setItemThietBi(thietBi));
-              navigate("/admin/quanLyThietBi/chiTiet");
-            }}
-          >
-            {index + 1}
-          </td>
-          <td
-            onClick={() => {
-              dispatch(setItemThietBi(thietBi));
-              navigate("/admin/quanLyThietBi/chiTiet");
-            }}
-          >
-            {thietBi.tenThietBi}
-          </td>
-          <td
-            className={thietBi.trangThai ? "true" : "false"}
-            onClick={() => {
-              dispatch(setItemThietBi(thietBi));
-              navigate("/admin/quanLyThietBi/chiTiet");
-            }}
-          >
-            {thietBi.trangThai
-              ? "Đang kích hoạt | Đang hoạt động"
-              : "Ngừng kích hoạt "}
-          </td>
-        </tr>
-      )
-    );
-  };
-  const renderTableRight = () => {
-    return arrQuanLyThietBi.map(
-      (thietBi: QuanLyThietBiRedux, index: number) => (
-        <tr
-          key={index}
+    return newArr.map((thietBi: QuanLyThietBiRedux, index: number) => (
+      <tr key={index}>
+        <td>
+          <Checkbox onChange={(e) => onChange(e, thietBi)}></Checkbox>
+        </td>
+        <td
+          className="text_right"
           onClick={() => {
             dispatch(setItemThietBi(thietBi));
             navigate("/admin/quanLyThietBi/chiTiet");
           }}
         >
-          <td>{thietBi.hanHopDong ? thietBi.hanHopDong : "-"}</td>
-          <td>{thietBi.tenDangNhap ? thietBi.tenDangNhap : "-"}</td>
-          <td>{thietBi.diaChi ? thietBi.diaChi : "-"}</td>
-          <td>{thietBi.memory ? thietBi.memory : "-"}</td>
-          <td>{thietBi.macAddresss ? thietBi.macAddresss : "-"}</td>
-          <td>{thietBi.skuId ? thietBi.skuId : "-"}</td>
-          <td>
-            {thietBi.hanBaoHanh
-              ? moment(thietBi.hanBaoHanh).format("DD/MM/YYYY")
-              : "-"}
-          </td>
-        </tr>
-      )
-    );
+          {index + 1}
+        </td>
+        <td
+          onClick={() => {
+            dispatch(setItemThietBi(thietBi));
+            navigate("/admin/quanLyThietBi/chiTiet");
+          }}
+        >
+          {thietBi.tenThietBi}
+        </td>
+        <td
+          className={thietBi.trangThai ? "true" : "false"}
+          onClick={() => {
+            dispatch(setItemThietBi(thietBi));
+            navigate("/admin/quanLyThietBi/chiTiet");
+          }}
+        >
+          {thietBi.trangThai
+            ? "Đang kích hoạt | Đang hoạt động"
+            : "Ngừng kích hoạt "}
+        </td>
+      </tr>
+    ));
+  };
+  const renderTableRight = () => {
+    return newArr.map((thietBi: QuanLyThietBiRedux, index: number) => (
+      <tr
+        key={index}
+        onClick={() => {
+          dispatch(setItemThietBi(thietBi));
+          navigate("/admin/quanLyThietBi/chiTiet");
+        }}
+      >
+        <td>{thietBi.hanHopDong ? thietBi.hanHopDong : "-"}</td>
+        <td>{thietBi.tenDangNhap ? thietBi.tenDangNhap : "-"}</td>
+        <td>{thietBi.diaChi ? thietBi.diaChi : "-"}</td>
+        <td>{thietBi.memory ? thietBi.memory : "-"}</td>
+        <td>{thietBi.macAddresss ? thietBi.macAddresss : "-"}</td>
+        <td>{thietBi.skuId ? thietBi.skuId : "-"}</td>
+        <td>
+          {thietBi.hanBaoHanh
+            ? moment(thietBi.hanBaoHanh).format("DD/MM/YYYY")
+            : "-"}
+        </td>
+      </tr>
+    ));
+  };
+  const renderButtonPage = (n: number) => {
+    let btn: any = "";
+    for (let i = 0; i < n; i++) {
+      btn += `<button
+          className=${isStyleBtn ? "btn-item-active btn-item" : "btn-item"}
+          >
+          ${i + 1}
+        </button>`;
+    }
+    return { __html: btn };
   };
 
   return (
@@ -216,10 +234,10 @@ export default function QuanLyThietBi() {
                   <p>
                     Hiển thị
                     <select
-                    // value={limit}
-                    // onChange={(e) => {
-                    //   setLimit(parseInt(e.target.value));
-                    // }}
+                      value={limit}
+                      onChange={(e) => {
+                        setLimit(parseInt(e.target.value));
+                      }}
                     >
                       <option value="12">12</option>
                       <option value="6">6</option>
@@ -230,25 +248,25 @@ export default function QuanLyThietBi() {
                 </div>
                 <div className="pagination_right">
                   <button
-                  // disabled={currentPage === 1}
-                  // onClick={() => {
-                  //   if (currentPage === 1) {
-                  //     setCurrentPage(1);
-                  //   }
-                  //   setCurrentPage(currentPage - 1);
-                  // }}
+                    disabled={currentPage === 1}
+                    onClick={() => {
+                      if (currentPage === 1) {
+                        setCurrentPage(1);
+                      }
+                      setCurrentPage(currentPage - 1);
+                    }}
                   >
                     <i className="fas fa-chevron-left"></i>
                   </button>
                   <div
                     id="btnPage"
-                    // dangerouslySetInnerHTML={renderButtonPage(totalPages)}
+                    dangerouslySetInnerHTML={renderButtonPage(totalPages)}
                   ></div>
                   <button
-                  // disabled={currentPage >= totalPages}
-                  // onClick={() => {
-                  //   setCurrentPage(currentPage + 1);
-                  // }}
+                    disabled={currentPage >= totalPages}
+                    onClick={() => {
+                      setCurrentPage(currentPage + 1);
+                    }}
                   >
                     <i className="fas fa-chevron-right"></i>
                   </button>

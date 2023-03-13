@@ -78,6 +78,7 @@ import BaoCaoDoanhThu from "./pages/DoanhThu/BaoCaoDoanhThu/BaoCaoDoanhThu";
 import BaoCaoChiTiet from "./pages/DoanhThu/BaoCaoDoanhThu/BaoCaoChiTiet";
 import ChiTietDoanhThuBaoCao from "./pages/DoanhThu/BaoCaoDoanhThu/ChiTietDoanhThuBaoCao";
 import LichSuDongBoThietBi from "./pages/DoanhThu/BaoCaoDoanhThu/LichSuDongBoThietBi";
+import AddLapLichPhat from "./pages/LapLichPhat/AddLapLichPhat";
 export const history: any = createBrowserHistory();
 
 const root = ReactDOM.createRoot(
@@ -139,6 +140,10 @@ root.render(
             <Route
               path="/admin/lapLichPhat/editLichPhat/apLichChoThietBi"
               element={<ApLichChoThietBi />}
+            ></Route>
+            <Route
+              path="/admin/lapLichPhat/addLapLichPhat"
+              element={<AddLapLichPhat />}
             ></Route>
             <Route
               path="/admin/thongtincoban"

@@ -6,6 +6,7 @@ import {
   getDoc,
   onSnapshot,
   query,
+  setDoc,
 } from "firebase/firestore";
 import { db } from "../../FireStore/fireStore";
 import { tongThoiLuong } from "../../pages/Playlist/EditPlayList";
@@ -18,7 +19,6 @@ export interface PlayListRedux {
   id: string | undefined;
   ngayTao: string | null;
   nguoiTao: string | null;
-  soBanGhi: number | null;
   thoiLuong: string;
   tieuDe: string | null;
   chuDe: string[];
@@ -36,7 +36,6 @@ const initialState: PlayListState = {
     id: "",
     ngayTao: null,
     nguoiTao: null,
-    soBanGhi: null,
     thoiLuong: "",
     tieuDe: null,
     desc: null,
@@ -48,7 +47,6 @@ const initialState: PlayListState = {
     id: "",
     ngayTao: "",
     nguoiTao: "",
-    soBanGhi: 20,
     thoiLuong: "",
     tieuDe: "",
     desc: "",
@@ -87,7 +85,7 @@ const playListReducer = createSlice({
       action: PayloadAction<number>
     ) => {
       console.log(state.itemPlayList.arrBanGhi);
-      if (state.itemPlayList.arrBanGhi !== undefined) {
+      if (state.itemPlayList.arrBanGhi) {
         state.itemPlayList.arrBanGhi.splice(action.payload, 1);
       }
     },
@@ -193,6 +191,30 @@ export const getItemPlayList = (id: string) => {
       } else {
         // doc.data() will be undefined in this case
         console.log("No such document!");
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};
+
+export const updateItemPlayLsit = (itemPlayList: PlayListRedux) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      console.log({ itemPlayList });
+      // cập nhật lên fireStore
+      if (itemPlayList.id) {
+        const itemPlaylistRef = doc(db, "playList", itemPlayList.id);
+        await setDoc(
+          itemPlaylistRef,
+          {
+            arrBanGhi: itemPlayList.arrBanGhi,
+            chuDe: itemPlayList.chuDe,
+            thoiLuong: tongThoiLuong(itemPlayList.arrBanGhi),
+          },
+          { merge: true }
+        );
+        dispatch(setItemPlayList(itemPlayList));
       }
     } catch (e) {
       console.log(e);

@@ -1,18 +1,25 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from "react";
 import { Button, Upload } from "antd";
 import { Field, Form, Formik } from "formik";
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { RootState } from "../../../redux/configStore";
-import * as Yup from "yup";
-import { HopDongUyQuyenRedux } from "../../../redux/hopDongReducer/hopDongReducer";
+import { AppDispatch, RootState } from "../../../redux/configStore";
+import {
+  HopDongUyQuyenRedux,
+  updateItemHopDongUyQuyen,
+} from "../../../redux/hopDongReducer/hopDongReducer";
 
 export default function ChinhSuaThongTin() {
+  const dispatch: AppDispatch = useDispatch();
   //lấy item trên redux về để chỉnh sửa
   const item = useSelector(
     (state: RootState) => state.hopDong.itemHopDongUyQuyen
   );
+  const [isCaNhan, setIsCaNhan] = useState<boolean>(
+    item?.tenToChuc === "" ? true : false
+  );
+  console.log({ isCaNhan });
   console.log({ item });
   const navigate = useNavigate();
   useEffect(() => {
@@ -55,13 +62,6 @@ export default function ChinhSuaThongTin() {
     initialValues = item;
   }
 
-  const loginSchema = Yup.object().shape({
-    password: Yup.string()
-      .required("Không được bỏ trống!")
-      .min(6, "Password nhiều hơn 6 ký tự!"),
-    userName: Yup.string().required("Không được bỏ trống!"),
-  });
-
   return (
     <div className="chinhSuaThongTin">
       <div className="container">
@@ -76,9 +76,9 @@ export default function ChinhSuaThongTin() {
 
         <Formik
           initialValues={initialValues}
-          validationSchema={loginSchema}
           onSubmit={async (values) => {
             console.log({ values });
+            dispatch(updateItemHopDongUyQuyen(values));
           }}
         >
           {({ errors, touched }) => (
@@ -169,9 +169,29 @@ export default function ChinhSuaThongTin() {
                       <div className="from-item">
                         <label htmlFor="">Pháp nhân ủy quyền:</label>
                         <div className="from-radio">
-                          <Field type="radio" name="uyQuyen" id="caNhan" />
+                          <input
+                            type="radio"
+                            name="uyQuyen"
+                            id="caNhan"
+                            checked={isCaNhan}
+                            onChange={(e) => {
+                              if (e.target.checked) {
+                                setIsCaNhan(true);
+                              }
+                            }}
+                          />
                           <label htmlFor="caNhan">Cá nhân</label>
-                          <Field type="radio" name="uyQuyen" id="toChuc" />
+                          <input
+                            type="radio"
+                            name="uyQuyen"
+                            id="toChuc"
+                            checked={!isCaNhan}
+                            onChange={(e) => {
+                              if (e.target.checked) {
+                                setIsCaNhan(false);
+                              }
+                            }}
+                          />
                           <label htmlFor="toChuc">Tổ chức</label>
                         </div>
                       </div>
@@ -228,13 +248,13 @@ export default function ChinhSuaThongTin() {
                         <label htmlFor="">
                           CMND/ CCCD: <i>*</i>
                         </label>
-                        <Field type="text" name="cmdn" />
+                        <Field type="text" name="cmnd" />
                       </div>
                       <div className="from-item">
                         <label htmlFor="">
                           Ngày cấp: <i>*</i>
                         </label>
-                        <Field type="text" name="ngayCap" />
+                        <Field type="date" name="ngayCap" />
                       </div>
                       <div className="from-item">
                         <label htmlFor="">
@@ -295,7 +315,7 @@ export default function ChinhSuaThongTin() {
                   >
                     Hủy
                   </button>
-                  <button type="submit">Tạo</button>
+                  <button type="submit">Lưu</button>
                 </div>
               </div>
             </Form>

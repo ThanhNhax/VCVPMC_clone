@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function CanhBaoHetHan() {
+  const navigate = useNavigate();
   return (
     <div className="CanhBaoHetHan">
       <div className="container">
@@ -19,8 +21,18 @@ export default function CanhBaoHetHan() {
             </div>
           </div>
           <div className="form-btn">
-            <button type="button">Hủy</button>
-            <button type="submit">Lưu</button>
+            <button
+              type="button"
+              onClick={() => navigate("/admin/caiDat/quanLyHopDong")}
+            >
+              Hủy
+            </button>
+            <button
+              type="submit"
+              onClick={() => navigate("/admin/caiDat/quanLyHopDong")}
+            >
+              Lưu
+            </button>
           </div>
         </div>
       </div>

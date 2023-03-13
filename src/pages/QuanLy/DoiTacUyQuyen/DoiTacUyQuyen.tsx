@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Switch } from "antd";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch, RootState } from "../../../redux/configStore";
@@ -16,37 +17,57 @@ export default function DoiTacUyQuyen() {
   );
   console.log({ arrDoiTacUyQuyen });
   const dispatch: AppDispatch = useDispatch();
+  // cấu hình phân pages
+  const [currentPage, setCurrentPage] = useState<number>(1); // Vị trí page hiện tại
+  const [limit, setLimit] = useState<number>(12); // change số item hiển thị
+  const indexOfLastNews = currentPage * limit; // vị trí cuối
+  const indexOfFirstNews = indexOfLastNews - limit; // Vị trí đầu
+  const totalPages = Math.ceil(arrDoiTacUyQuyen.length / limit); // Tính số tổng số pages
+  const newArr = arrDoiTacUyQuyen.slice(indexOfFirstNews, indexOfLastNews);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [isStyleBtn, setIsStyleBtn] = useState<boolean>(false);
+  // cấu hình phân pages
   useEffect(() => {
     dispatch(getArrQuanLyDoiTacUyQuyenFireStore());
   }, []);
   const navigate = useNavigate();
-  const renderTable = () => {
-    return arrDoiTacUyQuyen.map(
-      (uyQuyen: DoiTacUyQuyenRedux, index: number) => (
-        <tr key={index}>
-          <td className="stt">{index + 1}</td>
-          <td>{uyQuyen.tenNguoiDung}</td>
-          <td>{uyQuyen.tenDangNhap}</td>
-          <td>{uyQuyen.email}</td>
-          <td>{uyQuyen.ngayHetHan}</td>
-          <td>{uyQuyen.soDienThoi}</td>
-          <td>
-            <Switch checked={uyQuyen.trangThai} />
-            {uyQuyen.trangThai ? "Đang kích hoạt" : "Ngừng kích hoạt"}
-          </td>
-          <td
-            className="action"
-            onClick={() => {
-              navigate("/admin/quanLyUyQuyen/capNhat");
-              // cập nhật lên redux itemDoiTacUyQuyen
-              dispatch(setItemDoiTacUyQuyen(uyQuyen));
-            }}
+
+  const renderButtonPage = (n: number) => {
+    let btn: any = "";
+    for (let i = 0; i < n; i++) {
+      btn += `<button
+          className=${isStyleBtn ? "btn-item-active btn-item" : "btn-item"}
           >
-            Cập nhật
-          </td>
-        </tr>
-      )
-    );
+          ${i + 1}
+        </button>`;
+    }
+    return { __html: btn };
+  };
+  const renderTable = () => {
+    return newArr.map((uyQuyen: DoiTacUyQuyenRedux, index: number) => (
+      <tr key={index}>
+        <td className="stt">{index + 1}</td>
+        <td>{uyQuyen.tenNguoiDung}</td>
+        <td>{uyQuyen.tenDangNhap}</td>
+        <td>{uyQuyen.email}</td>
+        <td>{uyQuyen.ngayHetHan}</td>
+        <td>{uyQuyen.soDienThoi}</td>
+        <td>
+          <Switch checked={uyQuyen.trangThai} />
+          {uyQuyen.trangThai ? "Đang kích hoạt" : "Ngừng kích hoạt"}
+        </td>
+        <td
+          className="action"
+          onClick={() => {
+            navigate("/admin/quanLyUyQuyen/capNhat");
+            // cập nhật lên redux itemDoiTacUyQuyen
+            dispatch(setItemDoiTacUyQuyen(uyQuyen));
+          }}
+        >
+          Cập nhật
+        </td>
+      </tr>
+    ));
   };
   return (
     <div className="doiTacUyQuyen">
@@ -93,25 +114,25 @@ export default function DoiTacUyQuyen() {
           </div>
           <div className="pagination_right">
             <button
-            //   disabled={currentPage === 1}
-            //   onClick={() => {
-            //     if (currentPage === 1) {
-            //       setCurrentPage(1);
-            //     }
-            // setCurrentPage(currentPage - 1);
-            //   }}
+              disabled={currentPage === 1}
+              onClick={() => {
+                if (currentPage === 1) {
+                  setCurrentPage(1);
+                }
+                setCurrentPage(currentPage - 1);
+              }}
             >
               <i className="fas fa-chevron-left"></i>
             </button>
             <div
               id="btnPage"
-              // dangerouslySetInnerHTML={renderButtonPage(totalPages)}
+              dangerouslySetInnerHTML={renderButtonPage(totalPages)}
             ></div>
             <button
-            // disabled={currentPage >= totalPages}
-            //   onClick={() => {
-            //     setCurrentPage(currentPage + 1);
-            //   }}
+              disabled={currentPage >= totalPages}
+              onClick={() => {
+                setCurrentPage(currentPage + 1);
+              }}
             >
               <i className="fas fa-chevron-right"></i>
             </button>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { Checkbox, Switch } from "antd";
@@ -19,18 +20,16 @@ export default function QuanLyDonViSuDung() {
   const dispatch: AppDispatch = useDispatch();
   // cấu hình phân pages
   const [currentPage, setCurrentPage] = useState<number>(1); // Vị trí page hiện tại
-  // const [limit, setLimit] = useState<number>(13); // change số item hiển thị
-  // const indexOfLastNews = currentPage * limit; // vị trí cuối
-  // const indexOfFirstNews = indexOfLastNews - limit; // Vị trí đầu
-  // const totalPages = Math.ceil(arrPlayList.length / limit); // Tính số tổng số pages
-  // const newArrPlayList = arrPlayList.slice(indexOfFirstNews, indexOfLastNews);
-  // const [isStyleBtn] = useState<boolean>(false);
+  const [limit, setLimit] = useState<number>(13); // change số item hiển thị
+  const indexOfLastNews = currentPage * limit; // vị trí cuối
+  const indexOfFirstNews = indexOfLastNews - limit; // Vị trí đầu
+  const totalPages = Math.ceil(arrDonViSuDung.length / limit); // Tính số tổng số pages
+  const newArr = arrDonViSuDung.slice(indexOfFirstNews, indexOfLastNews);
+  const [isStyleBtn] = useState<boolean>(false);
   // cấu hình phân pages
 
-  // handle switch
-
   const renderTable = () => {
-    return arrDonViSuDung.map((thietBi: DonViSuDungRedux, index: number) => (
+    return newArr.map((thietBi: DonViSuDungRedux, index: number) => (
       <tr key={index}>
         <td>
           <Checkbox />
@@ -60,6 +59,17 @@ export default function QuanLyDonViSuDung() {
   useEffect(() => {
     dispatch(getArrQuanLyDonViSuDungFireStore());
   }, []);
+  const renderButtonPage = (n: number) => {
+    let btn: any = "";
+    for (let i = 0; i < n; i++) {
+      btn += `<button
+          className=${isStyleBtn ? "btn-item-active btn-item" : "btn-item"}
+          >
+          ${i + 1}
+        </button>`;
+    }
+    return { __html: btn };
+  };
   return (
     <div className="quanLyDonViSuDung">
       <div className="container">
@@ -126,10 +136,10 @@ export default function QuanLyDonViSuDung() {
                   </button>
                   <div
                     id="btnPage"
-                    // dangerouslySetInnerHTML={renderButtonPage(totalPages)}
+                    dangerouslySetInnerHTML={renderButtonPage(totalPages)}
                   ></div>
                   <button
-                    // disabled={currentPage >= totalPages}
+                    disabled={currentPage >= totalPages}
                     onClick={() => {
                       setCurrentPage(currentPage + 1);
                     }}

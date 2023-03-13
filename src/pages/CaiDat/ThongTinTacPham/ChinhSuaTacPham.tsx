@@ -1,7 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { AppDispatch, RootState } from "../../../redux/configStore";
-import { TheLoaiTacPhamRedux } from "../../../redux/theLoaiTacPham/theLoaiTacPhamReducer";
+import {
+  getArrTheLoaiTacPhamFireStore,
+  TheLoaiTacPhamRedux,
+} from "../../../redux/theLoaiTacPham/theLoaiTacPhamReducer";
 
 export default function ChinhSuaTacPham() {
   const [tenTheLoai, setTenTheLoai] = useState<string>("");
@@ -10,10 +15,11 @@ export default function ChinhSuaTacPham() {
     (state: RootState) => state.theLoaiTacPham
   );
   console.log({ arrTheLoaiTacPham });
+  const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
-  //   useEffect(() => {
-  //     dispatch(getArrTheLoaiTacPhamFireStore());
-  //   }, []);
+  useEffect(() => {
+    dispatch(getArrTheLoaiTacPhamFireStore());
+  }, []);
   const handleChangle = (e: any) => {
     console.log(e.target.value);
     setTenTheLoai(e.target.value);
@@ -66,15 +72,8 @@ export default function ChinhSuaTacPham() {
                 <div className="pagination_left">
                   <p>
                     Hiển thị
-                    <select
-                    // value={limit}
-                    // onChange={(e) => {
-                    //   setLimit(parseInt(e.target.value));
-                    // }}
-                    >
+                    <select>
                       <option value="12">12</option>
-                      <option value="6">6</option>
-                      <option value="8">8</option>
                     </select>
                     hàng trong mỗi trang
                   </p>
@@ -107,8 +106,18 @@ export default function ChinhSuaTacPham() {
               </div>
             </div>
             <div className="form-btn">
-              <button type="button">Hủy</button>
-              <button type="submit">Lưu</button>
+              <button
+                type="button"
+                onClick={() => navigate("/admin/thongTinTacPham")}
+              >
+                Hủy
+              </button>
+              <button
+                type="submit"
+                onClick={() => navigate("/admin/thongTinTacPham")}
+              >
+                Lưu
+              </button>
             </div>
           </div>
           <div className="menu">

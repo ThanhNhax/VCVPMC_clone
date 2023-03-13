@@ -113,7 +113,6 @@ export default function EditLichPhat() {
                     <span></span>
                     <span></span>
                     <span></span>
-                    <span></span>
                   </div>
                   <div className="playlist-item ">
                     <span>Thứ ba</span>

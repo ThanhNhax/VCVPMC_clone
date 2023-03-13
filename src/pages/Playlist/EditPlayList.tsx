@@ -2,17 +2,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { message, Modal, Switch } from "antd";
-import { doc, setDoc } from "firebase/firestore";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { db } from "../../FireStore/fireStore";
 import { AppDispatch, RootState } from "../../redux/configStore";
 import { KhoBanGhiRedux } from "../../redux/khoBanGhi/khoBanghiReducer";
 import {
   deleteArrBanGhiRedux,
-  setItemPlayList,
+  PlayListRedux,
+  updateItemPlayLsit,
 } from "../../redux/playListReducer/playListReducer";
 import { getArrTabFireStore } from "../../redux/theLoaiTacPham/theLoaiTacPhamReducer";
+import { Field, Form, Formik } from "formik";
 
 export const handleSearch = (arr: string[], string: string) => {
   return arr.filter((el) => el.toLowerCase().includes(string.toLowerCase()));
@@ -100,35 +100,6 @@ export default function EditPlayList() {
     console.log("call The loai");
   }, []);
 
-  console.log("tong thoi Luong:", tongThoiLuong(itemPlayList.arrBanGhi));
-  const handleSubmit = async () => {
-    console.log("id: ", itemPlayList.id, itemPlayList);
-    if (itemPlayList.id !== undefined) {
-      const itemPlaylistRef = doc(db, "playList", itemPlayList.id);
-
-      try {
-        setDoc(
-          itemPlaylistRef,
-          {
-            arrBanGhi: itemPlayList.arrBanGhi,
-            chuDe: selectedTags,
-            thoiLuong: tongThoiLuong(itemPlayList.arrBanGhi),
-          },
-          { merge: true }
-        );
-        message.open({
-          type: "success",
-          content: "Cập nhật thành công!",
-          duration: 0.8,
-        });
-        //cập nhật lại itemPlayList
-        dispatch(setItemPlayList(itemPlayList));
-        navigate("/admin/playlist/xemchitiet");
-      } catch (e) {
-        console.log({ e });
-      }
-    }
-  };
   const renderButtonPage = (n: number) => {
     let btn: any = "";
     for (let i = 0; i < n; i++) {
@@ -174,7 +145,7 @@ export default function EditPlayList() {
             <td
               className="action"
               onClick={() => {
-                if (itemPlayList.arrBanGhi !== undefined) {
+                if (itemPlayList.arrBanGhi) {
                   const indexDelete = itemPlayList.arrBanGhi.findIndex(
                     (item) => item?.id === banGhi?.id
                   );
@@ -196,6 +167,21 @@ export default function EditPlayList() {
   );
   const [valueSearch, setValueSearch] = useState<string>("");
 
+  let initialValues: PlayListRedux = {
+    anhBia: "",
+    arrBanGhi: [],
+    chuDe: [],
+    desc: "",
+    id: "",
+    ngayTao: "",
+    nguoiTao: "",
+    thoiLuong: "",
+    tieuDe: "",
+  };
+  if (itemPlayList) {
+    initialValues = itemPlayList;
+  }
+
   return (
     <div className="editplaylist">
       <div className="container">
@@ -206,186 +192,207 @@ export default function EditPlayList() {
           </p>
           <h1>Playlist {itemPlayList?.tieuDe}</h1>
         </div>
-        <div className="content_center">
-          <div className="center-left">
-            <div className="left-title">
-              <div className="title-top title-item">
-                <div className="img" onClick={showModal}></div>
-                <h3>Tiêu đề</h3>
-                <input
-                  type="text"
-                  placeholder="Tên tiêu đề"
-                  defaultValue={itemPlayList.tieuDe ? itemPlayList.tieuDe : ""}
-                />
-              </div>
-              <div className="title-table title-item">
-                <table>
-                  <tbody>
-                    <tr>
-                      <td>Người tạo:</td>
-                      <td>{itemPlayList?.nguoiTao}</td>
-                    </tr>
-                    <tr>
-                      <td>Tổng số:</td>
-                      <td>
-                        {itemPlayList?.arrBanGhi?.length
-                          ? itemPlayList.arrBanGhi.length
-                          : 0}
-                        bản ghi
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Tổng thời lượng:</td>
-                      <td>{tongThoiLuong(itemPlayList.arrBanGhi)}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div className="title-decs title-item">
-                <h5>Mô tả</h5>
-                <textarea placeholder="Thêm mô tả" />
-              </div>
-              <div className="title-chuDe title-item">
-                <h5>Chủ đề:</h5>
-                <div className="select_tag">
-                  <div className="list-tag">
-                    {selectedTags.map((tag, index) => (
-                      <div className="tag-item" key={tag}>
-                        <span>{tag}</span>
-                        <i
-                          onClick={() => {
-                            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                            let selectedTagsDelete = selectedTags.splice(
-                              index,
-                              1
-                            );
-                            setSelectedTags([...selectedTags]);
-                          }}
-                        >
-                          &times;
-                        </i>
-                      </div>
-                    ))}
+        <Formik
+          initialValues={initialValues}
+          onSubmit={async (values) => {
+            let newValue = { ...values };
+            newValue.arrBanGhi = itemPlayList.arrBanGhi;
+            newValue.chuDe = selectedTags;
+            console.log({ newValue });
+            try {
+              message.open({
+                type: "success",
+                content: "Cập nhật thành công!",
+                duration: 0.8,
+              });
+              // cập nhật lại itemPlayList
+              dispatch(updateItemPlayLsit(newValue));
+              navigate("/admin/playlist/xemchitiet");
+            } catch (e) {
+              console.log({ e });
+            }
+          }}
+        >
+          {({ errors, touched }) => (
+            <Form className="content_center">
+              <div className="center-left">
+                <div className="left-title">
+                  <div className="title-top title-item">
+                    <div className="img" onClick={showModal}></div>
+                    <h3>Tiêu đề</h3>
+                    <Field
+                      type="text"
+                      placeholder="Tên tiêu đề"
+                      name="tieuDe"
+                    />
                   </div>
-                  <input
-                    type="search"
-                    id="search-tag"
-                    value={valueSearch}
-                    onChange={(e) => {
-                      const arrChuDe = handleSearch(arrTag, e.target.value);
-                      setArrChuDeSearch(arrChuDe);
-                      setValueSearch(e.target.value);
-                    }}
-                    placeholder="Nhập chủ đề"
-                  />
-                  <div className="render-table-tag">
-                    {arrChuDeSearch.map((el) => (
-                      <div className="table-list" key={el}>
-                        <span
-                          onClick={() => {
-                            console.log(el);
-                            setSelectedTags([...selectedTags, el]);
-                            setArrChuDeSearch([]);
-                            setValueSearch("");
-                          }}
-                        >
-                          {el}
-                        </span>
+                  <div className="title-table title-item">
+                    <table>
+                      <tbody>
+                        <tr>
+                          <td>Người tạo:</td>
+                          <td>{itemPlayList.nguoiTao}</td>
+                        </tr>
+                        <tr>
+                          <td>Tổng số:</td>
+                          <td>
+                            {itemPlayList?.arrBanGhi?.length
+                              ? itemPlayList.arrBanGhi.length
+                              : 0}
+                            bản ghi
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Tổng thời lượng:</td>
+                          <td>{tongThoiLuong(itemPlayList.arrBanGhi)}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className="title-decs title-item">
+                    <h5>Mô tả</h5>
+                    <Field as="textarea" placeholder="Thêm mô tả" name="desc" />
+                  </div>
+                  <div className="title-chuDe title-item">
+                    <h5>Chủ đề:</h5>
+                    <div className="select_tag">
+                      <div className="list-tag">
+                        {selectedTags.map((tag, index) => (
+                          <div className="tag-item" key={index}>
+                            <span>{tag}</span>
+                            <i
+                              onClick={() => {
+                                let newTabs = [...selectedTags];
+
+                                newTabs.splice(index, 1);
+                                console.log({ newTabs });
+                                setSelectedTags(newTabs);
+                              }}
+                            >
+                              &times;
+                            </i>
+                          </div>
+                        ))}
                       </div>
-                    ))}
+                      <input
+                        type="search"
+                        id="search-tag"
+                        value={valueSearch}
+                        onChange={(e) => {
+                          const arrChuDe = handleSearch(arrTag, e.target.value);
+                          setArrChuDeSearch(arrChuDe);
+                          setValueSearch(e.target.value);
+                        }}
+                        placeholder="Nhập chủ đề"
+                      />
+                      <div className="render-table-tag">
+                        {arrChuDeSearch.map((el) => (
+                          <div className="table-list" key={el}>
+                            <span
+                              onClick={() => {
+                                console.log(el);
+                                setSelectedTags([...selectedTags, el]);
+                                setArrChuDeSearch([]);
+                                setValueSearch("");
+                              }}
+                            >
+                              {el}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="title-bottom title-item">
+                    <div className="bottom-item">
+                      <Switch defaultChecked onChange={onChange} />
+                      <p>Hiển thị ở chế độ công khai</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="left-table">
+                  <div className="wrap-table">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>STT</th>
+                          <th>Tên bản ghi</th>
+                          <th>Ca sĩ</th>
+                          <th>Tác giả</th>
+                        </tr>
+                      </thead>
+                      <tbody>{renderBanGhiTable()}</tbody>
+                    </table>
+                  </div>
+                  <div className="pagination-table">
+                    <div className="pagination_left">
+                      <p>
+                        Hiển thị
+                        <input defaultValue="12"></input>
+                        hàng trong mỗi trang
+                      </p>
+                    </div>
+                    <div className="pagination_right">
+                      <button
+                        disabled={currentPage === 1}
+                        onClick={() => {
+                          if (currentPage === 1) {
+                            setCurrentPage(1);
+                          }
+                          setCurrentPage(currentPage - 1);
+                        }}
+                      >
+                        <i className="fas fa-chevron-left"></i>
+                      </button>
+                      <div
+                        id="btnPage"
+                        dangerouslySetInnerHTML={renderButtonPage(totalPages)}
+                      ></div>
+                      <button
+                        disabled={currentPage >= totalPages}
+                        onClick={() => {
+                          setCurrentPage(currentPage + 1);
+                        }}
+                      >
+                        <i className="fas fa-chevron-right"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div className="left-table-btn">
+                    <p>
+                      <i>*</i> là những trường thông tin bắt buộc
+                    </p>
+                    <div className="btn-list">
+                      <button
+                        type="button"
+                        onClick={() => navigate("/admin/playlist/xemchitiet")}
+                      >
+                        Hủy
+                      </button>
+                      <button type="submit">Lưu</button>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="title-bottom title-item">
-                <div className="bottom-item">
-                  <Switch defaultChecked onChange={onChange} />
-                  <p>Hiển thị ở chế độ công khai</p>
+              <div className="center-right">
+                <div className="menu-list">
+                  <div className="menu-item">
+                    <div
+                      className="bg-icon"
+                      onClick={() => {
+                        console.log({ itemPlayList });
+                        navigate("/admin/addbanghi");
+                      }}
+                    >
+                      <i className="fas fa-plus"></i>
+                    </div>
+                    <p>Thêm bản ghi</p>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="left-table">
-              <div className="wrap-table">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>STT</th>
-                      <th>Tên bản ghi</th>
-                      <th>Ca sĩ</th>
-                      <th>Tác giả</th>
-                    </tr>
-                  </thead>
-                  <tbody>{renderBanGhiTable()}</tbody>
-                </table>
-              </div>
-              <div className="pagination-table">
-                <div className="pagination_left">
-                  <p>
-                    Hiển thị
-                    <input defaultValue="12"></input>
-                    hàng trong mỗi trang
-                  </p>
-                </div>
-                <div className="pagination_right">
-                  <button
-                    disabled={currentPage === 1}
-                    onClick={() => {
-                      if (currentPage === 1) {
-                        setCurrentPage(1);
-                      }
-                      setCurrentPage(currentPage - 1);
-                    }}
-                  >
-                    <i className="fas fa-chevron-left"></i>
-                  </button>
-                  <div
-                    id="btnPage"
-                    dangerouslySetInnerHTML={renderButtonPage(totalPages)}
-                  ></div>
-                  <button
-                    disabled={currentPage >= totalPages}
-                    onClick={() => {
-                      setCurrentPage(currentPage + 1);
-                    }}
-                  >
-                    <i className="fas fa-chevron-right"></i>
-                  </button>
-                </div>
-              </div>
-              <div className="left-table-btn">
-                <p>
-                  <i>*</i> là những trường thông tin bắt buộc
-                </p>
-                <div className="btn-list">
-                  <button
-                    type="button"
-                    onClick={() => navigate("/admin/playlist/xemchitiet")}
-                  >
-                    Hủy
-                  </button>
-                  <button type="submit" onClick={handleSubmit}>
-                    Lưu
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="center-right">
-            <div className="menu-list">
-              <div className="menu-item">
-                <div
-                  className="bg-icon"
-                  onClick={() => {
-                    console.log({ itemPlayList });
-                    navigate("/admin/addbanghi");
-                  }}
-                >
-                  <i className="fas fa-plus"></i>
-                </div>
-                <p>Thêm bản ghi</p>
-              </div>
-            </div>
-          </div>
-        </div>
+            </Form>
+          )}
+        </Formik>
       </div>
       <Modal
         open={isModalOpen}

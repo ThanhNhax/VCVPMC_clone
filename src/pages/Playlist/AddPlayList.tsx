@@ -15,6 +15,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../FireStore/fireStore";
 import { handleSearch, tongThoiLuong } from "./EditPlayList";
 import { ngayTao } from "../HoTro/Feedback";
+import { KhoBanGhiRedux } from "../../redux/khoBanGhi/khoBanghiReducer";
 
 export default function AddPlayList() {
   const { user } = useSelector((state: RootState) => state.user.userLogin);
@@ -83,7 +84,7 @@ export default function AddPlayList() {
 
   const renderBanGhiTable = () => {
     if (pagesBanGhi !== undefined) {
-      return pagesBanGhi.map((khoBanGhi, index: number) => {
+      return pagesBanGhi.map((khoBanGhi: KhoBanGhiRedux, index: number) => {
         return (
           <tr key={index}>
             <td className="text_right">{index + 1}</td>
@@ -151,7 +152,6 @@ export default function AddPlayList() {
         ngayTao: ngayTao,
         nguoiTao: user?.ho + " " + user?.ten,
         tieuDe: tieuDe,
-        soBanGhi: newPlayList.soBanGhi,
         thoiLuong: newPlayList.thoiLuong,
       };
       console.log({ newItem });
