@@ -1,9 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, message, Upload } from 'antd';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/configStore';
-import moment from 'moment';
 import { Field, Form, Formik } from 'formik';
 import { HopDongKhaiThacRedux } from '../../../../redux/hopDongReducer/hopDongReducer';
 import { useNavigate } from 'react-router-dom';
